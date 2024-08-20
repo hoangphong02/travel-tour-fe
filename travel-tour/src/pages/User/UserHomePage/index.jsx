@@ -1,8 +1,14 @@
 import React from 'react'
+import { CSHome2Outline } from '~/components/iconography/Outline'
 
 const UserHomePage = () => {
   return (
-    <div>UserHomePage</div>
+    <div>
+      <CSHome2Outline
+        style={{ width: '18px', height: '18px' }}
+        className="fill-secondary-black"
+      />
+    </div>
   )
 }
 

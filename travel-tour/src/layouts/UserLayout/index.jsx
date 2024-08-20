@@ -1,6 +1,6 @@
 import React from 'react';
 import { Route, useLocation } from 'react-router-dom';
-import { routesUser } from '../../configs';
+import { routesUser } from '~/configs';
 
 // import { getProfileRequest } from '~/redux/user/actions';
 // import { useDispatch, useSelector } from 'react-redux';
