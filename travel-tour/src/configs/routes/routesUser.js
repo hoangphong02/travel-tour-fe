@@ -17,4 +17,5 @@ export const routesUser = {
   managerCoin: '/manager-coin',
   information: '/information',
   addressesManager: '/addresses-manager',
+  admin: '/admin'
 };
