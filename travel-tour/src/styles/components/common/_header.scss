@@ -58,6 +58,9 @@
             justify-content: space-between;
             transition: margin-top 1s ease-in-out;
 
+            .filter-logo {
+                filter: brightness(10);
+            }
 
             .list-option {
                 display: flex;
@@ -69,7 +72,76 @@
                     height: 80px;
                     display: flex;
                     align-items: center;
+                    justify-content: center;
                     color: #fff;
+                    position: relative;
+                    flex-direction: column;
+
+                    .ul-tour {
+                        display: none;
+                        padding: 0;
+                        position: absolute;
+                        width: max-content;
+                        top: 65px;
+                        text-align: left;
+                        list-style: none;
+                        background-color: #fff;
+                        color: #000;
+                        gap: 8px;
+                        border-bottom-left-radius: 10px;
+                        border-bottom-right-radius: 10px;
+                        border: 1px solid #d5d5d5;
+
+                        li {
+                            padding: 8px;
+                            border-bottom: 1px solid #d5d5d5;
+
+                            &:hover {
+                                background-color: #d5d5d5;
+                            }
+
+                            &:last-child {
+                                border: none;
+                            }
+                        }
+
+                        &:hover {
+                            display: block;
+                        }
+                    }
+
+                    .ul-blog {
+                        display: none;
+                        padding: 0;
+                        position: absolute;
+                        width: max-content;
+                        top: 65px;
+                        text-align: left;
+                        list-style: none;
+                        background-color: #fff;
+                        color: #000;
+                        gap: 8px;
+                        border-bottom-left-radius: 10px;
+                        border-bottom-right-radius: 10px;
+                        border: 1px solid #d5d5d5;
+
+                        li {
+                            padding: 8px;
+                            border-bottom: 1px solid #d5d5d5;
+
+                            &:hover {
+                                background-color: #d5d5d5;
+                            }
+
+                            &:last-child {
+                                border: none;
+                            }
+                        }
+
+                        &:hover {
+                            display: block;
+                        }
+                    }
 
                     &:hover {
                         background-color: #d5d5d5;
@@ -122,6 +194,22 @@
                             }
                         }
                     }
+
+                    &:nth-child(3) {
+                        &:hover {
+                            .ul-tour {
+                                display: block;
+                            }
+                        }
+                    }
+
+                    &:nth-child(6) {
+                        &:hover {
+                            .ul-blog {
+                                display: block;
+                            }
+                        }
+                    }
                 }
             }
         }
@@ -136,6 +224,70 @@
 
         &--top {
             display: none;
+        }
+
+        &--bottom {
+            .logo {
+                filter: none;
+            }
+
+            .list-option {
+
+                .item {
+
+                    color: #000;
+
+                    &:hover {
+                        background-color: #d5d5d5;
+                    }
+
+                    .dropdown {
+                        .dropdown-menu-tour {
+                            background-color: #fff;
+                            padding: 10px;
+                            border-radius: 0 0 10px 10px;
+                            inset: -10px 0px auto auto !important;
+                        }
+
+                        .dropdown-menu-blog {
+                            background-color: #fff;
+                            padding: 10px;
+                            border-radius: 0 0 10px 10px;
+                            inset: -10px 0px auto auto !important;
+                        }
+
+                        button {
+
+                            color: #000;
+                        }
+
+
+
+
+                    }
+                }
+            }
+        }
+
+    }
+}
+
+.header-not-home {
+    background-color: #fff;
+
+    .header-action--inner {
+
+        &--top {
+
+            &--left {
+                .phone {
+                    display: flex;
+                    align-items: center;
+                    gap: 8px;
+                    font-weight: 600;
+                    color: #000;
+                }
+            }
         }
 
         &--bottom {

@@ -42,7 +42,7 @@ function SamplePrevArrow(props) {
       <img
         src={banner1}
         alt=""
-        style={{ width: '100%', height: 'auto', overflow: 'hidden' }}
+        style={{ width: '100%', height: '600px', overflow: 'hidden' }}
       />
       <img
         src={banner2}

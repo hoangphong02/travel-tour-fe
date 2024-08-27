@@ -13,9 +13,11 @@ export const routesUser = {
   voucherDetail: '/vouchers-list/:voucherId',
   profile: '/profile',
   cart: '/cart',
-  notifications: '/notifications',
-  managerCoin: '/manager-coin',
   information: '/information',
   addressesManager: '/addresses-manager',
-  admin: '/admin'
+  admin: '/admin',
+  introduce: '/introduce',
+  tablePriceTour:'/price-tour',
+  contact: '/contact',
+  booking: '/booking'
 };

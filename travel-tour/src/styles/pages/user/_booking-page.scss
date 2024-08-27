@@ -1,0 +1,280 @@
+.booking-page-wrapper {
+    padding-top: 160px;
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    margin-bottom: 40px;
+    display: flex;
+    gap: 16px;
+
+    &-left {
+        width: 60%;
+        display: flex;
+        flex-direction: column;
+        gap: 24px;
+
+        &-section-1 {
+            border: 1px solid #263593;
+            border-radius: 8px;
+            // overflow: hidden;
+
+            .top {
+                display: flex;
+                justify-content: space-between;
+                padding: 8px 16px;
+                background-color: #263593;
+                border-top-left-radius: 8px;
+                border-top-right-radius: 8px;
+
+                .title {
+                    font-size: 18px;
+                    font-weight: 600;
+                    color: #fff;
+                }
+            }
+
+            .bottom {
+                display: flex;
+                flex-direction: column;
+                gap: 16px;
+                padding: 16px;
+                text-align: left;
+
+                .tour-require {
+                    display: flex;
+                    flex-direction: column;
+                    gap: 8px;
+
+                    input {
+                        padding: 16px;
+                        border-radius: 8px;
+                        border: 1px solid var(--color-secondary-black);
+                        outline: #263593;
+                    }
+                }
+
+                .title {
+                    font-size: 18px;
+                    font-weight: 600;
+                }
+
+                .list-option {
+                    display: flex;
+                    justify-content: space-between;
+                    gap: 16px;
+
+                    .option {
+                        display: flex;
+                        flex-direction: column;
+                        gap: 8px;
+
+                        select {
+                            padding: 16px 4px;
+                            border-radius: 8px;
+                            border: 1px solid var(--color-secondary-black);
+                            min-width: 30%;
+                        }
+                    }
+                }
+            }
+        }
+
+        &-section-2 {
+            border: 1px solid #263593;
+            border-radius: 8px;
+            overflow: hidden;
+
+            .top {
+                display: flex;
+                justify-content: space-between;
+                padding: 8px 16px;
+                background-color: #263593;
+
+                .title {
+                    font-size: 18px;
+                    font-weight: 600;
+                    color: #fff;
+                }
+            }
+
+            .bottom {
+                display: flex;
+                flex-direction: column;
+                gap: 16px;
+                padding: 16px;
+                text-align: left;
+
+                .tour-require {
+                    display: flex;
+                    flex-direction: column;
+                    gap: 8px;
+
+                    input {
+                        padding: 16px;
+                        border-radius: 8px;
+                        border: 1px solid var(--color-secondary-black);
+                        outline: #263593;
+                    }
+                }
+
+                .title {
+                    font-size: 18px;
+                    font-weight: 600;
+                }
+
+                .list-option {
+                    display: flex;
+                    justify-content: space-between;
+                    gap: 16px;
+
+                    .option {
+                        display: flex;
+                        gap: 8px;
+                        align-items: center;
+
+                        span {
+                            font-size: 13px;
+                        }
+
+                        input {
+                            max-width: 80px;
+                            padding: 4px 8px;
+                            border-radius: 8px;
+                            border: 1px solid var(--color-secondary-black);
+                            outline: #263593;
+                        }
+
+                        select {
+                            padding: 16px 4px;
+                            border-radius: 8px;
+                            border: 1px solid var(--color-secondary-black);
+                            min-width: 30%;
+                        }
+                    }
+                }
+            }
+        }
+
+        &-section-3 {
+            border: 1px solid #263593;
+            border-radius: 8px;
+            overflow: hidden;
+
+            .top {
+                display: flex;
+                justify-content: space-between;
+                padding: 8px 16px;
+                background-color: #263593;
+
+                .title {
+                    font-size: 18px;
+                    font-weight: 600;
+                    color: #fff;
+                }
+            }
+
+            .bottom {
+                display: flex;
+                flex-direction: column;
+                gap: 16px;
+                padding: 16px;
+                text-align: left;
+
+                .tour-require {
+                    display: flex;
+                    flex-direction: column;
+                    gap: 8px;
+
+                    input {
+                        padding: 16px;
+                        border-radius: 8px;
+                        border: 1px solid var(--color-secondary-black);
+                        outline: #263593;
+                    }
+                }
+
+                .title {
+                    font-size: 18px;
+                    font-weight: 600;
+                }
+
+                .list-option {
+                    display: flex;
+                    justify-content: space-between;
+                    gap: 16px;
+
+                    .option {
+                        display: flex;
+                        flex-direction: column;
+                        gap: 8px;
+
+                        select {
+                            padding: 16px 4px;
+                            border-radius: 8px;
+                            border: 1px solid var(--color-secondary-black);
+                            min-width: 30%;
+                        }
+                    }
+                }
+            }
+        }
+
+    }
+
+
+    &-right {
+        width: 40%;
+        border: 1px solid #263593;
+        border-radius: 8px;
+        height: fit-content;
+
+        &-body {
+            .top {
+                padding: 16px;
+                background-color: #263593;
+                border-top-left-radius: 8px;
+                border-top-right-radius: 8px;
+                font-size: 18px;
+                color: #fff;
+                font-weight: 700;
+            }
+
+            .form {
+                padding: 16px;
+                display: flex;
+                flex-direction: column;
+                gap: 12px;
+
+                input {
+                    padding: 16px;
+                    border-radius: 8px;
+                    border: 1px solid var(--color-secondary-black);
+                    outline: #263593;
+                }
+
+                textarea {
+                    border-radius: 8px;
+                    padding: 16px;
+                    border: 1px solid var(--color-secondary-black);
+                    outline: #263593;
+                }
+            }
+
+            .bottom {
+                padding: 16px;
+
+                button {
+                    padding: 8px 16px;
+                    border-radius: 8px;
+                    font-size: 16px;
+                    font-weight: 600;
+                    color: #fff;
+                    background-color: #ffb13e;
+                    border: none;
+                    width: 100%;
+                }
+            }
+        }
+
+    }
+}

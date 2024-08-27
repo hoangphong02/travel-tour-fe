@@ -1,0 +1,56 @@
+.price-tour-page-wrapper {
+    width: 100%;
+
+    &-inner {
+        width: 100%;
+        max-width: 1200px;
+        margin: 0 auto;
+        padding-top: 160px;
+
+        .title {
+            font-size: 32px;
+            color: var(--color-secondary-brand-blue);
+            font-weight: 700;
+        }
+
+        .table-scroll-y-custom {
+            table {
+                border: 1px solid var(--color-secondary-brand-blue);
+                border-spacing: 0px;
+                border-radius: 10px;
+                overflow: hidden;
+
+                thead {
+                    background-color: var(--color-secondary-brand-blue);
+                    border-radius: 0px;
+
+                    th {
+                        padding: 20px 0;
+                        color: #fff;
+                    }
+                }
+
+                tbody {
+                    tr {
+                        td {
+                            padding: 10px;
+                            font-size: 18px;
+
+                            .btn-see-tour {
+                                button {
+
+                                    background-color: var(--color-secondary-brand-blue);
+                                    border: none;
+                                    padding: 10px 20px;
+                                    border-radius: 20px;
+                                    color: #fff;
+                                }
+                            }
+                        }
+
+                    }
+                }
+            }
+        }
+    }
+}

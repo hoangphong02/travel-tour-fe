@@ -1,11 +1,16 @@
 import React, { memo, useState } from 'react'
 import { Dropdown } from 'react-bootstrap';
+import { useHistory, useLocation } from 'react-router-dom/cjs/react-router-dom.min';
 import logo from '~/assets/logo/duck.png';
 import logoTour from '~/assets/logo/logo-tour.png';
 import { CSPhoneOutline } from '~/components/iconography/Outline';
+import { routesUser } from '~/configs';
 
 export const HeaderAction = memo(() => {
   const [isScroll, setIsScroll] = useState(false);
+  const history = useHistory();
+  const location = useLocation();
+  const { pathname } = location;
   // const { profileResponse } = useSelector((store) => store.user);
   // const { getAllNotificationsResponse } = useSelector(
   //   (store) => store.notification,
@@ -21,8 +26,6 @@ export const HeaderAction = memo(() => {
   //   )
   //   : [];
 
-  const [showBlog, setShowBlog] = useState(true);
-  const [showTour, setShowTour] = useState(true);
   window.addEventListener('scroll', function() {
   let scrollTop = window.scrollY || document.documentElement.scrollTop;
   if(scrollTop > 80) {
@@ -33,8 +36,9 @@ export const HeaderAction = memo(() => {
   }
 });
 
+
   return (
-    <section id="header-action" className={`header-action--wrapper ${isScroll ? 'isScroll' : ''}`}>
+    <section id="header-action" className={`header-action--wrapper ${isScroll ? 'isScroll' : ''} ${pathname.includes(routesUser.introduce) || pathname.includes(routesUser.tablePriceTour) || pathname.includes(routesUser.contact) || pathname.includes(routesUser.booking) ? 'header-not-home': ''}`}>
       <div className="header-action--inner flex-center-space h-full">
         <div className="header-action--inner--top">
             <div className='header-action--inner--top--left'>
@@ -48,54 +52,45 @@ export const HeaderAction = memo(() => {
             </div>
             <div className='header-action--inner--top--right'>
                 <img src={logo} alt="" style={{ width:'30px', height: '30px'}} />
-
             </div>
         </div>
 
         <div className='header-action--inner--bottom'> 
-          <div className='logo'>
+          <div className={`logo ${!pathname.includes(routesUser.introduce) && !pathname.includes(routesUser.tablePriceTour) && !pathname.includes(routesUser.contact) && !pathname.includes(routesUser.booking) ? 'filter-logo' : '' }`}>
             <img src={logoTour} alt="" style={{ height: '80px', width:'auto '}}/>
           </div>
           <div className='list-option'>
-            <div className='item'>
+            <div className='item' onClick={() => history.push(routesUser.home)}>
               <span>TRANG CHỦ</span>
             </div>
-            <div className='item'>
+            <div className='item'  onClick={() => history.push(routesUser.introduce)}>
               <span>GIỚI THIỆU</span>
             </div>
-            <div className='item' onClick={() => setShowTour(true)} onBlur={() => setShowTour(false)}>
-              <Dropdown autoClose align="end" > 
-                      <Dropdown.Toggle variant="success" id="dropdown-basic" >
-                        TOUR
-                      </Dropdown.Toggle>
-                      <Dropdown.Menu style={{ display: showTour === true ? 'flex' : 'none'}} className='dropdown-menu-tour' hidden={showTour}>
-                          <span>Miền tây trong ngày</span>
-                           <span>Tour dịch vụ</span>
-                           <span>Tour 3 ngày 2 đêm</span>
-                      </Dropdown.Menu>
-                    </Dropdown>
+            <div className='item' >
+              <span>TOUR</span>
+                <ul className='ul-tour'>
+                  <li>Miền tây trong ngày</li>
+                  <li>Tour dịch vụ</li>
+                  <li>Tour 3 ngày 2 đêm</li>
+                </ul>
             </div>
-            <div className='item'>
+            <div className='item' onClick={() => history.push(routesUser.tablePriceTour)}>
               <span>BẢNG GIÁ</span>
             </div>
-            <div className='item'>
+            <div className='item' onClick={() => history.push(routesUser.booking)}>
               <span>ĐẶT TOUR</span>
             </div>
-             <div className='item' onClick={() => setShowBlog(true)} onBlur={() => setShowBlog(false)}>
-              <Dropdown autoClose align="end" > 
-                      <Dropdown.Toggle variant="success" id="dropdown-basic" >
-                        BLOG
-                      </Dropdown.Toggle>
-                      <Dropdown.Menu style={{ display: showBlog === true ? 'flex' : 'none'}} className='dropdown-menu-blog' hidden={showBlog}>
-                          <span>Cẩm nang du lịch</span>
-                           <span>Đặt sản miền tây</span>
-                      </Dropdown.Menu>
-                    </Dropdown>
+             <div className='item' >
+              <span>BLOG</span>
+                  <ul className='ul-blog'>
+                  <li>Cẩm nang du lịch</li>
+                  <li>Đặt sản miền tây</li>
+                </ul>
             </div>
             <div className='item'>
               <span>HÌNH ẢNH</span>
             </div>
-            <div className='item'>
+            <div className='item' onClick={() => history.push(routesUser.contact)}>
               LIÊN HỆ
             </div>
           </div>
