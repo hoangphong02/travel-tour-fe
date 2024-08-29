@@ -8,6 +8,7 @@
     "@testing-library/user-event": "^13.5.0",
     "axios": "^1.6.8",
     "bootstrap": "^5.3.3",
+    "cdbreact": "^1.5.19",
     "classnames": "^2.5.1",
     "customize-cra": "^1.0.0",
     "eslint-config-airbnb": "^18.2.1",

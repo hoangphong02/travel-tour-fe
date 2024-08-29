@@ -183,7 +183,11 @@ const PriceTourPage = () => {
     <div className='price-tour-page-wrapper'>
       <div className='price-tour-page-wrapper-inner'>
         <div className='title'>
+          <div>
           <span>BẢNG GIÁ</span>
+           <span className='line-1'></span>
+          <span  className='line-2'></span>
+          </div>
         </div>
         <div className='table'>
         <ReactTableWithPaginationCard columns={columns} data={data}

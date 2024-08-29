@@ -38,7 +38,7 @@ export const HeaderAction = memo(() => {
 
 
   return (
-    <section id="header-action" className={`header-action--wrapper ${isScroll ? 'isScroll' : ''} ${pathname.includes(routesUser.introduce) || pathname.includes(routesUser.tablePriceTour) || pathname.includes(routesUser.contact) || pathname.includes(routesUser.booking) ? 'header-not-home': ''}`}>
+    <section id="header-action" className={`header-action--wrapper ${isScroll ? 'isScroll' : ''} ${pathname.includes(routesUser.introduce) || pathname.includes(routesUser.tablePriceTour) || pathname.includes(routesUser.contact) || pathname.includes(routesUser.booking) || pathname.includes(routesUser.tour)  ? 'header-not-home': ''}`}>
       <div className="header-action--inner flex-center-space h-full">
         <div className="header-action--inner--top">
             <div className='header-action--inner--top--left'>
@@ -56,7 +56,7 @@ export const HeaderAction = memo(() => {
         </div>
 
         <div className='header-action--inner--bottom'> 
-          <div className={`logo ${!pathname.includes(routesUser.introduce) && !pathname.includes(routesUser.tablePriceTour) && !pathname.includes(routesUser.contact) && !pathname.includes(routesUser.booking) ? 'filter-logo' : '' }`}>
+          <div className={`logo ${!pathname.includes(routesUser.introduce) && !pathname.includes(routesUser.tablePriceTour) && !pathname.includes(routesUser.contact) && !pathname.includes(routesUser.booking) && !pathname.includes(routesUser.tour) ? 'filter-logo' : '' }`}>
             <img src={logoTour} alt="" style={{ height: '80px', width:'auto '}}/>
           </div>
           <div className='list-option'>
@@ -67,7 +67,7 @@ export const HeaderAction = memo(() => {
               <span>GIỚI THIỆU</span>
             </div>
             <div className='item' >
-              <span>TOUR</span>
+              <span onClick={() => history.push(routesUser.tour) }>TOUR</span>
                 <ul className='ul-tour'>
                   <li>Miền tây trong ngày</li>
                   <li>Tour dịch vụ</li>

@@ -15,9 +15,11 @@ export const routesUser = {
   cart: '/cart',
   information: '/information',
   addressesManager: '/addresses-manager',
-  admin: '/admin',
   introduce: '/introduce',
   tablePriceTour:'/price-tour',
   contact: '/contact',
-  booking: '/booking'
+  booking: '/booking',
+  tour:'/tour',
+  tourOfList:'/tour/:id',
+  tourDetail:'/tour-detail/:id',
 };

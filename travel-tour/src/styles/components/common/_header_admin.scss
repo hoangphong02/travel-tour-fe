@@ -1,0 +1,25 @@
+#header-admin {
+    .header-admin--inner {
+        display: flex;
+        padding: 16px 32px;
+        justify-content: end;
+        box-shadow: 0 3px 0px 2px rgb(198 198 198 / 10%);
+
+
+        &--left {
+            img {
+                height: 60px;
+                width: auto;
+                object-fit: cover;
+            }
+        }
+
+        &--right {
+            img {
+                height: 40px;
+                width: 40px;
+                border-radius: 50%;
+            }
+        }
+    }
+}

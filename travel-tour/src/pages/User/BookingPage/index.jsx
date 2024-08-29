@@ -6,6 +6,44 @@ const BookingPage = () => {
   { value: 'require-tour', label: 'Tour yêu cầu' },
   { value: 'normal-tour', label: 'Tour bình thường' },
 ]
+    const optionRankHotel=[
+          { value: 1, label: '⭐' },
+          { value: 2, label: '⭐⭐' },
+          { value: 3, label: '⭐⭐⭐' },
+          { value: 4, label: '⭐⭐⭐⭐' },
+          { value: 5, label: '⭐⭐⭐⭐⭐' },
+    ]
+     const optionDayTour=[
+          { value: '1 ngày', label: '1 ngày' },
+          { value: '2 ngày 1 đêm', label: '2 ngày 1 đêm' },
+          { value: '3 ngày 2 đêm', label: '3 ngày 2 đêm'},
+          { value: '4 ngày 3 đêm', label: '4 ngày 3 đêm' },
+          { value: '5 ngày 4 đêm', label: '5 ngày 4 đêm' },
+          { value: 'Trên 5 ngày', label: 'Trên 5 ngày' },
+    ]
+
+    const optionVehicelTour=[
+          { value: {
+            title: 'Ô tô',
+            value: '1'
+          }, label: 'Ô tô' },
+          { value:  {
+            title: 'Xe khách',
+            value: '2'
+          }, label: 'Xe khách' },
+          { value: {
+            title: 'Ô tô & máy bay',
+            value: '1,3'
+          }, label: 'Ô tô & máy bay'},
+          { value: {
+            title: 'Xe khách & máy bay',
+            value: '2,3'
+          } , label: 'Xe khách & máy bay' },
+          { value: {
+            title: 'Xe khách & ô tô',
+            value: '1,2'
+          }, label: 'Xe khách & ô tô' },
+    ]
   return (
     <div className='booking-page-wrapper'>
         <div className='booking-page-wrapper-left'>
@@ -23,16 +61,16 @@ const BookingPage = () => {
                     <div className='list-option'>
                         <div className='option'>
                             <span className='title'>Khách sạn</span>
-                             <Select options={options} defaultValue={options[1]}/>
+                             <Select options={optionRankHotel} defaultValue={optionRankHotel[0]}/>
                         </div>
 
                         <div className='option'>
                              <span className='title'>Số ngày đi tour</span>
-                             <Select options={options} defaultValue={options[1]}/>
+                             <Select options={optionDayTour} defaultValue={optionDayTour[0]}/>
                         </div>
                           <div className='option'>
                              <span className='title'>Phương tiện</span>
-                             <Select options={options} defaultValue={options[1]}/>
+                             <Select options={optionVehicelTour} defaultValue={optionVehicelTour[0]}/>
                         </div>
                     </div>
                     
@@ -61,7 +99,7 @@ const BookingPage = () => {
                         </div>
                         
                     </div>
-                    <div>
+                    <div className='date-book-tour'>
                         <span>Ngày đặt tour</span>
                         <input type="date" />
                     </div>

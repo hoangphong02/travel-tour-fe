@@ -153,6 +153,18 @@
                     }
                 }
             }
+
+            .date-book-tour {
+                display: flex;
+                gap: 16px;
+                align-items: center;
+
+                input {
+                    padding: 8px 16px;
+                    border-radius: 8px;
+                    border: 0.5px solid var(--color-secondary-black);
+                }
+            }
         }
 
         &-section-3 {
