@@ -1,9 +1,8 @@
 import { v4 as uuidv4 } from 'uuid';
 import { routesUser } from '~/configs';
-import { UserHomePage, IntroducePage, PriceTourPage , ContactPage, BookingPage} from '~/pages/User';
-import TourDetailPage from '~/pages/User/TourDetailPage';
+import { UserHomePage, IntroducePage, PriceTourPage , ContactPage, BookingPage, TourPage, TourDetailPage} from '~/pages/User';
 import TourOfListPage from '~/pages/User/TourOfList';
-import TourPage from '~/pages/User/TourPage';
+
 
 export const routerUser = [
   {

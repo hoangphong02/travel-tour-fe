@@ -2,46 +2,33 @@ import React, { useEffect, useRef, useState } from 'react'
 import banner1 from '~/assets/logo/image3.jpg';
 
 const IntroducePage = () => {
-    const [isScrollSectionRight, setIsScrollSectionRight] = useState(false);
-    const [isScrollRight, setIsSCrollRight] = useState(true)
-    const ref = useRef();
-   const distanceFromTop = ref?.current?.offsetTop;
+   const [isScrollSectionRight, setIsScrollSectionRight] = useState(false);
+  const [isScrollRight, setIsScrollRight] = useState(true);
+  const ref = useRef();
 
-   useEffect(() => {
-    // Define the scroll event handler
+  useEffect(() => {
     const handleScroll = () => {
-      let scrollTop = window.scrollY || document.documentElement.scrollTop;
+      const scrollTop = window.scrollY; // vị trí cuộn hiện tại từ đầu trang
+      const windowHeight = window.innerHeight; // chiều cao của cửa sổ trình duyệt
+      const fullHeight = document.documentElement.scrollHeight; // tổng chiều cao của nội dung trang
+
       if (ref.current) {
-        if (scrollTop > distanceFromTop) {
+        const rightSectionRect = ref.current.getBoundingClientRect();
+
+        // Kiểm tra nếu phần tử đã được cuộn vào tầm nhìn
+        if (scrollTop > rightSectionRect.top + window.scrollY) {
           setIsScrollSectionRight(true);
         } else {
           setIsScrollSectionRight(false);
         }
-      }
-    };
 
-    // Add the scroll event listener
-    window.addEventListener('scroll', handleScroll);
-
-    // Cleanup function to remove the event listener on component unmount
-    return () => {
-      window.removeEventListener('scroll', handleScroll);
-    };
-  }, [distanceFromTop]);
-
-  useEffect(() => {
-    const handleScroll = () => {
-      const windowHeight = window.innerHeight; // Get the viewport height
-
-      if (ref.current) {
-        const rightSectionRect = ref.current.getBoundingClientRect();
-        const distanceFromBottom = windowHeight - (rightSectionRect.top + rightSectionRect.height); // Calculate distance from bottom
-
-        // If the distance from the bottom of the viewport to the bottom of the element is greater than 100px
-        if (distanceFromBottom > 100) {
-          setIsScrollSectionRight(true);
+        // Kiểm tra nếu khoảng cách từ cuối trang tới vị trí cuộn nhỏ hơn hoặc bằng 400px
+        if (fullHeight - (scrollTop + windowHeight) <= 400) {
+          setIsScrollRight(false); // tắt position fixed khi cách cuối trang 400px
         } else {
-          setIsScrollSectionRight(false);
+            if(fullHeight - (scrollTop + windowHeight) > 400 && window.scrollY < 130) {
+                setIsScrollRight(true); // bật position fixed khi chưa tới cuối trang
+            }
         }
       }
     };
@@ -53,9 +40,7 @@ const IntroducePage = () => {
     };
   }, []);
 
-  useEffect(() => {
-    setIsSCrollRight(isScrollSectionRight)
-  }, [isScrollSectionRight])
+
   return (
     <div className='introduce-page-wrapper'>
         <div className='introduce-page-wrapper-body'>
@@ -186,14 +171,6 @@ const IntroducePage = () => {
                                 <span>Giá: <span className='price'>450.000đ</span></span>
                             </div>
                         </div>
-                        <div  className='tour'>
-                            <img src={banner1} alt="" />
-                            <div>
-                                <span>TOUR MIỀN TÂY 1 NGÀY</span>
-                                <span>Giá: <span className='price'>450.000đ</span></span>
-                            </div>
-                        </div>  
-
                     </div>
                 </div>
             </div>

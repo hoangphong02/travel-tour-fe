@@ -1,5 +1,6 @@
 import React, { memo } from 'react'
 import { Button } from 'react-bootstrap';
+import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
 import image1 from '~/assets/logo/image4.jpg';
 import { CSChatOutline, CSCheckCircleOutline, CSMailBoxOutline, CSUser2Outline } from '~/components/iconography/Outline';
 import { CSUserSolid } from '~/components/iconography/Solid';
@@ -8,9 +9,13 @@ import { CSUserSolid } from '~/components/iconography/Solid';
 
 export const CardTour = memo(() => {
 
+    const history = useHistory();
+    const handleDetail = () => {
+        history.push('/tour-detail/123')
+    }
   
   return (
-   <div className='card-tour'>
+   <div className='card-tour' onClick={handleDetail}>
         <img src={image1}/>
         <div className='info-card'>
             <span className='title'>TOUR 4 NGÀY 3 ĐÊM</span>

@@ -1,0 +1,20 @@
+.tour-detail-page-wrapper {
+    padding-top: 160px;
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+
+    &-top {
+        display: flex;
+        flex-direction: column;
+        justify-content: left;
+        text-align: left;
+        gap: 12px;
+
+        .name-tour {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--color-brand-blue);
+        }
+    }
+}
