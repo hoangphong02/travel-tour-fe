@@ -1,8 +1,13 @@
 import React from 'react'
+import ProgramTour from './ProgramTour'
+import Editor from '~/components/common/Editor'
 
 const OptionTour = () => {
   return (
-    <div>OptionTour</div>
+    <div className='option-tour'>
+      <ProgramTour />
+      <Editor />
+    </div>
   )
 }
 

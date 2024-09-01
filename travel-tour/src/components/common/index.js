@@ -3,3 +3,5 @@ export * from './header'
 export * from './ScrollToTop'
 export * from './TableComponent';
 export * from './CardTour';
+export * from './Editor';
+
