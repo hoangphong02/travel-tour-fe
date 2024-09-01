@@ -1,7 +1,9 @@
 import React, { useState, useRef, useEffect } from 'react';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
-
+import Quill from 'quill';
+import BlotFormatter from 'quill-blot-formatter';
+Quill.register('modules/blotFormatter', BlotFormatter);
 // Hook xử lý upload hình ảnh
 const useImageUpload = (quill, uploadPreset, uploadUrl) => {
   useEffect(() => {
@@ -55,8 +57,7 @@ const useImageUpload = (quill, uploadPreset, uploadUrl) => {
   };
 };
 
-const Editor = () => {
-  const [value, setValue] = useState('');
+const Editor = ({ value, setValue }) => {
   const quillRef = useRef(null);
 
   useImageUpload(quillRef.current?.getEditor(), 'vr8eratg', 'https://api.cloudinary.com/v1_1/disrx4gzn/image/upload');
@@ -70,7 +71,11 @@ const Editor = () => {
         ['link', 'image'],
         ['clean'],
       ]
-    }
+
+    },
+     blotFormatter: {
+      // Các tùy chọn cấu hình cho blot formatter (nếu cần)
+    },
   };
 
   const formats = [
