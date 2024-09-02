@@ -42,44 +42,59 @@
 
         }
 
-        .table-scroll-y-custom {
-            table {
-                border: 1px solid var(--color-secondary-brand-blue);
-                border-spacing: 0px;
+        .table {
+            .card {
+                border: none;
+            }
+
+            .table-scroll-y-custom {
+                padding: 0;
                 border-radius: 10px;
-                overflow: hidden;
 
-                thead {
-                    background-color: var(--color-secondary-brand-blue);
-                    border-radius: 0px;
+                table {
+                    border: 1px solid var(--color-secondary-brand-blue);
+                    border-spacing: 0px;
+                    overflow: hidden;
 
-                    th {
-                        padding: 20px 0;
-                        font-size: 14px;
-                    }
-                }
 
-                tbody {
-                    tr {
-                        td {
-                            padding: 10px;
+                    thead {
+                        background-color: var(--color-secondary-brand-blue) !important;
+                        border-radius: 0px;
+
+                        th {
+                            padding: 20px 0;
                             font-size: 14px;
+                            background-color: var(--color-secondary-brand-blue);
+                            color: #fff;
+                        }
+                    }
 
-                            .btn-see-tour {
-                                button {
+                    tbody {
+                        tr {
+                            td {
+                                padding: 10px;
+                                font-size: 14px;
 
-                                    background-color: var(--color-secondary-brand-blue);
-                                    border: none;
-                                    padding: 10px 20px;
-                                    border-radius: 20px;
-                                    color: #fff;
+                                .btn-see-tour {
+                                    display: flex;
+                                    justify-content: center;
+
+                                    button {
+
+                                        background-color: var(--color-secondary-brand-blue);
+                                        border: none;
+                                        padding: 8px 20px;
+                                        border-radius: 20px;
+                                        color: #fff;
+                                    }
                                 }
                             }
-                        }
 
+                        }
                     }
                 }
             }
         }
+
     }
 }
