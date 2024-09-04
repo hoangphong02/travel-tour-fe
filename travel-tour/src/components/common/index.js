@@ -4,4 +4,6 @@ export * from './ScrollToTop'
 export * from './TableComponent';
 export * from './CardTour';
 export * from './Editor';
+export * from './CardBlog';
+
 

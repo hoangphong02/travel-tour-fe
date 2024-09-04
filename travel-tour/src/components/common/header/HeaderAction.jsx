@@ -38,7 +38,7 @@ export const HeaderAction = memo(() => {
 
 
   return (
-    <section id="header-action" className={`header-action--wrapper ${isScroll ? 'isScroll' : ''} ${pathname.includes(routesUser.introduce) || pathname.includes(routesUser.tablePriceTour) || pathname.includes(routesUser.contact) || pathname.includes(routesUser.booking) || pathname.includes(routesUser.tour)  ? 'header-not-home': ''}`}>
+    <section id="header-action" className={`header-action--wrapper ${isScroll ? 'isScroll' : ''} ${pathname.includes(routesUser.introduce) || pathname.includes(routesUser.tablePriceTour) || pathname.includes(routesUser.contact) || pathname.includes(routesUser.booking) || pathname.includes(routesUser.tour) || pathname.includes(routesUser.blogs) || pathname.includes(routesUser.picturePage) ? 'header-not-home': ''}`}>
       <div className="header-action--inner flex-center-space h-full">
         <div className="header-action--inner--top">
             <div className='header-action--inner--top--left'>
@@ -56,7 +56,7 @@ export const HeaderAction = memo(() => {
         </div>
 
         <div className='header-action--inner--bottom'> 
-          <div className={`logo ${!pathname.includes(routesUser.introduce) && !pathname.includes(routesUser.tablePriceTour) && !pathname.includes(routesUser.contact) && !pathname.includes(routesUser.booking) && !pathname.includes(routesUser.tour) ? 'filter-logo' : '' }`}>
+          <div className={`logo ${!pathname.includes(routesUser.introduce) && !pathname.includes(routesUser.tablePriceTour) && !pathname.includes(routesUser.contact) && !pathname.includes(routesUser.booking) && !pathname.includes(routesUser.tour) && !pathname.includes(routesUser.blogs) && !pathname.includes(routesUser.picturePage)? 'filter-logo' : '' }`}>
             <img src={logoTour} alt="" style={{ height: '80px', width:'auto '}}/>
           </div>
           <div className='list-option'>
@@ -83,11 +83,11 @@ export const HeaderAction = memo(() => {
              <div className='item' >
               <span>BLOG</span>
                   <ul className='ul-blog'>
-                  <li>Cẩm nang du lịch</li>
+                  <li onClick={() => history.push(routesUser.blogs) }>Cẩm nang du lịch</li>
                   <li>Đặt sản miền tây</li>
                 </ul>
             </div>
-            <div className='item'>
+            <div className='item' onClick={() => history.push(routesUser.picturePage)}>
               <span>HÌNH ẢNH</span>
             </div>
             <div className='item' onClick={() => history.push(routesUser.contact)}>

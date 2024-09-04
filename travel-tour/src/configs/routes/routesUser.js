@@ -6,7 +6,6 @@ export const routesUser = {
   orderDetail: '/orders-list/:orderId',
   productType: '/product-type/:productTypeId',
   blogDetail: '/blogs/:blogId',
-  blogs: '/blogs',
   giftsList: '/gifts-list',
   giftDetail: '/gifts-list/:giftId',
   vouchersList: '/vouchers-list',
@@ -22,4 +21,8 @@ export const routesUser = {
   tour:'/tour',
   tourOfList:'/tour/:id',
   tourDetail:'/tour-detail/:id',
+  blogs:'/blog',
+  picturePage:'/picture-page',
+
+
 };

@@ -7,8 +7,12 @@ import BookingPage from "./BookingPage";
 import TourDetailPage from "./TourDetailPage";
 import TourOfList from "./TourOfList";
 import TourPage from "./TourPage";
+import BlogsPage from "./BlogPage";
+import PicturePage from "./PicturePage";
+
+
 
 
 export {
-  UserHomePage, IntroducePage, PriceTourPage, ContactPage, BookingPage, TourDetailPage, TourOfList, TourPage
+  UserHomePage, IntroducePage, PriceTourPage, ContactPage, BookingPage, TourDetailPage, TourOfList, TourPage, BlogsPage, PicturePage
 };
