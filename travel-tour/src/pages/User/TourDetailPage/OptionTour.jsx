@@ -8,7 +8,7 @@ import RequireTour from './RequireTour';
 import PictureTour from './PictureTour';
 
 const OptionTour = ({ option, setOption }) => {
-  const [value, setValue] = useState('');
+  // const [value, setValue] = useState('');
 
   return (
     <div className='option-tour'>
@@ -42,7 +42,7 @@ const OptionTour = ({ option, setOption }) => {
           <PictureTour />
         ): null
       }
-      <Editor value={value} setValue={setValue}/>
+      {/* <Editor value={value} setValue={setValue}/> */}
     </div>
   )
 }

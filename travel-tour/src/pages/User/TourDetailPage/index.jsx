@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import OptionTour from './OptionTour'
+import CommentTour from './CommentTour';
 
 const TourDetailPage = () => {
       const [option, setOption] = useState('program');
@@ -40,6 +41,9 @@ const TourDetailPage = () => {
         </div>
         <div className='list-option-tour'>
             <OptionTour option={option} setOption={setOption}/>
+        </div>
+        <div>
+            <CommentTour />
         </div>
     </div>
   )

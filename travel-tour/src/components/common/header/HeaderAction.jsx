@@ -1,9 +1,10 @@
 import React, { memo, useState } from 'react'
-import { Dropdown } from 'react-bootstrap';
+import { Button, Dropdown } from 'react-bootstrap';
 import { useHistory, useLocation } from 'react-router-dom/cjs/react-router-dom.min';
 import logo from '~/assets/logo/duck.png';
 import logoTour from '~/assets/logo/logo-tour.png';
 import { CSPhoneOutline } from '~/components/iconography/Outline';
+import { CSUserAddSolid } from '~/components/iconography/Solid';
 import { routesUser } from '~/configs';
 
 export const HeaderAction = memo(() => {
@@ -51,13 +52,14 @@ export const HeaderAction = memo(() => {
                 </div>
             </div>
             <div className='header-action--inner--top--right'>
-                <img src={logo} alt="" style={{ width:'30px', height: '30px'}} />
+                {/* <img src={logo} alt="" style={{ width:'30px', height: '30px'}} /> */}
+                <CSUserAddSolid style={{ height:"24px", fill:"#fff"}}/>
             </div>
         </div>
 
         <div className='header-action--inner--bottom'> 
           <div className={`logo ${!pathname.includes(routesUser.introduce) && !pathname.includes(routesUser.tablePriceTour) && !pathname.includes(routesUser.contact) && !pathname.includes(routesUser.booking) && !pathname.includes(routesUser.tour) && !pathname.includes(routesUser.blogs) && !pathname.includes(routesUser.picturePage)? 'filter-logo' : '' }`}>
-            <img src={logoTour} alt="" style={{ height: '80px', width:'auto '}}/>
+            <img src={logoTour} alt="" style={{ height: '80px', width:'auto '}} onClick={() => history.push(routesUser.home)}/>
           </div>
           <div className='list-option'>
             <div className='item' onClick={() => history.push(routesUser.home)}>

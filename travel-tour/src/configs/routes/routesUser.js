@@ -23,6 +23,6 @@ export const routesUser = {
   tourDetail:'/tour-detail/:id',
   blogs:'/blog',
   picturePage:'/picture-page',
-
+  blogDetail:'/blog-detail/:id',
 
 };

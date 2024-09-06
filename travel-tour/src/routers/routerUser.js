@@ -1,6 +1,6 @@
 import { v4 as uuidv4 } from 'uuid';
 import { routesUser } from '~/configs';
-import { UserHomePage, IntroducePage, PriceTourPage , ContactPage, BookingPage, TourPage, TourDetailPage, BlogsPage, PicturePage} from '~/pages/User';
+import { UserHomePage, IntroducePage, PriceTourPage , ContactPage, BookingPage, TourPage, TourDetailPage, BlogsPage, PicturePage, BlogDetailPage} from '~/pages/User';
 import TourOfListPage from '~/pages/User/TourOfList';
 
 
@@ -54,5 +54,10 @@ export const routerUser = [
     id: `user-${uuidv4()}`,
     path: routesUser.picturePage,
     component: PicturePage,
+  },
+   {
+    id: `user-${uuidv4()}`,
+    path: routesUser.blogDetail,
+    component: BlogDetailPage,
   },
 ];

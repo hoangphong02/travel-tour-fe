@@ -6,6 +6,7 @@
     display: flex;
     flex-direction: column;
     gap: 24px;
+    padding-bottom: 40px;
 
     &-top {
         display: flex;
@@ -89,6 +90,10 @@
                         display: flex;
                         flex-direction: column;
                         gap: 24px;
+                        height: 1100px;
+                        padding: 16px;
+                        overflow: auto;
+                        scrollbar-width: thin;
 
                         .section {
                             display: flex;
@@ -280,6 +285,74 @@
                     }
                 }
             }
+        }
+    }
+
+    .comment-tour-detail {
+        .form-comment {
+            background-color: #9cccdb;
+            padding: 20px;
+            border-radius: 20px;
+            display: flex;
+            flex-direction: column;
+
+            &-body {
+                display: flex;
+                flex-direction: column;
+                gap: 20px;
+
+                .section-1 {
+                    display: flex;
+                    justify-content: space-between;
+                    gap: 20px;
+
+                    div {
+                        display: flex;
+                        flex-direction: column;
+                        gap: 20px;
+                        width: 100%;
+
+                        input {
+                            width: 100%;
+                            min-width: 150px;
+                            height: 40px;
+                            border-radius: 5px;
+                            border: 1px solid #d5d5d5;
+                        }
+                    }
+                }
+
+                .section-2 {
+                    display: flex;
+                    justify-content: space-between;
+
+                    div {
+                        display: flex;
+                        flex-direction: column;
+                        width: 100%;
+                        gap: 20px;
+
+                        .message {
+                            height: 200px;
+                            border: 1px solid #d5d5d5;
+                        }
+
+                    }
+                }
+
+                .section-3 {
+                    padding: 20px 0;
+
+                    .btn-send {
+                        border-radius: 20px;
+                        padding: 10px 50px;
+                        background-color: blanchedalmond;
+                        width: fit-content;
+                    }
+                }
+            }
+
+
         }
     }
 }

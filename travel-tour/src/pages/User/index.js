@@ -9,10 +9,12 @@ import TourOfList from "./TourOfList";
 import TourPage from "./TourPage";
 import BlogsPage from "./BlogPage";
 import PicturePage from "./PicturePage";
+import BlogDetailPage from "./BlogDetailPage";
+
 
 
 
 
 export {
-  UserHomePage, IntroducePage, PriceTourPage, ContactPage, BookingPage, TourDetailPage, TourOfList, TourPage, BlogsPage, PicturePage
+  UserHomePage, IntroducePage, PriceTourPage, ContactPage, BookingPage, TourDetailPage, TourOfList, TourPage, BlogsPage, PicturePage, BlogDetailPage 
 };
