@@ -9,21 +9,17 @@ import * as Actions from './actions';
 function* loginRequest({ payload }) {
   try {
     const response = yield call(() =>
-      axiosMicro.post('/clients/web/login', payload),
+      axiosMicro.post('/user/sign-in', payload),
     );
     const {
-      token_type: tokenType,
       access_token: accessToken,
       refresh_token: refreshToken,
-      expires_in: expiresIn,
     } = response.data;
     localStorage.setItem(
       STORAGE_KEY.ACCESS_TOKEN,
-      `${tokenType} ${accessToken}`,
+      `Bearer ${accessToken}`,
     );
     localStorage.setItem(STORAGE_KEY.REFRESH_TOKEN, refreshToken);
-    localStorage.setItem(STORAGE_KEY.EXPIRES_IN, expiresIn);
-    localStorage.setItem(STORAGE_KEY.IS_LOGIN, true);
     yield put(Actions.loginSuccess(response.data));
   } catch (e) {
     if (e?.response?.data) {

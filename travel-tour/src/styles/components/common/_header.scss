@@ -300,6 +300,17 @@
                     color: #000;
                 }
             }
+
+            &--right {
+                svg {
+                    height: 32px;
+
+                    path {
+                        fill: #000;
+                        color: #000;
+                    }
+                }
+            }
         }
 
         &--bottom {
