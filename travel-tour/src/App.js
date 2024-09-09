@@ -1,12 +1,13 @@
-import { Routing } from './components/routing';
-import './App.css';
-import { Container } from 'react-bootstrap';
+import { Routing } from "./components/routing";
+import "./App.css";
+import { Container } from "react-bootstrap";
+import { ToastContainer } from "react-toastify";
 
 function App() {
-
   return (
-   <div className="App">
+    <div className="App">
       <Container>
+        <ToastContainer />
         <Routing />
       </Container>
     </div>

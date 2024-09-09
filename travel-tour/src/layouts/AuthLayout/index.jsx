@@ -1,17 +1,18 @@
 import React, { useEffect } from 'react'
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import {Route } from 'react-router-dom';
 import { getProfileRequest } from '~/redux/user/actions';
 export const AuthLayout = (props) => {
   
+  const { isGetProfileSuccess } = useSelector((store) => store.user);
   const dispatch = useDispatch();
   const checkAuth = () => {
     dispatch(getProfileRequest());
   };
   useEffect(() => {
-    // if (!isGetProfileSuccess) {
+    if (!isGetProfileSuccess) {
       checkAuth();
-    // }
+    }
   }, []);
   const render = () => {
     return (

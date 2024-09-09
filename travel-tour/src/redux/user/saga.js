@@ -6,7 +6,7 @@ import * as Actions from './actions';
 
 function* getProfile() {
   try {
-    const response = yield call(() => axiosMicro.get('/profile'));
+    const response = yield call(() => axiosMicro.get('user/get-detail'));
     yield put(Actions.getProfileSuccess(response.data));
     getFCMToken();
   } catch (e) {

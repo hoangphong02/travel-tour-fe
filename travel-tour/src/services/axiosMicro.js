@@ -15,6 +15,7 @@ axiosMicro.interceptors.request.use(
     config.headers = {
       Accept: 'application/json',
       Authorization: accessToken,
+      Token: `${accessToken}`
     };
 
     return config;
