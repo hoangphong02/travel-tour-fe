@@ -101,10 +101,12 @@ export const HeaderAction = memo(() => {
                   style={{ border: "none" }}
                 />
 
-                <Dropdown.Menu>
-                  <Dropdown.Item href="#/action-1">
-                    Quản lý hệ thống
-                  </Dropdown.Item>
+                <Dropdown.Menu style={{ zIndex: "6" }}>
+                  {profileResponse?.data?.role === "admin" && (
+                    <Dropdown.Item href="/admin">
+                      Quản lý hệ thống
+                    </Dropdown.Item>
+                  )}
                   <Dropdown.Item href="#/action-2">Lịch công tác</Dropdown.Item>
                   <Dropdown.Item onClick={() => setIsShowModalLogout(true)}>
                     Đăng xuất
