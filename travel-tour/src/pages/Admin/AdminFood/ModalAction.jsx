@@ -13,6 +13,8 @@ import {
   ModalHeader,
 } from "reactstrap";
 import * as Yup from "yup";
+import Editor from "~/components/common/Editor";
+import { createFoodsRequest } from "~/redux/food/actions";
 
 export const PHONE_REGEX = /((0)+([1-9]{1})+([0-9]{8})\b)/g;
 
@@ -20,8 +22,6 @@ const SignupSchema = Yup.object().shape({
   name: Yup.string()
     .required("Tên không được để trống")
     .max(200, "Tên không quá 200 ký tự".replace("$x", 200)),
-
-  image: Yup.string().required("Hình ảnh không được trống"),
 });
 
 export const ModalActions = ({
@@ -34,23 +34,53 @@ export const ModalActions = ({
   const { profileResponse } = useSelector((store) => store.user);
   const dispatch = useDispatch();
   const [isShowModalConfirm, setIsShowModalConfirm] = useState(false);
-  const [imagePreview, setImagePreview] = useState();
+  const [urlImage, setUrlImage] = useState();
   const [fileUploadInput, setFileUploadInput] = useState();
+  const [valueTextEditor, setValueTextEditor] = useState(null);
   const [dataForm, setDataForm] = useState(null);
 
-  const handleUpload = (event) => {
-    const file = event.target.files[0];
-    setFileUploadInput(file);
-    const reader = new FileReader();
-    if (file && file.type.match("image.*")) {
-      reader.readAsDataURL(file);
+  console.log("valueEditor", valueTextEditor);
+
+  const uploadToCloudinary = async (file, uploadPreset, uploadUrl) => {
+    try {
+      const formData = new FormData();
+      formData.append("file", file); // Ảnh cần upload
+      formData.append("upload_preset", uploadPreset); // Upload preset của Cloudinary
+
+      const response = await fetch(uploadUrl, {
+        method: "POST",
+        body: formData,
+      });
+
+      const data = await response.json();
+
+      if (data.secure_url) {
+        // Trả về URL của ảnh đã upload
+        return data.secure_url;
+      } else {
+        throw new Error("Failed to upload image");
+      }
+    } catch (error) {
+      console.error("Error uploading image:", error);
+      return null;
     }
-    reader.onloadend = () => {
-      setImagePreview(reader.result);
-    };
+  };
+  const handleImageUpload = async (file) => {
+    const uploadPreset = "vr8eratg"; // Thay bằng upload preset của bạn
+    const uploadUrl = "https://api.cloudinary.com/v1_1/disrx4gzn/image/upload"; // Thay bằng URL Cloudinary của bạn
+
+    const imageUrl = await uploadToCloudinary(file, uploadPreset, uploadUrl);
+
+    if (imageUrl) {
+      console.log("Uploaded image URL:", imageUrl);
+      setUrlImage(imageUrl);
+      // Bạn có thể lưu URL ảnh vào state hoặc chèn nó vào editor
+    }
   };
 
-  console.log("imagePreview", imagePreview);
+  console.log("imagePreview", urlImage);
+
+  console.log("isShowModalConfirm", isShowModalConfirm);
 
   //   useEffect(() => {
   //       if (isUploadImageProduct) {
@@ -60,25 +90,31 @@ export const ModalActions = ({
   //   }, []);
 
   const onSubmit = (values) => {
-    if (type !== "detail") {
+    if (type !== "edit") {
       setDataForm(values);
       setIsShowModalConfirm(true);
     }
   };
 
   const handleSubmit = () => {
-    const { name, password, phone, email, avatar } = dataForm;
+    const { name, title } = dataForm;
 
-    if (type === "create") {
+    if (type === "add") {
       const payload = {
+        title,
         name,
-        password,
-        phone,
-        email,
-        avatar,
+        image: [
+          {
+            type: "photos",
+            url: urlImage,
+          },
+        ],
       };
+      if (valueTextEditor) {
+        payload.description = valueTextEditor.ops;
+      }
 
-      //   dispatch(createProductRequest(payload));
+      dispatch(createFoodsRequest(payload));
     } else {
       //   dispatch(updateProductRequest({ id: data.id, body: payload }));
     }
@@ -95,10 +131,8 @@ export const ModalActions = ({
         <ModalHeader>{`${type === "add" ? "Thêm" : "Chỉnh sửa"} nhân viên`}</ModalHeader>
         <Formik
           initialValues={{
+            title: type === "create" ? "" : data?.name || "",
             name: type === "create" ? "" : data?.name || "",
-            password: type === "create" ? "" : data?.password || "",
-            phone: type === "create" ? "" : data?.phone || "",
-            email: type === "create" ? "" : data?.email || "",
             avatar: type === "create" ? "" : data?.avatar || "",
           }}
           validationSchema={SignupSchema}
@@ -116,7 +150,25 @@ export const ModalActions = ({
                   <div className="d-flex" style={{ gap: "12px" }}>
                     <FormGroup className="w-100 error-l-100">
                       <Label>
-                        Tên nhân viên:{" "}
+                        Tiêu đề:{" "}
+                        <span style={{ color: "red", fontWeight: "600" }}>
+                          *
+                        </span>
+                      </Label>
+                      <Field
+                        className="form-control"
+                        name="title"
+                        placeholder="Nhập tiêu đề"
+                      />
+                      {errors.title && touched.title ? (
+                        <div className="invalid-feedback d-block">
+                          {errors.title}
+                        </div>
+                      ) : null}
+                    </FormGroup>
+                    <FormGroup className="w-100 error-l-100">
+                      <Label>
+                        Tên món ăn:{" "}
                         <span style={{ color: "red", fontWeight: "600" }}>
                           *
                         </span>
@@ -124,25 +176,7 @@ export const ModalActions = ({
                       <Field
                         className="form-control"
                         name="name"
-                        placeholder="Tên nhân viên"
-                      />
-                      {errors.name && touched.name ? (
-                        <div className="invalid-feedback d-block">
-                          {errors.name}
-                        </div>
-                      ) : null}
-                    </FormGroup>
-                    <FormGroup className="w-100 error-l-100">
-                      <Label>
-                        Email:{" "}
-                        <span style={{ color: "red", fontWeight: "600" }}>
-                          *
-                        </span>
-                      </Label>
-                      <Field
-                        className="form-control"
-                        name="email"
-                        placeholder="Nhập email"
+                        placeholder="Nhập tên"
                       />
                       {errors.email && touched.email ? (
                         <div className="invalid-feedback d-block">
@@ -150,34 +184,15 @@ export const ModalActions = ({
                         </div>
                       ) : null}
                     </FormGroup>
-                    <FormGroup className="w-100 error-l-100">
-                      <Label>
-                        Số điện thoại:{" "}
-                        <span style={{ color: "red", fontWeight: "600" }}>
-                          *
-                        </span>
-                      </Label>
-                      <Field
-                        className="form-control"
-                        name="phone"
-                        placeholder="Nhập số điện thoại"
-                      />
-                      {errors.phone && touched.phone ? (
-                        <div className="invalid-feedback d-block">
-                          {errors.phone}
-                        </div>
-                      ) : null}
-                    </FormGroup>
                   </div>
                   <FormGroup className="error-l-100">
                     <Label>
-                      Mật khẩu:{" "}
+                      Mô tả:{" "}
                       <span style={{ color: "red", fontWeight: "600" }}>*</span>
                     </Label>
-                    <Field
-                      className="form-control"
-                      name="password"
-                      placeholder="Nhập mật khẩu"
+                    <Editor
+                      value={valueTextEditor}
+                      setValue={setValueTextEditor}
                     />
                     {errors.password && touched.password ? (
                       <div className="invalid-feedback d-block">
@@ -187,15 +202,15 @@ export const ModalActions = ({
                   </FormGroup>
 
                   <FormGroup className="error-l-100">
-                    <Label>Ảnh đại diện:</Label>
+                    <Label>Ảnh minh họa:</Label>
                     <Input
                       type="file"
                       id="exampleCustomFileBrowser1"
                       name="image"
-                      onChange={(e) => handleUpload(e)}
+                      onChange={(e) => handleImageUpload(e.target.files[0])}
                     />
 
-                    {imagePreview && (
+                    {urlImage && (
                       <div
                         className="image-preview"
                         style={{
@@ -203,14 +218,14 @@ export const ModalActions = ({
                         }}
                       >
                         <img
-                          src={imagePreview}
+                          src={urlImage}
                           alt=""
                           style={{ height: "100px", width: "auto" }}
                         />
                         <div
                           className="image-preview-remove"
                           onClick={() => {
-                            setImagePreview("");
+                            setUrlImage("");
                           }}
                         >
                           x
