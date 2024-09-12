@@ -1,8 +1,7 @@
 import { Field, Form, Formik } from "formik";
 import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import {
-  Alert,
   Button,
   FormGroup,
   Input,
@@ -14,7 +13,7 @@ import {
 } from "reactstrap";
 import * as Yup from "yup";
 import Editor from "~/components/common/Editor";
-import { createFoodsRequest } from "~/redux/food/actions";
+import { createFoodsRequest, updateFoodsRequest } from "~/redux/food/actions";
 
 export const PHONE_REGEX = /((0)+([1-9]{1})+([0-9]{8})\b)/g;
 
@@ -29,23 +28,31 @@ export const ModalActions = ({
   type,
   handleClose,
   data,
-  handleClickUpdate,
+  isShowModalConfirm,
+  setIsShowModalConfirm,
 }) => {
-  const { profileResponse } = useSelector((store) => store.user);
   const dispatch = useDispatch();
-  const [isShowModalConfirm, setIsShowModalConfirm] = useState(false);
   const [urlImage, setUrlImage] = useState();
-  const [fileUploadInput, setFileUploadInput] = useState();
   const [valueTextEditor, setValueTextEditor] = useState(null);
   const [dataForm, setDataForm] = useState(null);
 
   console.log("valueEditor", valueTextEditor);
+  console.log("data", data);
+
+  useEffect(() => {
+    if (data?.image) {
+      setUrlImage(data?.image[0]?.url);
+    }
+    if (data?.description?.length > 0) {
+      setValueTextEditor({ ops: data?.description });
+    }
+  }, [data]);
 
   const uploadToCloudinary = async (file, uploadPreset, uploadUrl) => {
     try {
       const formData = new FormData();
-      formData.append("file", file); // Ảnh cần upload
-      formData.append("upload_preset", uploadPreset); // Upload preset của Cloudinary
+      formData.append("file", file);
+      formData.append("upload_preset", uploadPreset);
 
       const response = await fetch(uploadUrl, {
         method: "POST",
@@ -74,27 +81,19 @@ export const ModalActions = ({
     if (imageUrl) {
       console.log("Uploaded image URL:", imageUrl);
       setUrlImage(imageUrl);
-      // Bạn có thể lưu URL ảnh vào state hoặc chèn nó vào editor
     }
   };
 
   console.log("imagePreview", urlImage);
 
-  console.log("isShowModalConfirm", isShowModalConfirm);
-
-  //   useEffect(() => {
-  //       if (isUploadImageProduct) {
-  //         setImageProduct(uploadFileState?.data[0]);
-  //         setIsUploadImageProduct(false);
-  //       }
-  //   }, []);
+  console.log("vale", valueTextEditor);
 
   const onSubmit = (values) => {
-    if (type !== "edit") {
-      setDataForm(values);
-      setIsShowModalConfirm(true);
-    }
+    setDataForm(values);
+    setIsShowModalConfirm(true);
   };
+
+  console.log("dataform", dataForm);
 
   const handleSubmit = () => {
     const { name, title } = dataForm;
@@ -111,12 +110,25 @@ export const ModalActions = ({
         ],
       };
       if (valueTextEditor) {
-        payload.description = valueTextEditor.ops;
+        payload.description = valueTextEditor?.ops;
       }
 
       dispatch(createFoodsRequest(payload));
     } else {
-      //   dispatch(updateProductRequest({ id: data.id, body: payload }));
+      const payload = {
+        title,
+        name,
+        image: [
+          {
+            type: "photos",
+            url: urlImage,
+          },
+        ],
+      };
+      if (valueTextEditor) {
+        payload.description = valueTextEditor?.ops;
+      }
+      dispatch(updateFoodsRequest({ id: data._id, body: payload }));
     }
   };
 
@@ -133,7 +145,6 @@ export const ModalActions = ({
           initialValues={{
             title: type === "create" ? "" : data?.name || "",
             name: type === "create" ? "" : data?.name || "",
-            avatar: type === "create" ? "" : data?.avatar || "",
           }}
           validationSchema={SignupSchema}
           onSubmit={onSubmit}
@@ -250,8 +261,7 @@ export const ModalActions = ({
                         padding: "8px 24px",
                       }}
                       className="btn-shadow btn-multiple-state "
-                      onClick={handleClickUpdate}
-                      type="reset"
+                      type="submit"
                     >
                       <span className="label">Cập nhật</span>
                     </Button>

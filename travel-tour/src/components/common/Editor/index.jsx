@@ -61,7 +61,7 @@ const Editor = ({ value, setValue }) => {
   const quillRef = useRef(null);
 
   useImageUpload(
-    quillRef.current?.getEditor(),
+    quillRef?.current?.getEditor(),
     "vr8eratg",
     "https://api.cloudinary.com/v1_1/disrx4gzn/image/upload"
   );

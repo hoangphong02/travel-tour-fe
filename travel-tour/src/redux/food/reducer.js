@@ -118,7 +118,7 @@ const reducer = handleActions(
     [Actions.deleteFoodsRequest]: (state) => ({
       ...state,
       isDeleteFoodRequest: true,
-      isDeleteFoodsuccess: false,
+      isDeleteFoodSuccess: false,
       isDeleteFoodFailure: false,
     }),
     [Actions.deleteFoodsSuccess]: (state) => ({

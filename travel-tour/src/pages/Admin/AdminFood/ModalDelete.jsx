@@ -1,45 +1,50 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { toast } from "react-toastify";
 import { Alert, Button, Modal, ModalBody, ModalFooter } from "reactstrap";
+import { deleteFoodsRequest, resetDeleteFoods } from "~/redux/food/actions";
 
-export const ModalDelete = ({ data, isOpen, handleClose }) => {
+export const ModalDelete = ({ data, isOpen, handleClose, setCallApi }) => {
   const dispatch = useDispatch();
+  const { isDeleteFoodRequest, isDeleteFoodSuccess, isDeleteFoodFailure } =
+    useSelector((store) => store.food);
 
-  //   useEffect(() => {
-  //     if (isDeleteProductSuccess) {
-  //       handleClose();
-  //     }
-  //   }, [isDeleteProductSuccess]);
+  useEffect(() => {
+    if (isDeleteFoodSuccess) {
+      handleClose();
+      setCallApi(true);
+      toast.success("Xóa thành công món ăn");
+      dispatch(resetDeleteFoods());
+    }
+  }, [isDeleteFoodSuccess]);
 
   const handleDelete = () => {
-    // dispatch(deleteProductRequest(data.id));
+    dispatch(deleteFoodsRequest(data._id));
   };
 
   return (
     <Modal
       isOpen={isOpen}
-      size="sm"
+      size="md"
       centered
       backdrop="static"
       toggle={handleClose}
     >
       <ModalBody>
-        {/* {isDeleteProductFailure && (
-          <Alert color="danger">
-            {translate("product.noti.delete.failure")}
-          </Alert>
-        )} */}
-        <h3 className="color-danger">Xác nhận xóa nhân viên</h3>
-        <p>Bạn chắc chắc xóa nhân viên</p>
+        {isDeleteFoodFailure && (
+          <Alert color="danger">Xóa món ăn thất bại</Alert>
+        )}
+        <h3 className="color-danger">Xác nhận xóa món ăn</h3>
+        <p>Bạn chắc chắc xóa món ăn</p>
       </ModalBody>
       <ModalFooter>
-        <div className="d-flex align-content-center justify-content-between flex-grow-1">
+        <div className="d-flex align-content-center justify-content-end flex-grow-1 gap-2">
           <Button
             color="danger"
-            // disabled={isDeleteProductRequest}
-            // className={`btn-shadow btn-multiple-state ${
-            //   isDeleteProductRequest ? "show-spinner disabled" : ""
-            // }`}
+            disabled={isDeleteFoodRequest}
+            className={`btn-shadow btn-multiple-state ${
+              isDeleteFoodRequest ? "show-spinner disabled" : ""
+            }`}
             onClick={handleDelete}
           >
             <span className="spinner d-inline-block">
@@ -52,11 +57,11 @@ export const ModalDelete = ({ data, isOpen, handleClose }) => {
           <Button
             color="danger"
             outline
-            // disabled={isDeleteProductRequest}
-            // className={`btn-shadow btn-multiple-state ${
-            //   isDeleteProductRequest ? "disabled" : ""
-            // }`}
-            // style={isDeleteProductRequest ? { cursor: "no-drop" } : {}}
+            disabled={isDeleteFoodRequest}
+            className={`btn-shadow btn-multiple-state ${
+              isDeleteFoodRequest ? "disabled" : ""
+            }`}
+            style={isDeleteFoodRequest ? { cursor: "no-drop" } : {}}
             onClick={handleClose}
           >
             Trở về

@@ -8,15 +8,36 @@ import {
 import { ModalActions } from "./ModalAction";
 import { ModalDelete } from "./ModalDelete";
 import { useDispatch, useSelector } from "react-redux";
-import { getAllFoodsRequest } from "~/redux/food/actions";
-import { getProfileRequest } from "~/redux/user/actions";
+import {
+  getAllFoodsRequest,
+  resetCreateFoods,
+  resetUpdateFoods,
+} from "~/redux/food/actions";
+import { toast } from "react-toastify";
 
 const AdminFood = () => {
   const [isShowModalAction, setIsShowModalAction] = useState(false);
   const [isShowModalDelete, setIsShowModalDelete] = useState(false);
+  const [isShowModalConfirm, setIsShowModalConfirm] = useState(false);
   const [type, setType] = useState();
-  const { getAllFoodsState } = useSelector((store) => store.food);
+  const {
+    getAllFoodsState,
+    isGetAllFoodsRequest,
+    isGetAllFoodsSuccess,
+    isGetAllFoodsFailure,
+    isCreateFoodRequest,
+    isCreateFoodSuccess,
+    isCreateFoodFailure,
+
+    isUpdateFoodRequest,
+    isUpdateFoodSuccess,
+    isUpdateFoodFailure,
+  } = useSelector((store) => store.food);
   const [callApi, setCallApi] = useState(false);
+  const [dataActive, setDataActive] = useState(null);
+  const [dataTable, setDataTable] = useState([]);
+  const [indexPage, setIndexPage] = useState(1);
+  const limit = 10;
   const dispatch = useDispatch();
   const handleCloseModalActions = () => {
     setIsShowModalAction(false);
@@ -28,57 +49,35 @@ const AdminFood = () => {
   const handleCloseModalDelete = () => {
     setIsShowModalDelete(false);
   };
-  const handleShowModalDelete = (type) => {
+  const handleShowModalDelete = () => {
     setIsShowModalDelete(true);
   };
 
   useEffect(() => {
     setCallApi(true);
   }, []);
-
   useEffect(() => {
     if (callApi) {
-      dispatch(getAllFoodsRequest());
+      dispatch(
+        getAllFoodsRequest({
+          limit,
+          page: indexPage,
+        })
+      );
+      setCallApi(false);
     }
-  }, [callApi]);
+  }, [callApi, indexPage]);
 
-  console.log("getAllFoodsState", getAllFoodsState);
-
-  const fakeData = [
-    {
-      id: "123",
-      name: "Thai",
-      email: "thaistar1f@gmail.com",
-      password: "Xtera123",
-      phone: "0915210966",
-      avatar: "",
-    },
-    {
-      id: "123",
-      name: "Thai",
-      email: "thaistar1f@gmail.com",
-      password: "Xtera123",
-      phone: "0915210966",
-      avatar: "",
-    },
-    {
-      id: "123",
-      name: "Thai",
-      email: "thaistar1f@gmail.com",
-      password: "Xtera123",
-      phone: "0915210966",
-      avatar: "",
-    },
-  ];
   const columns = useMemo(() => [
     {
       Header: "STT",
       accessor: "",
       cellClass: "list-item-heading w-5",
+      Cell: (row) => row.row.index + 1,
     },
     {
       Header: "MÃ",
-      accessor: "id",
+      accessor: "_id",
       cellClass: "list-item-heading w-5",
     },
     {
@@ -87,15 +86,11 @@ const AdminFood = () => {
       cellClass: "list-item-heading w-5",
     },
     {
-      Header: "EMAIL",
-      accessor: "email",
+      Header: "Tiêu đề",
+      accessor: "title",
       cellClass: "list-item-heading w-5",
     },
-    {
-      Header: "SỐ ĐIỆN THOẠI",
-      accessor: "phone",
-      cellClass: "list-item-heading w-5",
-    },
+
     {
       Header: "HOẠT ĐỘNG",
       accessor: "action",
@@ -116,7 +111,7 @@ const AdminFood = () => {
             outline
             color="primary"
             className="icon-button"
-            onClick={handleShowModalDelete}
+            onClick={() => handleShowModalDelete(true)}
           >
             <CSTrash2Outline />
           </div>
@@ -124,13 +119,56 @@ const AdminFood = () => {
       ),
     },
   ]);
+
+  useEffect(() => {
+    if (isGetAllFoodsSuccess) {
+      setDataTable(getAllFoodsState?.data || []);
+    }
+  }, [isGetAllFoodsSuccess]);
+
+  useEffect(() => {
+    if (isCreateFoodSuccess) {
+      toast.success("Thêm món ăn thành công");
+      setIsShowModalConfirm(false);
+      setCallApi(true);
+      setIsShowModalAction(false);
+      dispatch(resetCreateFoods());
+    }
+  }, [isCreateFoodSuccess]);
+
+  useEffect(() => {
+    if (isUpdateFoodSuccess) {
+      toast.success("Cập nhật ăn thành công");
+      setCallApi(true);
+      setIsShowModalConfirm(false);
+      setIsShowModalAction(false);
+      dispatch(resetUpdateFoods());
+    }
+  }, [isUpdateFoodSuccess]);
+
+  const handleClickRow = (value) => {
+    setDataActive(value);
+  };
+  const handleChangePage = (idxPage) => {
+    setIndexPage(idxPage);
+    setCallApi(true);
+  };
+
   return (
     <div className="admin-staff-page">
       <div className="top">
         <TopComponent handleShowModalActions={handleShowModalActions} />
       </div>
       <div className="table">
-        <ReactTableWithPaginationCard data={fakeData} columns={columns} />
+        <ReactTableWithPaginationCard
+          data={dataTable}
+          columns={columns}
+          onClickRow={handleClickRow}
+          indexPage={indexPage}
+          maxPage={getAllFoodsState?.totalPage}
+          handlePaginationNext={handleChangePage}
+          showPagination={getAllFoodsState?.totalPage > 1 ? true : false}
+        />
       </div>
 
       {isShowModalAction && type && (
@@ -138,14 +176,17 @@ const AdminFood = () => {
           isOpen
           type={type}
           handleClose={handleCloseModalActions}
-          // data={dataActive}
+          data={dataActive}
+          isShowModalConfirm={isShowModalConfirm}
+          setIsShowModalConfirm={setIsShowModalConfirm}
         />
       )}
       {isShowModalDelete && (
         <ModalDelete
           isOpen
           handleClose={handleCloseModalDelete}
-          // data={dataActive}
+          data={dataActive}
+          setCallApi={setCallApi}
         />
       )}
     </div>

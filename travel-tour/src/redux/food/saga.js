@@ -34,7 +34,7 @@ function* createFood({ payload }) {
 function* updateFood({ payload }) {
   try {
     const response = yield call(() =>
-      axiosMicro.patch(`/food/${payload.id}`, payload.body)
+      axiosMicro.put(`/food/${payload.id}`, payload.body)
     );
     yield put(Actions.updateFoodsSuccess(response.data));
   } catch (error) {
