@@ -51,7 +51,9 @@ function* checkUserExists({ payload }) {
 
 function* register({ payload }) {
   try {
-    const response = yield call(() => axiosMicro.post("/register", payload));
+    const response = yield call(() =>
+      axiosMicro.post("/user/create-user", payload)
+    );
     yield put(Actions.registerSuccess(response.data));
   } catch (e) {
     if (e?.response?.data) {

@@ -111,9 +111,9 @@ const Editor = ({ value, setValue }) => {
   // };
 
   const handleChange = () => {
-    if (quillRef.current) {
-      const quill = quillRef.current.getEditor(); // Access the Quill instance
-      const contents = quill.getContents(); // Get the delta
+    if (quillRef?.current) {
+      const quill = quillRef?.current?.getEditor(); // Access the Quill instance
+      const contents = quill?.getContents(); // Get the delta
       setValue(contents); // Set the delta to state
     }
   };

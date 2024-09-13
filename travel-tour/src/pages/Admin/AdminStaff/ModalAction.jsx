@@ -13,6 +13,7 @@ import {
   ModalHeader,
 } from "reactstrap";
 import * as Yup from "yup";
+import { registerRequest } from "~/redux/auth/actions";
 
 export const PHONE_REGEX = /((0)+([1-9]{1})+([0-9]{8})\b)/g;
 
@@ -20,8 +21,6 @@ const SignupSchema = Yup.object().shape({
   name: Yup.string()
     .required("Tên không được để trống")
     .max(200, "Tên không quá 200 ký tự".replace("$x", 200)),
-
-  image: Yup.string().required("Hình ảnh không được trống"),
 });
 
 export const ModalActions = ({
@@ -60,25 +59,26 @@ export const ModalActions = ({
   //   }, []);
 
   const onSubmit = (values) => {
-    if (type !== "detail") {
-      setDataForm(values);
-      setIsShowModalConfirm(true);
-    }
+    // if (type !== "detail") {
+    setDataForm(values);
+    setIsShowModalConfirm(true);
+    // }
   };
+  console.log("dataFỏm", dataForm);
 
   const handleSubmit = () => {
-    const { name, password, phone, email, avatar } = dataForm;
+    const { name, password, phone, email } = dataForm;
 
-    if (type === "create") {
+    if (type === "add") {
       const payload = {
         name,
         password,
         phone,
         email,
-        avatar,
+        confirmPassword: password,
       };
 
-      //   dispatch(createProductRequest(payload));
+      dispatch(registerRequest(payload));
     } else {
       //   dispatch(updateProductRequest({ id: data.id, body: payload }));
     }
@@ -89,7 +89,7 @@ export const ModalActions = ({
       <Modal
         centered
         isOpen={isOpen}
-        size="xl"
+        size="md"
         className="modal-actions-product"
       >
         <ModalHeader>{`${type === "add" ? "Thêm" : "Chỉnh sửa"} nhân viên`}</ModalHeader>
@@ -99,7 +99,7 @@ export const ModalActions = ({
             password: type === "create" ? "" : data?.password || "",
             phone: type === "create" ? "" : data?.phone || "",
             email: type === "create" ? "" : data?.email || "",
-            avatar: type === "create" ? "" : data?.avatar || "",
+            // avatar: type === "create" ? "" : data?.avatar || "",
           }}
           validationSchema={SignupSchema}
           onSubmit={onSubmit}
@@ -113,62 +113,55 @@ export const ModalActions = ({
                       {translate(`product.noti.${type}.failure`)}
                     </Alert>
                   )} */}
-                  <div className="d-flex" style={{ gap: "12px" }}>
-                    <FormGroup className="w-100 error-l-100">
-                      <Label>
-                        Tên nhân viên:{" "}
-                        <span style={{ color: "red", fontWeight: "600" }}>
-                          *
-                        </span>
-                      </Label>
-                      <Field
-                        className="form-control"
-                        name="name"
-                        placeholder="Tên nhân viên"
-                      />
-                      {errors.name && touched.name ? (
-                        <div className="invalid-feedback d-block">
-                          {errors.name}
-                        </div>
-                      ) : null}
-                    </FormGroup>
-                    <FormGroup className="w-100 error-l-100">
-                      <Label>
-                        Email:{" "}
-                        <span style={{ color: "red", fontWeight: "600" }}>
-                          *
-                        </span>
-                      </Label>
-                      <Field
-                        className="form-control"
-                        name="email"
-                        placeholder="Nhập email"
-                      />
-                      {errors.email && touched.email ? (
-                        <div className="invalid-feedback d-block">
-                          {errors.email}
-                        </div>
-                      ) : null}
-                    </FormGroup>
-                    <FormGroup className="w-100 error-l-100">
-                      <Label>
-                        Số điện thoại:{" "}
-                        <span style={{ color: "red", fontWeight: "600" }}>
-                          *
-                        </span>
-                      </Label>
-                      <Field
-                        className="form-control"
-                        name="phone"
-                        placeholder="Nhập số điện thoại"
-                      />
-                      {errors.phone && touched.phone ? (
-                        <div className="invalid-feedback d-block">
-                          {errors.phone}
-                        </div>
-                      ) : null}
-                    </FormGroup>
-                  </div>
+
+                  <FormGroup className="w-100 error-l-100">
+                    <Label>
+                      Tên nhân viên:{" "}
+                      <span style={{ color: "red", fontWeight: "600" }}>*</span>
+                    </Label>
+                    <Field
+                      className="form-control"
+                      name="name"
+                      placeholder="Tên nhân viên"
+                    />
+                    {errors.name && touched.name ? (
+                      <div className="invalid-feedback d-block">
+                        {errors.name}
+                      </div>
+                    ) : null}
+                  </FormGroup>
+                  <FormGroup className="w-100 error-l-100">
+                    <Label>
+                      Email:{" "}
+                      <span style={{ color: "red", fontWeight: "600" }}>*</span>
+                    </Label>
+                    <Field
+                      className="form-control"
+                      name="email"
+                      placeholder="Nhập email"
+                    />
+                    {errors.email && touched.email ? (
+                      <div className="invalid-feedback d-block">
+                        {errors.email}
+                      </div>
+                    ) : null}
+                  </FormGroup>
+                  <FormGroup className="w-100 error-l-100">
+                    <Label>
+                      Số điện thoại:{" "}
+                      <span style={{ color: "red", fontWeight: "600" }}>*</span>
+                    </Label>
+                    <Field
+                      className="form-control"
+                      name="phone"
+                      placeholder="Nhập số điện thoại"
+                    />
+                    {errors.phone && touched.phone ? (
+                      <div className="invalid-feedback d-block">
+                        {errors.phone}
+                      </div>
+                    ) : null}
+                  </FormGroup>
                   <FormGroup className="error-l-100">
                     <Label>
                       Mật khẩu:{" "}
@@ -186,7 +179,7 @@ export const ModalActions = ({
                     ) : null}
                   </FormGroup>
 
-                  <FormGroup className="error-l-100">
+                  {/* <FormGroup className="error-l-100">
                     <Label>Ảnh đại diện:</Label>
                     <Input
                       type="file"
@@ -222,7 +215,7 @@ export const ModalActions = ({
                         {errors.desc}
                       </div>
                     ) : null}
-                  </FormGroup>
+                  </FormGroup> */}
                 </ModalBody>
                 <ModalFooter>
                   {type === "edit" && (

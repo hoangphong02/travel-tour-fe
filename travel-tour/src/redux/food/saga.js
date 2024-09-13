@@ -22,7 +22,12 @@ function* getAllFoods({ payload }) {
 function* createFood({ payload }) {
   try {
     const response = yield call(() => axiosMicro.post("/food", payload));
-    yield put(Actions.createFoodsSuccess(response.data));
+    if (response?.data?.status === "OK") {
+      yield put(Actions.createFoodsSuccess(response.data));
+    } else {
+      const messages = response.data.messages;
+      yield put(Actions.createFoodsFailure(messages));
+    }
   } catch (error) {
     if (error?.response?.data) {
       const messages = error.response.data;

@@ -3,6 +3,7 @@ import TopComponent from "./TopComponent";
 import { ReactTableWithPaginationCard } from "~/components/common";
 import {
   CSEditOutline,
+  CSSearchOutline,
   CSTrash2Outline,
 } from "~/components/iconography/Outline";
 import { ModalActions } from "./ModalAction";
@@ -14,12 +15,15 @@ import {
   resetUpdateFoods,
 } from "~/redux/food/actions";
 import { toast } from "react-toastify";
+import { useDebounce } from "~/helpers/hooks";
 
 const AdminFood = () => {
   const [isShowModalAction, setIsShowModalAction] = useState(false);
   const [isShowModalDelete, setIsShowModalDelete] = useState(false);
   const [isShowModalConfirm, setIsShowModalConfirm] = useState(false);
   const [type, setType] = useState();
+  const [search, setSearch] = useState("");
+  const searchDebounce = useDebounce(search, 500);
   const {
     getAllFoodsState,
     isGetAllFoodsRequest,
@@ -56,14 +60,20 @@ const AdminFood = () => {
   useEffect(() => {
     setCallApi(true);
   }, []);
+
+  useEffect(() => {
+    setCallApi(true);
+  }, [searchDebounce]);
   useEffect(() => {
     if (callApi) {
-      dispatch(
-        getAllFoodsRequest({
-          limit,
-          page: indexPage,
-        })
-      );
+      const params = {
+        limit,
+        page: indexPage,
+      };
+      if (searchDebounce) {
+        params.name = searchDebounce;
+      }
+      dispatch(getAllFoodsRequest(params));
       setCallApi(false);
     }
   }, [callApi, indexPage]);
@@ -137,6 +147,13 @@ const AdminFood = () => {
   }, [isCreateFoodSuccess]);
 
   useEffect(() => {
+    if (isCreateFoodFailure) {
+      toast.error("Thêm món ăn thất bại");
+      dispatch(resetCreateFoods());
+    }
+  }, [isCreateFoodFailure]);
+
+  useEffect(() => {
     if (isUpdateFoodSuccess) {
       toast.success("Cập nhật ăn thành công");
       setCallApi(true);
@@ -155,9 +172,22 @@ const AdminFood = () => {
   };
 
   return (
-    <div className="admin-staff-page">
+    <div className="admin-food-page">
       <div className="top">
         <TopComponent handleShowModalActions={handleShowModalActions} />
+      </div>
+      <div className="search">
+        <div className="body">
+          <input
+            type="text"
+            placeholder="Nhập tìm kiếm"
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+          />
+          <span>
+            <CSSearchOutline />
+          </span>
+        </div>
       </div>
       <div className="table">
         <ReactTableWithPaginationCard

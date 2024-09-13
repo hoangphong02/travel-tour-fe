@@ -43,10 +43,19 @@ export const ModalActions = ({
     if (data?.image) {
       setUrlImage(data?.image[0]?.url);
     }
-    if (data?.description?.length > 0) {
-      setValueTextEditor({ ops: data?.description });
-    }
   }, [data]);
+
+  useEffect(() => {
+    if (data?.description?.length) {
+      setValueTextEditor({ ops: data.description });
+    }
+  }, [data?.description]);
+
+  useEffect(() => {
+    if (data?.description?.[0]?.text?.length) {
+      setValueTextEditor({ ops: [{ insert: data.description[0].text }] });
+    }
+  }, [data?.description]);
 
   const uploadToCloudinary = async (file, uploadPreset, uploadUrl) => {
     try {
@@ -205,11 +214,6 @@ export const ModalActions = ({
                       value={valueTextEditor}
                       setValue={setValueTextEditor}
                     />
-                    {errors.password && touched.password ? (
-                      <div className="invalid-feedback d-block">
-                        {errors.password}
-                      </div>
-                    ) : null}
                   </FormGroup>
 
                   <FormGroup className="error-l-100">

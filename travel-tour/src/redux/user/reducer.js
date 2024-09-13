@@ -1,6 +1,6 @@
-import { handleActions } from 'redux-actions';
+import { handleActions } from "redux-actions";
 
-import * as Actions from './actions';
+import * as Actions from "./actions";
 
 const initialState = {
   isCallApiFirstTime: false,
@@ -14,12 +14,37 @@ const initialState = {
   isGetConfigSuccess: false,
   isGetConfigFailure: false,
   configResponse: {},
+
+  isGetAllUsersRequest: false,
+  isGetAllUsersSuccess: false,
+  isGetAllUsersFailure: false,
+  getAllUsersState: {},
   //
   errorMessages: [],
 };
 
 const reducer = handleActions(
   {
+    [Actions.getAllUserRequest]: (state) => ({
+      ...state,
+      isGetAllUsersRequest: true,
+      isGetAllUsersSuccess: false,
+      isGetAllUsersFailure: false,
+    }),
+    [Actions.getAllUserSuccess]: (state, { payload }) => ({
+      ...state,
+      isGetAllUsersRequest: false,
+      isGetAllUsersSuccess: true,
+      isGetAllUsersFailure: false,
+      getAllUsersState: payload,
+    }),
+    [Actions.getAllUserFailure]: (state, { payload }) => ({
+      ...state,
+      isGetAllUsersRequest: false,
+      isGetAllUsersSuccess: false,
+      isGetAllUsersFailure: true,
+      errorMessages: payload,
+    }),
     // #region : Get Profile
     [Actions.getProfileRequest]: (state) => ({
       ...state,
@@ -83,7 +108,7 @@ const reducer = handleActions(
         data: {
           ...state.configResponse.data,
           addresses:
-            payload.type === 'create'
+            payload.type === "create"
               ? [
                   ...state.configResponse.data.addresses.map((item) => {
                     const response = payload.data;
@@ -98,7 +123,7 @@ const reducer = handleActions(
                   }),
                   payload.data,
                 ]
-              : payload.type === 'update'
+              : payload.type === "update"
                 ? [
                     ...state.configResponse.data.addresses.map((item) => {
                       const response = payload.data;
@@ -116,10 +141,10 @@ const reducer = handleActions(
                       }
                     }),
                   ]
-                : payload.type === 'delete'
+                : payload.type === "delete"
                   ? [
                       ...state.configResponse.data.addresses.filter(
-                        (item) => item.id !== payload.id,
+                        (item) => item.id !== payload.id
                       ),
                     ]
                   : [...state.configResponse.data.addresses],
@@ -164,7 +189,7 @@ const reducer = handleActions(
     [Actions.resetUserState]: () => initialState,
     // #endregion
   },
-  initialState,
+  initialState
 );
 
 export default reducer;
