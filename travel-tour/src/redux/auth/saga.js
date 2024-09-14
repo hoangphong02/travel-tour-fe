@@ -54,7 +54,12 @@ function* register({ payload }) {
     const response = yield call(() =>
       axiosMicro.post("/user/create-user", payload)
     );
-    yield put(Actions.registerSuccess(response.data));
+    if (response.data.status === "OK") {
+      yield put(Actions.registerSuccess(response.data));
+    } else {
+      const messages = response.data.message;
+      yield put(Actions.registerFailure(messages));
+    }
   } catch (e) {
     if (e?.response?.data) {
       const messages = e.response.data;
@@ -65,45 +70,15 @@ function* register({ payload }) {
 
 function* updateUser({ payload }) {
   try {
-    const { type, data } = payload;
-    const form = new FormData();
-    if (type === "forgot-password") {
-      form.append("password", data.password);
-    } else if (type === "update-information") {
-      if (data?.name) {
-        form.append("name", data.name);
-      }
-      if (data?.email) {
-        form.append("email", data.email);
-      }
-      if (data?.gender) {
-        form.append("gender", data.gender);
-      }
-      if (data?.username) {
-        form.append("username", data.username);
-      }
-      if (data?.username) {
-        form.append("shop_id", data.shop_id);
-      }
-      if (data.email) {
-        form.append("email", data.email);
-      }
-      if (data.birthday) {
-        form.append("birthday", data.birthday);
-      }
-      if (data?.phone) {
-        form.append("phone", data.phone);
-      }
-      if (data?.avatar) {
-        form.append("avatar", data.avatar);
-      }
-    } else if (type === "update-avatar") {
-      form.append("avatar", data.avatar);
-    }
     const response = yield call(() =>
-      axiosMicro.post(`/users/${data.id}?_method=PATCH`, form)
+      axiosMicro.put(`/user/update-user/${payload.id}`, payload.body)
     );
-    yield put(Actions.updateUserSuccess(response.data));
+    if (response.data.status === "OK") {
+      yield put(Actions.updateUserSuccess(response.data));
+    } else {
+      const messages = response.data.message;
+      yield put(Actions.updateUserFailure(messages));
+    }
   } catch (e) {
     if (e?.response?.data) {
       const messages = e.response.data;
@@ -111,6 +86,7 @@ function* updateUser({ payload }) {
     }
   }
 }
+
 function* uploadFile({ payload }) {
   try {
     const response = yield call(() =>

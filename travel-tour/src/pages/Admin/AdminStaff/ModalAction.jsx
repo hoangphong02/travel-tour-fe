@@ -13,30 +13,61 @@ import {
   ModalHeader,
 } from "reactstrap";
 import * as Yup from "yup";
-import { registerRequest } from "~/redux/auth/actions";
+import { registerRequest, updateUserRequest } from "~/redux/auth/actions";
 
 export const PHONE_REGEX = /((0)+([1-9]{1})+([0-9]{8})\b)/g;
 
-const SignupSchema = Yup.object().shape({
-  name: Yup.string()
-    .required("Tên không được để trống")
-    .max(200, "Tên không quá 200 ký tự".replace("$x", 200)),
-});
+// const SignupSchema = Yup.object().shape({
+//   name: Yup.string()
+//     .trim()
+//     .required("Tên nhân viên không được để trống")
+//     .min(2, "Phải ít nhất 2 ký tự"),
+//   phone: Yup.string()
+//     .required("Số điện thoại không được để trống")
+//     .min(10, "Phải ít nhất 10 ký tự"),
+//   email: Yup.string()
+//     .required("Email không thể để trống")
+//     .matches(
+//       /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+//       "Email không hợp lệ"
+//     ),
+//   password: Yup.string()
+//     .required("Mật khẩu không được để trống")
+//     .min(5, "Mật khẩu phải ít nhất 5 ký tự"),
+//   confirmPassword: Yup.string()
+//     .required("Mật khẩu xác nhận không được để trống")
+//     .oneOf([Yup.ref("password"), null], "Mật khẩu không trùng khớp"),
+// });
 
-export const ModalActions = ({
-  isOpen,
-  type,
-  handleClose,
-  data,
-  handleClickUpdate,
-}) => {
-  const { profileResponse } = useSelector((store) => store.user);
+export const ModalActions = ({ isOpen, type, handleClose, data }) => {
+  const {
+    isRegisterRequest,
+    isRegisterFailure,
+    isUpdateUserRequest,
+    isUpdateUserFailure,
+  } = useSelector((store) => store.auth);
+
   const dispatch = useDispatch();
   const [isShowModalConfirm, setIsShowModalConfirm] = useState(false);
   const [imagePreview, setImagePreview] = useState();
   const [fileUploadInput, setFileUploadInput] = useState();
   const [dataForm, setDataForm] = useState(null);
 
+  const SignupSchema = Yup.object().shape({
+    name: Yup.string()
+      .trim()
+      .required("Tên nhân viên không được để trống")
+      .min(2, "Phải ít nhất 2 ký tự"),
+    phone: Yup.string()
+      .required("Số điện thoại không được để trống")
+      .min(10, "Phải ít nhất 10 ký tự"),
+    email: Yup.string()
+      .required("Email không thể để trống")
+      .matches(
+        /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+        "Email không hợp lệ"
+      ),
+  });
   const handleUpload = (event) => {
     const file = event.target.files[0];
     setFileUploadInput(file);
@@ -59,28 +90,25 @@ export const ModalActions = ({
   //   }, []);
 
   const onSubmit = (values) => {
-    // if (type !== "detail") {
+    console.log("values", values);
     setDataForm(values);
     setIsShowModalConfirm(true);
-    // }
   };
-  console.log("dataFỏm", dataForm);
 
   const handleSubmit = () => {
-    const { name, password, phone, email } = dataForm;
+    const { name, password, phone, email, confirmPassword } = dataForm;
 
+    const payload = {
+      name,
+      password,
+      phone,
+      email,
+      confirmPassword,
+    };
     if (type === "add") {
-      const payload = {
-        name,
-        password,
-        phone,
-        email,
-        confirmPassword: password,
-      };
-
       dispatch(registerRequest(payload));
     } else {
-      //   dispatch(updateProductRequest({ id: data.id, body: payload }));
+      dispatch(updateUserRequest({ id: data._id, body: payload }));
     }
   };
 
@@ -95,10 +123,12 @@ export const ModalActions = ({
         <ModalHeader>{`${type === "add" ? "Thêm" : "Chỉnh sửa"} nhân viên`}</ModalHeader>
         <Formik
           initialValues={{
-            name: type === "create" ? "" : data?.name || "",
-            password: type === "create" ? "" : data?.password || "",
-            phone: type === "create" ? "" : data?.phone || "",
-            email: type === "create" ? "" : data?.email || "",
+            name: type === "add" ? "" : data?.name || "",
+            password: type === "add" ? "" : data?.password || "",
+            phone: type === "add" ? "" : data?.phone || "",
+            email: type === "add" ? "" : data?.email || "",
+            confirmPassword: type === "add" ? "" : data?.confirmPassword || "",
+
             // avatar: type === "create" ? "" : data?.avatar || "",
           }}
           validationSchema={SignupSchema}
@@ -108,11 +138,13 @@ export const ModalActions = ({
             return (
               <Form className="av-tooltip">
                 <ModalBody>
-                  {/* {(isCreateProductFailure || isUpdateProductFailure) && (
+                  {(isRegisterFailure || isUpdateUserFailure) && (
                     <Alert color="danger">
-                      {translate(`product.noti.${type}.failure`)}
+                      {type === "add"
+                        ? "Thêm nhận viên thất bại"
+                        : "Cập nhật nhân viên thất bại"}
                     </Alert>
-                  )} */}
+                  )}
 
                   <FormGroup className="w-100 error-l-100">
                     <Label>
@@ -162,22 +194,46 @@ export const ModalActions = ({
                       </div>
                     ) : null}
                   </FormGroup>
-                  <FormGroup className="error-l-100">
-                    <Label>
-                      Mật khẩu:{" "}
-                      <span style={{ color: "red", fontWeight: "600" }}>*</span>
-                    </Label>
-                    <Field
-                      className="form-control"
-                      name="password"
-                      placeholder="Nhập mật khẩu"
-                    />
-                    {errors.password && touched.password ? (
-                      <div className="invalid-feedback d-block">
-                        {errors.password}
-                      </div>
-                    ) : null}
-                  </FormGroup>
+                  {type === "add" ? (
+                    <>
+                      <FormGroup className="error-l-100">
+                        <Label>
+                          Mật khẩu:{" "}
+                          <span style={{ color: "red", fontWeight: "600" }}>
+                            *
+                          </span>
+                        </Label>
+                        <Field
+                          className="form-control"
+                          name="password"
+                          placeholder="Nhập mật khẩu"
+                        />
+                        {errors.password && touched.password ? (
+                          <div className="invalid-feedback d-block">
+                            {errors.password}
+                          </div>
+                        ) : null}
+                      </FormGroup>
+                      <FormGroup className="error-l-100">
+                        <Label>
+                          Mật khẩu xác nhận:{" "}
+                          <span style={{ color: "red", fontWeight: "600" }}>
+                            *
+                          </span>
+                        </Label>
+                        <Field
+                          className="form-control"
+                          name="confirmPassword"
+                          placeholder="Nhập mật khẩu xác nhận"
+                        />
+                        {errors.confirmPassword && touched.confirmPassword ? (
+                          <div className="invalid-feedback d-block">
+                            {errors.confirmPassword}
+                          </div>
+                        ) : null}
+                      </FormGroup>
+                    </>
+                  ) : null}
 
                   {/* <FormGroup className="error-l-100">
                     <Label>Ảnh đại diện:</Label>
@@ -228,8 +284,7 @@ export const ModalActions = ({
                         padding: "8px 24px",
                       }}
                       className="btn-shadow btn-multiple-state "
-                      onClick={handleClickUpdate}
-                      type="reset"
+                      type="submit"
                     >
                       <span className="label">Cập nhật</span>
                     </Button>
@@ -243,13 +298,11 @@ export const ModalActions = ({
                         border: "none",
                         padding: "8px 24px",
                       }}
-                      //   className={`btn-shadow btn-multiple-state ${
-                      //     isCreateProductRequest ||
-                      //     isUpdateProductRequest ||
-                      //     isUploadFileRequest
-                      //       ? "show-spinner cursor-none"
-                      //       : ""
-                      //   } `}
+                      className={`btn-shadow btn-multiple-state ${
+                        isRegisterRequest || isUpdateUserRequest
+                          ? "show-spinner cursor-none"
+                          : ""
+                      } `}
                       type="submit"
                     >
                       <span className="spinner d-inline-block">
@@ -283,19 +336,20 @@ export const ModalActions = ({
         toggle={() => setIsShowModalConfirm(false)}
       >
         <ModalBody>
-          <h3>{`Xác nhận ${type === "add" ? "Thêm" : "Chỉnh sửa"} nhân viên`}</h3>
-          <p>{`Bạn chắc chắn ${type === "add" ? "Thêm" : "Chỉnh sửa"} nhân viên`}</p>
+          <h4>{`Xác nhận ${type === "add" ? "thêm" : "chỉnh sửa"} nhân viên`}</h4>
+          <p>{`Bạn chắc chắn ${type === "add" ? "thêm" : "chỉnh sửa"} nhân viên`}</p>
         </ModalBody>
         <ModalFooter>
           <div className="d-flex align-content-center justify-content-between flex-grow-1">
             <Button
+              style={{ background: "rgb(8, 66, 140)", border: "none" }}
               color="primary"
-              //   disabled={isCreateProductRequest || isUpdateProductRequest}
-              //   className={`btn-shadow btn-multiple-state ${
-              //     isCreateProductRequest || isUpdateProductRequest
-              //       ? "show-spinner disabled"
-              //       : ""
-              //   }`}
+              disabled={isRegisterRequest || isUpdateUserRequest}
+              className={`btn-shadow btn-multiple-state ${
+                isRegisterRequest || isUpdateUserRequest
+                  ? "show-spinner disabled"
+                  : ""
+              }`}
               onClick={handleSubmit}
             >
               <span className="spinner d-inline-block">
@@ -308,17 +362,15 @@ export const ModalActions = ({
             <Button
               color="primary"
               outline
-              //   disabled={isCreateProductRequest || isUpdateProductRequest}
-              //   className={`btn-shadow btn-multiple-state ${
-              //     isCreateProductRequest || isUpdateProductRequest
-              //       ? "disabled"
-              //       : ""
-              //   }`}
-              //   style={
-              //     isCreateProductRequest || isUpdateProductRequest
-              //       ? { cursor: "no-drop" }
-              //       : {}
-              //   }
+              disabled={isRegisterRequest || isUpdateUserRequest}
+              className={`btn-shadow btn-multiple-state ${
+                isRegisterRequest || isUpdateUserRequest ? "disabled" : ""
+              }`}
+              style={
+                isRegisterRequest || isUpdateUserRequest
+                  ? { cursor: "no-drop" }
+                  : {}
+              }
               onClick={() => setIsShowModalConfirm(false)}
             >
               Trở về

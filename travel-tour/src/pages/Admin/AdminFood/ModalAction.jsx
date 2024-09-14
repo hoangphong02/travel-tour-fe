@@ -1,6 +1,7 @@
 import { Field, Form, Formik } from "formik";
 import { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
+import { Alert } from "react-bootstrap";
+import { useDispatch, useSelector } from "react-redux";
 import {
   Button,
   FormGroup,
@@ -31,13 +32,16 @@ export const ModalActions = ({
   isShowModalConfirm,
   setIsShowModalConfirm,
 }) => {
+  const {
+    isCreateFoodRequest,
+    isCreateFoodFailure,
+    isUpdateFoodRequest,
+    isUpdateFoodFailure,
+  } = useSelector((store) => store.food);
   const dispatch = useDispatch();
   const [urlImage, setUrlImage] = useState();
   const [valueTextEditor, setValueTextEditor] = useState(null);
   const [dataForm, setDataForm] = useState(null);
-
-  console.log("valueEditor", valueTextEditor);
-  console.log("data", data);
 
   useEffect(() => {
     if (data?.image) {
@@ -152,8 +156,8 @@ export const ModalActions = ({
         <ModalHeader>{`${type === "add" ? "Thêm" : "Chỉnh sửa"} nhân viên`}</ModalHeader>
         <Formik
           initialValues={{
-            title: type === "create" ? "" : data?.name || "",
-            name: type === "create" ? "" : data?.name || "",
+            title: type === "add" ? "" : data?.name || "",
+            name: type === "add" ? "" : data?.name || "",
           }}
           validationSchema={SignupSchema}
           onSubmit={onSubmit}
@@ -162,11 +166,13 @@ export const ModalActions = ({
             return (
               <Form className="av-tooltip">
                 <ModalBody>
-                  {/* {(isCreateProductFailure || isUpdateProductFailure) && (
+                  {(isCreateFoodFailure || isUpdateFoodFailure) && (
                     <Alert color="danger">
-                      {translate(`product.noti.${type}.failure`)}
+                      {type === "add"
+                        ? "Thêm món ăn thất bại"
+                        : "Cập nhật món ăn thất bại"}
                     </Alert>
-                  )} */}
+                  )}
                   <div className="d-flex" style={{ gap: "12px" }}>
                     <FormGroup className="w-100 error-l-100">
                       <Label>
@@ -279,13 +285,11 @@ export const ModalActions = ({
                         border: "none",
                         padding: "8px 24px",
                       }}
-                      //   className={`btn-shadow btn-multiple-state ${
-                      //     isCreateProductRequest ||
-                      //     isUpdateProductRequest ||
-                      //     isUploadFileRequest
-                      //       ? "show-spinner cursor-none"
-                      //       : ""
-                      //   } `}
+                      className={`btn-shadow btn-multiple-state ${
+                        isCreateFoodRequest || isUpdateFoodRequest
+                          ? "show-spinner cursor-none"
+                          : ""
+                      } `}
                       type="submit"
                     >
                       <span className="spinner d-inline-block">
@@ -326,12 +330,13 @@ export const ModalActions = ({
           <div className="d-flex align-content-center justify-content-between flex-grow-1">
             <Button
               color="primary"
-              //   disabled={isCreateProductRequest || isUpdateProductRequest}
-              //   className={`btn-shadow btn-multiple-state ${
-              //     isCreateProductRequest || isUpdateProductRequest
-              //       ? "show-spinner disabled"
-              //       : ""
-              //   }`}
+              disabled={isCreateFoodRequest || isUpdateFoodRequest}
+              className={`btn-shadow btn-multiple-state ${
+                isCreateFoodRequest || isUpdateFoodRequest
+                  ? "show-spinner disabled"
+                  : ""
+              }`}
+              style={{ background: "rgb(8, 66, 140)", border: "none" }}
               onClick={handleSubmit}
             >
               <span className="spinner d-inline-block">
@@ -344,17 +349,15 @@ export const ModalActions = ({
             <Button
               color="primary"
               outline
-              //   disabled={isCreateProductRequest || isUpdateProductRequest}
-              //   className={`btn-shadow btn-multiple-state ${
-              //     isCreateProductRequest || isUpdateProductRequest
-              //       ? "disabled"
-              //       : ""
-              //   }`}
-              //   style={
-              //     isCreateProductRequest || isUpdateProductRequest
-              //       ? { cursor: "no-drop" }
-              //       : {}
-              //   }
+              disabled={isCreateFoodRequest || isUpdateFoodRequest}
+              className={`btn-shadow btn-multiple-state ${
+                isCreateFoodRequest || isUpdateFoodRequest ? "disabled" : ""
+              }`}
+              style={
+                isCreateFoodRequest || isUpdateFoodRequest
+                  ? { cursor: "no-drop" }
+                  : {}
+              }
               onClick={() => setIsShowModalConfirm(false)}
             >
               Trở về

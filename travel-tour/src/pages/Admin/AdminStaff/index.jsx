@@ -17,6 +17,7 @@ import {
 import { toast } from "react-toastify";
 import { useDebounce } from "~/helpers/hooks";
 import { getAllUserRequest } from "~/redux/user/actions";
+import { resetRegisterState, resetUpdateUserState } from "~/redux/auth/actions";
 
 const AdminFood = () => {
   const [isShowModalAction, setIsShowModalAction] = useState(false);
@@ -31,6 +32,16 @@ const AdminFood = () => {
     isGetAllUsersFailure,
     getAllUsersState,
   } = useSelector((store) => store.user);
+
+  const {
+    isRegisterRequest,
+    isRegisterSuccess,
+    isRegisterFailure,
+    isUpdateUserRequest,
+    isUpdateUserSuccess,
+    isUpdateUserFailure,
+  } = useSelector((store) => store.auth);
+
   const [callApi, setCallApi] = useState(false);
   const [dataActive, setDataActive] = useState(null);
   const [dataTable, setDataTable] = useState([]);
@@ -135,32 +146,39 @@ const AdminFood = () => {
     }
   }, [isGetAllUsersSuccess]);
 
-  // useEffect(() => {
-  //   if (isCreateFoodSuccess) {
-  //     toast.success("Thêm món ăn thành công");
-  //     setIsShowModalConfirm(false);
-  //     setCallApi(true);
-  //     setIsShowModalAction(false);
-  //     dispatch(resetCreateFoods());
-  //   }
-  // }, [isCreateFoodSuccess]);
+  useEffect(() => {
+    if (isRegisterSuccess) {
+      toast.success("Thêm nhân viên thành công");
+      setIsShowModalConfirm(false);
+      setCallApi(true);
+      setIsShowModalAction(false);
+      dispatch(resetRegisterState());
+    }
+  }, [isRegisterSuccess]);
 
-  // useEffect(() => {
-  //   if (isCreateFoodFailure) {
-  //     toast.error("Thêm món ăn thất bại");
-  //     dispatch(resetCreateFoods());
-  //   }
-  // }, [isCreateFoodFailure]);
+  useEffect(() => {
+    if (isRegisterFailure) {
+      toast.error("Thêm nhân viên thất bại");
+      dispatch(resetRegisterState());
+    }
+  }, [isRegisterFailure]);
 
-  // useEffect(() => {
-  //   if (isUpdateFoodSuccess) {
-  //     toast.success("Cập nhật ăn thành công");
-  //     setCallApi(true);
-  //     setIsShowModalConfirm(false);
-  //     setIsShowModalAction(false);
-  //     dispatch(resetUpdateFoods());
-  //   }
-  // }, [isUpdateFoodSuccess]);
+  useEffect(() => {
+    if (isUpdateUserSuccess) {
+      toast.success("Cập nhật nhân viên thành công");
+      setCallApi(true);
+      setIsShowModalConfirm(false);
+      setIsShowModalAction(false);
+      dispatch(resetUpdateUserState());
+    }
+  }, [isUpdateUserSuccess]);
+
+  useEffect(() => {
+    if (isUpdateUserFailure) {
+      toast.error("Cập nhật nhân viên thất bại");
+      dispatch(resetUpdateUserState());
+    }
+  }, [isUpdateUserFailure]);
 
   const handleClickRow = (value) => {
     setDataActive(value);
@@ -171,7 +189,7 @@ const AdminFood = () => {
   };
 
   return (
-    <div className="admin-food-page">
+    <div className="admin-staff-page">
       <div className="top">
         <TopComponent handleShowModalActions={handleShowModalActions} />
       </div>

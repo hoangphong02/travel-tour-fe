@@ -1,6 +1,6 @@
-import { handleActions } from 'redux-actions';
+import { handleActions } from "redux-actions";
 
-import * as Actions from './actions';
+import * as Actions from "./actions";
 
 const initialState = {
   //
@@ -97,6 +97,13 @@ const reducer = handleActions(
       isRegisterFailure: true,
       errorMessages: payload,
     }),
+    [Actions.resetRegisterState]: (state) => ({
+      ...state,
+      isRegisterRequest: false,
+      isRegisterSuccess: false,
+      isRegisterFailure: false,
+      errorMessages: [],
+    }),
     // #endregion
     // #region : Register
     [Actions.uploadFileRequest]: (state) => ({
@@ -162,7 +169,7 @@ const reducer = handleActions(
     [Actions.resetAuthState]: () => initialState,
     // #endregion
   },
-  initialState,
+  initialState
 );
 
 export default reducer;
