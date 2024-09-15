@@ -1,5 +1,5 @@
 import { Field, Form, Formik } from "formik";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   Alert,
@@ -14,30 +14,8 @@ import {
 } from "reactstrap";
 import * as Yup from "yup";
 import { registerRequest, updateUserRequest } from "~/redux/auth/actions";
-
+import logo from "~/assets/logo/no-avatar.png";
 export const PHONE_REGEX = /((0)+([1-9]{1})+([0-9]{8})\b)/g;
-
-// const SignupSchema = Yup.object().shape({
-//   name: Yup.string()
-//     .trim()
-//     .required("Tên nhân viên không được để trống")
-//     .min(2, "Phải ít nhất 2 ký tự"),
-//   phone: Yup.string()
-//     .required("Số điện thoại không được để trống")
-//     .min(10, "Phải ít nhất 10 ký tự"),
-//   email: Yup.string()
-//     .required("Email không thể để trống")
-//     .matches(
-//       /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
-//       "Email không hợp lệ"
-//     ),
-//   password: Yup.string()
-//     .required("Mật khẩu không được để trống")
-//     .min(5, "Mật khẩu phải ít nhất 5 ký tự"),
-//   confirmPassword: Yup.string()
-//     .required("Mật khẩu xác nhận không được để trống")
-//     .oneOf([Yup.ref("password"), null], "Mật khẩu không trùng khớp"),
-// });
 
 export const ModalActions = ({ isOpen, type, handleClose, data }) => {
   const {
@@ -49,10 +27,9 @@ export const ModalActions = ({ isOpen, type, handleClose, data }) => {
 
   const dispatch = useDispatch();
   const [isShowModalConfirm, setIsShowModalConfirm] = useState(false);
-  const [imagePreview, setImagePreview] = useState();
-  const [fileUploadInput, setFileUploadInput] = useState();
+  const [urlImage, setUrlImage] = useState();
   const [dataForm, setDataForm] = useState(null);
-
+  const fileInputRef = useRef(null);
   const SignupSchema = Yup.object().shape({
     name: Yup.string()
       .trim()
@@ -68,29 +45,39 @@ export const ModalActions = ({ isOpen, type, handleClose, data }) => {
         "Email không hợp lệ"
       ),
   });
-  const handleUpload = (event) => {
-    const file = event.target.files[0];
-    setFileUploadInput(file);
-    const reader = new FileReader();
-    if (file && file.type.match("image.*")) {
-      reader.readAsDataURL(file);
+
+  const uploadToCloudinary = async (file, uploadPreset, uploadUrl) => {
+    try {
+      const formData = new FormData();
+      formData.append("file", file);
+      formData.append("upload_preset", uploadPreset);
+
+      const response = await fetch(uploadUrl, {
+        method: "POST",
+        body: formData,
+      });
+      const data = await response.json();
+      if (data.secure_url) {
+        return data.secure_url;
+      } else {
+        throw new Error("Failed to upload image");
+      }
+    } catch (error) {
+      console.error("Error uploading image:", error);
+      return null;
     }
-    reader.onloadend = () => {
-      setImagePreview(reader.result);
-    };
+  };
+  const handleImageUpload = async (file) => {
+    const uploadPreset = "vr8eratg";
+    const uploadUrl = "https://api.cloudinary.com/v1_1/disrx4gzn/image/upload";
+    const imageUrl = await uploadToCloudinary(file, uploadPreset, uploadUrl);
+
+    if (imageUrl) {
+      setUrlImage(imageUrl);
+    }
   };
 
-  console.log("imagePreview", imagePreview);
-
-  //   useEffect(() => {
-  //       if (isUploadImageProduct) {
-  //         setImageProduct(uploadFileState?.data[0]);
-  //         setIsUploadImageProduct(false);
-  //       }
-  //   }, []);
-
   const onSubmit = (values) => {
-    console.log("values", values);
     setDataForm(values);
     setIsShowModalConfirm(true);
   };
@@ -98,28 +85,34 @@ export const ModalActions = ({ isOpen, type, handleClose, data }) => {
   const handleSubmit = () => {
     const { name, password, phone, email, confirmPassword } = dataForm;
 
-    const payload = {
-      name,
-      password,
-      phone,
-      email,
-      confirmPassword,
-    };
     if (type === "add") {
+      const payload = {
+        name,
+        password,
+        phone,
+        email,
+        confirmPassword,
+      };
+      if (urlImage) {
+        payload.avatar = urlImage;
+      }
       dispatch(registerRequest(payload));
     } else {
+      const payload = {
+        name,
+        phone,
+        email,
+      };
+      if (urlImage) {
+        payload.avatar = urlImage;
+      }
       dispatch(updateUserRequest({ id: data._id, body: payload }));
     }
   };
 
   return (
     <>
-      <Modal
-        centered
-        isOpen={isOpen}
-        size="md"
-        className="modal-actions-product"
-      >
+      <Modal centered isOpen={isOpen} size="md" className="modal-actions-staff">
         <ModalHeader>{`${type === "add" ? "Thêm" : "Chỉnh sửa"} nhân viên`}</ModalHeader>
         <Formik
           initialValues={{
@@ -145,6 +138,34 @@ export const ModalActions = ({ isOpen, type, handleClose, data }) => {
                         : "Cập nhật nhân viên thất bại"}
                     </Alert>
                   )}
+                  <FormGroup className="form-avatar">
+                    <div className="info-image">
+                      <img
+                        src={
+                          urlImage
+                            ? urlImage
+                            : data?.avatar
+                              ? data?.avatar
+                              : logo
+                        }
+                        alt=""
+                      />
+                      <input
+                        className="input-file"
+                        ref={fileInputRef}
+                        type="file"
+                        id="avatar"
+                        name="avatar"
+                        onChange={(e) => handleImageUpload(e.target.files[0])}
+                      />
+                      <span
+                        className="icon-change-avatar"
+                        onClick={() => fileInputRef.current.click()}
+                      >
+                        <i className="fas fa-camera"></i>
+                      </span>
+                    </div>
+                  </FormGroup>
 
                   <FormGroup className="w-100 error-l-100">
                     <Label>

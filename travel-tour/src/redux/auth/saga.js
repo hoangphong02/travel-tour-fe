@@ -100,6 +100,18 @@ function* uploadFile({ payload }) {
     }
   }
 }
+
+function* deleteUser({ payload }) {
+  try {
+    yield call(() => axiosMicro.delete(`/user/delete-user/${payload}`));
+    yield put(Actions.deleteUserSuccess(payload));
+  } catch (error) {
+    if (error?.response?.data) {
+      const messages = error.response.data;
+      yield put(Actions.deleteUserFailure(messages));
+    }
+  }
+}
 // eslint-disable-next-line func-names
 export default function* () {
   yield takeLatest(Actions.loginRequest, loginRequest);
@@ -108,4 +120,5 @@ export default function* () {
   yield takeLatest(Actions.registerRequest, register);
   yield takeLatest(Actions.updateUserRequest, updateUser);
   yield takeLatest(Actions.uploadFileRequest, uploadFile);
+  yield takeLatest(Actions.deleteUserRequest, deleteUser);
 }

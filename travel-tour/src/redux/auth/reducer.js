@@ -27,6 +27,11 @@ const initialState = {
   isUploadFileSuccess: false,
   isUploadFileFailure: false,
   uploadFileResponse: {},
+
+  // Delete user
+  isDeleteUserRequest: false,
+  isDeleteUserSuccess: false,
+  isDeleteUserFailure: false,
   //
   errorMessages: [],
 };
@@ -164,6 +169,35 @@ const reducer = handleActions(
       updateUserResponse: {},
       errorMessages: [],
     }),
+
+    // #region : Delete User
+    [Actions.deleteUserRequest]: (state) => ({
+      ...state,
+      isDeleteUserRequest: true,
+      isDeleteUserSuccess: false,
+      isDeleteUserFailure: false,
+    }),
+    [Actions.deleteUserSuccess]: (state) => ({
+      ...state,
+      isDeleteUserRequest: false,
+      isDeleteUserSuccess: true,
+      isDeleteUserFailure: false,
+    }),
+    [Actions.deleteUserFailure]: (state, { payload }) => ({
+      ...state,
+      isDeleteUserRequest: false,
+      isDeleteUserSuccess: false,
+      isDeleteUserFailure: true,
+      errorMessages: payload,
+    }),
+    [Actions.resetDeleteUserState]: (state) => ({
+      ...state,
+      isDeleteUserRequest: false,
+      isDeleteUserSuccess: false,
+      isDeleteUserFailure: false,
+      errorMessages: [],
+    }),
+
     // #endregion
     // #region : Local
     [Actions.resetAuthState]: () => initialState,

@@ -7,7 +7,7 @@ import {
 } from "react-router-dom/cjs/react-router-dom.min";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import logo from "~/assets/logo/duck.png";
+import logo from "~/assets/logo/no-avatar.png";
 import logoTour from "~/assets/logo/logo-tour.png";
 import { CSPhoneOutline } from "~/components/iconography/Outline";
 import { CSUserAddSolid } from "~/components/iconography/Solid";

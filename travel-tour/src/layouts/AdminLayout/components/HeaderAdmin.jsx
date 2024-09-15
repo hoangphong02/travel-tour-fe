@@ -1,7 +1,10 @@
-import React, { memo, useState } from 'react'
-import { useHistory, useLocation } from 'react-router-dom/cjs/react-router-dom.min';
-import logo from '~/assets/logo/duck.png';
-import logoTour from '~/assets/logo/logo-tour.png';
+import React, { memo, useState } from "react";
+import {
+  useHistory,
+  useLocation,
+} from "react-router-dom/cjs/react-router-dom.min";
+import logo from "~/assets/logo/no-avatar.png";
+import logoTour from "~/assets/logo/logo-tour.png";
 
 export const HeaderAdmin = memo(() => {
   const [isScroll, setIsScroll] = useState(false);
@@ -23,26 +26,24 @@ export const HeaderAdmin = memo(() => {
   //   )
   //   : [];
 
-  window.addEventListener('scroll', function() {
-  let scrollTop = window.scrollY || document.documentElement.scrollTop;
-  if(scrollTop > 80) {
-    setIsScroll(true);
-  }
-  else{
-    setIsScroll(false)
-  }
-});
-
+  window.addEventListener("scroll", function () {
+    let scrollTop = window.scrollY || document.documentElement.scrollTop;
+    if (scrollTop > 80) {
+      setIsScroll(true);
+    } else {
+      setIsScroll(false);
+    }
+  });
 
   return (
-    <section id="header-admin" >
-            <div className="header-admin--inner">
-                <div className='header-admin--inner--right'>
-                    <img src={logo} /> 
-                </div>
+    <section id="header-admin">
+      <div className="header-admin--inner">
+        <div className="header-admin--inner--right">
+          <img src={logo} />
+        </div>
       </div>
     </section>
   );
 });
 
-HeaderAdmin.displayName = 'HeaderAdmin';
+HeaderAdmin.displayName = "HeaderAdmin";

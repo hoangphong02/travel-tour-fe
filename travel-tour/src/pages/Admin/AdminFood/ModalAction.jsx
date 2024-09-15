@@ -97,16 +97,10 @@ export const ModalActions = ({
     }
   };
 
-  console.log("imagePreview", urlImage);
-
-  console.log("vale", valueTextEditor);
-
   const onSubmit = (values) => {
     setDataForm(values);
     setIsShowModalConfirm(true);
   };
-
-  console.log("dataform", dataForm);
 
   const handleSubmit = () => {
     const { name, title } = dataForm;
@@ -153,7 +147,7 @@ export const ModalActions = ({
         size="xl"
         className="modal-actions-product"
       >
-        <ModalHeader>{`${type === "add" ? "Thêm" : "Chỉnh sửa"} nhân viên`}</ModalHeader>
+        <ModalHeader>{`${type === "add" ? "Thêm" : "Chỉnh sửa"} món ăn`}</ModalHeader>
         <Formik
           initialValues={{
             title: type === "add" ? "" : data?.name || "",
@@ -323,8 +317,8 @@ export const ModalActions = ({
         toggle={() => setIsShowModalConfirm(false)}
       >
         <ModalBody>
-          <h3>{`Xác nhận ${type === "add" ? "Thêm" : "Chỉnh sửa"} nhân viên`}</h3>
-          <p>{`Bạn chắc chắn ${type === "add" ? "Thêm" : "Chỉnh sửa"} nhân viên`}</p>
+          <h3>{`Xác nhận ${type === "add" ? "thêm" : "chỉnh sửa"} nhân viên`}</h3>
+          <p>{`Bạn chắc chắn ${type === "add" ? "thêm" : "chỉnh sửa"} nhân viên`}</p>
         </ModalBody>
         <ModalFooter>
           <div className="d-flex align-content-center justify-content-between flex-grow-1">

@@ -9,15 +9,11 @@ import {
 import { ModalActions } from "./ModalAction";
 import { ModalDelete } from "./ModalDelete";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  getAllFoodsRequest,
-  resetCreateFoods,
-  resetUpdateFoods,
-} from "~/redux/food/actions";
 import { toast } from "react-toastify";
 import { useDebounce } from "~/helpers/hooks";
 import { getAllUserRequest } from "~/redux/user/actions";
 import { resetRegisterState, resetUpdateUserState } from "~/redux/auth/actions";
+import logo from "~/assets/logo/no-avatar.png";
 
 const AdminFood = () => {
   const [isShowModalAction, setIsShowModalAction] = useState(false);
@@ -26,18 +22,13 @@ const AdminFood = () => {
   const [type, setType] = useState();
   const [search, setSearch] = useState("");
   const searchDebounce = useDebounce(search, 500);
-  const {
-    isGetAllUsersRequest,
-    isGetAllUsersSuccess,
-    isGetAllUsersFailure,
-    getAllUsersState,
-  } = useSelector((store) => store.user);
+  const { isGetAllUsersSuccess, getAllUsersState } = useSelector(
+    (store) => store.user
+  );
 
   const {
-    isRegisterRequest,
     isRegisterSuccess,
     isRegisterFailure,
-    isUpdateUserRequest,
     isUpdateUserSuccess,
     isUpdateUserFailure,
   } = useSelector((store) => store.auth);
@@ -91,6 +82,23 @@ const AdminFood = () => {
       Cell: (row) => row.row.index + 1,
     },
     {
+      Header: "Ảnh đại diện",
+      accessor: "avatar",
+      cellClass: "list-item-heading w-5",
+      Cell: ({ value }) => (
+        <div
+          className="d-flex align-items-center btn-see-tour justify-content-center"
+          style={{ gap: "10px" }}
+        >
+          <img
+            src={value ? value : logo}
+            alt="avatar"
+            style={{ height: "50px", width: "50px", objectFit: "contain" }}
+          />
+        </div>
+      ),
+    },
+    {
       Header: "MÃ",
       accessor: "_id",
       cellClass: "list-item-heading w-5",
@@ -131,7 +139,7 @@ const AdminFood = () => {
             outline
             color="primary"
             className="icon-button"
-            onClick={() => handleShowModalDelete(true)}
+            onClick={handleShowModalDelete}
           >
             <CSTrash2Outline />
           </div>
@@ -187,6 +195,8 @@ const AdminFood = () => {
     setIndexPage(idxPage);
     setCallApi(true);
   };
+
+  console.log("isShowModalDelete", isShowModalDelete);
 
   return (
     <div className="admin-staff-page">

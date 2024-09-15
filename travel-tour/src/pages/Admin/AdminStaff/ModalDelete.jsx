@@ -1,18 +1,31 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Alert, Button, Modal, ModalBody, ModalFooter } from "reactstrap";
+import { toast } from "react-toastify";
+import { Button, Modal, ModalBody, ModalFooter } from "reactstrap";
+import { deleteUserRequest, resetDeleteUserState } from "~/redux/auth/actions";
 
-export const ModalDelete = ({ data, isOpen, handleClose }) => {
+export const ModalDelete = ({ data, isOpen, handleClose, setCallApi }) => {
+  const { isDeleteUserRequest, isDeleteUserSuccess, isDeleteUserFailure } =
+    useSelector((store) => store.auth);
   const dispatch = useDispatch();
 
-  //   useEffect(() => {
-  //     if (isDeleteProductSuccess) {
-  //       handleClose();
-  //     }
-  //   }, [isDeleteProductSuccess]);
+  useEffect(() => {
+    if (isDeleteUserSuccess) {
+      setCallApi(true);
+      toast.success("Xóa nhân viên thành công");
+      handleClose();
+      dispatch(resetDeleteUserState());
+    }
+  }, [isDeleteUserSuccess]);
+  useEffect(() => {
+    if (isDeleteUserFailure) {
+      toast.error("Xóa nhân viên thất bại");
+      dispatch(resetDeleteUserState());
+    }
+  }, [isDeleteUserFailure]);
 
   const handleDelete = () => {
-    // dispatch(deleteProductRequest(data.id));
+    dispatch(deleteUserRequest(data._id));
   };
 
   return (
@@ -36,10 +49,10 @@ export const ModalDelete = ({ data, isOpen, handleClose }) => {
         <div className="d-flex align-content-center justify-content-between flex-grow-1">
           <Button
             color="danger"
-            // disabled={isDeleteProductRequest}
-            // className={`btn-shadow btn-multiple-state ${
-            //   isDeleteProductRequest ? "show-spinner disabled" : ""
-            // }`}
+            disabled={isDeleteUserRequest}
+            className={`btn-shadow btn-multiple-state ${
+              isDeleteUserRequest ? "show-spinner disabled" : ""
+            }`}
             onClick={handleDelete}
           >
             <span className="spinner d-inline-block">
@@ -52,11 +65,11 @@ export const ModalDelete = ({ data, isOpen, handleClose }) => {
           <Button
             color="danger"
             outline
-            // disabled={isDeleteProductRequest}
-            // className={`btn-shadow btn-multiple-state ${
-            //   isDeleteProductRequest ? "disabled" : ""
-            // }`}
-            // style={isDeleteProductRequest ? { cursor: "no-drop" } : {}}
+            disabled={isDeleteUserRequest}
+            className={`btn-shadow btn-multiple-state ${
+              isDeleteUserRequest ? "disabled" : ""
+            }`}
+            style={isDeleteUserRequest ? { cursor: "no-drop" } : {}}
             onClick={handleClose}
           >
             Trở về

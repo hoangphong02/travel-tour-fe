@@ -25,4 +25,9 @@ export const uploadFileSuccess = createAction("UPLOAD_FILE_SUCCESS");
 export const uploadFileFailure = createAction("UPLOAD_FILE_FAILURE");
 export const resetUploadFile = createAction("RESET_UPLOAD_FILE");
 
+export const deleteUserRequest = createAction("DELETE_USER_REQUEST");
+export const deleteUserSuccess = createAction("DELETE_USER_SUCCESS");
+export const deleteUserFailure = createAction("DELETE_USER_FAILURE");
+export const resetDeleteUserState = createAction("RESET_DELETE_USER");
+
 export const resetAuthState = createAction("RESET_AUTH_STATE");
