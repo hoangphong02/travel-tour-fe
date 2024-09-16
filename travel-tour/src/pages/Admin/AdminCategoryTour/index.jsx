@@ -9,34 +9,40 @@ import {
 import { ModalActions } from "./ModalAction";
 import { ModalDelete } from "./ModalDelete";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  getAllFoodsRequest,
-  resetCreateFoods,
-  resetUpdateFoods,
-} from "~/redux/food/actions";
+// import {
+//   getAllFoodsRequest,
+//   resetCreateFoods,
+//   resetUpdateFoods,
+// } from "~/redux/food/actions";
 import { toast } from "react-toastify";
 import { useDebounce } from "~/helpers/hooks";
+import logo from "~/assets/logo/no-avatar.png";
+import {
+  getAllCategoryRequest,
+  resetCreateCategory,
+  resetUpdateCategory,
+} from "~/redux/categoryBlog/actions";
 
-const AdminFood = () => {
+const AdminCategoryTour = () => {
   const [isShowModalAction, setIsShowModalAction] = useState(false);
   const [isShowModalDelete, setIsShowModalDelete] = useState(false);
   const [isShowModalConfirm, setIsShowModalConfirm] = useState(false);
   const [type, setType] = useState();
   const [search, setSearch] = useState("");
   const searchDebounce = useDebounce(search, 500);
-  const {
-    getAllFoodsState,
-    isGetAllFoodsRequest,
-    isGetAllFoodsSuccess,
-    isGetAllFoodsFailure,
-    isCreateFoodRequest,
-    isCreateFoodSuccess,
-    isCreateFoodFailure,
 
-    isUpdateFoodRequest,
-    isUpdateFoodSuccess,
-    isUpdateFoodFailure,
-  } = useSelector((store) => store.food);
+  const {
+    getAllCategoryState,
+    isCreateCategoryRequest,
+    isCreateCategorySuccess,
+    isCreateCategoryFailure,
+    isGetAllCategoryRequest,
+    isGetAllCategorySuccess,
+    isGetAllCategoryFailure,
+    isUpdateCategoryRequest,
+    isUpdateCategorySuccess,
+    isUpdateCategoryFailure,
+  } = useSelector((store) => store.categoryBlog);
   const [callApi, setCallApi] = useState(false);
   const [dataActive, setDataActive] = useState(null);
   const [dataTable, setDataTable] = useState([]);
@@ -73,10 +79,12 @@ const AdminFood = () => {
       if (searchDebounce) {
         params.name = searchDebounce;
       }
-      dispatch(getAllFoodsRequest(params));
+      dispatch(getAllCategoryRequest(params));
       setCallApi(false);
     }
   }, [callApi, indexPage]);
+
+  console.log("getAllCategoryState", getAllCategoryState);
 
   const columns = useMemo(() => [
     {
@@ -96,9 +104,21 @@ const AdminFood = () => {
       cellClass: "list-item-heading w-5",
     },
     {
-      Header: "Tiêu đề",
-      accessor: "title",
+      Header: "Ảnh minh họa",
+      accessor: "thumbnail",
       cellClass: "list-item-heading w-5",
+      Cell: ({ value }) => (
+        <div
+          className="d-flex align-items-center btn-see-tour justify-content-center"
+          style={{ gap: "10px" }}
+        >
+          <img
+            src={value ? value : logo}
+            alt="avatar"
+            style={{ height: "50px", width: "50px", objectFit: "contain" }}
+          />
+        </div>
+      ),
     },
 
     {
@@ -131,37 +151,37 @@ const AdminFood = () => {
   ]);
 
   useEffect(() => {
-    if (isGetAllFoodsSuccess) {
-      setDataTable(getAllFoodsState?.data || []);
+    if (isGetAllCategorySuccess) {
+      setDataTable(getAllCategoryState?.data || []);
     }
-  }, [isGetAllFoodsSuccess]);
+  }, [isGetAllCategorySuccess]);
 
   useEffect(() => {
-    if (isCreateFoodSuccess) {
-      toast.success("Thêm món ăn thành công");
+    if (isCreateCategorySuccess) {
+      toast.success("Thêm danh mục thành công");
       setIsShowModalConfirm(false);
       setCallApi(true);
       setIsShowModalAction(false);
-      dispatch(resetCreateFoods());
+      dispatch(resetCreateCategory());
     }
-  }, [isCreateFoodSuccess]);
+  }, [isCreateCategorySuccess]);
 
   useEffect(() => {
-    if (isCreateFoodFailure) {
-      toast.error("Thêm món ăn thất bại");
-      dispatch(resetCreateFoods());
+    if (isCreateCategoryFailure) {
+      toast.error("Thêm danh mục thất bại");
+      dispatch(resetCreateCategory());
     }
-  }, [isCreateFoodFailure]);
+  }, [isCreateCategoryFailure]);
 
   useEffect(() => {
-    if (isUpdateFoodSuccess) {
-      toast.success("Cập nhật ăn thành công");
+    if (isUpdateCategorySuccess) {
+      toast.success("Cập nhật danh mục thành công");
       setCallApi(true);
       setIsShowModalConfirm(false);
       setIsShowModalAction(false);
-      dispatch(resetUpdateFoods());
+      dispatch(resetUpdateCategory());
     }
-  }, [isUpdateFoodSuccess]);
+  }, [isUpdateCategorySuccess]);
 
   const handleClickRow = (value) => {
     setDataActive(value);
@@ -195,9 +215,9 @@ const AdminFood = () => {
           columns={columns}
           onClickRow={handleClickRow}
           indexPage={indexPage}
-          maxPage={getAllFoodsState?.totalPage}
+          maxPage={getAllCategoryState?.totalPage}
           handlePaginationNext={handleChangePage}
-          showPagination={getAllFoodsState?.totalPage > 1 ? true : false}
+          showPagination={getAllCategoryState?.totalPage > 1 ? true : false}
         />
       </div>
 
@@ -223,4 +243,4 @@ const AdminFood = () => {
   );
 };
 
-export default AdminFood;
+export default AdminCategoryTour;

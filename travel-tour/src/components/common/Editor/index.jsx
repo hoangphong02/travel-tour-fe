@@ -72,6 +72,7 @@ const Editor = ({ value, setValue }) => {
         [{ header: [1, 2, false] }],
         [{ size: ["small", false, "large", "huge"] }], // Thêm lựa chọn size chữ
         ["bold", "italic", "underline", "strike", "blockquote"],
+        [{ align: [] }],
         [
           { list: "ordered" },
           { list: "bullet" },

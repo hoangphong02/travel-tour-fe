@@ -1,10 +1,17 @@
 import AdminDashboard from "./AdminDashboard";
 import AdminBooking from "./AdminBooking";
 import AdminBlog from "./AdminBlog";
-import AdminFood from "./AdminFood";
+import AdminCategoryBlog from "./AdminCategoryBlog";
 import AdminStaff from "./AdminStaff";
 import AdminTour from "./AdminTour";
+import AdminCategoryTour from "./AdminCategoryTour";
 
 export {
-  AdminDashboard,AdminBooking,AdminBlog,AdminFood,AdminStaff,AdminTour
+  AdminDashboard,
+  AdminBooking,
+  AdminBlog,
+  AdminCategoryBlog,
+  AdminStaff,
+  AdminTour,
+  AdminCategoryTour,
 };

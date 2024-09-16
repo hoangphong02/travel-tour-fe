@@ -16,28 +16,33 @@ import { useDispatch, useSelector } from "react-redux";
 // } from "~/redux/food/actions";
 import { toast } from "react-toastify";
 import { useDebounce } from "~/helpers/hooks";
-import { getAllCategoryRequest } from "~/redux/categoryBlog/actions";
+import logo from "~/assets/logo/no-avatar.png";
+import {
+  getAllCategoryRequest,
+  resetCreateCategory,
+  resetUpdateCategory,
+} from "~/redux/categoryBlog/actions";
 
-const AdminBlog = () => {
+const AdminCategoryBlog = () => {
   const [isShowModalAction, setIsShowModalAction] = useState(false);
   const [isShowModalDelete, setIsShowModalDelete] = useState(false);
   const [isShowModalConfirm, setIsShowModalConfirm] = useState(false);
   const [type, setType] = useState();
   const [search, setSearch] = useState("");
   const searchDebounce = useDebounce(search, 500);
-  // const {
-  //   getAllFoodsState,
-  //   isGetAllFoodsRequest,
-  //   isGetAllFoodsSuccess,
-  //   isGetAllFoodsFailure,
-  //   isCreateFoodRequest,
-  //   isCreateFoodSuccess,
-  //   isCreateFoodFailure,
 
-  //   isUpdateFoodRequest,
-  //   isUpdateFoodSuccess,
-  //   isUpdateFoodFailure,
-  // } = useSelector((store) => store.food);
+  const {
+    getAllCategoryState,
+    isCreateCategoryRequest,
+    isCreateCategorySuccess,
+    isCreateCategoryFailure,
+    isGetAllCategoryRequest,
+    isGetAllCategorySuccess,
+    isGetAllCategoryFailure,
+    isUpdateCategoryRequest,
+    isUpdateCategorySuccess,
+    isUpdateCategoryFailure,
+  } = useSelector((store) => store.categoryBlog);
   const [callApi, setCallApi] = useState(false);
   const [dataActive, setDataActive] = useState(null);
   const [dataTable, setDataTable] = useState([]);
@@ -74,16 +79,12 @@ const AdminBlog = () => {
       if (searchDebounce) {
         params.name = searchDebounce;
       }
-      // dispatch(getAllFoodsRequest(params));
+      dispatch(getAllCategoryRequest(params));
       setCallApi(false);
     }
   }, [callApi, indexPage]);
 
-  useEffect(() => {
-    if (isShowModalAction) {
-      dispatch(getAllCategoryRequest());
-    }
-  }, [isShowModalAction]);
+  console.log("getAllCategoryState", getAllCategoryState);
 
   const columns = useMemo(() => [
     {
@@ -103,9 +104,21 @@ const AdminBlog = () => {
       cellClass: "list-item-heading w-5",
     },
     {
-      Header: "Tiêu đề",
-      accessor: "title",
+      Header: "Ảnh minh họa",
+      accessor: "thumbnail",
       cellClass: "list-item-heading w-5",
+      Cell: ({ value }) => (
+        <div
+          className="d-flex align-items-center btn-see-tour justify-content-center"
+          style={{ gap: "10px" }}
+        >
+          <img
+            src={value ? value : logo}
+            alt="avatar"
+            style={{ height: "50px", width: "50px", objectFit: "contain" }}
+          />
+        </div>
+      ),
     },
 
     {
@@ -137,38 +150,38 @@ const AdminBlog = () => {
     },
   ]);
 
-  // useEffect(() => {
-  //   if (isGetAllFoodsSuccess) {
-  //     setDataTable(getAllFoodsState?.data || []);
-  //   }
-  // }, [isGetAllFoodsSuccess]);
+  useEffect(() => {
+    if (isGetAllCategorySuccess) {
+      setDataTable(getAllCategoryState?.data || []);
+    }
+  }, [isGetAllCategorySuccess]);
 
-  // useEffect(() => {
-  //   if (isCreateFoodSuccess) {
-  //     toast.success("Thêm món ăn thành công");
-  //     setIsShowModalConfirm(false);
-  //     setCallApi(true);
-  //     setIsShowModalAction(false);
-  //     dispatch(resetCreateFoods());
-  //   }
-  // }, [isCreateFoodSuccess]);
+  useEffect(() => {
+    if (isCreateCategorySuccess) {
+      toast.success("Thêm danh mục thành công");
+      setIsShowModalConfirm(false);
+      setCallApi(true);
+      setIsShowModalAction(false);
+      dispatch(resetCreateCategory());
+    }
+  }, [isCreateCategorySuccess]);
 
-  // useEffect(() => {
-  //   if (isCreateFoodFailure) {
-  //     toast.error("Thêm món ăn thất bại");
-  //     dispatch(resetCreateFoods());
-  //   }
-  // }, [isCreateFoodFailure]);
+  useEffect(() => {
+    if (isCreateCategoryFailure) {
+      toast.error("Thêm danh mục thất bại");
+      dispatch(resetCreateCategory());
+    }
+  }, [isCreateCategoryFailure]);
 
-  // useEffect(() => {
-  //   if (isUpdateFoodSuccess) {
-  //     toast.success("Cập nhật ăn thành công");
-  //     setCallApi(true);
-  //     setIsShowModalConfirm(false);
-  //     setIsShowModalAction(false);
-  //     dispatch(resetUpdateFoods());
-  //   }
-  // }, [isUpdateFoodSuccess]);
+  useEffect(() => {
+    if (isUpdateCategorySuccess) {
+      toast.success("Cập nhật danh mục thành công");
+      setCallApi(true);
+      setIsShowModalConfirm(false);
+      setIsShowModalAction(false);
+      dispatch(resetUpdateCategory());
+    }
+  }, [isUpdateCategorySuccess]);
 
   const handleClickRow = (value) => {
     setDataActive(value);
@@ -202,9 +215,9 @@ const AdminBlog = () => {
           columns={columns}
           onClickRow={handleClickRow}
           indexPage={indexPage}
-          // maxPage={getAllFoodsState?.totalPage}
+          maxPage={getAllCategoryState?.totalPage}
           handlePaginationNext={handleChangePage}
-          // showPagination={getAllFoodsState?.totalPage > 1 ? true : false}
+          showPagination={getAllCategoryState?.totalPage > 1 ? true : false}
         />
       </div>
 
@@ -230,4 +243,4 @@ const AdminBlog = () => {
   );
 };
 
-export default AdminBlog;
+export default AdminCategoryBlog;

@@ -4,7 +4,8 @@ import user from "./user/saga";
 import product from "./product/saga";
 import order from "./order/saga";
 import food from "./food/saga";
+import categoryBlog from "./categoryBlog/saga";
 
 export default function* rootSaga() {
-  yield all([auth(), user(), product(), order(), food()]);
+  yield all([auth(), user(), product(), order(), food(), categoryBlog()]);
 }

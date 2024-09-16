@@ -13,8 +13,10 @@ import {
   ModalHeader,
 } from "reactstrap";
 import * as Yup from "yup";
-import Editor from "~/components/common/Editor";
-import { createFoodsRequest, updateFoodsRequest } from "~/redux/food/actions";
+import {
+  createCategoryRequest,
+  updateCategoryRequest,
+} from "~/redux/categoryBlog/actions";
 
 export const PHONE_REGEX = /((0)+([1-9]{1})+([0-9]{8})\b)/g;
 
@@ -40,26 +42,13 @@ export const ModalActions = ({
   } = useSelector((store) => store.food);
   const dispatch = useDispatch();
   const [urlImage, setUrlImage] = useState();
-  const [valueTextEditor, setValueTextEditor] = useState(null);
   const [dataForm, setDataForm] = useState(null);
 
   useEffect(() => {
-    if (data?.image) {
-      setUrlImage(data?.image[0]?.url);
+    if (data?.thumbnail) {
+      setUrlImage(data?.thumbnail);
     }
   }, [data]);
-
-  useEffect(() => {
-    if (data?.description?.length) {
-      setValueTextEditor({ ops: data.description });
-    }
-  }, [data?.description]);
-
-  useEffect(() => {
-    if (data?.description?.[0]?.text?.length) {
-      setValueTextEditor({ ops: [{ insert: data.description[0].text }] });
-    }
-  }, [data?.description]);
 
   const uploadToCloudinary = async (file, uploadPreset, uploadUrl) => {
     try {
@@ -103,39 +92,21 @@ export const ModalActions = ({
   };
 
   const handleSubmit = () => {
-    const { name, title } = dataForm;
+    const { name } = dataForm;
 
     if (type === "add") {
       const payload = {
-        title,
         name,
-        image: [
-          {
-            type: "photos",
-            url: urlImage,
-          },
-        ],
+        thumbnail: urlImage,
       };
-      if (valueTextEditor) {
-        payload.description = valueTextEditor?.ops;
-      }
 
-      dispatch(createFoodsRequest(payload));
+      dispatch(createCategoryRequest(payload));
     } else {
       const payload = {
-        title,
         name,
-        image: [
-          {
-            type: "photos",
-            url: urlImage,
-          },
-        ],
+        thumbnail: urlImage,
       };
-      if (valueTextEditor) {
-        payload.description = valueTextEditor?.ops;
-      }
-      dispatch(updateFoodsRequest({ id: data._id, body: payload }));
+      dispatch(updateCategoryRequest({ id: data._id, body: payload }));
     }
   };
 
@@ -150,7 +121,6 @@ export const ModalActions = ({
         <ModalHeader>{`${type === "add" ? "Thêm" : "Chỉnh sửa"} món ăn`}</ModalHeader>
         <Formik
           initialValues={{
-            title: type === "add" ? "" : data?.name || "",
             name: type === "add" ? "" : data?.name || "",
           }}
           validationSchema={SignupSchema}
@@ -163,32 +133,14 @@ export const ModalActions = ({
                   {(isCreateFoodFailure || isUpdateFoodFailure) && (
                     <Alert color="danger">
                       {type === "add"
-                        ? "Thêm món ăn thất bại"
-                        : "Cập nhật món ăn thất bại"}
+                        ? "Thêm danh mục Blog"
+                        : "Cập nhật danh mục Blog"}
                     </Alert>
                   )}
                   <div className="d-flex" style={{ gap: "12px" }}>
                     <FormGroup className="w-100 error-l-100">
                       <Label>
-                        Tiêu đề:{" "}
-                        <span style={{ color: "red", fontWeight: "600" }}>
-                          *
-                        </span>
-                      </Label>
-                      <Field
-                        className="form-control"
-                        name="title"
-                        placeholder="Nhập tiêu đề"
-                      />
-                      {errors.title && touched.title ? (
-                        <div className="invalid-feedback d-block">
-                          {errors.title}
-                        </div>
-                      ) : null}
-                    </FormGroup>
-                    <FormGroup className="w-100 error-l-100">
-                      <Label>
-                        Tên món ăn:{" "}
+                        Tên danh mục:{" "}
                         <span style={{ color: "red", fontWeight: "600" }}>
                           *
                         </span>
@@ -196,25 +148,15 @@ export const ModalActions = ({
                       <Field
                         className="form-control"
                         name="name"
-                        placeholder="Nhập tên"
+                        placeholder="Nhập tiêu đề"
                       />
-                      {errors.email && touched.email ? (
+                      {errors.name && touched.name ? (
                         <div className="invalid-feedback d-block">
-                          {errors.email}
+                          {errors.name}
                         </div>
                       ) : null}
                     </FormGroup>
                   </div>
-                  <FormGroup className="error-l-100">
-                    <Label>
-                      Mô tả:{" "}
-                      <span style={{ color: "red", fontWeight: "600" }}>*</span>
-                    </Label>
-                    <Editor
-                      value={valueTextEditor}
-                      setValue={setValueTextEditor}
-                    />
-                  </FormGroup>
 
                   <FormGroup className="error-l-100">
                     <Label>Ảnh minh họa:</Label>
@@ -317,8 +259,8 @@ export const ModalActions = ({
         toggle={() => setIsShowModalConfirm(false)}
       >
         <ModalBody>
-          <h3>{`Xác nhận ${type === "add" ? "thêm" : "chỉnh sửa"} nhân viên`}</h3>
-          <p>{`Bạn chắc chắn ${type === "add" ? "thêm" : "chỉnh sửa"} nhân viên`}</p>
+          <h3>{`Xác nhận ${type === "add" ? "thêm" : "chỉnh sửa"} danh mục Blog`}</h3>
+          <p>{`Bạn chắc chắn ${type === "add" ? "thêm" : "chỉnh sửa"} Blog`}</p>
         </ModalBody>
         <ModalFooter>
           <div className="d-flex align-content-center justify-content-between flex-grow-1">

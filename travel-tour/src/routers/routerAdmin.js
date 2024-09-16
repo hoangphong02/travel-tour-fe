@@ -1,7 +1,14 @@
-import { v4 as uuidv4 } from 'uuid';
-import { routesAdmin } from '~/configs';
-import { AdminBlog, AdminBooking, AdminDashboard, AdminFood, AdminStaff, AdminTour } from '~/pages/Admin';
-
+import { v4 as uuidv4 } from "uuid";
+import { routesAdmin } from "~/configs";
+import {
+  AdminBlog,
+  AdminBooking,
+  AdminCategoryBlog,
+  AdminCategoryTour,
+  AdminDashboard,
+  AdminStaff,
+  AdminTour,
+} from "~/pages/Admin";
 
 export const routerAdmin = [
   {
@@ -26,8 +33,13 @@ export const routerAdmin = [
   },
   {
     id: `user-${uuidv4()}`,
-    path: routesAdmin.adminFood,
-    component: AdminFood,
+    path: routesAdmin.adminCategoryBlog,
+    component: AdminCategoryBlog,
+  },
+  {
+    id: `user-${uuidv4()}`,
+    path: routesAdmin.adminCategoryTour,
+    component: AdminCategoryTour,
   },
   {
     id: `user-${uuidv4()}`,
