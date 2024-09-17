@@ -106,7 +106,7 @@ const AdminCategoryBlog = () => {
     {
       Header: "Ảnh minh họa",
       accessor: "thumbnail",
-      cellClass: "list-item-heading w-5",
+      cellClass: "list-item-heading w-5 d-flex",
       Cell: ({ value }) => (
         <div
           className="d-flex align-items-center btn-see-tour justify-content-center"
@@ -115,7 +115,7 @@ const AdminCategoryBlog = () => {
           <img
             src={value ? value : logo}
             alt="avatar"
-            style={{ height: "50px", width: "50px", objectFit: "contain" }}
+            style={{ height: "60px", width: "60px", objectFit: "contain" }}
           />
         </div>
       ),
@@ -192,7 +192,7 @@ const AdminCategoryBlog = () => {
   };
 
   return (
-    <div className="admin-food-page">
+    <div className="admin-category-blog-page">
       <div className="top">
         <TopComponent handleShowModalActions={handleShowModalActions} />
       </div>

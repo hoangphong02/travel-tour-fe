@@ -6,7 +6,6 @@ import {
   deleteCategoryRequest,
   resetDeleteCategory,
 } from "~/redux/categoryBlog/actions";
-import { deleteFoodsRequest, resetDeleteFoods } from "~/redux/food/actions";
 
 export const ModalDelete = ({ data, isOpen, handleClose, setCallApi }) => {
   const dispatch = useDispatch();
@@ -21,7 +20,7 @@ export const ModalDelete = ({ data, isOpen, handleClose, setCallApi }) => {
     if (isDeleteCategorySuccess) {
       handleClose();
       setCallApi(true);
-      toast.success("Xóa thành công món ăn");
+      toast.success("Xóa thành công danh mục blog");
       dispatch(resetDeleteCategory());
     }
   }, [isDeleteCategorySuccess]);

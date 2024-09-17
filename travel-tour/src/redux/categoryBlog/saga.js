@@ -41,7 +41,12 @@ function* updateCategory({ payload }) {
     const response = yield call(() =>
       axiosMicro.put(`/category/${payload.id}`, payload.body)
     );
-    yield put(Actions.updateCategorySuccess(response.data));
+    if (response?.data?.status === "OK") {
+      yield put(Actions.updateCategorySuccess(response.data));
+    } else {
+      const messages = response.data.messages;
+      yield put(Actions.updateCategoryFailure(messages));
+    }
   } catch (error) {
     if (error?.response?.data) {
       const messages = error.response.data;

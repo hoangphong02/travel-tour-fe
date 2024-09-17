@@ -14,9 +14,9 @@ import {
 } from "reactstrap";
 import * as Yup from "yup";
 import {
-  createCategoryRequest,
-  updateCategoryRequest,
-} from "~/redux/categoryBlog/actions";
+  createCategoryTourRequest,
+  updateCategoryTourRequest,
+} from "~/redux/categoryTour/actions";
 
 export const PHONE_REGEX = /((0)+([1-9]{1})+([0-9]{8})\b)/g;
 
@@ -35,11 +35,13 @@ export const ModalActions = ({
   setIsShowModalConfirm,
 }) => {
   const {
-    isCreateFoodRequest,
-    isCreateFoodFailure,
-    isUpdateFoodRequest,
-    isUpdateFoodFailure,
-  } = useSelector((store) => store.food);
+    isCreateCategoryTourRequest,
+    isCreateCategoryTourSuccess,
+    isCreateCategoryTourFailure,
+    isUpdateCategoryTourRequest,
+    isUpdateCategoryTourSuccess,
+    isUpdateCategoryTourFailure,
+  } = useSelector((store) => store.categoryTour);
   const dispatch = useDispatch();
   const [urlImage, setUrlImage] = useState();
   const [dataForm, setDataForm] = useState(null);
@@ -49,6 +51,11 @@ export const ModalActions = ({
       setUrlImage(data?.thumbnail);
     }
   }, [data]);
+  useEffect(() => {
+    if (isCreateCategoryTourSuccess || isUpdateCategoryTourSuccess) {
+      setUrlImage();
+    }
+  }, [isCreateCategoryTourSuccess, isUpdateCategoryTourSuccess]);
 
   const uploadToCloudinary = async (file, uploadPreset, uploadUrl) => {
     try {
@@ -100,13 +107,13 @@ export const ModalActions = ({
         thumbnail: urlImage,
       };
 
-      dispatch(createCategoryRequest(payload));
+      dispatch(createCategoryTourRequest(payload));
     } else {
       const payload = {
         name,
         thumbnail: urlImage,
       };
-      dispatch(updateCategoryRequest({ id: data._id, body: payload }));
+      dispatch(updateCategoryTourRequest({ id: data._id, body: payload }));
     }
   };
 
@@ -118,7 +125,7 @@ export const ModalActions = ({
         size="xl"
         className="modal-actions-product"
       >
-        <ModalHeader>{`${type === "add" ? "Thêm" : "Chỉnh sửa"} món ăn`}</ModalHeader>
+        <ModalHeader>{`${type === "add" ? "Thêm" : "Chỉnh sửa"} danh mục tour`}</ModalHeader>
         <Formik
           initialValues={{
             name: type === "add" ? "" : data?.name || "",
@@ -130,11 +137,12 @@ export const ModalActions = ({
             return (
               <Form className="av-tooltip">
                 <ModalBody>
-                  {(isCreateFoodFailure || isUpdateFoodFailure) && (
+                  {(isCreateCategoryTourFailure ||
+                    isUpdateCategoryTourFailure) && (
                     <Alert color="danger">
                       {type === "add"
-                        ? "Thêm danh mục Blog"
-                        : "Cập nhật danh mục Blog"}
+                        ? "Thêm danh mục Tour"
+                        : "Cập nhật danh mục Tour"}
                     </Alert>
                   )}
                   <div className="d-flex" style={{ gap: "12px" }}>
@@ -222,7 +230,8 @@ export const ModalActions = ({
                         padding: "8px 24px",
                       }}
                       className={`btn-shadow btn-multiple-state ${
-                        isCreateFoodRequest || isUpdateFoodRequest
+                        isCreateCategoryTourRequest ||
+                        isUpdateCategoryTourRequest
                           ? "show-spinner cursor-none"
                           : ""
                       } `}
@@ -259,16 +268,18 @@ export const ModalActions = ({
         toggle={() => setIsShowModalConfirm(false)}
       >
         <ModalBody>
-          <h3>{`Xác nhận ${type === "add" ? "thêm" : "chỉnh sửa"} danh mục Blog`}</h3>
-          <p>{`Bạn chắc chắn ${type === "add" ? "thêm" : "chỉnh sửa"} Blog`}</p>
+          <h3>{`Xác nhận ${type === "add" ? "thêm" : "chỉnh sửa"} danh mục Tour`}</h3>
+          <p>{`Bạn chắc chắn ${type === "add" ? "thêm" : "chỉnh sửa"} Tour`}</p>
         </ModalBody>
         <ModalFooter>
           <div className="d-flex align-content-center justify-content-between flex-grow-1">
             <Button
               color="primary"
-              disabled={isCreateFoodRequest || isUpdateFoodRequest}
+              disabled={
+                isCreateCategoryTourRequest || isUpdateCategoryTourRequest
+              }
               className={`btn-shadow btn-multiple-state ${
-                isCreateFoodRequest || isUpdateFoodRequest
+                isCreateCategoryTourRequest || isUpdateCategoryTourRequest
                   ? "show-spinner disabled"
                   : ""
               }`}
@@ -285,12 +296,16 @@ export const ModalActions = ({
             <Button
               color="primary"
               outline
-              disabled={isCreateFoodRequest || isUpdateFoodRequest}
+              disabled={
+                isCreateCategoryTourRequest || isUpdateCategoryTourRequest
+              }
               className={`btn-shadow btn-multiple-state ${
-                isCreateFoodRequest || isUpdateFoodRequest ? "disabled" : ""
+                isCreateCategoryTourRequest || isUpdateCategoryTourRequest
+                  ? "disabled"
+                  : ""
               }`}
               style={
-                isCreateFoodRequest || isUpdateFoodRequest
+                isCreateCategoryTourRequest || isUpdateCategoryTourRequest
                   ? { cursor: "no-drop" }
                   : {}
               }

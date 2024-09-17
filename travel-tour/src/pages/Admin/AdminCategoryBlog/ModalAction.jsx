@@ -35,11 +35,17 @@ export const ModalActions = ({
   setIsShowModalConfirm,
 }) => {
   const {
-    isCreateFoodRequest,
-    isCreateFoodFailure,
-    isUpdateFoodRequest,
-    isUpdateFoodFailure,
-  } = useSelector((store) => store.food);
+    getAllCategoryState,
+    isCreateCategoryRequest,
+    isCreateCategorySuccess,
+    isCreateCategoryFailure,
+    isGetAllCategoryRequest,
+    isGetAllCategorySuccess,
+    isGetAllCategoryFailure,
+    isUpdateCategoryRequest,
+    isUpdateCategorySuccess,
+    isUpdateCategoryFailure,
+  } = useSelector((store) => store.categoryBlog);
   const dispatch = useDispatch();
   const [urlImage, setUrlImage] = useState();
   const [dataForm, setDataForm] = useState(null);
@@ -130,7 +136,7 @@ export const ModalActions = ({
             return (
               <Form className="av-tooltip">
                 <ModalBody>
-                  {(isCreateFoodFailure || isUpdateFoodFailure) && (
+                  {(isCreateCategoryFailure || isUpdateCategoryFailure) && (
                     <Alert color="danger">
                       {type === "add"
                         ? "Thêm danh mục Blog"
@@ -222,7 +228,7 @@ export const ModalActions = ({
                         padding: "8px 24px",
                       }}
                       className={`btn-shadow btn-multiple-state ${
-                        isCreateFoodRequest || isUpdateFoodRequest
+                        isCreateCategoryRequest || isUpdateCategoryRequest
                           ? "show-spinner cursor-none"
                           : ""
                       } `}
@@ -266,9 +272,9 @@ export const ModalActions = ({
           <div className="d-flex align-content-center justify-content-between flex-grow-1">
             <Button
               color="primary"
-              disabled={isCreateFoodRequest || isUpdateFoodRequest}
+              disabled={isCreateCategoryRequest || isUpdateCategoryRequest}
               className={`btn-shadow btn-multiple-state ${
-                isCreateFoodRequest || isUpdateFoodRequest
+                isCreateCategoryRequest || isUpdateCategoryRequest
                   ? "show-spinner disabled"
                   : ""
               }`}
@@ -285,12 +291,14 @@ export const ModalActions = ({
             <Button
               color="primary"
               outline
-              disabled={isCreateFoodRequest || isUpdateFoodRequest}
+              disabled={isCreateCategoryRequest || isUpdateCategoryRequest}
               className={`btn-shadow btn-multiple-state ${
-                isCreateFoodRequest || isUpdateFoodRequest ? "disabled" : ""
+                isCreateCategoryRequest || isUpdateCategoryRequest
+                  ? "disabled"
+                  : ""
               }`}
               style={
-                isCreateFoodRequest || isUpdateFoodRequest
+                isCreateCategoryRequest || isUpdateCategoryRequest
                   ? { cursor: "no-drop" }
                   : {}
               }

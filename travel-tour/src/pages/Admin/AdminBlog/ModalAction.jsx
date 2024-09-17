@@ -15,6 +15,7 @@ import {
 } from "reactstrap";
 import * as Yup from "yup";
 import Editor from "~/components/common/Editor";
+import { LIST_PROVINCE } from "~/constants";
 
 export const PHONE_REGEX = /((0)+([1-9]{1})+([0-9]{8})\b)/g;
 
@@ -38,6 +39,17 @@ export const ModalActions = ({
   const [valueTextEditor, setValueTextEditor] = useState(null);
   const [dataForm, setDataForm] = useState(null);
   const [options, setOptions] = useState([]);
+
+  const typeBlog = [
+    {
+      value: "place",
+      label: "Địa điểm",
+    },
+    {
+      value: "food",
+      label: "Món ăn",
+    },
+  ];
   useEffect(() => {
     if (getAllCategoryState?.data) {
       setOptions(
@@ -155,11 +167,14 @@ export const ModalActions = ({
         size="xl"
         className="modal-actions-product"
       >
-        <ModalHeader>{`${type === "add" ? "Thêm" : "Chỉnh sửa"} món ăn`}</ModalHeader>
+        <ModalHeader>{`${type === "add" ? "Thêm" : "Chỉnh sửa"} bài blog`}</ModalHeader>
         <Formik
           initialValues={{
             title: type === "add" ? "" : data?.name || "",
             name: type === "add" ? "" : data?.name || "",
+            category: type === "add" ? "" : data?.category?._id || "",
+            type: type === "add" ? "" : data?.type || "",
+            provinceId: type === "add" ? "" : data?.provinceId || "",
           }}
           validationSchema={SignupSchema}
           onSubmit={onSubmit}
@@ -214,14 +229,39 @@ export const ModalActions = ({
                         </div>
                       ) : null}
                     </FormGroup>
+                  </div>
+
+                  <div className="d-flex" style={{ gap: "12px" }}>
                     <FormGroup className="w-100 error-l-100">
                       <Label>
-                        Tiêu đề:{" "}
+                        Loại bài blog:{" "}
                         <span style={{ color: "red", fontWeight: "600" }}>
                           *
                         </span>
                       </Label>
-                      <Select options={options}></Select>
+                      <Select
+                        options={typeBlog}
+                        onChange={(e) => setFieldValue("type", e)}
+                        value={values.type}
+                      ></Select>
+                      {errors.email && touched.email ? (
+                        <div className="invalid-feedback d-block">
+                          {errors.email}
+                        </div>
+                      ) : null}
+                    </FormGroup>
+                    <FormGroup className="w-100 error-l-100">
+                      <Label>
+                        Danh mục blog:{" "}
+                        <span style={{ color: "red", fontWeight: "600" }}>
+                          *
+                        </span>
+                      </Label>
+                      <Select
+                        options={options}
+                        value={values.category}
+                        onChange={(e) => setFieldValue("category", e)}
+                      ></Select>
                       {errors.title && touched.title ? (
                         <div className="invalid-feedback d-block">
                           {errors.title}
@@ -229,6 +269,28 @@ export const ModalActions = ({
                       ) : null}
                     </FormGroup>
                   </div>
+                  {values.type.value === "place" ? (
+                    <div className="d-flex" style={{ gap: "12px" }}>
+                      <FormGroup className="w-100 error-l-100">
+                        <Label>
+                          Tỉnh thành:{" "}
+                          <span style={{ color: "red", fontWeight: "600" }}>
+                            *
+                          </span>
+                        </Label>
+                        <Select
+                          options={LIST_PROVINCE}
+                          value={values.provinceId}
+                          onChange={(e) => setFieldValue("provinceId", e)}
+                        ></Select>
+                        {/* {errors.email && touched.email ? (
+                        <div className="invalid-feedback d-block">
+                          {errors.email}
+                        </div>
+                      ) : null} */}
+                      </FormGroup>
+                    </div>
+                  ) : null}
                   <FormGroup className="error-l-100">
                     <Label>
                       Mô tả:{" "}

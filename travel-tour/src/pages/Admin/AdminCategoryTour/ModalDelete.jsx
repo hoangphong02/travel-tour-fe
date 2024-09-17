@@ -3,31 +3,30 @@ import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import { Alert, Button, Modal, ModalBody, ModalFooter } from "reactstrap";
 import {
-  deleteCategoryRequest,
-  resetDeleteCategory,
-} from "~/redux/categoryBlog/actions";
-import { deleteFoodsRequest, resetDeleteFoods } from "~/redux/food/actions";
+  deleteCategoryTourRequest,
+  resetDeleteCategoryTour,
+} from "~/redux/categoryTour/actions";
 
 export const ModalDelete = ({ data, isOpen, handleClose, setCallApi }) => {
   const dispatch = useDispatch();
 
   const {
-    isDeleteCategoryRequest,
-    isDeleteCategorySuccess,
-    isDeleteCategoryFailure,
-  } = useSelector((store) => store.categoryBlog);
+    isDeleteCategoryTourRequest,
+    isDeleteCategoryTourSuccess,
+    isDeleteCategoryTourFailure,
+  } = useSelector((store) => store.categoryTour);
 
   useEffect(() => {
-    if (isDeleteCategorySuccess) {
+    if (isDeleteCategoryTourSuccess) {
       handleClose();
       setCallApi(true);
-      toast.success("Xóa thành công món ăn");
-      dispatch(resetDeleteCategory());
+      toast.success("Xóa danh mục tour món ăn");
+      dispatch(resetDeleteCategoryTour());
     }
-  }, [isDeleteCategorySuccess]);
+  }, [isDeleteCategoryTourSuccess]);
 
   const handleDelete = () => {
-    dispatch(deleteCategoryRequest(data._id));
+    dispatch(deleteCategoryTourRequest(data._id));
   };
 
   return (
@@ -39,19 +38,19 @@ export const ModalDelete = ({ data, isOpen, handleClose, setCallApi }) => {
       toggle={handleClose}
     >
       <ModalBody>
-        {isDeleteCategoryFailure && (
-          <Alert color="danger">Xóa danh mục Blog thất bại</Alert>
+        {isDeleteCategoryTourFailure && (
+          <Alert color="danger">Xóa danh mục Tour thất bại</Alert>
         )}
-        <h3 className="color-danger">Xác nhận xóa danh mục Blog</h3>
-        <p>Bạn chắc chắc xóa danh mục blog</p>
+        <h3 className="color-danger">Xác nhận xóa danh mục Tour</h3>
+        <p>Bạn chắc chắc xóa danh mục Tour</p>
       </ModalBody>
       <ModalFooter>
         <div className="d-flex align-content-center justify-content-end flex-grow-1 gap-2">
           <Button
             color="danger"
-            disabled={isDeleteCategoryRequest}
+            disabled={isDeleteCategoryTourRequest}
             className={`btn-shadow btn-multiple-state ${
-              isDeleteCategoryRequest ? "show-spinner disabled" : ""
+              isDeleteCategoryTourRequest ? "show-spinner disabled" : ""
             }`}
             onClick={handleDelete}
           >
@@ -65,11 +64,11 @@ export const ModalDelete = ({ data, isOpen, handleClose, setCallApi }) => {
           <Button
             color="danger"
             outline
-            disabled={isDeleteCategoryRequest}
+            disabled={isDeleteCategoryTourRequest}
             className={`btn-shadow btn-multiple-state ${
-              isDeleteCategoryRequest ? "disabled" : ""
+              isDeleteCategoryTourRequest ? "disabled" : ""
             }`}
-            style={isDeleteCategoryRequest ? { cursor: "no-drop" } : {}}
+            style={isDeleteCategoryTourRequest ? { cursor: "no-drop" } : {}}
             onClick={handleClose}
           >
             Trở về

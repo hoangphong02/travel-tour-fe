@@ -9,19 +9,14 @@ import {
 import { ModalActions } from "./ModalAction";
 import { ModalDelete } from "./ModalDelete";
 import { useDispatch, useSelector } from "react-redux";
-// import {
-//   getAllFoodsRequest,
-//   resetCreateFoods,
-//   resetUpdateFoods,
-// } from "~/redux/food/actions";
 import { toast } from "react-toastify";
 import { useDebounce } from "~/helpers/hooks";
 import logo from "~/assets/logo/no-avatar.png";
 import {
-  getAllCategoryRequest,
-  resetCreateCategory,
-  resetUpdateCategory,
-} from "~/redux/categoryBlog/actions";
+  getAllCategoryTourRequest,
+  resetCreateCategoryTour,
+  resetUpdateCategoryTour,
+} from "~/redux/categoryTour/actions";
 
 const AdminCategoryTour = () => {
   const [isShowModalAction, setIsShowModalAction] = useState(false);
@@ -32,17 +27,17 @@ const AdminCategoryTour = () => {
   const searchDebounce = useDebounce(search, 500);
 
   const {
-    getAllCategoryState,
-    isCreateCategoryRequest,
-    isCreateCategorySuccess,
-    isCreateCategoryFailure,
-    isGetAllCategoryRequest,
-    isGetAllCategorySuccess,
-    isGetAllCategoryFailure,
-    isUpdateCategoryRequest,
-    isUpdateCategorySuccess,
-    isUpdateCategoryFailure,
-  } = useSelector((store) => store.categoryBlog);
+    isGetAllCategoryTourRequest,
+    isGetAllCategoryTourSuccess,
+    isGetAllCategoryTourFailure,
+    getAllCategoryTourState,
+    isCreateCategoryTourRequest,
+    isCreateCategoryTourSuccess,
+    isCreateCategoryTourFailure,
+    isUpdateCategoryTourRequest,
+    isUpdateCategoryTourSuccess,
+    isUpdateCategoryTourFailure,
+  } = useSelector((store) => store.categoryTour);
   const [callApi, setCallApi] = useState(false);
   const [dataActive, setDataActive] = useState(null);
   const [dataTable, setDataTable] = useState([]);
@@ -79,12 +74,10 @@ const AdminCategoryTour = () => {
       if (searchDebounce) {
         params.name = searchDebounce;
       }
-      dispatch(getAllCategoryRequest(params));
+      dispatch(getAllCategoryTourRequest(params));
       setCallApi(false);
     }
   }, [callApi, indexPage]);
-
-  console.log("getAllCategoryState", getAllCategoryState);
 
   const columns = useMemo(() => [
     {
@@ -106,7 +99,7 @@ const AdminCategoryTour = () => {
     {
       Header: "Ảnh minh họa",
       accessor: "thumbnail",
-      cellClass: "list-item-heading w-5",
+      cellClass: "list-item-heading w-5 d-flex",
       Cell: ({ value }) => (
         <div
           className="d-flex align-items-center btn-see-tour justify-content-center"
@@ -115,7 +108,7 @@ const AdminCategoryTour = () => {
           <img
             src={value ? value : logo}
             alt="avatar"
-            style={{ height: "50px", width: "50px", objectFit: "contain" }}
+            style={{ height: "60px", width: "60px", objectFit: "contain" }}
           />
         </div>
       ),
@@ -151,37 +144,44 @@ const AdminCategoryTour = () => {
   ]);
 
   useEffect(() => {
-    if (isGetAllCategorySuccess) {
-      setDataTable(getAllCategoryState?.data || []);
+    if (isGetAllCategoryTourSuccess) {
+      setDataTable(getAllCategoryTourState?.data || []);
     }
-  }, [isGetAllCategorySuccess]);
+  }, [isGetAllCategoryTourSuccess]);
 
   useEffect(() => {
-    if (isCreateCategorySuccess) {
-      toast.success("Thêm danh mục thành công");
+    if (isCreateCategoryTourSuccess) {
+      toast.success("Thêm danh mục tour thành công");
       setIsShowModalConfirm(false);
       setCallApi(true);
       setIsShowModalAction(false);
-      dispatch(resetCreateCategory());
+      dispatch(resetCreateCategoryTour());
     }
-  }, [isCreateCategorySuccess]);
+  }, [isCreateCategoryTourSuccess]);
 
   useEffect(() => {
-    if (isCreateCategoryFailure) {
-      toast.error("Thêm danh mục thất bại");
-      dispatch(resetCreateCategory());
+    if (isCreateCategoryTourFailure) {
+      toast.error("Thêm danh mục tour thất bại");
+      dispatch(resetCreateCategoryTour());
     }
-  }, [isCreateCategoryFailure]);
+  }, [isCreateCategoryTourFailure]);
 
   useEffect(() => {
-    if (isUpdateCategorySuccess) {
+    if (isUpdateCategoryTourSuccess) {
       toast.success("Cập nhật danh mục thành công");
       setCallApi(true);
       setIsShowModalConfirm(false);
       setIsShowModalAction(false);
-      dispatch(resetUpdateCategory());
+      dispatch(resetUpdateCategoryTour());
     }
-  }, [isUpdateCategorySuccess]);
+  }, [isUpdateCategoryTourSuccess]);
+
+  useEffect(() => {
+    if (isUpdateCategoryTourFailure) {
+      toast.error("Cập nhật danh mục tour thất bại");
+      dispatch(resetUpdateCategoryTour());
+    }
+  }, [isUpdateCategoryTourFailure]);
 
   const handleClickRow = (value) => {
     setDataActive(value);
@@ -192,7 +192,7 @@ const AdminCategoryTour = () => {
   };
 
   return (
-    <div className="admin-food-page">
+    <div className="admin-category-tour-page">
       <div className="top">
         <TopComponent handleShowModalActions={handleShowModalActions} />
       </div>
@@ -215,9 +215,9 @@ const AdminCategoryTour = () => {
           columns={columns}
           onClickRow={handleClickRow}
           indexPage={indexPage}
-          maxPage={getAllCategoryState?.totalPage}
+          maxPage={getAllCategoryTourState?.totalPage}
           handlePaginationNext={handleChangePage}
-          showPagination={getAllCategoryState?.totalPage > 1 ? true : false}
+          showPagination={getAllCategoryTourState?.totalPage > 1 ? true : false}
         />
       </div>
 

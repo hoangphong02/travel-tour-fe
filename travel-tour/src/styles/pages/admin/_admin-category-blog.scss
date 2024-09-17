@@ -1,4 +1,4 @@
-.admin-staff-page {
+.admin-category-blog-page {
     .top {
         padding: 32px 32px 0 32px;
 
@@ -68,9 +68,9 @@
                     &:nth-child(1) {
                         padding-left: 8px;
                     }
-                                         &:last-child {
-                                             text-align: right;
-                                         }
+                                        &:last-child {
+                                            text-align: center;
+                                        }
                 }
             }
 
@@ -113,37 +113,5 @@
 
             }
         }
-    }
-}
-
-.modal-actions-staff{
-    .form-avatar{
-        display: flex;
-        justify-content: center;
-        .info-image {
-                width: 100px;
-                height: 100px;
-                position: relative;
-        
-                img {
-                    width: 100px;
-                    border-radius: 50%;
-                    height: 100px;
-                }
-        
-                .input-file {
-                    display: none;
-                }
-        
-                .icon-change-avatar {
-                    position: absolute;
-                    cursor: pointer;
-                    bottom: 0px;
-                    right: 0px;
-                    background: rgb(255, 255, 255);
-                    padding: 2px 5px;
-                    border-radius: 50%;
-                }
-            }
     }
 }
