@@ -6,6 +6,7 @@ import order from "./order/saga";
 import food from "./food/saga";
 import categoryBlog from "./categoryBlog/saga";
 import categoryTour from "./categoryTour/saga";
+import blog from "./blog/saga";
 
 export default function* rootSaga() {
   yield all([
@@ -16,5 +17,6 @@ export default function* rootSaga() {
     food(),
     categoryBlog(),
     categoryTour(),
+    blog(),
   ]);
 }

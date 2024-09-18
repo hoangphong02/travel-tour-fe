@@ -124,7 +124,7 @@ export const ModalActions = ({
         size="xl"
         className="modal-actions-product"
       >
-        <ModalHeader>{`${type === "add" ? "Thêm" : "Chỉnh sửa"} món ăn`}</ModalHeader>
+        <ModalHeader>{`${type === "add" ? "Thêm" : "Chỉnh sửa"} danh mục blog`}</ModalHeader>
         <Formik
           initialValues={{
             name: type === "add" ? "" : data?.name || "",

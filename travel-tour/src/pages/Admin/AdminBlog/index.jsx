@@ -17,6 +17,11 @@ import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import { useDebounce } from "~/helpers/hooks";
 import { getAllCategoryRequest } from "~/redux/categoryBlog/actions";
+import {
+  getAllBlogsRequest,
+  resetCreateBlogs,
+  resetUpdateBlogs,
+} from "~/redux/blog/actions";
 
 const AdminBlog = () => {
   const [isShowModalAction, setIsShowModalAction] = useState(false);
@@ -25,23 +30,26 @@ const AdminBlog = () => {
   const [type, setType] = useState();
   const [search, setSearch] = useState("");
   const searchDebounce = useDebounce(search, 500);
-  // const {
-  //   getAllFoodsState,
-  //   isGetAllFoodsRequest,
-  //   isGetAllFoodsSuccess,
-  //   isGetAllFoodsFailure,
-  //   isCreateFoodRequest,
-  //   isCreateFoodSuccess,
-  //   isCreateFoodFailure,
+  const {
+    isGetAllBlogsRequest,
+    isGetAllBlogsSuccess,
+    isGetAllBlogsFailure,
+    getAllBlogsState,
+    isCreateBlogsRequest,
+    isCreateBlogsSuccess,
+    isCreateBlogsFailure,
+    isUpdateBlogsRequest,
+    isUpdateBlogsSuccess,
+    isUpdateBlogsFailure,
+  } = useSelector((store) => store.blog);
+  const { getAllCategoryState } = useSelector((store) => store.categoryBlog);
 
-  //   isUpdateFoodRequest,
-  //   isUpdateFoodSuccess,
-  //   isUpdateFoodFailure,
-  // } = useSelector((store) => store.food);
   const [callApi, setCallApi] = useState(false);
   const [dataActive, setDataActive] = useState(null);
   const [dataTable, setDataTable] = useState([]);
   const [indexPage, setIndexPage] = useState(1);
+  const [options, setOptions] = useState([]);
+
   const limit = 10;
   const dispatch = useDispatch();
   const handleCloseModalActions = () => {
@@ -65,6 +73,20 @@ const AdminBlog = () => {
   useEffect(() => {
     setCallApi(true);
   }, [searchDebounce]);
+
+  useEffect(() => {
+    if (getAllCategoryState?.data) {
+      setOptions(
+        getAllCategoryState?.data.map((item) => {
+          return {
+            value: item?._id,
+            label: item?.name,
+          };
+        })
+      );
+    }
+  }, [getAllCategoryState.data]);
+
   useEffect(() => {
     if (callApi) {
       const params = {
@@ -74,7 +96,7 @@ const AdminBlog = () => {
       if (searchDebounce) {
         params.name = searchDebounce;
       }
-      // dispatch(getAllFoodsRequest(params));
+      dispatch(getAllBlogsRequest(params));
       setCallApi(false);
     }
   }, [callApi, indexPage]);
@@ -137,38 +159,44 @@ const AdminBlog = () => {
     },
   ]);
 
-  // useEffect(() => {
-  //   if (isGetAllFoodsSuccess) {
-  //     setDataTable(getAllFoodsState?.data || []);
-  //   }
-  // }, [isGetAllFoodsSuccess]);
+  useEffect(() => {
+    if (isGetAllBlogsSuccess) {
+      setDataTable(getAllBlogsState?.data || []);
+    }
+  }, [isGetAllBlogsSuccess]);
 
-  // useEffect(() => {
-  //   if (isCreateFoodSuccess) {
-  //     toast.success("Thêm món ăn thành công");
-  //     setIsShowModalConfirm(false);
-  //     setCallApi(true);
-  //     setIsShowModalAction(false);
-  //     dispatch(resetCreateFoods());
-  //   }
-  // }, [isCreateFoodSuccess]);
+  useEffect(() => {
+    if (isCreateBlogsSuccess) {
+      toast.success("Thêm bài blog thành công");
+      setIsShowModalConfirm(false);
+      setCallApi(true);
+      setIsShowModalAction(false);
+      dispatch(resetCreateBlogs());
+    }
+  }, [isCreateBlogsSuccess]);
 
-  // useEffect(() => {
-  //   if (isCreateFoodFailure) {
-  //     toast.error("Thêm món ăn thất bại");
-  //     dispatch(resetCreateFoods());
-  //   }
-  // }, [isCreateFoodFailure]);
+  useEffect(() => {
+    if (isCreateBlogsFailure) {
+      toast.error("Thêm bài blog thất bại");
+      dispatch(resetCreateBlogs());
+    }
+  }, [isCreateBlogsFailure]);
 
-  // useEffect(() => {
-  //   if (isUpdateFoodSuccess) {
-  //     toast.success("Cập nhật ăn thành công");
-  //     setCallApi(true);
-  //     setIsShowModalConfirm(false);
-  //     setIsShowModalAction(false);
-  //     dispatch(resetUpdateFoods());
-  //   }
-  // }, [isUpdateFoodSuccess]);
+  useEffect(() => {
+    if (isUpdateBlogsSuccess) {
+      toast.success("Cập nhật bài blog thành công");
+      setCallApi(true);
+      setIsShowModalConfirm(false);
+      setIsShowModalAction(false);
+      dispatch(resetUpdateBlogs());
+    }
+  }, [isUpdateBlogsSuccess]);
+  useEffect(() => {
+    if (isUpdateBlogsFailure) {
+      toast.error("Cập nhật bài blog thất bại");
+      dispatch(resetUpdateBlogs());
+    }
+  }, [isUpdateBlogsFailure]);
 
   const handleClickRow = (value) => {
     setDataActive(value);
@@ -216,6 +244,7 @@ const AdminBlog = () => {
           data={dataActive}
           isShowModalConfirm={isShowModalConfirm}
           setIsShowModalConfirm={setIsShowModalConfirm}
+          options={options}
         />
       )}
       {isShowModalDelete && (

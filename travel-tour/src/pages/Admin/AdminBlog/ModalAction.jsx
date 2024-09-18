@@ -16,13 +16,14 @@ import {
 import * as Yup from "yup";
 import Editor from "~/components/common/Editor";
 import { LIST_PROVINCE } from "~/constants";
+import { createBlogsRequest, updateBlogsRequest } from "~/redux/blog/actions";
 
 export const PHONE_REGEX = /((0)+([1-9]{1})+([0-9]{8})\b)/g;
 
 const SignupSchema = Yup.object().shape({
-  name: Yup.string()
-    .required("Tên không được để trống")
-    .max(200, "Tên không quá 200 ký tự".replace("$x", 200)),
+  // name: Yup.string()
+  //   .required("Tên không được để trống")
+  //   .max(200, "Tên không quá 200 ký tự".replace("$x", 200)),
 });
 
 export const ModalActions = ({
@@ -32,36 +33,36 @@ export const ModalActions = ({
   data,
   isShowModalConfirm,
   setIsShowModalConfirm,
+  options,
 }) => {
   const { getAllCategoryState } = useSelector((store) => store.categoryBlog);
+  const {
+    isCreateBlogsRequest,
+    isCreateBlogsSuccess,
+    isCreateBlogsFailure,
+    isUpdateBlogsRequest,
+    isUpdateBlogsSuccess,
+    isUpdateBlogsFailure,
+  } = useSelector((store) => store.blog);
+
   const dispatch = useDispatch();
   const [urlImage, setUrlImage] = useState();
   const [valueTextEditor, setValueTextEditor] = useState(null);
   const [dataForm, setDataForm] = useState(null);
-  const [options, setOptions] = useState([]);
+  // const [options, setOptions] = useState([]);
 
-  const typeBlog = [
+  const ListTypeBlog = [
     {
-      value: "place",
+      value: "Place",
       label: "Địa điểm",
     },
     {
-      value: "food",
+      value: "Food",
       label: "Món ăn",
     },
   ];
-  useEffect(() => {
-    if (getAllCategoryState?.data) {
-      setOptions(
-        getAllCategoryState?.data.map((item) => {
-          return {
-            value: item?._id,
-            label: item?.name,
-          };
-        })
-      );
-    }
-  }, [getAllCategoryState.data]);
+
+  console.log("data", data);
 
   useEffect(() => {
     if (data?.image) {
@@ -123,39 +124,32 @@ export const ModalActions = ({
   };
 
   const handleSubmit = () => {
-    const { name, title } = dataForm;
+    const { name, title, typeBlog, category, addressString, provinceId } =
+      dataForm;
 
+    const payload = {
+      title,
+      name,
+      type: typeBlog?.value,
+      category: category?.value,
+      image: [
+        {
+          type: "photos",
+          url: urlImage,
+        },
+      ],
+    };
+    if (valueTextEditor) {
+      payload.description = valueTextEditor?.ops;
+    }
+    if (typeBlog?.value === "Place") {
+      payload.addressString = addressString;
+      payload.provinceId = provinceId.value;
+    }
     if (type === "add") {
-      const payload = {
-        title,
-        name,
-        image: [
-          {
-            type: "photos",
-            url: urlImage,
-          },
-        ],
-      };
-      if (valueTextEditor) {
-        payload.description = valueTextEditor?.ops;
-      }
-
-      // dispatch(createFoodsRequest(payload));
+      dispatch(createBlogsRequest(payload));
     } else {
-      const payload = {
-        title,
-        name,
-        image: [
-          {
-            type: "photos",
-            url: urlImage,
-          },
-        ],
-      };
-      if (valueTextEditor) {
-        payload.description = valueTextEditor?.ops;
-      }
-      // dispatch(updateFoodsRequest({ id: data._id, body: payload }));
+      dispatch(updateBlogsRequest({ id: data._id, body: payload }));
     }
   };
 
@@ -170,16 +164,30 @@ export const ModalActions = ({
         <ModalHeader>{`${type === "add" ? "Thêm" : "Chỉnh sửa"} bài blog`}</ModalHeader>
         <Formik
           initialValues={{
-            title: type === "add" ? "" : data?.name || "",
+            title: type === "add" ? "" : data?.title || "",
             name: type === "add" ? "" : data?.name || "",
-            category: type === "add" ? "" : data?.category?._id || "",
-            type: type === "add" ? "" : data?.type || "",
-            provinceId: type === "add" ? "" : data?.provinceId || "",
+            category:
+              type === "add"
+                ? {}
+                : options.find((item) => item.value === data.category._id) ||
+                  {},
+            typeBlog:
+              type === "add"
+                ? ""
+                : ListTypeBlog.find((item) => item.value === data.type) || {},
+            provinceId:
+              type === "add"
+                ? {}
+                : LIST_PROVINCE.find(
+                    (item) => Number(item.value) === data.provinceId
+                  ) || {},
+            addressString: type === "add" ? "" : data?.addressString || "",
           }}
-          validationSchema={SignupSchema}
+          // validationSchema={SignupSchema}
           onSubmit={onSubmit}
         >
           {({ setFieldValue, setFieldTouched, values, errors, touched }) => {
+            console.log("va", values);
             return (
               <Form className="av-tooltip">
                 <ModalBody>
@@ -203,11 +211,11 @@ export const ModalActions = ({
                         name="title"
                         placeholder="Nhập tiêu đề"
                       />
-                      {errors.title && touched.title ? (
+                      {/* {errors.title && touched.title ? (
                         <div className="invalid-feedback d-block">
                           {errors.title}
                         </div>
-                      ) : null}
+                      ) : null} */}
                     </FormGroup>
                   </div>
                   <div className="d-flex" style={{ gap: "12px" }}>
@@ -223,11 +231,11 @@ export const ModalActions = ({
                         name="name"
                         placeholder="Nhập tên"
                       />
-                      {errors.email && touched.email ? (
+                      {/* {errors.name && touched.name ? (
                         <div className="invalid-feedback d-block">
-                          {errors.email}
+                          {errors.name}
                         </div>
-                      ) : null}
+                      ) : null} */}
                     </FormGroup>
                   </div>
 
@@ -240,15 +248,15 @@ export const ModalActions = ({
                         </span>
                       </Label>
                       <Select
-                        options={typeBlog}
-                        onChange={(e) => setFieldValue("type", e)}
-                        value={values.type}
+                        options={ListTypeBlog}
+                        onChange={(e) => setFieldValue("typeBlog", e)}
+                        value={values.typeBlog}
                       ></Select>
-                      {errors.email && touched.email ? (
+                      {/* {errors.typeBlog && touched.typeBlog ? (
                         <div className="invalid-feedback d-block">
-                          {errors.email}
+                          {errors.typeBlog}
                         </div>
-                      ) : null}
+                      ) : null} */}
                     </FormGroup>
                     <FormGroup className="w-100 error-l-100">
                       <Label>
@@ -262,14 +270,14 @@ export const ModalActions = ({
                         value={values.category}
                         onChange={(e) => setFieldValue("category", e)}
                       ></Select>
-                      {errors.title && touched.title ? (
+                      {/* {errors.title && touched.title ? (
                         <div className="invalid-feedback d-block">
                           {errors.title}
                         </div>
-                      ) : null}
+                      ) : null} */}
                     </FormGroup>
                   </div>
-                  {values.type.value === "place" ? (
+                  {values.typeBlog.value === "Place" ? (
                     <div className="d-flex" style={{ gap: "12px" }}>
                       <FormGroup className="w-100 error-l-100">
                         <Label>
@@ -333,11 +341,11 @@ export const ModalActions = ({
                         </div>
                       </div>
                     )}
-                    {errors.desc && touched.desc ? (
+                    {/* {errors.desc && touched.desc ? (
                       <div className="invalid-feedback d-block">
                         {errors.desc}
                       </div>
-                    ) : null}
+                    ) : null} */}
                   </FormGroup>
                 </ModalBody>
                 <ModalFooter>
@@ -406,7 +414,7 @@ export const ModalActions = ({
           <h3>{`Xác nhận ${type === "add" ? "thêm" : "chỉnh sửa"} nhân viên`}</h3>
           <p>{`Bạn chắc chắn ${type === "add" ? "thêm" : "chỉnh sửa"} nhân viên`}</p>
         </ModalBody>
-        <ModalFooter>
+        {/* <ModalFooter>
           <div className="d-flex align-content-center justify-content-between flex-grow-1">
             <Button
               color="primary"
@@ -438,6 +446,45 @@ export const ModalActions = ({
               //     ? { cursor: "no-drop" }
               //     : {}
               // }
+              onClick={() => setIsShowModalConfirm(false)}
+            >
+              Trở về
+            </Button>
+          </div>
+        </ModalFooter> */}
+
+        <ModalFooter>
+          <div className="d-flex align-content-center justify-content-between flex-grow-1">
+            <Button
+              color="primary"
+              disabled={isCreateBlogsRequest || isUpdateBlogsRequest}
+              className={`btn-shadow btn-multiple-state ${
+                isCreateBlogsRequest || isUpdateBlogsRequest
+                  ? "show-spinner disabled"
+                  : ""
+              }`}
+              style={{ background: "rgb(8, 66, 140)", border: "none" }}
+              onClick={handleSubmit}
+            >
+              <span className="spinner d-inline-block">
+                <span className="bounce1" />
+                <span className="bounce2" />
+                <span className="bounce3" />
+              </span>
+              <span className="label">Xác nhận</span>
+            </Button>
+            <Button
+              color="primary"
+              outline
+              disabled={isCreateBlogsRequest || isUpdateBlogsRequest}
+              className={`btn-shadow btn-multiple-state ${
+                isCreateBlogsRequest || isUpdateBlogsRequest ? "disabled" : ""
+              }`}
+              style={
+                isCreateBlogsRequest || isUpdateBlogsRequest
+                  ? { cursor: "no-drop" }
+                  : {}
+              }
               onClick={() => setIsShowModalConfirm(false)}
             >
               Trở về

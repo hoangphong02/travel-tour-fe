@@ -20,7 +20,7 @@ export const ModalDelete = ({ data, isOpen, handleClose, setCallApi }) => {
     if (isDeleteCategoryTourSuccess) {
       handleClose();
       setCallApi(true);
-      toast.success("Xóa danh mục tour món ăn");
+      toast.success("Xóa danh mục tour thành công");
       dispatch(resetDeleteCategoryTour());
     }
   }, [isDeleteCategoryTourSuccess]);
