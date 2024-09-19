@@ -31,14 +31,12 @@ const LoginPage = () => {
       password: Yup.string().trim().required("input.password.error.required"),
     }),
     onSubmit: (values) => {
-      console.log("values", values);
       dispatch(
         loginRequest({ email: values.email, password: values.password })
       );
     },
   });
 
-  console.log("profileResponse", profileResponse);
   useEffect(() => {
     if (profileResponse?.data) {
       history.push(routesUser.home);

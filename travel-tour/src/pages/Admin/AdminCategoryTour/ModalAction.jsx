@@ -88,7 +88,6 @@ export const ModalActions = ({
     const imageUrl = await uploadToCloudinary(file, uploadPreset, uploadUrl);
 
     if (imageUrl) {
-      console.log("Uploaded image URL:", imageUrl);
       setUrlImage(imageUrl);
     }
   };

@@ -196,8 +196,6 @@ const AdminFood = () => {
     setCallApi(true);
   };
 
-  console.log("isShowModalDelete", isShowModalDelete);
-
   return (
     <div className="admin-staff-page">
       <div className="top">

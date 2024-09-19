@@ -1,4 +1,4 @@
-import React, { memo } from "react";
+import React, { memo, useState } from "react";
 import {
   CDBSidebar,
   CDBSidebarHeader,
@@ -6,12 +6,19 @@ import {
   CDBSidebarContent,
   CDBSidebarMenu,
 } from "cdbreact";
-import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
+import {
+  useHistory,
+  useLocation,
+  useParams,
+} from "react-router-dom/cjs/react-router-dom.min";
 import { routesAdmin } from "~/configs";
 import logoTour from "~/assets/logo/logo-tour.png";
 
 export const SideBar = memo(() => {
   const history = useHistory();
+  const { pathname } = useLocation();
+  console.log("params", pathname);
+
   return (
     <CDBSidebar textColor="#333" backgroundColor="#f0f0f0" className="sidebar">
       <CDBSidebarHeader prefix={<i className="fa fa-bars" />}>
@@ -30,6 +37,11 @@ export const SideBar = memo(() => {
         <CDBSidebarMenu>
           <CDBSidebarMenuItem
             icon="th-large"
+            style={{
+              backgroundColor:
+                pathname === routesAdmin.admin ? "#08428c" : "transparent",
+              color: pathname === routesAdmin.admin ? "#fff" : "#000",
+            }}
             onClick={() => history.push(routesAdmin.admin)}
           >
             Dashboard
@@ -37,12 +49,25 @@ export const SideBar = memo(() => {
           <CDBSidebarMenuItem
             icon="sticky-note"
             onClick={() => history.push(routesAdmin.adminCategoryTour)}
+            style={{
+              backgroundColor:
+                pathname === routesAdmin.adminCategoryTour
+                  ? "#08428c"
+                  : "transparent",
+              color:
+                pathname === routesAdmin.adminCategoryTour ? "#fff" : "#000",
+            }}
           >
             Danh mục tour
           </CDBSidebarMenuItem>
           <CDBSidebarMenuItem
             icon="sticky-note"
             onClick={() => history.push(routesAdmin.adminTour)}
+            style={{
+              backgroundColor:
+                pathname === routesAdmin.adminTour ? "#08428c" : "transparent",
+              color: pathname === routesAdmin.adminTour ? "#fff" : "#000",
+            }}
           >
             Tour
           </CDBSidebarMenuItem>
@@ -50,6 +75,14 @@ export const SideBar = memo(() => {
             icon="chart-line"
             iconType="solid"
             onClick={() => history.push(routesAdmin.adminCategoryBlog)}
+            style={{
+              backgroundColor:
+                pathname === routesAdmin.adminCategoryBlog
+                  ? "#08428c"
+                  : "transparent",
+              color:
+                pathname === routesAdmin.adminCategoryBlog ? "#fff" : "#000",
+            }}
           >
             Danh mục blog
           </CDBSidebarMenuItem>
@@ -57,6 +90,11 @@ export const SideBar = memo(() => {
             icon="chart-line"
             iconType="solid"
             onClick={() => history.push(routesAdmin.adminBlog)}
+            style={{
+              backgroundColor:
+                pathname === routesAdmin.adminBlog ? "#08428c" : "transparent",
+              color: pathname === routesAdmin.adminBlog ? "#fff" : "#000",
+            }}
           >
             Blog
           </CDBSidebarMenuItem>
@@ -64,6 +102,11 @@ export const SideBar = memo(() => {
             icon="chart-line"
             iconType="solid"
             onClick={() => history.push(routesAdmin.adminStaff)}
+            style={{
+              backgroundColor:
+                pathname === routesAdmin.adminStaff ? "#08428c" : "transparent",
+              color: pathname === routesAdmin.adminStaff ? "#fff" : "#000",
+            }}
           >
             Nhân viên
           </CDBSidebarMenuItem>
@@ -71,6 +114,13 @@ export const SideBar = memo(() => {
             icon="chart-line"
             iconType="solid"
             onClick={() => history.push(routesAdmin.adminBooking)}
+            style={{
+              backgroundColor:
+                pathname === routesAdmin.adminBooking
+                  ? "#08428c"
+                  : "transparent",
+              color: pathname === routesAdmin.adminBooking ? "#fff" : "#000",
+            }}
           >
             Book tour
           </CDBSidebarMenuItem>

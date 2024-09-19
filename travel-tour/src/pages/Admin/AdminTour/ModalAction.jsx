@@ -15,7 +15,7 @@ import {
 } from "reactstrap";
 import * as Yup from "yup";
 import Editor from "~/components/common/Editor";
-import { LIST_PROVINCE } from "~/constants";
+import { LIST_OPTION_RANK_HOTEL, LIST_PROVINCE } from "~/constants";
 import { createBlogsRequest, updateBlogsRequest } from "~/redux/blog/actions";
 
 export const PHONE_REGEX = /((0)+([1-9]{1})+([0-9]{8})\b)/g;
@@ -49,7 +49,6 @@ export const ModalActions = ({
   const [urlImage, setUrlImage] = useState();
   const [valueTextEditor, setValueTextEditor] = useState(null);
   const [dataForm, setDataForm] = useState(null);
-  // const [options, setOptions] = useState([]);
 
   const ListTypeBlog = [
     {
@@ -59,6 +58,48 @@ export const ModalActions = ({
     {
       value: "Food",
       label: "Món ăn",
+    },
+  ];
+
+  const ListTransport = [
+    {
+      value: "car",
+      label: "Xe ô tô",
+    },
+    {
+      value: "plane",
+      label: "Máy bay",
+    },
+  ];
+
+  const ListDayTour = [
+    {
+      value: 1,
+      label: "1 ngày",
+    },
+    {
+      value: 2,
+      label: "2 ngày",
+    },
+    {
+      value: 3,
+      label: "3 ngày",
+    },
+    {
+      value: 4,
+      label: "4 ngày",
+    },
+    {
+      value: 5,
+      label: "5 ngày",
+    },
+    {
+      value: 6,
+      label: "6 ngày",
+    },
+    {
+      value: 7,
+      label: "7 ngày",
     },
   ];
 
@@ -158,27 +199,32 @@ export const ModalActions = ({
         size="xl"
         className="modal-actions-product"
       >
-        <ModalHeader>{`${type === "add" ? "Thêm" : "Chỉnh sửa"} bài blog`}</ModalHeader>
+        <ModalHeader>{`${type === "add" ? "Thêm" : "Chỉnh sửa"} tour`}</ModalHeader>
         <Formik
           initialValues={{
-            title: type === "add" ? "" : data?.title || "",
+            tour_code: type === "add" ? "" : data?.tour_code || "",
             name: type === "add" ? "" : data?.name || "",
             category:
               type === "add"
                 ? {}
                 : options.find((item) => item.value === data.category._id) ||
                   {},
-            typeBlog:
-              type === "add"
-                ? ""
-                : ListTypeBlog.find((item) => item.value === data.type) || {},
-            provinceId:
-              type === "add"
-                ? {}
-                : LIST_PROVINCE.find(
-                    (item) => Number(item.value) === data.provinceId
-                  ) || {},
-            addressString: type === "add" ? "" : data?.addressString || "",
+
+            shedule_on_week: type === "add" ? "" : data?.shedule_on_week || "",
+            start_location: type === "add" ? "" : data?.start_location || "",
+            end_location: type === "add" ? "" : data?.end_location || "",
+            transportation_type:
+              type === "add" ? "" : data?.transportation_type || "",
+            base_price_adult:
+              type === "add" ? "" : data?.base_price_adult || "",
+            base_price_child:
+              type === "add" ? "" : data?.base_price_child || "",
+            start_date: type === "add" ? "" : data?.start_date || "",
+            end_date: type === "add" ? "" : data?.start_date || "",
+            star: type === "add" ? "" : data?.star || "",
+            price_adult: type === "add" ? "" : data?.price_adult || "",
+            price_child: type === "add" ? "" : data?.price_child || "",
+            schedules: type === "add" ? [] : data.schedules || [],
           }}
           // validationSchema={SignupSchema}
           onSubmit={onSubmit}
@@ -197,15 +243,15 @@ export const ModalActions = ({
                   <div className="d-flex" style={{ gap: "12px" }}>
                     <FormGroup className="w-100 error-l-100">
                       <Label>
-                        Tiêu đề:{" "}
+                        Mã tour:{" "}
                         <span style={{ color: "red", fontWeight: "600" }}>
                           *
                         </span>
                       </Label>
                       <Field
                         className="form-control"
-                        name="title"
-                        placeholder="Nhập tiêu đề"
+                        name="tour_code"
+                        placeholder="Nhập mã tour"
                       />
                       {/* {errors.title && touched.title ? (
                         <div className="invalid-feedback d-block">
@@ -217,7 +263,7 @@ export const ModalActions = ({
                   <div className="d-flex" style={{ gap: "12px" }}>
                     <FormGroup className="w-100 error-l-100">
                       <Label>
-                        Tên món ăn:{" "}
+                        Tên tour:{" "}
                         <span style={{ color: "red", fontWeight: "600" }}>
                           *
                         </span>
@@ -225,7 +271,7 @@ export const ModalActions = ({
                       <Field
                         className="form-control"
                         name="name"
-                        placeholder="Nhập tên"
+                        placeholder="Nhập tên tour"
                       />
                       {/* {errors.name && touched.name ? (
                         <div className="invalid-feedback d-block">
@@ -238,15 +284,16 @@ export const ModalActions = ({
                   <div className="d-flex" style={{ gap: "12px" }}>
                     <FormGroup className="w-100 error-l-100">
                       <Label>
-                        Loại bài blog:{" "}
+                        Danh mục tour:{" "}
                         <span style={{ color: "red", fontWeight: "600" }}>
                           *
                         </span>
                       </Label>
                       <Select
-                        options={ListTypeBlog}
-                        onChange={(e) => setFieldValue("typeBlog", e)}
-                        value={values.typeBlog}
+                        options={options}
+                        onChange={(e) => setFieldValue("category", e)}
+                        value={values.category}
+                        placeholder="Chọn danh mục tour"
                       ></Select>
                       {/* {errors.typeBlog && touched.typeBlog ? (
                         <div className="invalid-feedback d-block">
@@ -256,45 +303,239 @@ export const ModalActions = ({
                     </FormGroup>
                     <FormGroup className="w-100 error-l-100">
                       <Label>
-                        Danh mục blog:{" "}
+                        Thời gian trong tuần:{" "}
+                        <span style={{ color: "red", fontWeight: "600" }}>
+                          *
+                        </span>
+                      </Label>
+                      <Field
+                        className="form-control"
+                        name="shedule_on_week"
+                        placeholder="Nhập thời gian trong tuần"
+                      />
+                      {/* {errors.name && touched.name ? (
+                        <div className="invalid-feedback d-block">
+                          {errors.name}
+                        </div>
+                      ) : null} */}
+                    </FormGroup>
+                  </div>
+
+                  <div className="d-flex" style={{ gap: "12px" }}>
+                    <FormGroup className="w-100 error-l-100">
+                      <Label>
+                        Vị trí xuất phát:{" "}
+                        <span style={{ color: "red", fontWeight: "600" }}>
+                          *
+                        </span>
+                      </Label>
+                      <Field
+                        className="form-control"
+                        name="start_location"
+                        placeholder="Nhập vị trí xuất phát"
+                      />
+                      {/* {errors.name && touched.name ? (
+                        <div className="invalid-feedback d-block">
+                          {errors.name}
+                        </div>
+                      ) : null} */}
+                    </FormGroup>
+                    <FormGroup className="w-100 error-l-100">
+                      <Label>
+                        Vị trí kết thúc:{" "}
+                        <span style={{ color: "red", fontWeight: "600" }}>
+                          *
+                        </span>
+                      </Label>
+                      <Field
+                        className="form-control"
+                        name="end_location"
+                        placeholder="Nhập vị trí kết thúc"
+                      />
+                      {/* {errors.name && touched.name ? (
+                        <div className="invalid-feedback d-block">
+                          {errors.name}
+                        </div>
+                      ) : null} */}
+                    </FormGroup>
+                  </div>
+
+                  <div className="d-flex" style={{ gap: "12px" }}>
+                    <FormGroup className="w-100 error-l-100">
+                      <Label>
+                        Chọn phương tiện:{" "}
                         <span style={{ color: "red", fontWeight: "600" }}>
                           *
                         </span>
                       </Label>
                       <Select
-                        options={options}
-                        value={values.category}
-                        onChange={(e) => setFieldValue("category", e)}
+                        options={ListTransport}
+                        onChange={(e) => setFieldValue("transportation", e)}
+                        value={values.transportation}
                       ></Select>
-                      {/* {errors.title && touched.title ? (
+                      {/* {errors.typeBlog && touched.typeBlog ? (
                         <div className="invalid-feedback d-block">
-                          {errors.title}
+                          {errors.typeBlog}
+                        </div>
+                      ) : null} */}
+                    </FormGroup>
+                    <FormGroup className="w-100 error-l-100">
+                      <Label>
+                        Chọn số ngày:{" "}
+                        <span style={{ color: "red", fontWeight: "600" }}>
+                          *
+                        </span>
+                      </Label>
+                      <Select
+                        options={ListDayTour}
+                        onChange={(e) => setFieldValue("day", e)}
+                        value={values.day}
+                      ></Select>
+                      {/* {errors.typeBlog && touched.typeBlog ? (
+                        <div className="invalid-feedback d-block">
+                          {errors.typeBlog}
                         </div>
                       ) : null} */}
                     </FormGroup>
                   </div>
-                  {values.typeBlog.value === "Place" ? (
-                    <div className="d-flex" style={{ gap: "12px" }}>
-                      <FormGroup className="w-100 error-l-100">
-                        <Label>
-                          Tỉnh thành:{" "}
-                          <span style={{ color: "red", fontWeight: "600" }}>
-                            *
-                          </span>
-                        </Label>
-                        <Select
-                          options={LIST_PROVINCE}
-                          value={values.provinceId}
-                          onChange={(e) => setFieldValue("provinceId", e)}
-                        ></Select>
-                        {/* {errors.email && touched.email ? (
+
+                  <div className="d-flex" style={{ gap: "12px" }}>
+                    <FormGroup className="w-100 error-l-100">
+                      <Label>
+                        Giá vé người lớn:{" "}
+                        <span style={{ color: "red", fontWeight: "600" }}>
+                          *
+                        </span>
+                      </Label>
+                      <Field
+                        className="form-control"
+                        name="base_price_adult"
+                        placeholder="Nhập giá vé người lớn"
+                      />
+                      {/* {errors.typeBlog && touched.typeBlog ? (
                         <div className="invalid-feedback d-block">
-                          {errors.email}
+                          {errors.typeBlog}
                         </div>
                       ) : null} */}
-                      </FormGroup>
-                    </div>
-                  ) : null}
+                    </FormGroup>
+                    <FormGroup className="w-100 error-l-100">
+                      <Label>
+                        Giá vé trẻ em:{" "}
+                        <span style={{ color: "red", fontWeight: "600" }}>
+                          *
+                        </span>
+                      </Label>
+                      <Field
+                        className="form-control"
+                        name="base_price_child"
+                        placeholder="Nhập giá vé trẻ em"
+                      />
+                      {/* {errors.typeBlog && touched.typeBlog ? (
+                        <div className="invalid-feedback d-block">
+                          {errors.typeBlog}
+                        </div>
+                      ) : null} */}
+                    </FormGroup>
+                  </div>
+
+                  <div className="d-flex" style={{ gap: "12px" }}>
+                    <FormGroup className="w-100 error-l-100">
+                      <Label>
+                        Chọn ngày bắt đầu:{" "}
+                        <span style={{ color: "red", fontWeight: "600" }}>
+                          *
+                        </span>
+                      </Label>
+                      <Field
+                        className="form-control"
+                        name="start_date"
+                        placeholder="Chọn ngày bắt đầu  "
+                        type="date"
+                      />
+                      {/* {errors.typeBlog && touched.typeBlog ? (
+                        <div className="invalid-feedback d-block">
+                          {errors.typeBlog}
+                        </div>
+                      ) : null} */}
+                    </FormGroup>
+                    <FormGroup className="w-100 error-l-100">
+                      <Label>
+                        Chọn ngày kết thúc:{" "}
+                        <span style={{ color: "red", fontWeight: "600" }}>
+                          *
+                        </span>
+                      </Label>
+                      <Field
+                        className="form-control"
+                        name="end_date"
+                        placeholder="Chọn ngày kết thúc"
+                        type="date"
+                      />
+                      {/* {errors.typeBlog && touched.typeBlog ? (
+                        <div className="invalid-feedback d-block">
+                          {errors.typeBlog}
+                        </div>
+                      ) : null} */}
+                    </FormGroup>
+                  </div>
+
+                  <div className="d-flex" style={{ gap: "12px" }}>
+                    <FormGroup className="w-100 error-l-100">
+                      <Label>
+                        Chọn khách sạn:{" "}
+                        <span style={{ color: "red", fontWeight: "600" }}>
+                          *
+                        </span>
+                      </Label>
+                      <Select
+                        options={LIST_OPTION_RANK_HOTEL}
+                        onChange={(e) => setFieldValue("star", e)}
+                        value={values.star}
+                      ></Select>
+                      {/* {errors.typeBlog && touched.typeBlog ? (
+                        <div className="invalid-feedback d-block">
+                          {errors.typeBlog}
+                        </div>
+                      ) : null} */}
+                    </FormGroup>
+                    <FormGroup className="w-100 error-l-100">
+                      <Label>
+                        Nhập giá khách sạn người lớn:{" "}
+                        <span style={{ color: "red", fontWeight: "600" }}>
+                          *
+                        </span>
+                      </Label>
+                      <Field
+                        className="form-control"
+                        name="price_adult"
+                        placeholder="Nhập giá khách sạn người lớn"
+                      />
+                      {/* {errors.typeBlog && touched.typeBlog ? (
+                        <div className="invalid-feedback d-block">
+                          {errors.typeBlog}
+                        </div>
+                      ) : null} */}
+                    </FormGroup>
+                    <FormGroup className="w-100 error-l-100">
+                      <Label>
+                        Nhập giá khách sạn trẻ em:{" "}
+                        <span style={{ color: "red", fontWeight: "600" }}>
+                          *
+                        </span>
+                      </Label>
+                      <Field
+                        className="form-control"
+                        name="price_child"
+                        placeholder="Nhập giá khách sạn trẻ em"
+                      />
+                      {/* {errors.typeBlog && touched.typeBlog ? (
+                        <div className="invalid-feedback d-block">
+                          {errors.typeBlog}
+                        </div>
+                      ) : null} */}
+                    </FormGroup>
+                  </div>
+
                   <FormGroup className="error-l-100">
                     <Label>
                       Mô tả:{" "}
@@ -305,6 +546,21 @@ export const ModalActions = ({
                       setValue={setValueTextEditor}
                     />
                   </FormGroup>
+
+                  {Array.from({ length: 2 }).map((_, i) => (
+                    <FormGroup className="error-l-100" key={i}>
+                      <Label>
+                        {`Nhập chi tiết ngày ${i + 1}`}:{" "}
+                        <span style={{ color: "red", fontWeight: "600" }}>
+                          *
+                        </span>
+                      </Label>
+                      <Editor
+                        value={valueTextEditor}
+                        setValue={setValueTextEditor}
+                      />
+                    </FormGroup>
+                  ))}
 
                   <FormGroup className="error-l-100">
                     <Label>Ảnh minh họa:</Label>

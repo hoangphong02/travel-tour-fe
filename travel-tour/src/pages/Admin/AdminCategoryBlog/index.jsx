@@ -84,8 +84,6 @@ const AdminCategoryBlog = () => {
     }
   }, [callApi, indexPage]);
 
-  console.log("getAllCategoryState", getAllCategoryState);
-
   const columns = useMemo(() => [
     {
       Header: "STT",

@@ -1,9 +1,275 @@
-import React from 'react'
+import React, { useEffect, useMemo, useState } from "react";
+import TopComponent from "./TopComponent";
+import { ReactTableWithPaginationCard } from "~/components/common";
+import {
+  CSEditOutline,
+  CSSearchOutline,
+  CSTrash2Outline,
+} from "~/components/iconography/Outline";
+import { ModalActions } from "./ModalAction";
+import { ModalDelete } from "./ModalDelete";
+import { useDispatch, useSelector } from "react-redux";
+// import {
+//   getAllFoodsRequest,
+//   resetCreateFoods,
+//   resetUpdateFoods,
+// } from "~/redux/food/actions";
+import { toast } from "react-toastify";
+import { useDebounce } from "~/helpers/hooks";
+import { getAllCategoryRequest } from "~/redux/categoryBlog/actions";
+import {
+  getAllBlogsRequest,
+  resetCreateBlogs,
+  resetUpdateBlogs,
+} from "~/redux/blog/actions";
+import { getAllCategoryTourRequest } from "~/redux/categoryTour/actions";
 
 const AdminTour = () => {
-  return (
-    <div>AdminTour</div>
-  )
-}
+  const [isShowModalAction, setIsShowModalAction] = useState(false);
+  const [isShowModalDelete, setIsShowModalDelete] = useState(false);
+  const [isShowModalConfirm, setIsShowModalConfirm] = useState(false);
+  const [type, setType] = useState();
+  const [search, setSearch] = useState("");
+  const searchDebounce = useDebounce(search, 500);
+  const {
+    isGetAllBlogsRequest,
+    isGetAllBlogsSuccess,
+    isGetAllBlogsFailure,
+    getAllBlogsState,
+    isCreateBlogsRequest,
+    isCreateBlogsSuccess,
+    isCreateBlogsFailure,
+    isUpdateBlogsRequest,
+    isUpdateBlogsSuccess,
+    isUpdateBlogsFailure,
+  } = useSelector((store) => store.blog);
 
-export default AdminTour
+  const {
+    isGetAllCategoryTourRequest,
+    isGetAllCategoryTourSuccess,
+    isGetAllCategoryTourFailure,
+    getAllCategoryTourState,
+    isCreateCategoryTourRequest,
+    isCreateCategoryTourSuccess,
+    isCreateCategoryTourFailure,
+    isUpdateCategoryTourRequest,
+    isUpdateCategoryTourSuccess,
+    isUpdateCategoryTourFailure,
+  } = useSelector((store) => store.categoryTour);
+
+  const [callApi, setCallApi] = useState(false);
+  const [dataActive, setDataActive] = useState(null);
+  const [dataTable, setDataTable] = useState([]);
+  const [indexPage, setIndexPage] = useState(1);
+  const [options, setOptions] = useState([]);
+
+  const limit = 10;
+  const dispatch = useDispatch();
+  const handleCloseModalActions = () => {
+    setIsShowModalAction(false);
+  };
+  const handleShowModalActions = (type) => {
+    setType(type);
+    setIsShowModalAction(true);
+  };
+  const handleCloseModalDelete = () => {
+    setIsShowModalDelete(false);
+  };
+  const handleShowModalDelete = () => {
+    setIsShowModalDelete(true);
+  };
+
+  useEffect(() => {
+    setCallApi(true);
+  }, []);
+
+  useEffect(() => {
+    setCallApi(true);
+  }, [searchDebounce]);
+
+  useEffect(() => {
+    if (getAllCategoryTourState?.data) {
+      setOptions(
+        getAllCategoryTourState?.data.map((item) => {
+          return {
+            value: item?._id,
+            label: item?.name,
+          };
+        })
+      );
+    }
+  }, [getAllCategoryTourState.data]);
+
+  useEffect(() => {
+    if (callApi) {
+      const params = {
+        limit,
+        page: indexPage,
+      };
+      if (searchDebounce) {
+        params.name = searchDebounce;
+      }
+      dispatch(getAllBlogsRequest(params));
+      setCallApi(false);
+    }
+  }, [callApi, indexPage]);
+
+  useEffect(() => {
+    if (isShowModalAction) {
+      dispatch(getAllCategoryTourRequest());
+    }
+  }, [isShowModalAction]);
+
+  const columns = useMemo(() => [
+    {
+      Header: "STT",
+      accessor: "",
+      cellClass: "list-item-heading w-5",
+      Cell: (row) => row.row.index + 1,
+    },
+    {
+      Header: "MÃ",
+      accessor: "_id",
+      cellClass: "list-item-heading w-5",
+    },
+    {
+      Header: "TÊN",
+      accessor: "name",
+      cellClass: "list-item-heading w-5",
+    },
+    {
+      Header: "Tiêu đề",
+      accessor: "title",
+      cellClass: "list-item-heading w-5",
+    },
+
+    {
+      Header: "HOẠT ĐỘNG",
+      accessor: "action",
+      Cell: () => (
+        <div
+          className="d-flex align-items-center btn-see-tour justify-content-center"
+          style={{ gap: "10px" }}
+        >
+          <div
+            outline
+            color="primary"
+            className="icon-button"
+            onClick={() => handleShowModalActions("edit")}
+          >
+            <CSEditOutline />
+          </div>
+          <div
+            outline
+            color="primary"
+            className="icon-button"
+            onClick={() => handleShowModalDelete(true)}
+          >
+            <CSTrash2Outline />
+          </div>
+        </div>
+      ),
+    },
+  ]);
+
+  useEffect(() => {
+    if (isGetAllBlogsSuccess) {
+      setDataTable(getAllBlogsState?.data || []);
+    }
+  }, [isGetAllBlogsSuccess]);
+
+  useEffect(() => {
+    if (isCreateBlogsSuccess) {
+      toast.success("Thêm bài blog thành công");
+      setIsShowModalConfirm(false);
+      setCallApi(true);
+      setIsShowModalAction(false);
+      dispatch(resetCreateBlogs());
+    }
+  }, [isCreateBlogsSuccess]);
+
+  useEffect(() => {
+    if (isCreateBlogsFailure) {
+      toast.error("Thêm bài blog thất bại");
+      dispatch(resetCreateBlogs());
+    }
+  }, [isCreateBlogsFailure]);
+
+  useEffect(() => {
+    if (isUpdateBlogsSuccess) {
+      toast.success("Cập nhật bài blog thành công");
+      setCallApi(true);
+      setIsShowModalConfirm(false);
+      setIsShowModalAction(false);
+      dispatch(resetUpdateBlogs());
+    }
+  }, [isUpdateBlogsSuccess]);
+  useEffect(() => {
+    if (isUpdateBlogsFailure) {
+      toast.error("Cập nhật bài blog thất bại");
+      dispatch(resetUpdateBlogs());
+    }
+  }, [isUpdateBlogsFailure]);
+
+  const handleClickRow = (value) => {
+    setDataActive(value);
+  };
+  const handleChangePage = (idxPage) => {
+    setIndexPage(idxPage);
+    setCallApi(true);
+  };
+
+  return (
+    <div className="admin-food-page">
+      <div className="top">
+        <TopComponent handleShowModalActions={handleShowModalActions} />
+      </div>
+      <div className="search">
+        <div className="body">
+          <input
+            type="text"
+            placeholder="Nhập tìm kiếm"
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+          />
+          <span>
+            <CSSearchOutline />
+          </span>
+        </div>
+      </div>
+      <div className="table">
+        <ReactTableWithPaginationCard
+          data={dataTable}
+          columns={columns}
+          onClickRow={handleClickRow}
+          indexPage={indexPage}
+          // maxPage={getAllFoodsState?.totalPage}
+          handlePaginationNext={handleChangePage}
+          // showPagination={getAllFoodsState?.totalPage > 1 ? true : false}
+        />
+      </div>
+
+      {isShowModalAction && type && (
+        <ModalActions
+          isOpen
+          type={type}
+          handleClose={handleCloseModalActions}
+          data={dataActive}
+          isShowModalConfirm={isShowModalConfirm}
+          setIsShowModalConfirm={setIsShowModalConfirm}
+          options={options}
+        />
+      )}
+      {isShowModalDelete && (
+        <ModalDelete
+          isOpen
+          handleClose={handleCloseModalDelete}
+          data={dataActive}
+          setCallApi={setCallApi}
+        />
+      )}
+    </div>
+  );
+};
+
+export default AdminTour;
