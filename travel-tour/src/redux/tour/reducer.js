@@ -11,7 +11,7 @@ const initialState = {
   // Create Food
   isCreateTourRequest: false,
   isCreateTourSuccess: false,
-  isCreateFoodFailure: false,
+  isCreateTourFailure: false,
   // Update Food
   isUpdateTourRequest: false,
   isUpdateTourSuccess: false,

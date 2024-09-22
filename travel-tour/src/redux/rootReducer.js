@@ -7,6 +7,7 @@ import food from "./food/reducer";
 import categoryBlog from "./categoryBlog/reducer";
 import categoryTour from "./categoryTour/reducer";
 import blog from "./blog/reducer";
+import tour from "./tour/reducer";
 
 const rootReducer = combineReducers({
   auth,
@@ -17,6 +18,7 @@ const rootReducer = combineReducers({
   categoryBlog,
   categoryTour,
   blog,
+  tour,
 });
 
 export default rootReducer;

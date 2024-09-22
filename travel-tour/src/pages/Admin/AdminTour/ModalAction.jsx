@@ -1,4 +1,5 @@
 import { Field, Form, Formik } from "formik";
+import moment from "moment";
 import { useEffect, useState } from "react";
 import { Alert } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
@@ -15,8 +16,8 @@ import {
 } from "reactstrap";
 import * as Yup from "yup";
 import Editor from "~/components/common/Editor";
-import { LIST_OPTION_RANK_HOTEL, LIST_PROVINCE } from "~/constants";
-import { createBlogsRequest, updateBlogsRequest } from "~/redux/blog/actions";
+import { LIST_OPTION_RANK_HOTEL } from "~/constants";
+import { createTourRequest, updateTourRequest } from "~/redux/tour/actions";
 
 export const PHONE_REGEX = /((0)+([1-9]{1})+([0-9]{8})\b)/g;
 
@@ -35,31 +36,19 @@ export const ModalActions = ({
   setIsShowModalConfirm,
   options,
 }) => {
-  const { getAllCategoryState } = useSelector((store) => store.categoryBlog);
   const {
-    isCreateBlogsRequest,
-    isCreateBlogsSuccess,
-    isCreateBlogsFailure,
-    isUpdateBlogsRequest,
-    isUpdateBlogsSuccess,
-    isUpdateBlogsFailure,
-  } = useSelector((store) => store.blog);
+    isCreateTourRequest,
+    isCreateFoodFailure,
+    isUpdateTourRequest,
+    isUpdateTourFailure,
+  } = useSelector((store) => store.tour);
 
   const dispatch = useDispatch();
   const [urlImage, setUrlImage] = useState();
+  const [urlBanner, setUrlBanner] = useState();
   const [valueTextEditor, setValueTextEditor] = useState(null);
   const [dataForm, setDataForm] = useState(null);
-
-  const ListTypeBlog = [
-    {
-      value: "Place",
-      label: "Địa điểm",
-    },
-    {
-      value: "Food",
-      label: "Món ăn",
-    },
-  ];
+  const [arrSchedules, setArrSchedules] = useState([]);
 
   const ListTransport = [
     {
@@ -105,7 +94,12 @@ export const ModalActions = ({
 
   useEffect(() => {
     if (data?.image) {
-      setUrlImage(data?.image[0]?.url);
+      setUrlImage(
+        data?.image.find((item) => item.type === "photos")?.url || ""
+      );
+      setUrlBanner(
+        data?.image.find((item) => item.type === "banner")?.url || ""
+      );
     }
   }, [data]);
 
@@ -120,6 +114,16 @@ export const ModalActions = ({
       setValueTextEditor({ ops: [{ insert: data.description[0].text }] });
     }
   }, [data?.description]);
+
+  useEffect(() => {
+    if (data?.schedules?.length) {
+      const arr = data.schedules.map((item) => ({
+        day: item.day,
+        detail: item.detail,
+      }));
+      setArrSchedules(arr);
+    }
+  }, [data?.schedules?.length]);
 
   const uploadToCloudinary = async (file, uploadPreset, uploadUrl) => {
     try {
@@ -155,21 +159,61 @@ export const ModalActions = ({
       setUrlImage(imageUrl);
     }
   };
+  const handleBannerUpload = async (file) => {
+    const uploadPreset = "vr8eratg"; // Thay bằng upload preset của bạn
+    const uploadUrl = "https://api.cloudinary.com/v1_1/disrx4gzn/image/upload"; // Thay bằng URL Cloudinary của bạn
+
+    const imageUrl = await uploadToCloudinary(file, uploadPreset, uploadUrl);
+
+    if (imageUrl) {
+      setUrlBanner(imageUrl);
+    }
+  };
 
   const onSubmit = (values) => {
     setDataForm(values);
     setIsShowModalConfirm(true);
   };
 
+  console.log("dataForm", dataForm);
+
   const handleSubmit = () => {
-    const { name, title, typeBlog, category, addressString, provinceId } =
-      dataForm;
+    const {
+      tour_code,
+      name,
+      category,
+      shedule_on_week,
+      start_location,
+      end_location,
+      base_price_adult,
+      base_price_child,
+      start_date,
+      end_date,
+      star,
+      price_adult,
+      price_child,
+      transportation,
+    } = dataForm;
 
     const payload = {
-      title,
+      tour_code,
       name,
-      type: typeBlog?.value,
       category: category?.value,
+      shedule_on_week,
+      start_location,
+      end_location,
+      base_price_adult,
+      base_price_child,
+      start_date,
+      end_date,
+      transportation: transportation?.value,
+      hotel_level: [
+        {
+          star: star.value,
+          price_adult: price_adult,
+          price_child: price_child,
+        },
+      ],
       image: [
         {
           type: "photos",
@@ -180,14 +224,28 @@ export const ModalActions = ({
     if (valueTextEditor) {
       payload.description = valueTextEditor?.ops;
     }
-    if (typeBlog?.value === "Place") {
-      payload.addressString = addressString;
-      payload.provinceId = provinceId.value;
+
+    if (arrSchedules) {
+      payload.schedules = arrSchedules.map((item) => {
+        return {
+          day: item.day + 1,
+          detail: item.detail.ops,
+        };
+      });
+    }
+    if (urlBanner) {
+      payload.image = [
+        ...payload.image,
+        {
+          type: "banner",
+          url: urlBanner,
+        },
+      ];
     }
     if (type === "add") {
-      dispatch(createBlogsRequest(payload));
+      dispatch(createTourRequest(payload));
     } else {
-      dispatch(updateBlogsRequest({ id: data._id, body: payload }));
+      dispatch(updateTourRequest({ id: data._id, body: payload }));
     }
   };
 
@@ -213,18 +271,40 @@ export const ModalActions = ({
             shedule_on_week: type === "add" ? "" : data?.shedule_on_week || "",
             start_location: type === "add" ? "" : data?.start_location || "",
             end_location: type === "add" ? "" : data?.end_location || "",
-            transportation_type:
-              type === "add" ? "" : data?.transportation_type || "",
             base_price_adult:
               type === "add" ? "" : data?.base_price_adult || "",
             base_price_child:
               type === "add" ? "" : data?.base_price_child || "",
-            start_date: type === "add" ? "" : data?.start_date || "",
-            end_date: type === "add" ? "" : data?.start_date || "",
-            star: type === "add" ? "" : data?.star || "",
-            price_adult: type === "add" ? "" : data?.price_adult || "",
-            price_child: type === "add" ? "" : data?.price_child || "",
-            schedules: type === "add" ? [] : data.schedules || [],
+            start_date:
+              type === "add"
+                ? ""
+                : moment(data?.start_date).format("YYYY-MM-DD") || "",
+            end_date:
+              type === "add"
+                ? ""
+                : moment(data?.end_date).format("YYYY-MM-DD") || "",
+            star:
+              type === "add"
+                ? ""
+                : LIST_OPTION_RANK_HOTEL.find(
+                    (item) => item.value === data?.hotel_level[0].star
+                  ) || "",
+            price_adult:
+              type === "add" ? "" : data?.hotel_level[0]?.price_adult || "",
+            price_child:
+              type === "add" ? "" : data?.hotel_level[0]?.price_child || "",
+            day:
+              type === "add"
+                ? 0
+                : ListDayTour.find(
+                    (item) => item.value === data?.schedules?.length
+                  ) || 0,
+            transportation:
+              type === "add"
+                ? {}
+                : ListTransport.find(
+                    (item) => item.value === data?.transportation
+                  ) || 0,
           }}
           // validationSchema={SignupSchema}
           onSubmit={onSubmit}
@@ -233,13 +313,13 @@ export const ModalActions = ({
             return (
               <Form className="av-tooltip">
                 <ModalBody>
-                  {/* {(isCreateFoodFailure || isUpdateFoodFailure) && (
+                  {(isCreateFoodFailure || isUpdateTourFailure) && (
                     <Alert color="danger">
                       {type === "add"
-                        ? "Thêm món ăn thất bại"
-                        : "Cập nhật món ăn thất bại"}
+                        ? "Thêm tour thất bại"
+                        : "Cập nhật tour thất bại"}
                     </Alert>
-                  )} */}
+                  )}
                   <div className="d-flex" style={{ gap: "12px" }}>
                     <FormGroup className="w-100 error-l-100">
                       <Label>
@@ -547,7 +627,7 @@ export const ModalActions = ({
                     />
                   </FormGroup>
 
-                  {Array.from({ length: 2 }).map((_, i) => (
+                  {Array.from({ length: values?.day?.value }).map((_, i) => (
                     <FormGroup className="error-l-100" key={i}>
                       <Label>
                         {`Nhập chi tiết ngày ${i + 1}`}:{" "}
@@ -556,8 +636,15 @@ export const ModalActions = ({
                         </span>
                       </Label>
                       <Editor
-                        value={valueTextEditor}
-                        setValue={setValueTextEditor}
+                        value={arrSchedules[i]?.detail || ""}
+                        setValue={(e) => {
+                          const updatedSchedules = [...arrSchedules]; // Copy the array
+                          updatedSchedules[i] = {
+                            day: i,
+                            detail: e,
+                          }; // Update the correct index
+                          setArrSchedules(updatedSchedules); // Set the new array to state
+                        }}
                       />
                     </FormGroup>
                   ))}
@@ -587,6 +674,44 @@ export const ModalActions = ({
                           className="image-preview-remove"
                           onClick={() => {
                             setUrlImage("");
+                          }}
+                        >
+                          x
+                        </div>
+                      </div>
+                    )}
+                    {/* {errors.desc && touched.desc ? (
+                      <div className="invalid-feedback d-block">
+                        {errors.desc}
+                      </div>
+                    ) : null} */}
+                  </FormGroup>
+
+                  <FormGroup className="error-l-100">
+                    <Label>Ảnh banner quảng bá:</Label>
+                    <Input
+                      type="file"
+                      id="exampleCustomFileBrowser1"
+                      name="image"
+                      onChange={(e) => handleBannerUpload(e.target.files[0])}
+                    />
+
+                    {urlBanner && (
+                      <div
+                        className="image-preview"
+                        style={{
+                          marginTop: "40px",
+                        }}
+                      >
+                        <img
+                          src={urlBanner}
+                          alt=""
+                          style={{ height: "100px", width: "auto" }}
+                        />
+                        <div
+                          className="image-preview-remove"
+                          onClick={() => {
+                            setUrlBanner("");
                           }}
                         >
                           x
@@ -709,9 +834,9 @@ export const ModalActions = ({
           <div className="d-flex align-content-center justify-content-between flex-grow-1">
             <Button
               color="primary"
-              disabled={isCreateBlogsRequest || isUpdateBlogsRequest}
+              disabled={isCreateTourRequest || isUpdateTourRequest}
               className={`btn-shadow btn-multiple-state ${
-                isCreateBlogsRequest || isUpdateBlogsRequest
+                isCreateTourRequest || isUpdateTourRequest
                   ? "show-spinner disabled"
                   : ""
               }`}
@@ -728,12 +853,12 @@ export const ModalActions = ({
             <Button
               color="primary"
               outline
-              disabled={isCreateBlogsRequest || isUpdateBlogsRequest}
+              disabled={isCreateTourRequest || isUpdateTourRequest}
               className={`btn-shadow btn-multiple-state ${
-                isCreateBlogsRequest || isUpdateBlogsRequest ? "disabled" : ""
+                isCreateTourRequest || isUpdateTourRequest ? "disabled" : ""
               }`}
               style={
-                isCreateBlogsRequest || isUpdateBlogsRequest
+                isCreateTourRequest || isUpdateTourRequest
                   ? { cursor: "no-drop" }
                   : {}
               }

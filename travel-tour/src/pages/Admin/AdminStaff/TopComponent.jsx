@@ -4,7 +4,7 @@ import { Button } from "react-bootstrap";
 const TopComponent = ({ handleShowModalActions }) => {
   return (
     <div className="body">
-      <h3>Danh sách nhân viên</h3>
+      <h3>Quản lý danh sách nhân viên</h3>
       <div>
         <Button onClick={() => handleShowModalActions("add")}>Thêm</Button>
       </div>

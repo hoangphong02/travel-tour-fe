@@ -9,20 +9,15 @@ import {
 import { ModalActions } from "./ModalAction";
 import { ModalDelete } from "./ModalDelete";
 import { useDispatch, useSelector } from "react-redux";
-// import {
-//   getAllFoodsRequest,
-//   resetCreateFoods,
-//   resetUpdateFoods,
-// } from "~/redux/food/actions";
 import { toast } from "react-toastify";
 import { useDebounce } from "~/helpers/hooks";
-import { getAllCategoryRequest } from "~/redux/categoryBlog/actions";
-import {
-  getAllBlogsRequest,
-  resetCreateBlogs,
-  resetUpdateBlogs,
-} from "~/redux/blog/actions";
+import logo from "~/assets/logo/no-avatar.png";
 import { getAllCategoryTourRequest } from "~/redux/categoryTour/actions";
+import {
+  getAllTourRequest,
+  resetCreateTour,
+  resetUpdateTour,
+} from "~/redux/tour/actions";
 
 const AdminTour = () => {
   const [isShowModalAction, setIsShowModalAction] = useState(false);
@@ -32,30 +27,17 @@ const AdminTour = () => {
   const [search, setSearch] = useState("");
   const searchDebounce = useDebounce(search, 500);
   const {
-    isGetAllBlogsRequest,
-    isGetAllBlogsSuccess,
-    isGetAllBlogsFailure,
-    getAllBlogsState,
-    isCreateBlogsRequest,
-    isCreateBlogsSuccess,
-    isCreateBlogsFailure,
-    isUpdateBlogsRequest,
-    isUpdateBlogsSuccess,
-    isUpdateBlogsFailure,
-  } = useSelector((store) => store.blog);
+    getAllTourState,
+    isGetAllTourSuccess,
+    isCreateTourSuccess,
+    isCreateTourFailure,
+    isUpdateTourSuccess,
+    isUpdateTourFailure,
+  } = useSelector((store) => store.tour);
 
-  const {
-    isGetAllCategoryTourRequest,
-    isGetAllCategoryTourSuccess,
-    isGetAllCategoryTourFailure,
-    getAllCategoryTourState,
-    isCreateCategoryTourRequest,
-    isCreateCategoryTourSuccess,
-    isCreateCategoryTourFailure,
-    isUpdateCategoryTourRequest,
-    isUpdateCategoryTourSuccess,
-    isUpdateCategoryTourFailure,
-  } = useSelector((store) => store.categoryTour);
+  const { getAllCategoryTourState } = useSelector(
+    (store) => store.categoryTour
+  );
 
   const [callApi, setCallApi] = useState(false);
   const [dataActive, setDataActive] = useState(null);
@@ -109,7 +91,7 @@ const AdminTour = () => {
       if (searchDebounce) {
         params.name = searchDebounce;
       }
-      dispatch(getAllBlogsRequest(params));
+      dispatch(getAllTourRequest(params));
       setCallApi(false);
     }
   }, [callApi, indexPage]);
@@ -128,8 +110,30 @@ const AdminTour = () => {
       Cell: (row) => row.row.index + 1,
     },
     {
-      Header: "MÃ",
+      Header: "Mã",
       accessor: "_id",
+      cellClass: "list-item-heading w-5",
+    },
+    {
+      Header: "Hình ảnh",
+      accessor: "image",
+      cellClass: "list-item-heading w-5",
+      Cell: ({ value }) => (
+        <div
+          className="d-flex align-items-center btn-see-tour "
+          style={{ gap: "10px" }}
+        >
+          <img
+            src={value ? value[0]?.url : logo}
+            alt="avatar"
+            style={{ height: "60px", width: "60px", objectFit: "contain" }}
+          />
+        </div>
+      ),
+    },
+    {
+      Header: "Mã code",
+      accessor: "tour_code",
       cellClass: "list-item-heading w-5",
     },
     {
@@ -138,9 +142,37 @@ const AdminTour = () => {
       cellClass: "list-item-heading w-5",
     },
     {
-      Header: "Tiêu đề",
-      accessor: "title",
+      Header: "Danh mục",
+      accessor: "category",
       cellClass: "list-item-heading w-5",
+      Cell: ({ value }) => (
+        <div
+          className="d-flex align-items-center btn-see-tour"
+          style={{ gap: "10px" }}
+        >
+          <span>{value?.name}</span>
+        </div>
+      ),
+    },
+    {
+      Header: "Vị trí",
+      accessor: "",
+      cellClass: "list-item-heading w-5",
+      Cell: ({ row }) => {
+        return (
+          <div
+            className=" align-items-center btn-see-tour "
+            style={{ gap: "10px" }}
+          >
+            <div>
+              <strong>Bắt đầu:</strong> {row?.original?.start_location}
+            </div>
+            <div>
+              <strong>Kết thúc:</strong> {row?.original?.end_location}
+            </div>
+          </div>
+        );
+      },
     },
 
     {
@@ -173,43 +205,43 @@ const AdminTour = () => {
   ]);
 
   useEffect(() => {
-    if (isGetAllBlogsSuccess) {
-      setDataTable(getAllBlogsState?.data || []);
+    if (isGetAllTourSuccess) {
+      setDataTable(getAllTourState?.data || []);
     }
-  }, [isGetAllBlogsSuccess]);
+  }, [isGetAllTourSuccess]);
 
   useEffect(() => {
-    if (isCreateBlogsSuccess) {
-      toast.success("Thêm bài blog thành công");
+    if (isCreateTourSuccess) {
+      toast.success("Thêm tour thành công");
       setIsShowModalConfirm(false);
       setCallApi(true);
       setIsShowModalAction(false);
-      dispatch(resetCreateBlogs());
+      dispatch(resetCreateTour());
     }
-  }, [isCreateBlogsSuccess]);
+  }, [isCreateTourSuccess]);
 
   useEffect(() => {
-    if (isCreateBlogsFailure) {
+    if (isCreateTourFailure) {
       toast.error("Thêm bài blog thất bại");
-      dispatch(resetCreateBlogs());
+      dispatch(resetCreateTour());
     }
-  }, [isCreateBlogsFailure]);
+  }, [isCreateTourFailure]);
 
   useEffect(() => {
-    if (isUpdateBlogsSuccess) {
-      toast.success("Cập nhật bài blog thành công");
+    if (isUpdateTourSuccess) {
+      toast.success("Cập nhật tour thành công");
       setCallApi(true);
       setIsShowModalConfirm(false);
       setIsShowModalAction(false);
-      dispatch(resetUpdateBlogs());
+      dispatch(resetUpdateTour());
     }
-  }, [isUpdateBlogsSuccess]);
+  }, [isUpdateTourSuccess]);
   useEffect(() => {
-    if (isUpdateBlogsFailure) {
+    if (isUpdateTourFailure) {
       toast.error("Cập nhật bài blog thất bại");
-      dispatch(resetUpdateBlogs());
+      dispatch(resetUpdateTour());
     }
-  }, [isUpdateBlogsFailure]);
+  }, [isUpdateTourFailure]);
 
   const handleClickRow = (value) => {
     setDataActive(value);
@@ -218,6 +250,8 @@ const AdminTour = () => {
     setIndexPage(idxPage);
     setCallApi(true);
   };
+
+  console.log("dataTable", dataTable);
 
   return (
     <div className="admin-food-page">

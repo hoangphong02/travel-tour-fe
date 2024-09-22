@@ -99,12 +99,12 @@ const AdminFood = () => {
       ),
     },
     {
-      Header: "MÃ",
+      Header: "Mã",
       accessor: "_id",
       cellClass: "list-item-heading w-5",
     },
     {
-      Header: "TÊN",
+      Header: "Tên",
       accessor: "name",
       cellClass: "list-item-heading w-5",
     },

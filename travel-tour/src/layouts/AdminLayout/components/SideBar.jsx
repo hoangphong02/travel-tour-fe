@@ -9,7 +9,6 @@ import {
 import {
   useHistory,
   useLocation,
-  useParams,
 } from "react-router-dom/cjs/react-router-dom.min";
 import { routesAdmin } from "~/configs";
 import logoTour from "~/assets/logo/logo-tour.png";
@@ -17,7 +16,6 @@ import logoTour from "~/assets/logo/logo-tour.png";
 export const SideBar = memo(() => {
   const history = useHistory();
   const { pathname } = useLocation();
-  console.log("params", pathname);
 
   return (
     <CDBSidebar textColor="#333" backgroundColor="#f0f0f0" className="sidebar">
