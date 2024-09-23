@@ -71,6 +71,12 @@ const AdminBlog = () => {
   }, []);
 
   useEffect(() => {
+    if (!isShowModalAction) {
+      setDataActive();
+    }
+  }, [isShowModalAction]);
+
+  useEffect(() => {
     setCallApi(true);
   }, [searchDebounce]);
 

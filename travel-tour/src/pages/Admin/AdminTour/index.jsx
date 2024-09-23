@@ -99,6 +99,8 @@ const AdminTour = () => {
   useEffect(() => {
     if (isShowModalAction) {
       dispatch(getAllCategoryTourRequest());
+    } else {
+      setDataActive();
     }
   }, [isShowModalAction]);
 

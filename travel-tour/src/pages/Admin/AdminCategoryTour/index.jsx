@@ -63,6 +63,12 @@ const AdminCategoryTour = () => {
   }, []);
 
   useEffect(() => {
+    if (!isShowModalAction) {
+      setDataActive();
+    }
+  }, [isShowModalAction]);
+
+  useEffect(() => {
     setCallApi(true);
   }, [searchDebounce]);
   useEffect(() => {

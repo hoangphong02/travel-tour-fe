@@ -10,7 +10,7 @@ import {
   useHistory,
   useLocation,
 } from "react-router-dom/cjs/react-router-dom.min";
-import { routesAdmin } from "~/configs";
+import { routesAdmin, routesUser } from "~/configs";
 import logoTour from "~/assets/logo/logo-tour.png";
 
 export const SideBar = memo(() => {
@@ -23,6 +23,7 @@ export const SideBar = memo(() => {
         <div
           className="container"
           style={{ display: "flex", alignItems: "center" }}
+          onClick={() => history.push(routesUser.home)}
         >
           <img
             src={logoTour}

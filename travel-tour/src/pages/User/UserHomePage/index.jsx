@@ -5,8 +5,27 @@ import image1 from "~/assets/logo/image9.png";
 import image4 from "~/assets/logo/image4.jpg";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { useDispatch, useSelector } from "react-redux";
+import { getAllCategoryTourRequest } from "~/redux/categoryTour/actions";
 
 const UserHomePage = () => {
+  const {
+    isGetAllCategoryTourRequest,
+    isGetAllCategoryTourSuccess,
+    isGetAllCategoryTourFailure,
+    getAllCategoryTourState,
+  } = useSelector((store) => store.categoryTour);
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(
+      getAllCategoryTourRequest({
+        limit: 5,
+      })
+    );
+  }, []);
+
+  console.log("getAllCategoryTourState", getAllCategoryTourState);
+
   return (
     <div className="home-page">
       <div className="banner-introduce">
@@ -88,41 +107,19 @@ const UserHomePage = () => {
       <div className="list-tour-options">
         <span className="title">DANH SÁCH TOUR</span>
         <div className="list-tour-options--content">
-          <div className="option">
-            <img src={image4} alt="" />
-            <div className="option-info">
-              <span>MIỀN TÂY TRONG NGÀY</span>
-              <span>3 Tour</span>
-            </div>
-          </div>
-          <div className="option">
-            <img src={image4} alt="" />
-            <div className="option-info">
-              <span>MIỀN TÂY TRONG NGÀY</span>
-              <span>3 Tour</span>
-            </div>
-          </div>
-          <div className="option">
-            <img src={image4} alt="" />
-            <div className="option-info">
-              <span>MIỀN TÂY TRONG NGÀY</span>
-              <span>3 Tour</span>
-            </div>
-          </div>
-          <div className="option">
-            <img src={image4} alt="" />
-            <div className="option-info">
-              <span>MIỀN TÂY TRONG NGÀY</span>
-              <span>3 Tour</span>
-            </div>
-          </div>
-          <div className="option">
-            <img src={image4} alt="" />
-            <div className="option-info">
-              <span>MIỀN TÂY TRONG NGÀY</span>
-              <span>3 Tour</span>
-            </div>
-          </div>
+          {getAllCategoryTourState?.data?.length
+            ? getAllCategoryTourState?.data?.map((item, index) => {
+                return (
+                  <div className="option" key={index}>
+                    <img src={item?.thumbnail} alt="" />
+                    <div className="option-info">
+                      <span>{item.name}</span>
+                      <span>3 Tour</span>
+                    </div>
+                  </div>
+                );
+              })
+            : null}
         </div>
       </div>
 
