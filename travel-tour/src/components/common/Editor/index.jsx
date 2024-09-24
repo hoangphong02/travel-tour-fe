@@ -101,6 +101,7 @@ const Editor = ({ value, setValue }) => {
     "link",
     "image",
     "size",
+    "align",
   ];
 
   // const getEditorContents = () => {

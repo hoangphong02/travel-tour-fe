@@ -217,7 +217,7 @@ export const ModalActions = ({
                   <div className="d-flex" style={{ gap: "12px" }}>
                     <FormGroup className="w-100 error-l-100">
                       <Label>
-                        Tên món ăn:{" "}
+                        Tên bài blog:{" "}
                         <span style={{ color: "red", fontWeight: "600" }}>
                           *
                         </span>

@@ -175,8 +175,6 @@ export const ModalActions = ({
     setIsShowModalConfirm(true);
   };
 
-  console.log("dataForm", dataForm);
-
   const handleSubmit = () => {
     const {
       tour_code,

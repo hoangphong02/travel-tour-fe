@@ -7,6 +7,8 @@ import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useDispatch, useSelector } from "react-redux";
 import { getAllCategoryTourRequest } from "~/redux/categoryTour/actions";
+import { getAllCategoryRequest } from "~/redux/categoryBlog/actions";
+import { getAllBlogsRequest } from "~/redux/blog/actions";
 
 const UserHomePage = () => {
   const {
@@ -15,6 +17,18 @@ const UserHomePage = () => {
     isGetAllCategoryTourFailure,
     getAllCategoryTourState,
   } = useSelector((store) => store.categoryTour);
+  const {
+    isGetAllCategoryRequest,
+    isGetAllCategorySuccess,
+    isGetAllCategoryFailure,
+    getAllCategoryState,
+  } = useSelector((store) => store.categoryBlog);
+  const {
+    isGetAllBlogsRequest,
+    isGetAllBlogsSuccess,
+    isGetAllBlogsFailure,
+    getAllBlogsState,
+  } = useSelector((store) => store.blog);
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(
@@ -22,9 +36,19 @@ const UserHomePage = () => {
         limit: 5,
       })
     );
+    dispatch(
+      getAllCategoryRequest({
+        limit: 5,
+      })
+    );
+    dispatch(
+      getAllBlogsRequest({
+        limit: 6,
+      })
+    );
   }, []);
 
-  console.log("getAllCategoryTourState", getAllCategoryTourState);
+  console.log("getAllCategoryTourState", getAllBlogsState);
 
   return (
     <div className="home-page">
@@ -125,103 +149,40 @@ const UserHomePage = () => {
 
       <div className="list-blog">
         <span className="title">BLOG</span>
+        <div className="category-blog">
+          {getAllCategoryState?.data?.map((item) => {
+            return (
+              <div className="category-blog-item">
+                <img
+                  src={item.thumbnail}
+                  alt=""
+                  style={{ width: "100%", height: "auto", overflow: "hidden" }}
+                />
+                <div className="info-blog">
+                  <span className="name">{item.name.toUpperCase()}</span>
+                  <div className="btn-more">
+                    <span>Xem thêm</span>
+                  </div>
+                </div>
+              </div>
+            );
+          })}
+        </div>
         <div className="list-blog-body">
-          <div className="blog-items">
-            <img src={image1} alt="" />
-            <span className="name">
-              LÒ HỦ TIẾU TRUYỀN THỐNG CẦN THƠ - NÉT ĐẸP VĂN HÓA TRUYỀN THỐNG
-            </span>
-            <span className="des">
-              Cần Thơ không chỉ nổi tiếng với những khu chợ nổi nhộn nhịp, những
-              vườn trái cây trĩu quả mà còn níu chân du khách bởi hương vị đặc
-              trưng của các món ăn miệt vườn. Trong đó, hủ tiếu đã trở thành
-              biểu tượng ẩm thực của vùng đất này, thu hút du khách bởi hương vị
-              thơm ngon và quy trình chế biến độc đáo.
-            </span>
-            <div className="btn-more">
-              <span>Xem thêm</span>
-            </div>
-          </div>
-          <div className="blog-items">
-            <img src={image1} alt="" />
-            <span>
-              LÒ HỦ TIẾU TRUYỀN THỐNG CẦN THƠ - NÉT ĐẸP VĂN HÓA TRUYỀN THỐNG
-            </span>
-            <span>
-              Cần Thơ không chỉ nổi tiếng với những khu chợ nổi nhộn nhịp, những
-              vườn trái cây trĩu quả mà còn níu chân du khách bởi hương vị đặc
-              trưng của các món ăn miệt vườn. Trong đó, hủ tiếu đã trở thành
-              biểu tượng ẩm thực của vùng đất này, thu hút du khách bởi hương vị
-              thơm ngon và quy trình chế biến độc đáo.
-            </span>
-            <div className="btn-more">
-              <span>Xem thêm</span>
-            </div>
-          </div>
-          <div className="blog-items">
-            <img src={image1} alt="" />
-            <span>
-              LÒ HỦ TIẾU TRUYỀN THỐNG CẦN THƠ - NÉT ĐẸP VĂN HÓA TRUYỀN THỐNG
-            </span>
-            <span>
-              Cần Thơ không chỉ nổi tiếng với những khu chợ nổi nhộn nhịp, những
-              vườn trái cây trĩu quả mà còn níu chân du khách bởi hương vị đặc
-              trưng của các món ăn miệt vườn. Trong đó, hủ tiếu đã trở thành
-              biểu tượng ẩm thực của vùng đất này, thu hút du khách bởi hương vị
-              thơm ngon và quy trình chế biến độc đáo.
-            </span>
-            <div className="btn-more">
-              <span>Xem thêm</span>
-            </div>
-          </div>
-          <div className="blog-items">
-            <img src={image1} alt="" />
-            <span>
-              LÒ HỦ TIẾU TRUYỀN THỐNG CẦN THƠ - NÉT ĐẸP VĂN HÓA TRUYỀN THỐNG
-            </span>
-            <span>
-              Cần Thơ không chỉ nổi tiếng với những khu chợ nổi nhộn nhịp, những
-              vườn trái cây trĩu quả mà còn níu chân du khách bởi hương vị đặc
-              trưng của các món ăn miệt vườn. Trong đó, hủ tiếu đã trở thành
-              biểu tượng ẩm thực của vùng đất này, thu hút du khách bởi hương vị
-              thơm ngon và quy trình chế biến độc đáo.
-            </span>
-            <div className="btn-more">
-              <span>Xem thêm</span>
-            </div>
-          </div>
-          <div className="blog-items">
-            <img src={image1} alt="" />
-            <span>
-              LÒ HỦ TIẾU TRUYỀN THỐNG CẦN THƠ - NÉT ĐẸP VĂN HÓA TRUYỀN THỐNG
-            </span>
-            <span>
-              Cần Thơ không chỉ nổi tiếng với những khu chợ nổi nhộn nhịp, những
-              vườn trái cây trĩu quả mà còn níu chân du khách bởi hương vị đặc
-              trưng của các món ăn miệt vườn. Trong đó, hủ tiếu đã trở thành
-              biểu tượng ẩm thực của vùng đất này, thu hút du khách bởi hương vị
-              thơm ngon và quy trình chế biến độc đáo.
-            </span>
-            <div className="btn-more">
-              <span>Xem thêm</span>
-            </div>
-          </div>
-          <div className="blog-items">
-            <img src={image1} alt="" />
-            <span>
-              LÒ HỦ TIẾU TRUYỀN THỐNG CẦN THƠ - NÉT ĐẸP VĂN HÓA TRUYỀN THỐNG
-            </span>
-            <span>
-              Cần Thơ không chỉ nổi tiếng với những khu chợ nổi nhộn nhịp, những
-              vườn trái cây trĩu quả mà còn níu chân du khách bởi hương vị đặc
-              trưng của các món ăn miệt vườn. Trong đó, hủ tiếu đã trở thành
-              biểu tượng ẩm thực của vùng đất này, thu hút du khách bởi hương vị
-              thơm ngon và quy trình chế biến độc đáo.
-            </span>
-            <div className="btn-more">
-              <span>Xem thêm</span>
-            </div>
-          </div>
+          {getAllBlogsState?.data?.length
+            ? getAllBlogsState?.data?.map((item) => {
+                return (
+                  <div className="blog-items">
+                    <img src={item.image[0].url} alt="" />
+                    <span className="name">{item.name}</span>
+                    <span className="des">{item.title}</span>
+                    <div className="btn-more">
+                      <span>Xem thêm</span>
+                    </div>
+                  </div>
+                );
+              })
+            : null}
         </div>
       </div>
     </div>

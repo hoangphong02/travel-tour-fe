@@ -1,10 +1,12 @@
-import React, { memo, useState } from "react";
+import React, { memo, useEffect, useState } from "react";
 import {
   useHistory,
   useLocation,
 } from "react-router-dom/cjs/react-router-dom.min";
 import logo from "~/assets/logo/no-avatar.png";
 import logoTour from "~/assets/logo/logo-tour.png";
+import { useDispatch } from "react-redux";
+import { getAllCategoryTourRequest } from "~/redux/categoryTour/actions";
 
 export const HeaderAdmin = memo(() => {
   const [isScroll, setIsScroll] = useState(false);
@@ -26,6 +28,14 @@ export const HeaderAdmin = memo(() => {
   //   )
   //   : [];
 
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(
+      getAllCategoryTourRequest({
+        limit: 5,
+      })
+    );
+  }, []);
   window.addEventListener("scroll", function () {
     let scrollTop = window.scrollY || document.documentElement.scrollTop;
     if (scrollTop > 80) {

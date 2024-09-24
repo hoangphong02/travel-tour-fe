@@ -23,6 +23,9 @@ export const HeaderAction = memo(() => {
   const { profileResponse } = useSelector((store) => store.user);
   const [isShowModalLogout, setIsShowModalLogout] = useState(false);
   const dispatch = useDispatch();
+  const { getAllCategoryTourState } = useSelector(
+    (store) => store.categoryTour
+  );
 
   window.addEventListener("scroll", function () {
     let scrollTop = window.scrollY || document.documentElement.scrollTop;
@@ -44,8 +47,6 @@ export const HeaderAction = memo(() => {
     dispatch(resetUserState());
     setIsShowModalLogout(false);
   };
-
-  console.log("profileResponse header", profileResponse);
 
   return (
     <section
@@ -148,9 +149,9 @@ export const HeaderAction = memo(() => {
             <div className="item">
               <span onClick={() => history.push(routesUser.tour)}>TOUR</span>
               <ul className="ul-tour">
-                <li>Miền tây trong ngày</li>
-                <li>Tour dịch vụ</li>
-                <li>Tour 3 ngày 2 đêm</li>
+                {getAllCategoryTourState?.data?.map((item) => {
+                  return <li>{item.name}</li>;
+                })}
               </ul>
             </div>
             <div

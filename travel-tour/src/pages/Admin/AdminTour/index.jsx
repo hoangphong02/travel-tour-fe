@@ -253,8 +253,6 @@ const AdminTour = () => {
     setCallApi(true);
   };
 
-  console.log("dataTable", dataTable);
-
   return (
     <div className="admin-food-page">
       <div className="top">
