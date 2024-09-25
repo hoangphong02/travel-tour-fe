@@ -4,6 +4,10 @@ export const getAllTourRequest = createAction("GET_ALL_TOUR_REQUEST");
 export const getAllTourSuccess = createAction("GET_ALL_TOUR_SUCCESS");
 export const getAllTourFailure = createAction("GET_ALL_TOUR_FAILURE");
 
+export const getDetailTourRequest = createAction("GET_DETAIL_TOUR_REQUEST");
+export const getDetailTourSuccess = createAction("GET_DETAIL_TOUR_SUCCESS");
+export const getDetailTourFailure = createAction("GET_DETAIL_TOUR_FAILURE");
+
 export const createTourRequest = createAction("CREATE_TOUR_REQUEST");
 export const createTourSuccess = createAction("CREATE_TOUR_SUCCESS");
 export const createTourFailure = createAction("CREATE_TOUR_FAILURE");

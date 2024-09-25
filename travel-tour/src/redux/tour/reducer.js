@@ -8,6 +8,11 @@ const initialState = {
   isGetAllTourSuccess: false,
   isGetAllTourFailure: false,
   getAllTourState: {},
+  // Get All Food
+  isGetDetailTourRequest: false,
+  isGetDetailTourSuccess: false,
+  isGetDetailTourFailure: false,
+  getDetailTourState: {},
   // Create Food
   isCreateTourRequest: false,
   isCreateTourSuccess: false,
@@ -46,6 +51,27 @@ const reducer = handleActions(
       isGetAllTourRequest: false,
       isGetAllTourSuccess: false,
       isGetAllTourFailure: true,
+      errorMessages: payload,
+    }),
+    // #region : Get detail tour
+    [Actions.getDetailTourRequest]: (state) => ({
+      ...state,
+      isGetDetailTourRequest: true,
+      isGetDetailTourSuccess: false,
+      isGetDetailTourFailure: false,
+    }),
+    [Actions.getDetailTourSuccess]: (state, { payload }) => ({
+      ...state,
+      isGetDetailTourRequest: false,
+      isGetDetailTourSuccess: true,
+      isGetDetailTourFailure: false,
+      getDetailTourState: payload,
+    }),
+    [Actions.getDetailTourFailure]: (state, { payload }) => ({
+      ...state,
+      isGetDetailTourRequest: false,
+      isGetDetailTourSuccess: false,
+      isGetDetailTourFailure: true,
       errorMessages: payload,
     }),
     // #endregion

@@ -19,6 +19,22 @@ function* getAllTours({ payload }) {
   }
 }
 
+function* getDetailTours({ payload }) {
+  try {
+    const response = yield call(
+      typeof payload === "string"
+        ? () => axiosMicro.get(`/tour/${payload.id}`)
+        : () => axiosMicro.get(`/tour/${payload.id}`, { params: payload })
+    );
+    yield put(Actions.getDetailTourSuccess(response.data));
+  } catch (error) {
+    if (error?.response?.data) {
+      const messages = error.response.data;
+      yield put(Actions.getDetailTourFailure(messages));
+    }
+  }
+}
+
 function* createTour({ payload }) {
   try {
     const response = yield call(() => axiosMicro.post("/tour", payload));
@@ -65,6 +81,7 @@ function* deleteTour({ payload }) {
 // eslint-disable-next-line func-names
 export default function* () {
   yield takeLatest(Actions.getAllTourRequest, getAllTours);
+  yield takeLatest(Actions.getDetailTourRequest, getDetailTours);
   yield takeLatest(Actions.createTourRequest, createTour);
   yield takeLatest(Actions.updateTourRequest, updateTour);
   yield takeLatest(Actions.deleteTourRequest, deleteTour);

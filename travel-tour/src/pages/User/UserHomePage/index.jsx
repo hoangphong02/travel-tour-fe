@@ -9,6 +9,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { getAllCategoryTourRequest } from "~/redux/categoryTour/actions";
 import { getAllCategoryRequest } from "~/redux/categoryBlog/actions";
 import { getAllBlogsRequest } from "~/redux/blog/actions";
+import { getAllTourRequest } from "~/redux/tour/actions";
 
 const UserHomePage = () => {
   const {
@@ -29,6 +30,12 @@ const UserHomePage = () => {
     isGetAllBlogsFailure,
     getAllBlogsState,
   } = useSelector((store) => store.blog);
+  const {
+    isGetAllTourRequest,
+    isGetAllTourSuccess,
+    isGetAllTourFailure,
+    getAllTourState,
+  } = useSelector((store) => store.tour);
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(
@@ -46,9 +53,14 @@ const UserHomePage = () => {
         limit: 6,
       })
     );
+    dispatch(
+      getAllTourRequest({
+        limit: 5,
+      })
+    );
   }, []);
 
-  console.log("getAllCategoryTourState", getAllBlogsState);
+  console.log("getAllCategoryTourState", getAllTourState);
 
   return (
     <div className="home-page">
@@ -67,62 +79,101 @@ const UserHomePage = () => {
         <span className="title">TOUR CHÍNH</span>
         <div className="list-tour-main-body">
           <div className="list-tour-main-body-left">
-            <div className="items">
-              <img src={image1} />
-              <div className="items-info">
-                <span>ĐỊA ĐẠO CỦ CHI NỮA NGÀY</span>
-                <span>Giá: 450.000 VND</span>
-                <div className="btn-book">
-                  <span>Đặt ngay</span>
-                </div>
-              </div>
-            </div>
+            {getAllTourState?.data?.length
+              ? getAllTourState?.data?.slice(0, 1)?.map((item) => {
+                  return (
+                    <div className="items">
+                      <img
+                        src={
+                          item?.image?.find((image) => image.type === "banner")
+                            ?.url
+                        }
+                        alt=""
+                      />
+                      <div className="items-info">
+                        <div className="name">
+                          <span>{item.category.name.toUpperCase()}</span>
+                          <span>{item.name.toUpperCase()}</span>
+                        </div>
+                        <span>
+                          Giá: {item.base_price_adult.toLocaleString("vi-VN")}{" "}
+                          VND
+                        </span>
+                        <div className="btn-book">
+                          <span>Đặt ngay</span>
+                        </div>
+                      </div>
+                      <div className="bg"></div>
+                    </div>
+                  );
+                })
+              : null}
           </div>
           <div className="list-tour-main-body-right">
             <div className="list-tour-main-body-right-top">
-              <div className="items">
-                <img src={image1} />
-                <div className="items-info">
-                  <span>ĐỊA ĐẠO CỦ CHI NỮA NGÀY</span>
-                  <span>Giá: 450.000 VND</span>
-                  <div className="btn-book">
-                    <span>Đặt ngay</span>
-                  </div>
-                </div>
-              </div>
-              <div className="items">
-                <img src={image1} />
-                <div className="items-info">
-                  <span>ĐỊA ĐẠO CỦ CHI NỮA NGÀY</span>
-                  <span>Giá: 450.000 VND</span>
-                  <div className="btn-book">
-                    <span>Đặt ngay</span>
-                  </div>
-                </div>
-              </div>
+              {getAllTourState?.data?.length
+                ? getAllTourState?.data?.slice(1, 3)?.map((item) => {
+                    return (
+                      <div className="items">
+                        <img
+                          src={
+                            item?.image?.find(
+                              (image) => image.type === "banner"
+                            )?.url
+                          }
+                          alt=""
+                        />
+                        <div className="items-info">
+                          <div className="name">
+                            <span>{item.category.name.toUpperCase()}</span>
+                            <span>{item.name.toUpperCase()}</span>
+                          </div>
+                          <span>
+                            Giá: {item.base_price_adult.toLocaleString("vi-VN")}{" "}
+                            VND
+                          </span>
+                          <div className="btn-book">
+                            <span>Đặt ngay</span>
+                          </div>
+                        </div>
+                        <div className="bg"></div>
+                      </div>
+                    );
+                  })
+                : null}
             </div>
 
             <div className="list-tour-main-body-right-bottom">
-              <div className="items">
-                <img src={image1} />
-                <div className="items-info">
-                  <span>ĐỊA ĐẠO CỦ CHI NỮA NGÀY</span>
-                  <span>Giá: 450.000 VND</span>
-                  <div className="btn-book">
-                    <span>Đặt ngay</span>
-                  </div>
-                </div>
-              </div>
-              <div className="items">
-                <img src={image1} />
-                <div className="items-info">
-                  <span>ĐỊA ĐẠO CỦ CHI NỮA NGÀY</span>
-                  <span>Giá: 450.000 VND</span>
-                  <div className="btn-book">
-                    <span>Đặt ngay</span>
-                  </div>
-                </div>
-              </div>
+              {getAllTourState?.data?.length
+                ? getAllTourState?.data?.slice(3, 5)?.map((item) => {
+                    return (
+                      <div className="items">
+                        <img
+                          src={
+                            item?.image?.find(
+                              (image) => image.type === "banner"
+                            )?.url
+                          }
+                          alt=""
+                        />
+                        <div className="items-info">
+                          <div className="name">
+                            <span>{item.category.name.toUpperCase()}</span>
+                            <span>{item.name.toUpperCase()}</span>
+                          </div>
+                          <span>
+                            Giá: {item.base_price_adult.toLocaleString("vi-VN")}{" "}
+                            VND
+                          </span>
+                          <div className="btn-book">
+                            <span>Đặt ngay</span>
+                          </div>
+                        </div>
+                        <div className="bg"></div>
+                      </div>
+                    );
+                  })
+                : null}
             </div>
           </div>
         </div>
