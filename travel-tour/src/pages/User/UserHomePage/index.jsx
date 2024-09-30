@@ -10,6 +10,7 @@ import { getAllCategoryTourRequest } from "~/redux/categoryTour/actions";
 import { getAllCategoryRequest } from "~/redux/categoryBlog/actions";
 import { getAllBlogsRequest } from "~/redux/blog/actions";
 import { getAllTourRequest } from "~/redux/tour/actions";
+import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 
 const UserHomePage = () => {
   const {
@@ -37,6 +38,7 @@ const UserHomePage = () => {
     getAllTourState,
   } = useSelector((store) => store.tour);
   const dispatch = useDispatch();
+  const history = useHistory();
   useEffect(() => {
     dispatch(
       getAllCategoryTourRequest({
@@ -62,6 +64,9 @@ const UserHomePage = () => {
 
   console.log("getAllCategoryTourState", getAllTourState);
 
+  const handleClickTourDetail = (id) => {
+    history.push(`/tour-detail/${id}`);
+  };
   return (
     <div className="home-page">
       <div className="banner-introduce">
@@ -82,7 +87,10 @@ const UserHomePage = () => {
             {getAllTourState?.data?.length
               ? getAllTourState?.data?.slice(0, 1)?.map((item) => {
                   return (
-                    <div className="items">
+                    <div
+                      className="items"
+                      onClick={() => handleClickTourDetail(item?._id)}
+                    >
                       <img
                         src={
                           item?.image?.find((image) => image.type === "banner")
@@ -114,7 +122,10 @@ const UserHomePage = () => {
               {getAllTourState?.data?.length
                 ? getAllTourState?.data?.slice(1, 3)?.map((item) => {
                     return (
-                      <div className="items">
+                      <div
+                        className="items"
+                        onClick={() => handleClickTourDetail(item?._id)}
+                      >
                         <img
                           src={
                             item?.image?.find(
@@ -147,7 +158,10 @@ const UserHomePage = () => {
               {getAllTourState?.data?.length
                 ? getAllTourState?.data?.slice(3, 5)?.map((item) => {
                     return (
-                      <div className="items">
+                      <div
+                        className="items"
+                        onClick={() => handleClickTourDetail(item?._id)}
+                      >
                         <img
                           src={
                             item?.image?.find(

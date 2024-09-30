@@ -28,9 +28,13 @@ const TourDetailPage = () => {
   return (
     <div className="tour-detail-page-wrapper">
       <div className="tour-detail-page-wrapper-top">
-        <span className="name-tour">TOUR MIỀN TÂY 1 NGÀY</span>
+        <span className="name-tour">{getDetailTourState?.data?.name}</span>
         <span className="price-tour">
-          Giá tour gốc: <span className="price">450.000VNĐ</span>
+          Giá tour gốc:{" "}
+          <span className="price">
+            {getDetailTourState?.data?.base_price_adult.toLocaleString("vi-VN")}
+            VNĐ
+          </span>
         </span>
         <div className="btn-book-tour">
           <span>Đặt ngay</span>
@@ -63,12 +67,12 @@ const TourDetailPage = () => {
           >
             <span>Tổng quan tour</span>
           </div>
-          <div
+          {/* <div
             className={`option ${option === "require" ? "active" : ""}`}
             onClick={() => handleChangeOption("require")}
           >
             <span>Điều kiện tour</span>
-          </div>
+          </div> */}
           <div
             className={`option ${option === "picture" ? "active" : ""}`}
             onClick={() => handleChangeOption("picture")}

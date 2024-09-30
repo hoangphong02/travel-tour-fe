@@ -16,7 +16,7 @@ import {
 } from "reactstrap";
 import * as Yup from "yup";
 import Editor from "~/components/common/Editor";
-import { LIST_OPTION_RANK_HOTEL } from "~/constants";
+import { LIST_OPTION_RANK_HOTEL, ListTransport } from "~/constants";
 import { createTourRequest, updateTourRequest } from "~/redux/tour/actions";
 
 export const PHONE_REGEX = /((0)+([1-9]{1})+([0-9]{8})\b)/g;
@@ -49,17 +49,6 @@ export const ModalActions = ({
   const [valueTextEditor, setValueTextEditor] = useState(null);
   const [dataForm, setDataForm] = useState(null);
   const [arrSchedules, setArrSchedules] = useState([]);
-
-  const ListTransport = [
-    {
-      value: "car",
-      label: "Xe ô tô",
-    },
-    {
-      value: "plane",
-      label: "Máy bay",
-    },
-  ];
 
   const ListDayTour = [
     {
