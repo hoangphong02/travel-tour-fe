@@ -51,7 +51,7 @@ export const HeaderAction = memo(() => {
   return (
     <section
       id="header-action"
-      className={`header-action--wrapper ${isScroll ? "isScroll" : ""} ${pathname.includes(routesUser.introduce) || pathname.includes(routesUser.tablePriceTour) || pathname.includes(routesUser.contact) || pathname.includes(routesUser.booking) || pathname.includes(routesUser.tour) || pathname.includes(routesUser.blogs) || pathname.includes(routesUser.picturePage) ? "header-not-home" : ""}`}
+      className={`header-action--wrapper ${isScroll ? "isScroll" : ""} ${pathname.includes(routesUser.introduce) || pathname.includes(routesUser.tablePriceTour) || pathname.includes(routesUser.contact) || pathname.includes("booking") || pathname.includes(routesUser.tour) || pathname.includes(routesUser.blogs) || pathname.includes(routesUser.picturePage) ? "header-not-home" : ""}`}
     >
       <div className="header-action--inner flex-center-space h-full">
         <div className="header-action--inner--top">
@@ -127,7 +127,7 @@ export const HeaderAction = memo(() => {
 
         <div className="header-action--inner--bottom">
           <div
-            className={`logo ${!pathname.includes(routesUser.introduce) && !pathname.includes(routesUser.tablePriceTour) && !pathname.includes(routesUser.contact) && !pathname.includes(routesUser.booking) && !pathname.includes(routesUser.tour) && !pathname.includes(routesUser.blogs) && !pathname.includes(routesUser.picturePage) ? "filter-logo" : ""}`}
+            className={`logo ${!pathname.includes(routesUser.introduce) && !pathname.includes(routesUser.tablePriceTour) && !pathname.includes(routesUser.contact) && !pathname.includes("booking") && !pathname.includes(routesUser.tour) && !pathname.includes(routesUser.blogs) && !pathname.includes(routesUser.picturePage) ? "filter-logo" : ""}`}
           >
             <img
               src={logoTour}

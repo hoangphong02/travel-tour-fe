@@ -24,7 +24,6 @@ const TourDetailPage = () => {
     }
   }, [id]);
 
-  console.log("getDetailTourState", getDetailTourState);
   return (
     <div className="tour-detail-page-wrapper">
       <div className="tour-detail-page-wrapper-top">

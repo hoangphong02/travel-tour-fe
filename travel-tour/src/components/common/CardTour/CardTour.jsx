@@ -16,8 +16,6 @@ export const CardTour = memo((tour) => {
     history.push(`/tour-detail/${tour?._id}`);
   };
 
-  console.log(tour.tour);
-
   return (
     <div className="card-tour" onClick={handleDetail}>
       <img

@@ -62,8 +62,6 @@ const UserHomePage = () => {
     );
   }, []);
 
-  console.log("getAllCategoryTourState", getAllTourState);
-
   const handleClickTourDetail = (id) => {
     history.push(`/tour-detail/${id}`);
   };

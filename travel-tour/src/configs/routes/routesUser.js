@@ -16,7 +16,7 @@ export const routesUser = {
   introduce: "/introduce",
   tablePriceTour: "/price-tour",
   contact: "/contact",
-  booking: "/booking",
+  booking: "/booking/:id",
   tour: "/tour",
   tourOfList: "/tour/:id",
   tourDetail: "/tour-detail/:id",

@@ -46,27 +46,34 @@
                     gap: 8px;
 
                     input {
-                        padding: 16px;
+                        padding: 12px 16px;
                         border-radius: 8px;
-                        border: 1px solid var(--color-secondary-black);
+                        border: 1px solid #cbcbcb;
                         outline: #263593;
                     }
                 }
 
                 .title {
-                    font-size: 18px;
+                    font-size: 16px;
                     font-weight: 600;
                 }
 
                 .list-option {
                     display: flex;
                     justify-content: space-between;
-                    gap: 16px;
+                    gap: 4px;
 
                     .option {
                         display: flex;
                         flex-direction: column;
                         gap: 8px;
+
+                        input{
+                            border-radius: 8px;
+                            padding: 12px 8px;
+                            border: 1px solid #cbcbcb;
+                            outline: none;
+                        }
 
                         select {
                             padding: 16px 4px;
@@ -133,12 +140,12 @@
                         align-items: center;
 
                         span {
-                            font-size: 13px;
+                            font-size: 14px;
                         }
 
                         input {
-                            max-width: 80px;
-                            padding: 4px 8px;
+                            max-width: 140px;
+                            padding: 12px 8px;
                             border-radius: 8px;
                             border: 1px solid var(--color-secondary-black);
                             outline: #263593;
@@ -149,6 +156,74 @@
                             border-radius: 8px;
                             border: 1px solid var(--color-secondary-black);
                             min-width: 30%;
+                        }
+                    }
+                }
+
+                .list-option-price{
+                    display: flex;
+                    gap: 24px;
+                    justify-content: space-between;
+
+                    .option{
+                        width: 50%;
+                        .title{
+                            font-size: 16px;
+                        }
+
+                        .input-price{
+                            margin-top: 8px;
+                            display: flex;
+                            input{
+                                border: 1px solid #CBCBCB;
+                                width: 100%;
+                                padding: 4px 16px;
+                                color:#263593;
+                                font-weight: 600;
+                                font-size: 18px;
+                                border-top-left-radius: 4px;
+                                border-bottom-left-radius: 4px;
+                            }
+                            
+                            .unit{
+                                background-color: #CBCBCB;
+                                padding: 8px;
+                            }
+                        }
+                    }
+                }
+
+                .list-total-price{
+                    width: 100%;
+                    margin-top: 12px;
+                    
+                    .body{
+                        display: flex;
+                        gap: 12px;
+                        .title{
+                            font-size: 20px;
+                            font-weight: 600;
+                            color: #263593;
+                        }
+
+                        .input-price{
+                            flex: 1;
+                            display: flex;
+                            input{
+                                width: 100%;
+                                border: 1px solid #CBCBCB;
+                                    padding: 4px 16px;
+                                    color: #263593;
+                                    font-weight: 600;
+                                    font-size: 18px;
+                                    border-top-left-radius: 4px;
+                                    border-bottom-left-radius: 4px;
+                            }
+
+                            .unit {
+                                    background-color: #CBCBCB;
+                                    padding: 8px;
+                                }
                         }
                     }
                 }

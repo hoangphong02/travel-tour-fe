@@ -22,7 +22,6 @@ const TourPage = () => {
     dispatch(getAllTourRequest());
   }, []);
 
-  console.log("getAllTourState", getAllTourState);
   return (
     <div className="tour-page-wrapper">
       <div className="title">
