@@ -21,6 +21,7 @@ export const routesUser = {
   tourOfList: "/tour/:id",
   tourDetail: "/tour-detail/:id",
   blogs: "/blog",
+  blogsOfList: "/blogs/:id",
   picturePage: "/picture-page",
   blogDetail: "/blog-detail/:id",
 };

@@ -8,6 +8,11 @@ const initialState = {
   isGetAllBlogsSuccess: false,
   isGetAllBlogsFailure: false,
   getAllBlogsState: {},
+  // Get All Food
+  isGetDetailBlogRequest: false,
+  isGetDetailBlogSuccess: false,
+  isGetDetailBlogFailure: false,
+  getDetailBlogState: {},
   // Create Blogs
   isCreateBlogsRequest: false,
   isCreateBlogsSuccess: false,
@@ -49,6 +54,29 @@ const reducer = handleActions(
       errorMessages: payload,
     }),
     // #endregion
+
+    // #region : Get detail tour
+    [Actions.getDetailBlogsRequest]: (state) => ({
+      ...state,
+      isGetDetailBlogRequest: true,
+      isGetDetailBlogSuccess: false,
+      isGetDetailBlogFailure: false,
+    }),
+    [Actions.getDetailBlogsSuccess]: (state, { payload }) => ({
+      ...state,
+      isGetDetailBlogRequest: false,
+      isGetDetailBlogSuccess: true,
+      isGetDetailBlogFailure: false,
+      getDetailBlogState: payload,
+    }),
+    [Actions.getListBlogsFailure]: (state, { payload }) => ({
+      ...state,
+      isGetDetailBlogRequest: false,
+      isGetDetailBlogSuccess: false,
+      isGetDetailBlogFailure: true,
+      errorMessages: payload,
+    }),
+
     // #region : Create blog
     [Actions.createBlogsRequest]: (state) => ({
       ...state,

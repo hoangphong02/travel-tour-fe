@@ -19,6 +19,22 @@ function* getAllBlogs({ payload }) {
   }
 }
 
+function* getDetailBlog({ payload }) {
+  try {
+    const response = yield call(
+      typeof payload === "string"
+        ? () => axiosMicro.get(`/blog/${payload.id}`)
+        : () => axiosMicro.get(`/blog/${payload.id}`, { params: payload })
+    );
+    yield put(Actions.getDetailBlogsSuccess(response.data));
+  } catch (error) {
+    if (error?.response?.data) {
+      const messages = error.response.data;
+      yield put(Actions.getDetailBlogsFailure(messages));
+    }
+  }
+}
+
 function* createBlogs({ payload }) {
   try {
     const response = yield call(() => axiosMicro.post("/blog", payload));
@@ -73,4 +89,5 @@ export default function* () {
   yield takeLatest(Actions.createBlogsRequest, createBlogs);
   yield takeLatest(Actions.updateBlogsRequest, updateBlogs);
   yield takeLatest(Actions.deleteBlogsRequest, deleteBlogs);
+  yield takeLatest(Actions.getDetailBlogsRequest, getDetailBlog);
 }

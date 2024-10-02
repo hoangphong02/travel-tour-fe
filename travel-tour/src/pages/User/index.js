@@ -1,4 +1,3 @@
-
 import UserHomePage from "./UserHomePage";
 import IntroducePage from "./IntroducePage";
 import PriceTourPage from "./PriceTourPage";
@@ -10,11 +9,19 @@ import TourPage from "./TourPage";
 import BlogsPage from "./BlogPage";
 import PicturePage from "./PicturePage";
 import BlogDetailPage from "./BlogDetailPage";
-
-
-
-
+import BlogOfListPage from "./BlogOfListPage";
 
 export {
-  UserHomePage, IntroducePage, PriceTourPage, ContactPage, BookingPage, TourDetailPage, TourOfList, TourPage, BlogsPage, PicturePage, BlogDetailPage 
+  UserHomePage,
+  IntroducePage,
+  PriceTourPage,
+  ContactPage,
+  BookingPage,
+  TourDetailPage,
+  TourOfList,
+  TourPage,
+  BlogsPage,
+  PicturePage,
+  BlogDetailPage,
+  BlogOfListPage,
 };

@@ -4,6 +4,10 @@ export const getAllBlogsRequest = createAction("GET_ALL_BLOGS_REQUEST");
 export const getAllBlogsSuccess = createAction("GET_ALL_BLOGS_SUCCESS");
 export const getAllBlogsFailure = createAction("GET_ALL_BLOGS_FAILURE");
 
+export const getDetailBlogsRequest = createAction("GET_DETAIL_BLOGS_REQUEST");
+export const getDetailBlogsSuccess = createAction("GET_DETAIL_BLOGS_SUCCESS");
+export const getDetailBlogsFailure = createAction("GET_DETAIL_BLOGS_FAILURE");
+
 export const createBlogsRequest = createAction("CREATE_BLOGS_REQUEST");
 export const createBlogsSuccess = createAction("CREATE_BLOGS_SUCCESS");
 export const createBlogsFailure = createAction("CREATE_BLOGS_FAILURE");

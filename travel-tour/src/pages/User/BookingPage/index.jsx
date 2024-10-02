@@ -147,15 +147,6 @@ const BookingPage = () => {
     setTotal(price);
   }, [formik.values.adult_ticket, formik.values.child_ticket]);
 
-  console.log("getDetailTourState", getDetailTourState);
-
-  console.log(
-    "values",
-    formik.values,
-    total,
-    getDetailTourState?.data?.hotel_level[0]?.star
-  );
-
   return (
     <div className="booking-page-wrapper">
       <div className="booking-page-wrapper-left">

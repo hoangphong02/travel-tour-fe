@@ -235,7 +235,10 @@ const UserHomePage = () => {
           {getAllBlogsState?.data?.length
             ? getAllBlogsState?.data?.map((item) => {
                 return (
-                  <div className="blog-items">
+                  <div
+                    className="blog-items"
+                    onClick={() => history.push(`/blog-detail/${item._id}`)}
+                  >
                     <img src={item.image[0].url} alt="" />
                     <span className="name">{item.name}</span>
                     <span className="des">{item.title}</span>

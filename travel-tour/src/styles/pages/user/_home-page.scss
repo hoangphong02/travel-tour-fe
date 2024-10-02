@@ -194,7 +194,7 @@
 
                 .items {
                     position: relative;
-
+                    cursor: pointer;
                     img {
                         height: 500px;
                         width: 100%;
@@ -263,6 +263,7 @@
                     height: 250px;
 
                     .items {
+                        cursor: pointer;
                         width: 50%;
                         height: 100%;
                         position: relative;
@@ -332,6 +333,7 @@
                 &-bottom {
                     display: flex;
                     height: 250px;
+                    cursor: pointer;
 
                     .items {
                         width: 50%;
@@ -421,6 +423,7 @@
 
 
             .option {
+                cursor: pointer;
                 width: 250px;
                 height: 350px;
                 border-radius: 20px;
@@ -466,6 +469,7 @@
             margin: 16px 0;
 
             &-item{
+                cursor: pointer;
                 position: relative;
                 width: 50%;
                 border-radius: 16px;
@@ -516,6 +520,7 @@
             grid-template-columns: 1fr 1fr 1fr;
 
             .blog-items {
+                cursor: pointer;
                 img {
                     width: 100%;
                     height: 300px;

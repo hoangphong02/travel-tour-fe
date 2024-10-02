@@ -1,21 +1,44 @@
 import React, { useEffect, useMemo, useState } from "react";
 import { Button } from "react-bootstrap";
+import { useDispatch, useSelector } from "react-redux";
+import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 import { ReactTableWithPaginationCard, Table } from "~/components/common";
+import { ListTransport } from "~/constants";
+import { getAllTourRequest } from "~/redux/tour/actions";
 
 const PriceTourPage = () => {
   const [indexPage, setIndexPage] = useState(1);
   const [dataActive, setDataActive] = useState({});
   const [dataTable, setDataTable] = useState([]);
+  const {
+    isGetAllTourRequest,
+    isGetAllTourSuccess,
+    isGetAllTourFailure,
+    getAllTourState,
+  } = useSelector((store) => store.tour);
+  const dispatch = useDispatch();
+  const history = useHistory();
+  useEffect(() => {
+    const params = {
+      limit: 10,
+      page: indexPage,
+    };
+    dispatch(getAllTourRequest(params));
+  }, [indexPage]);
 
+  const handleDetailTour = (id) => {
+    history.push(`/tour-detail/${id}`);
+  };
   const columns = useMemo(() => [
     {
       Header: "STT",
       accessor: "",
       cellClass: "list-item-heading w-5",
+      Cell: (row) => row.row.index + 1,
     },
     {
       Header: "MÃ",
-      accessor: "id",
+      accessor: "tour_code",
       cellClass: "list-item-heading w-5",
     },
     {
@@ -25,151 +48,64 @@ const PriceTourPage = () => {
     },
     {
       Header: "THỜI GIAN",
-      accessor: "time",
+      accessor: "schedules",
       cellClass: "list-item-heading w-5",
+      Cell: ({ value }) => {
+        return (
+          <span>
+            {value?.length > 1
+              ? `${value?.length} Ngày ${value?.length - 1} Đêm`
+              : `${value?.length} Ngày`}
+          </span>
+        );
+      },
     },
     {
       Header: "LỊCH KHỞI HÀNH",
-      accessor: "time-start",
+      accessor: "shedule_on_week",
       cellClass: "list-item-heading w-5",
     },
     {
       Header: "PHƯƠNG TIỆN",
-      accessor: "vehicle",
+      accessor: "transportation",
       cellClass: "list-item-heading w-5",
+      Cell: ({ value }) => {
+        return (
+          <span>
+            {ListTransport.find((item) => item.value === value)?.label}
+          </span>
+        );
+      },
     },
     {
       Header: "GIÁ TOUR",
-      accessor: "price",
+      accessor: "base_price_adult",
       cellClass: "list-item-heading w-5",
+      Cell: ({ value }) => {
+        return <span>{value.toLocaleString("vi-VN")}</span>;
+      },
     },
     {
       Header: "HÀNH ĐỘNG",
-      accessor: "action",
-      Cell: () => (
+      accessor: "_id",
+      Cell: ({ value }) => (
         <div
           className="d-flex align-items-center btn-see-tour"
           style={{ gap: "10px" }}
         >
-          <Button outline color="primary" className="icon-button">
+          <Button
+            outline
+            color="primary"
+            className="icon-button"
+            onClick={() => handleDetailTour(value)}
+          >
             XEM TOUR
           </Button>
         </div>
       ),
     },
   ]);
-  const data = [
-    {
-      id: 1,
-      name: "Cà phê",
-      price: "20000",
-    },
-    {
-      id: 1,
-      name: "Cà phê",
-      price: "20000",
-    },
-    {
-      id: 1,
-      name: "Cà phê",
-      price: "20000",
-    },
-    {
-      id: 1,
-      name: "Cà phê",
-      price: "20000",
-    },
-    {
-      id: 1,
-      name: "Cà phê",
-      price: "20000",
-    },
-    {
-      id: 1,
-      name: "Cà phê",
-      price: "20000",
-    },
-    {
-      id: 1,
-      name: "Cà phê",
-      price: "20000",
-    },
-    {
-      id: 1,
-      name: "Cà phê",
-      price: "20000",
-    },
-    {
-      id: 1,
-      name: "Cà phê",
-      price: "20000",
-    },
-    {
-      id: 1,
-      name: "Cà phê",
-      price: "20000",
-    },
-    {
-      id: 1,
-      name: "Cà phê",
-      price: "20000",
-    },
-    {
-      id: 1,
-      name: "Cà phê",
-      price: "20000",
-    },
-    {
-      id: 1,
-      name: "Cà phê",
-      price: "20000",
-    },
-    {
-      id: 1,
-      name: "Cà phê",
-      price: "20000",
-    },
-    {
-      id: 1,
-      name: "Cà phê",
-      price: "20000",
-    },
-    {
-      id: 1,
-      name: "Cà phê",
-      price: "20000",
-    },
-    {
-      id: 1,
-      name: "Cà phê",
-      price: "20000",
-    },
-    {
-      id: 1,
-      name: "Cà phê",
-      price: "20000",
-    },
-    {
-      id: 1,
-      name: "Cà phê",
-      price: "20000",
-    },
-    {
-      id: 1,
-      name: "Cà phê",
-      price: "20000",
-    },
-    {
-      id: 1,
-      name: "Cà phê",
-      price: "20000",
-    },
-    {
-      id: 1,
-      name: "Cà phê",
-      price: "20000",
-    },
-  ];
+
   const handleChangePage = (idxPage) => {
     setIndexPage(idxPage);
     // setIsCallApi(true);
@@ -179,10 +115,10 @@ const PriceTourPage = () => {
   };
 
   useEffect(() => {
-    if (data) {
-      setDataTable(data);
+    if (getAllTourState?.data) {
+      setDataTable(getAllTourState?.data);
     }
-  }, [data]);
+  }, [getAllTourState?.data]);
   return (
     <div className="price-tour-page-wrapper">
       <div className="price-tour-page-wrapper-inner">
@@ -198,12 +134,11 @@ const PriceTourPage = () => {
             columns={columns}
             data={dataTable}
             indexPage={indexPage}
-            maxPage={10}
+            maxPage={getAllTourState?.totalPage}
             handlePaginationNext={handleChangePage}
             // isLoading={isGetAllOrdersListRequest}
             divided
             onClickRow={handleClickRow}
-            limit={20}
           />
         </div>
       </div>

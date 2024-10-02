@@ -1,4 +1,4 @@
-import React, { memo, useState } from "react";
+import React, { memo, useEffect, useState } from "react";
 import { Button, ButtonGroup, Dropdown, Modal } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -14,6 +14,7 @@ import { CSUserAddSolid } from "~/components/iconography/Solid";
 import { routesAuth, routesUser } from "~/configs";
 import { logoutRequest } from "~/redux/auth/actions";
 import { resetUserState } from "~/redux/user/actions";
+import { getAllCategoryRequest } from "~/redux/categoryBlog/actions";
 
 export const HeaderAction = memo(() => {
   const [isScroll, setIsScroll] = useState(false);
@@ -21,11 +22,21 @@ export const HeaderAction = memo(() => {
   const location = useLocation();
   const { pathname } = location;
   const { profileResponse } = useSelector((store) => store.user);
+  const {
+    isGetAllCategoryRequest,
+    isGetAllCategorySuccess,
+    isGetAllCategoryFailure,
+    getAllCategoryState,
+  } = useSelector((store) => store.categoryBlog);
   const [isShowModalLogout, setIsShowModalLogout] = useState(false);
   const dispatch = useDispatch();
   const { getAllCategoryTourState } = useSelector(
     (store) => store.categoryTour
   );
+
+  useEffect(() => {
+    dispatch(getAllCategoryRequest());
+  }, []);
 
   window.addEventListener("scroll", function () {
     let scrollTop = window.scrollY || document.documentElement.scrollTop;
@@ -167,12 +178,18 @@ export const HeaderAction = memo(() => {
               <span>ĐẶT TOUR</span>
             </div>
             <div className="item">
-              <span>BLOG</span>
+              <span onClick={() => history.push(routesUser.blogs)}>BLOG</span>
               <ul className="ul-blog">
-                <li onClick={() => history.push(routesUser.blogs)}>
-                  Cẩm nang du lịch
-                </li>
-                <li>Đặt sản miền tây</li>
+                {getAllCategoryState?.data?.map((item) => {
+                  return (
+                    <li
+                      onClick={() => history.push(`/blogs/${item?._id}`)}
+                      key={item?._id}
+                    >
+                      {item.name}
+                    </li>
+                  );
+                })}
               </ul>
             </div>
             <div

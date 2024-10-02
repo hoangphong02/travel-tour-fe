@@ -1,19 +1,16 @@
 import React, { memo } from "react";
 import { Button } from "react-bootstrap";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
-import image1 from "~/assets/logo/image4.jpg";
 import {
   CSChatOutline,
   CSCheckCircleOutline,
-  CSMailBoxOutline,
   CSUser2Outline,
 } from "~/components/iconography/Outline";
-import { CSUserSolid } from "~/components/iconography/Solid";
 
 export const CardTour = memo((tour) => {
   const history = useHistory();
   const handleDetail = () => {
-    history.push(`/tour-detail/${tour?._id}`);
+    history.push(`/tour-detail/${tour?.tour?._id}`);
   };
 
   return (
