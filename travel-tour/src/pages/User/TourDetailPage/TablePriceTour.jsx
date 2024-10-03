@@ -63,7 +63,7 @@ const TablePriceTour = () => {
       accessor: "price_child",
       cellClass: "list-item-heading w-5",
       Cell: ({ value }) => {
-        return <span>{value.toLocaleString("vi-VN")}</span>;
+        return <span>{value?.toLocaleString("vi-VN")}</span>;
       },
     },
     {

@@ -1,13 +1,17 @@
 import React, { useEffect, useState } from "react";
 import OptionTour from "./OptionTour";
 import CommentTour from "./CommentTour";
-import { useParams } from "react-router-dom/cjs/react-router-dom.min";
+import {
+  useHistory,
+  useParams,
+} from "react-router-dom/cjs/react-router-dom.min";
 import { useDispatch, useSelector } from "react-redux";
 import { getDetailTourRequest } from "~/redux/tour/actions";
 
 const TourDetailPage = () => {
   const [option, setOption] = useState("program");
   const dispatch = useDispatch();
+  const history = useHistory();
   const handleChangeOption = (value) => {
     setOption(value);
   };
@@ -23,6 +27,9 @@ const TourDetailPage = () => {
       dispatch(getDetailTourRequest({ id: id }));
     }
   }, [id]);
+  const handleBooking = (id) => {
+    history.push(`/booking/${id}`);
+  };
 
   return (
     <div className="tour-detail-page-wrapper">
@@ -31,11 +38,14 @@ const TourDetailPage = () => {
         <span className="price-tour">
           Giá tour gốc:{" "}
           <span className="price">
-            {getDetailTourState?.data?.base_price_adult.toLocaleString("vi-VN")}
+            {getDetailTourState?.data?.base_price_adult.toLocaleString("vi-VN")}{" "}
             VNĐ
           </span>
         </span>
-        <div className="btn-book-tour">
+        <div
+          className="btn-book-tour"
+          onClick={() => handleBooking(getDetailTourState?.data?._id)}
+        >
           <span>Đặt ngay</span>
         </div>
       </div>

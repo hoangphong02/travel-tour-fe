@@ -197,7 +197,11 @@ const UserHomePage = () => {
           {getAllCategoryTourState?.data?.length
             ? getAllCategoryTourState?.data?.map((item, index) => {
                 return (
-                  <div className="option" key={index}>
+                  <div
+                    className="option"
+                    key={index}
+                    onClick={() => history.push(`/tour/${item?._id}`)}
+                  >
                     <img src={item?.thumbnail} alt="" />
                     <div className="option-info">
                       <span>{item.name}</span>
@@ -215,7 +219,10 @@ const UserHomePage = () => {
         <div className="category-blog">
           {getAllCategoryState?.data?.map((item) => {
             return (
-              <div className="category-blog-item">
+              <div
+                className="category-blog-item"
+                onClick={() => history.push(`/blogs/${item?._id}`)}
+              >
                 <img
                   src={item.thumbnail}
                   alt=""

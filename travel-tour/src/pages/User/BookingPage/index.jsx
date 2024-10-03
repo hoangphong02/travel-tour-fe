@@ -153,7 +153,7 @@ const BookingPage = () => {
         <div className="booking-page-wrapper-left-section-1">
           <div className="top">
             <span className="title">DỊCH VỤ TOUR</span>
-            <Select options={options} defaultValue={options[0]} />
+            {/* <Select options={options} defaultValue={options[0]} /> */}
           </div>
           <div className="bottom">
             <div className="tour-require">
