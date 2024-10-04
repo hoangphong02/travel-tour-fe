@@ -17,6 +17,10 @@ import {
 import * as Yup from "yup";
 import Editor from "~/components/common/Editor";
 import { LIST_OPTION_RANK_HOTEL, ListTransport } from "~/constants";
+import {
+  createBookingRequest,
+  updateBookingRequest,
+} from "~/redux/booking/actions";
 import { createTourRequest, updateTourRequest } from "~/redux/tour/actions";
 
 export const PHONE_REGEX = /((0)+([1-9]{1})+([0-9]{8})\b)/g;
@@ -166,73 +170,49 @@ export const ModalActions = ({
 
   const handleSubmit = () => {
     const {
-      tour_code,
-      name,
-      category,
-      shedule_on_week,
-      start_location,
-      end_location,
-      base_price_adult,
-      base_price_child,
+      tour_id,
+      hotel_level,
+      email,
+      phone,
+      fullname,
+      adult_ticket,
+      child_ticket1,
+      total_price,
+      transactionId,
+      payment_status,
+      payment_method_name,
+      tour_guide,
+      group_number,
       start_date,
       end_date,
-      star,
-      price_adult,
-      price_child,
-      transportation,
+      note,
+      address,
     } = dataForm;
 
     const payload = {
-      tour_code,
-      name,
-      category: category?.value,
-      shedule_on_week,
-      start_location,
-      end_location,
-      base_price_adult,
-      base_price_child,
+      tour_id,
+      hotel_level,
+      email,
+      phone,
+      fullname,
+      adult_ticket,
+      child_ticket1,
+      total_price,
+      transactionId,
+      payment_status,
+      payment_method_name,
+      tour_guide,
+      group_number,
       start_date,
       end_date,
-      transportation: transportation?.value,
-      hotel_level: [
-        {
-          star: star.value,
-          price_adult: price_adult,
-          price_child: price_child,
-        },
-      ],
-      image: [
-        {
-          type: "photos",
-          url: urlImage,
-        },
-      ],
+      note,
+      address,
     };
-    if (valueTextEditor) {
-      payload.description = valueTextEditor?.ops;
-    }
 
-    if (arrSchedules) {
-      payload.schedules = arrSchedules.map((item) => {
-        return {
-          day: item.day + 1,
-          detail: item.detail.ops,
-        };
-      });
-    }
-    if (urlBanner) {
-      payload.image = [
-        ...payload.image,
-        {
-          type: "banner",
-          url: urlBanner,
-        },
-      ];
-    }
     if (type === "add") {
-      dispatch(createTourRequest(payload));
+      dispatch(createBookingRequest(payload));
     } else {
-      dispatch(updateTourRequest({ id: data._id, body: payload }));
+      dispatch(updateBookingRequest({ id: data._id, body: payload }));
     }
   };
 
@@ -244,24 +224,15 @@ export const ModalActions = ({
         size="xl"
         className="modal-actions-product"
       >
-        <ModalHeader>{`${type === "add" ? "Thêm" : "Chỉnh sửa"} tour`}</ModalHeader>
+        <ModalHeader>{`${type === "add" ? "Thêm" : "Chỉnh sửa"} đặt tour`}</ModalHeader>
         <Formik
           initialValues={{
-            tour_code: type === "add" ? "" : data?.tour_code || "",
-            name: type === "add" ? "" : data?.name || "",
-            category:
-              type === "add"
-                ? {}
-                : options.find((item) => item.value === data.category._id) ||
-                  {},
-
-            shedule_on_week: type === "add" ? "" : data?.shedule_on_week || "",
-            start_location: type === "add" ? "" : data?.start_location || "",
-            end_location: type === "add" ? "" : data?.end_location || "",
-            base_price_adult:
-              type === "add" ? "" : data?.base_price_adult || "",
-            base_price_child:
-              type === "add" ? "" : data?.base_price_child || "",
+            tour_id: type === "add" ? "" : data?.tour_id || "",
+            fullname: type === "add" ? "" : data?.fullname || "",
+            email: type === "add" ? "" : data?.email || "",
+            phone: type === "add" ? "" : data?.phone || "",
+            adult_ticket: type === "add" ? 0 : data?.base_price_adult || 0,
+            child_ticket1: type === "add" ? 0 : data?.base_price_child || 0,
             start_date:
               type === "add"
                 ? ""
@@ -270,28 +241,21 @@ export const ModalActions = ({
               type === "add"
                 ? ""
                 : moment(data?.end_date).format("YYYY-MM-DD") || "",
-            star:
+            hotel_level:
               type === "add"
                 ? ""
                 : LIST_OPTION_RANK_HOTEL.find(
                     (item) => item.value === data?.hotel_level[0].star
                   ) || "",
-            price_adult:
-              type === "add" ? "" : data?.hotel_level[0]?.price_adult || "",
-            price_child:
-              type === "add" ? "" : data?.hotel_level[0]?.price_child || "",
-            day:
-              type === "add"
-                ? 0
-                : ListDayTour.find(
-                    (item) => item.value === data?.schedules?.length
-                  ) || 0,
-            transportation:
-              type === "add"
-                ? {}
-                : ListTransport.find(
-                    (item) => item.value === data?.transportation
-                  ) || 0,
+            total_price: type === "add" ? 0 : data?.total_price || 0,
+            transactionId: type === "add" ? "" : data?.transactionId || "",
+            payment_status: type === "add" ? "" : data?.payment_status || "",
+            payment_method_name:
+              type === "add" ? "" : data?.payment_method_name || "",
+            tour_guide: type === "add" ? "" : data?.tour_guide || "",
+            group_number: type === "add" ? 0 : data?.group_number || 0,
+            note: type === "add" ? "" : data?.note || "",
+            address: type === "add" ? "" : data?.address || "",
           }}
           // validationSchema={SignupSchema}
           onSubmit={onSubmit}

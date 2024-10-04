@@ -16,7 +16,11 @@ import {
 } from "reactstrap";
 import * as Yup from "yup";
 import Editor from "~/components/common/Editor";
-import { LIST_OPTION_RANK_HOTEL, ListTransport } from "~/constants";
+import {
+  LIST_OPTION_RANK_HOTEL,
+  LIST_PROVINCE,
+  ListTransport,
+} from "~/constants";
 import { createTourRequest, updateTourRequest } from "~/redux/tour/actions";
 
 export const PHONE_REGEX = /((0)+([1-9]{1})+([0-9]{8})\b)/g;
@@ -49,6 +53,8 @@ export const ModalActions = ({
   const [valueTextEditor, setValueTextEditor] = useState(null);
   const [dataForm, setDataForm] = useState(null);
   const [arrSchedules, setArrSchedules] = useState([]);
+
+  console.log("data", data);
 
   const ListDayTour = [
     {
@@ -180,6 +186,7 @@ export const ModalActions = ({
       price_adult,
       price_child,
       transportation,
+      provinceId,
     } = dataForm;
 
     const payload = {
@@ -193,6 +200,7 @@ export const ModalActions = ({
       base_price_child,
       start_date,
       end_date,
+      provinceId: provinceId.map((item) => item.value),
       transportation: transportation?.value,
       hotel_level: [
         {
@@ -236,6 +244,7 @@ export const ModalActions = ({
     }
   };
 
+  console.log("dataFỏm", dataForm);
   return (
     <>
       <Modal
@@ -256,6 +265,12 @@ export const ModalActions = ({
                   {},
 
             shedule_on_week: type === "add" ? "" : data?.shedule_on_week || "",
+            provinceId:
+              type === "add"
+                ? []
+                : LIST_PROVINCE.filter((item) =>
+                    data.provinceId.includes(Number(item.value))
+                  ),
             start_location: type === "add" ? "" : data?.start_location || "",
             end_location: type === "add" ? "" : data?.end_location || "",
             base_price_adult:
@@ -565,6 +580,30 @@ export const ModalActions = ({
                         </div>
                       ) : null} */}
                     </FormGroup>
+
+                    <FormGroup className="w-100 error-l-100">
+                      <Label>
+                        Tỉnh thành:{" "}
+                        <span style={{ color: "red", fontWeight: "600" }}>
+                          *
+                        </span>
+                      </Label>
+                      <Select
+                        options={LIST_PROVINCE}
+                        value={values.provinceId}
+                        onChange={(e) => {
+                          setFieldValue("provinceId", e);
+                        }}
+                        isMulti
+                      ></Select>
+                      {/* {errors.email && touched.email ? (
+                        <div className="invalid-feedback d-block">
+                          {errors.email}
+                        </div>
+                      ) : null} */}
+                    </FormGroup>
+                  </div>
+                  <div className="d-flex" style={{ gap: "12px" }}>
                     <FormGroup className="w-100 error-l-100">
                       <Label>
                         Nhập giá khách sạn người lớn:{" "}
