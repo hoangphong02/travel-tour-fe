@@ -16,3 +16,18 @@ export const ListStatusBooking = [
     label: "Đã xác nhận",
   },
 ];
+
+export const ListNameBooking = [
+  {
+    value: "vnpay",
+    label: "Thanh toán qua ví Vnpay",
+  },
+  {
+    value: "paypal",
+    label: "Thanh toán qua ví Paypal",
+  },
+  {
+    value: "cash",
+    label: "Thanh toán tiền mặt",
+  },
+];

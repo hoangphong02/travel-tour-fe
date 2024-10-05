@@ -13,7 +13,11 @@ import { toast } from "react-toastify";
 import { useDebounce } from "~/helpers/hooks";
 import logo from "~/assets/logo/no-avatar.png";
 import { getAllCategoryTourRequest } from "~/redux/categoryTour/actions";
-import { resetCreateTour, resetUpdateTour } from "~/redux/tour/actions";
+import {
+  getAllTourRequest,
+  resetCreateTour,
+  resetUpdateTour,
+} from "~/redux/tour/actions";
 import {
   getAllBookingRequest,
   resetCreateBooking,
@@ -21,6 +25,7 @@ import {
 } from "~/redux/booking/actions";
 import moment from "moment";
 import { ListStatusBooking } from "~/constants";
+import { getAllUserRequest } from "~/redux/user/actions";
 
 const AdminBooking = () => {
   const [isShowModalAction, setIsShowModalAction] = useState(false);
@@ -41,6 +46,7 @@ const AdminBooking = () => {
     isUpdateBookingSuccess,
     isUpdateBookingFailure,
   } = useSelector((store) => store.booking);
+  const { getAllTourState } = useSelector((store) => store.tour);
 
   const { getAllCategoryTourState } = useSelector(
     (store) => store.categoryTour
@@ -105,7 +111,12 @@ const AdminBooking = () => {
 
   useEffect(() => {
     if (isShowModalAction) {
+      const params = {
+        limit: 0,
+      };
       dispatch(getAllCategoryTourRequest());
+      dispatch(getAllTourRequest(params));
+      dispatch(getAllUserRequest(params));
     } else {
       setDataActive();
     }
@@ -221,14 +232,14 @@ const AdminBooking = () => {
           >
             <CSEditOutline />
           </div>
-          <div
+          {/* <div
             outline
             color="primary"
             className="icon-button"
             onClick={() => handleShowModalDelete(true)}
           >
             <CSTrash2Outline />
-          </div>
+          </div> */}
         </div>
       ),
     },

@@ -2,24 +2,31 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import { Alert, Button, Modal, ModalBody, ModalFooter } from "reactstrap";
+import {
+  deleteBookingRequest,
+  resetDeleteBooking,
+} from "~/redux/booking/actions";
 import { deleteTourRequest, resetDeleteTour } from "~/redux/tour/actions";
 
 export const ModalDelete = ({ data, isOpen, handleClose, setCallApi }) => {
   const dispatch = useDispatch();
 
-  const { isDeleteTourRequest, isDeleteTourSuccess, isDeleteTourFailure } =
-    useSelector((store) => store.tour);
+  const {
+    isDeleteBookingRequest,
+    isDeleteBookingSuccess,
+    isDeleteBookingFailure,
+  } = useSelector((store) => store.booking);
   useEffect(() => {
-    if (isDeleteTourSuccess) {
+    if (isDeleteBookingSuccess) {
       handleClose();
       setCallApi(true);
-      toast.success("Xóa Tour du lịch thành công");
-      dispatch(resetDeleteTour());
+      toast.success("Xóa đặt tour du lịch thành công");
+      dispatch(resetDeleteBooking());
     }
-  }, [isDeleteTourSuccess]);
+  }, [isDeleteBookingSuccess]);
 
   const handleDelete = () => {
-    dispatch(deleteTourRequest(data._id));
+    dispatch(deleteBookingRequest(data._id));
   };
 
   return (
@@ -31,19 +38,19 @@ export const ModalDelete = ({ data, isOpen, handleClose, setCallApi }) => {
       toggle={handleClose}
     >
       <ModalBody>
-        {isDeleteTourFailure && (
-          <Alert color="danger">Xóa Tour du lịch thất bại</Alert>
+        {isDeleteBookingFailure && (
+          <Alert color="danger">Xóa đặt tour du lịch thất bại</Alert>
         )}
-        <h3 className="color-danger">Xác nhận xóa Tour du lịch</h3>
-        <p>Bạn chắc chắc xóa Tour du lịch</p>
+        <h3 className="color-danger">Xác nhận xóa đặt tour du lịch</h3>
+        <p>Bạn chắc chắc xóa đặt tour du lịch</p>
       </ModalBody>
       <ModalFooter>
         <div className="d-flex align-content-center justify-content-end flex-grow-1 gap-2">
           <Button
             color="danger"
-            disabled={isDeleteTourRequest}
+            disabled={isDeleteBookingRequest}
             className={`btn-shadow btn-multiple-state ${
-              isDeleteTourRequest ? "show-spinner disabled" : ""
+              isDeleteBookingRequest ? "show-spinner disabled" : ""
             }`}
             onClick={handleDelete}
           >
@@ -57,11 +64,11 @@ export const ModalDelete = ({ data, isOpen, handleClose, setCallApi }) => {
           <Button
             color="danger"
             outline
-            disabled={isDeleteTourRequest}
+            disabled={isDeleteBookingRequest}
             className={`btn-shadow btn-multiple-state ${
-              isDeleteTourRequest ? "disabled" : ""
+              isDeleteBookingRequest ? "disabled" : ""
             }`}
-            style={isDeleteTourRequest ? { cursor: "no-drop" } : {}}
+            style={isDeleteBookingRequest ? { cursor: "no-drop" } : {}}
             onClick={handleClose}
           >
             Trở về

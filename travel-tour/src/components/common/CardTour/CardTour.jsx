@@ -36,7 +36,7 @@ export const CardTour = memo((tour) => {
         <div className="right">
           <div>
             <CSCheckCircleOutline />
-            100
+            {tour?.tour?.view}
           </div>
           <div>
             <CSChatOutline />
