@@ -127,7 +127,7 @@ export const ModalActions = ({
               type === "add"
                 ? {}
                 : getAllTourState?.data
-                    .filter((item) => item._id === data?.tour_id?._id)
+                    ?.filter((item) => item._id === data?.tour_id?._id)
                     ?.map((tour) => {
                       return {
                         value: tour?._id,
