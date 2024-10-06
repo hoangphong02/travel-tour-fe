@@ -1,13 +1,20 @@
 import React from "react";
+import { useSelector } from "react-redux";
+import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 import Slider from "react-slick";
-import banner1 from "~/assets/logo/image3.jpg";
-import banner2 from "~/assets/logo/image3.jpg";
-import banner3 from "~/assets/logo/image3.jpg";
 import {
   CSChevronLeftNavigational,
   CSChevronRightNavigational,
 } from "~/components/iconography/Navigational";
 const BannerTourTrending = () => {
+  const { getAllTourMainState } = useSelector((store) => store.tour);
+  const history = useHistory();
+
+  console.log("getAllTourMainState", getAllTourMainState);
+  const handleClickTourDetail = (id) => {
+    history.push(`/tour-detail/${id}`);
+  };
+
   function SampleNextArrow(props) {
     const { className, style, onClick } = props;
     return (
@@ -48,76 +55,38 @@ const BannerTourTrending = () => {
   return (
     <div>
       <Slider {...settings}>
-        <div className="item-tour-trending">
-          <img
-            src={banner1}
-            alt=""
-            style={{ width: "100%", height: "auto", overflow: "hidden" }}
-          />
-          <div className="info-tour">
-            <span>ĐỊA ĐẠO CỦ CHI NỮA NGÀY</span>
-            <span>Giá: 450.000 VND</span>
-            <div className="btn-book">
-              <span>Đặt ngay</span>
+        {getAllTourMainState?.data?.map((item, index) => {
+          return (
+            <div className="item-tour-trending" key={index}>
+              <img
+                src={
+                  item?.image?.find((image) => image.type === "banner")?.url ||
+                  item?.image?.find((image) => image.type === "slide")?.url
+                }
+                alt=""
+                style={{
+                  width: "100%",
+                  height: "300px",
+                  overflow: "hidden",
+                  objectFit: "cover",
+                }}
+              />
+              <div className="info-tour">
+                <span>{item?.name}</span>
+                <span>
+                  {" "}
+                  Giá: {item.base_price_adult.toLocaleString("vi-VN")} VND
+                </span>
+                <div
+                  className="btn-book"
+                  onClick={() => handleClickTourDetail(item?._id)}
+                >
+                  <span>Đặt ngay</span>
+                </div>
+              </div>
             </div>
-          </div>
-        </div>
-        <div className="item-tour-trending">
-          <img
-            src={banner1}
-            alt=""
-            style={{ width: "100%", height: "auto", overflow: "hidden" }}
-          />
-          <div className="info-tour">
-            <span>ĐỊA ĐẠO CỦ CHI NỮA NGÀY</span>
-            <span>Giá: 450.000 VND</span>
-            <div className="btn-book">
-              <span>Đặt ngay</span>
-            </div>
-          </div>
-        </div>
-        <div className="item-tour-trending">
-          <img
-            src={banner1}
-            alt=""
-            style={{ width: "100%", height: "auto", overflow: "hidden" }}
-          />
-          <div className="info-tour">
-            <span>ĐỊA ĐẠO CỦ CHI NỮA NGÀY</span>
-            <span>Giá: 450.000 VND</span>
-            <div className="btn-book">
-              <span>Đặt ngay</span>
-            </div>
-          </div>
-        </div>
-        <div className="item-tour-trending">
-          <img
-            src={banner1}
-            alt=""
-            style={{ width: "100%", height: "auto", overflow: "hidden" }}
-          />
-          <div className="info-tour">
-            <span>ĐỊA ĐẠO CỦ CHI NỮA NGÀY</span>
-            <span>Giá: 450.000 VND</span>
-            <div className="btn-book">
-              <span>Đặt ngay</span>
-            </div>
-          </div>
-        </div>
-        <div className="item-tour-trending">
-          <img
-            src={banner1}
-            alt=""
-            style={{ width: "100%", height: "auto", overflow: "hidden" }}
-          />
-          <div className="info-tour">
-            <span>ĐỊA ĐẠO CỦ CHI NỮA NGÀY</span>
-            <span>Giá: 450.000 VND</span>
-            <div className="btn-book">
-              <span>Đặt ngay</span>
-            </div>
-          </div>
-        </div>
+          );
+        })}
       </Slider>
     </div>
   );

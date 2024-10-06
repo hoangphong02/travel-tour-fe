@@ -33,7 +33,7 @@ const ProgramTour = () => {
         <div className="program-tour-body-right">
           {getDetailTourState?.data?.schedules?.map((item, index) => {
             return (
-              <div className="section">
+              <div className="section" key={index}>
                 <div className="section-left">
                   <span>Ngày {index + 1}</span>
                 </div>

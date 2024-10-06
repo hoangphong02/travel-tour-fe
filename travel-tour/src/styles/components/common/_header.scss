@@ -1,7 +1,7 @@
 .header-action--wrapper {
     width: 100%;
     margin: 0 auto;
-    border-bottom: 0.5px solid #d5d5d5;
+    border-bottom: solid rgb(255 255 255 / 18%);
     position: fixed;
     z-index: 3;
     transition: all 0.5s ease-in-out;
@@ -18,7 +18,7 @@
             display: flex;
             justify-content: space-between;
             padding: 8px;
-            border-bottom: 0.5px solid #d5d5d5;
+            border-bottom: solid rgb(255 255 255 / 18%);
             transition: all 1s ease-in-out;
 
             &--left {

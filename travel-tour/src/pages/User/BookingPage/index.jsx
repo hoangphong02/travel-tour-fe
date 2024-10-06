@@ -7,63 +7,15 @@ import {
   useHistory,
   useParams,
 } from "react-router-dom/cjs/react-router-dom.min";
-import Select from "react-select";
 import { toast } from "react-toastify";
 import { LIST_OPTION_RANK_HOTEL, ListTransport } from "~/constants";
-import { createBookingRequest } from "~/redux/booking/actions";
+import {
+  createBookingRequest,
+  resetCreateBooking,
+} from "~/redux/booking/actions";
 import { getDetailTourRequest } from "~/redux/tour/actions";
 
 const BookingPage = () => {
-  const options = [
-    { value: "require-tour", label: "Tour yêu cầu" },
-    { value: "normal-tour", label: "Tour bình thường" },
-  ];
-  const optionDayTour = [
-    { value: "1 ngày", label: "1 ngày" },
-    { value: "2 ngày 1 đêm", label: "2 ngày 1 đêm" },
-    { value: "3 ngày 2 đêm", label: "3 ngày 2 đêm" },
-    { value: "4 ngày 3 đêm", label: "4 ngày 3 đêm" },
-    { value: "5 ngày 4 đêm", label: "5 ngày 4 đêm" },
-    { value: "Trên 5 ngày", label: "Trên 5 ngày" },
-  ];
-  const optionVehicelTour = [
-    {
-      value: {
-        title: "Ô tô",
-        value: "1",
-      },
-      label: "Ô tô",
-    },
-    {
-      value: {
-        title: "Xe khách",
-        value: "2",
-      },
-      label: "Xe khách",
-    },
-    {
-      value: {
-        title: "Ô tô & máy bay",
-        value: "1,3",
-      },
-      label: "Ô tô & máy bay",
-    },
-    {
-      value: {
-        title: "Xe khách & máy bay",
-        value: "2,3",
-      },
-      label: "Xe khách & máy bay",
-    },
-    {
-      value: {
-        title: "Xe khách & ô tô",
-        value: "1,2",
-      },
-      label: "Xe khách & ô tô",
-    },
-  ];
-
   const history = useHistory();
   const { id } = useParams();
   const dispatch = useDispatch();
@@ -91,6 +43,7 @@ const BookingPage = () => {
   useEffect(() => {
     if (isCreateBookingSuccess) {
       toast.success("Đặt tour thành công");
+      dispatch(resetCreateBooking());
     }
   }, [isCreateBookingSuccess]);
 
@@ -131,9 +84,16 @@ const BookingPage = () => {
         child_ticket: Number(child_ticket),
         total_price: total,
         transactionId,
-        // start_date: moment(start_date).format("DD/MM/YYYY"),
+        start_date: moment(start_date).format("MM/DD/YYYY"),
         payment_method_name: "cash",
       };
+      if (start_date) {
+        payload.end_date = moment(start_date).add(
+          getDetailTourState?.data?.schedules?.length,
+          "days"
+        );
+      }
+      console.log(payload);
       dispatch(createBookingRequest(payload));
     },
   });
@@ -146,6 +106,8 @@ const BookingPage = () => {
         getDetailTourState?.data?.base_price_child;
     setTotal(price);
   }, [formik.values.adult_ticket, formik.values.child_ticket]);
+
+  console.log(getDetailTourState);
 
   return (
     <div className="booking-page-wrapper">
@@ -271,12 +233,14 @@ const BookingPage = () => {
                 <span className="title">Giá người lớn</span>
                 <div className="input-price">
                   <input
-                    type="number"
-                    placeholder="0"
                     disabled
-                    value={getDetailTourState?.data?.base_price_adult?.toLocaleString(
-                      "vi-VN"
-                    )}
+                    value={
+                      Number(
+                        getDetailTourState?.data?.base_price_adult > 0
+                          ? getDetailTourState?.data?.base_price_adult
+                          : 0
+                      )?.toLocaleString("vi-VN") || 0
+                    }
                   />
                   <div className="unit">VND</div>
                 </div>
@@ -285,12 +249,14 @@ const BookingPage = () => {
                 <span className="title"> Giá trẻ em</span>
                 <div className="input-price">
                   <input
-                    type="number"
-                    placeholder="0"
                     disabled
-                    value={getDetailTourState?.data?.base_price_child?.toLocaleString(
-                      "vi-VN"
-                    )}
+                    value={
+                      Number(
+                        getDetailTourState?.data?.base_price_child > 0
+                          ? getDetailTourState?.data?.base_price_child
+                          : 0
+                      )?.toLocaleString("vi-VN") || 0
+                    }
                   />
                   <div className="unit">VND</div>
                 </div>

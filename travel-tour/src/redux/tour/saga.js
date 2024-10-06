@@ -19,6 +19,22 @@ function* getAllTours({ payload }) {
   }
 }
 
+function* getAllToursMain({ payload }) {
+  try {
+    const response = yield call(
+      typeof payload === "string"
+        ? () => axiosMicro.get(`/tour/main?${payload}`)
+        : () => axiosMicro.get("/tour/main", { params: payload })
+    );
+    yield put(Actions.getAllTourMainSuccess(response.data));
+  } catch (error) {
+    if (error?.response?.data) {
+      const messages = error.response.data;
+      yield put(Actions.getAllTourMainFailure(messages));
+    }
+  }
+}
+
 function* getDetailTours({ payload }) {
   try {
     const response = yield call(
@@ -78,6 +94,21 @@ function* deleteTour({ payload }) {
   }
 }
 
+function* getSlidesTour({ payload }) {
+  try {
+    const response = yield call(
+      typeof payload === "string"
+        ? () => axiosMicro.get(`/tour/slides?${payload}`)
+        : () => axiosMicro.get("/tour/slides", { params: payload })
+    );
+    yield put(Actions.getSlidesTourSuccess(response.data));
+  } catch (error) {
+    if (error?.response?.data) {
+      const messages = error.response.data;
+      yield put(Actions.getSlidesTourFailure(messages));
+    }
+  }
+}
 // eslint-disable-next-line func-names
 export default function* () {
   yield takeLatest(Actions.getAllTourRequest, getAllTours);
@@ -85,4 +116,6 @@ export default function* () {
   yield takeLatest(Actions.createTourRequest, createTour);
   yield takeLatest(Actions.updateTourRequest, updateTour);
   yield takeLatest(Actions.deleteTourRequest, deleteTour);
+  yield takeLatest(Actions.getSlidesTourRequest, getSlidesTour);
+  yield takeLatest(Actions.getAllTourMainRequest, getAllToursMain);
 }

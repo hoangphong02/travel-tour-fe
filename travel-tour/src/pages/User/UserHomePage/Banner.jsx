@@ -1,31 +1,45 @@
 import React from "react";
+import { Button } from "react-bootstrap";
+import { useSelector } from "react-redux";
+import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 import Slider from "react-slick";
-import banner1 from '~/assets/logo/image3.jpg';
-import banner2 from '~/assets/logo/image3.jpg';
-import banner3 from '~/assets/logo/image3.jpg';
-import { CSArrowNarrowLeftNavigational, CSArrowRightNavigational, CSChevronLeftNavigational, CSChevronRightNavigational } from "~/components/iconography/Navigational";
+import {
+  CSChevronLeftNavigational,
+  CSChevronRightNavigational,
+} from "~/components/iconography/Navigational";
 const Banner = () => {
-    function SampleNextArrow(props) {
-  const { className, style, onClick } = props;
-  return (
-    <div
-      className={className}
-      style={{ ...style, display: "block"}}
-      onClick={onClick}
-    > <CSChevronRightNavigational/> </div>
-  );
-}
+  const { getSlidesTourState } = useSelector((store) => store.tour);
+  const history = useHistory();
+  const handleClickTourDetail = (id) => {
+    history.push(`/tour-detail/${id}`);
+  };
+  function SampleNextArrow(props) {
+    const { className, style, onClick } = props;
+    return (
+      <div
+        className={className}
+        style={{ ...style, display: "block" }}
+        onClick={onClick}
+      >
+        {" "}
+        <CSChevronRightNavigational />{" "}
+      </div>
+    );
+  }
 
-function SamplePrevArrow(props) {
-  const { className, style, onClick } = props;
-  return (
-    <div
-      className={className}
-      style={{ ...style, display: "block" }}
-      onClick={onClick}
-    > <CSChevronLeftNavigational /> </div>
-  );
-}
+  function SamplePrevArrow(props) {
+    const { className, style, onClick } = props;
+    return (
+      <div
+        className={className}
+        style={{ ...style, display: "block" }}
+        onClick={onClick}
+      >
+        {" "}
+        <CSChevronLeftNavigational />{" "}
+      </div>
+    );
+  }
   const settings = {
     dots: false,
     infinite: false,
@@ -34,29 +48,34 @@ function SamplePrevArrow(props) {
     slidesToScroll: 1,
     autoplay: true,
     nextArrow: <SampleNextArrow />,
-    prevArrow: <SamplePrevArrow />
+    prevArrow: <SamplePrevArrow />,
   };
   return (
-    <div>
-        <Slider {...settings}>
-      <img
-        src={banner1}
-        alt=""
-        style={{ width: '100%', height: '600px', overflow: 'hidden' }}
-      />
-      <img
-        src={banner2}
-        alt=""
-        style={{ width: '100%', height: 'auto', overflow: 'hidden' }}
-      />
-      <img
-        src={banner3}
-        alt=""
-        style={{ width: '100%', height: 'auto', overflow: 'hidden' }}
-      />
-    </Slider>
+    <div className="slider-home-page">
+      <Slider {...settings}>
+        {getSlidesTourState?.data?.map((item) => {
+          return (
+            <div className="slider-home-item">
+              <img src={item?.image[0]?.url} alt="" />
+              <div className="information-tour-slide">
+                <span className="category">
+                  {item?.category?.name?.toUpperCase()}
+                </span>
+                <span className="name-tour">{item?.name?.toUpperCase()}</span>
+                <span className="price-tour">
+                  {" "}
+                  Giá: {item.base_price_adult.toLocaleString("vi-VN")} VND
+                </span>
+                <Button onClick={() => handleClickTourDetail(item?._id)}>
+                  Đặt ngay
+                </Button>
+              </div>
+            </div>
+          );
+        })}
+      </Slider>
     </div>
   );
-}
+};
 
 export default Banner;

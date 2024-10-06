@@ -50,11 +50,10 @@ export const ModalActions = ({
   const dispatch = useDispatch();
   const [urlImage, setUrlImage] = useState();
   const [urlBanner, setUrlBanner] = useState();
+  const [urlSlide, setUrlSlide] = useState();
   const [valueTextEditor, setValueTextEditor] = useState(null);
   const [dataForm, setDataForm] = useState(null);
   const [arrSchedules, setArrSchedules] = useState([]);
-
-  console.log("data", data);
 
   const ListDayTour = [
     {
@@ -95,6 +94,7 @@ export const ModalActions = ({
       setUrlBanner(
         data?.image.find((item) => item.type === "banner")?.url || ""
       );
+      setUrlSlide(data?.image.find((item) => item.type === "slide")?.url || "");
     }
   }, [data]);
 
@@ -162,6 +162,16 @@ export const ModalActions = ({
 
     if (imageUrl) {
       setUrlBanner(imageUrl);
+    }
+  };
+  const handleSlideUpload = async (file) => {
+    const uploadPreset = "vr8eratg"; // Thay bằng upload preset của bạn
+    const uploadUrl = "https://api.cloudinary.com/v1_1/disrx4gzn/image/upload"; // Thay bằng URL Cloudinary của bạn
+
+    const imageUrl = await uploadToCloudinary(file, uploadPreset, uploadUrl);
+
+    if (imageUrl) {
+      setUrlSlide(imageUrl);
     }
   };
 
@@ -234,6 +244,15 @@ export const ModalActions = ({
         {
           type: "banner",
           url: urlBanner,
+        },
+      ];
+    }
+    if (urlSlide) {
+      payload.image = [
+        ...payload.image,
+        {
+          type: "slide",
+          url: urlSlide,
         },
       ];
     }
@@ -738,6 +757,44 @@ export const ModalActions = ({
                           className="image-preview-remove"
                           onClick={() => {
                             setUrlBanner("");
+                          }}
+                        >
+                          x
+                        </div>
+                      </div>
+                    )}
+                    {/* {errors.desc && touched.desc ? (
+                      <div className="invalid-feedback d-block">
+                        {errors.desc}
+                      </div>
+                    ) : null} */}
+                  </FormGroup>
+
+                  <FormGroup className="error-l-100">
+                    <Label>Ảnh slide quảng bá:</Label>
+                    <Input
+                      type="file"
+                      id="exampleCustomFileBrowser1"
+                      name="image"
+                      onChange={(e) => handleSlideUpload(e.target.files[0])}
+                    />
+
+                    {urlSlide && (
+                      <div
+                        className="image-preview"
+                        style={{
+                          marginTop: "40px",
+                        }}
+                      >
+                        <img
+                          src={urlSlide}
+                          alt=""
+                          style={{ height: "100px", width: "auto" }}
+                        />
+                        <div
+                          className="image-preview-remove"
+                          onClick={() => {
+                            setUrlSlide("");
                           }}
                         >
                           x

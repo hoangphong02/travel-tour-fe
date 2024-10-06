@@ -1,42 +1,25 @@
 import React, { useEffect } from "react";
 import Banner from "./Banner";
 import BannerTourTrending from "./BannerTourTrending";
-import image1 from "~/assets/logo/image9.png";
-import image4 from "~/assets/logo/image4.jpg";
-import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useDispatch, useSelector } from "react-redux";
 import { getAllCategoryTourRequest } from "~/redux/categoryTour/actions";
 import { getAllCategoryRequest } from "~/redux/categoryBlog/actions";
 import { getAllBlogsRequest } from "~/redux/blog/actions";
-import { getAllTourRequest } from "~/redux/tour/actions";
+import {
+  getAllTourMainRequest,
+  getAllTourRequest,
+  getSlidesTourRequest,
+} from "~/redux/tour/actions";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 
 const UserHomePage = () => {
-  const {
-    isGetAllCategoryTourRequest,
-    isGetAllCategoryTourSuccess,
-    isGetAllCategoryTourFailure,
-    getAllCategoryTourState,
-  } = useSelector((store) => store.categoryTour);
-  const {
-    isGetAllCategoryRequest,
-    isGetAllCategorySuccess,
-    isGetAllCategoryFailure,
-    getAllCategoryState,
-  } = useSelector((store) => store.categoryBlog);
-  const {
-    isGetAllBlogsRequest,
-    isGetAllBlogsSuccess,
-    isGetAllBlogsFailure,
-    getAllBlogsState,
-  } = useSelector((store) => store.blog);
-  const {
-    isGetAllTourRequest,
-    isGetAllTourSuccess,
-    isGetAllTourFailure,
-    getAllTourState,
-  } = useSelector((store) => store.tour);
+  const { getAllCategoryTourState } = useSelector(
+    (store) => store.categoryTour
+  );
+  const { getAllCategoryState } = useSelector((store) => store.categoryBlog);
+  const { getAllBlogsState } = useSelector((store) => store.blog);
+  const { getAllTourState } = useSelector((store) => store.tour);
   const dispatch = useDispatch();
   const history = useHistory();
   useEffect(() => {
@@ -57,6 +40,16 @@ const UserHomePage = () => {
     );
     dispatch(
       getAllTourRequest({
+        limit: 5,
+      })
+    );
+    dispatch(
+      getSlidesTourRequest({
+        limit: 5,
+      })
+    );
+    dispatch(
+      getAllTourMainRequest({
         limit: 5,
       })
     );

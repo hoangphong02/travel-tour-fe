@@ -425,24 +425,27 @@ export const ModalActions = ({
                         </div>
                       ) : null} */}
                     </FormGroup>
-                    <FormGroup className="w-100 error-l-100">
-                      <Label>
-                        Số người/nhóm:{" "}
-                        <span style={{ color: "red", fontWeight: "600" }}>
-                          *
-                        </span>
-                      </Label>
-                      <Field
-                        className="form-control"
-                        name="group_number"
-                        placeholder="Nhập số người/nhóm"
-                      />
-                      {/* {errors.typeBlog && touched.typeBlog ? (
-                        <div className="invalid-feedback d-block">
-                          {errors.typeBlog}
-                        </div>
-                      ) : null} */}
-                    </FormGroup>
+                    {type !== "add" ? (
+                      <FormGroup className="w-100 error-l-100">
+                        <Label>
+                          Nhóm:{" "}
+                          <span style={{ color: "red", fontWeight: "600" }}>
+                            *
+                          </span>
+                        </Label>
+                        <Field
+                          disabled
+                          className="form-control"
+                          name="group_number"
+                          placeholder="Nhập số người/nhóm"
+                        />
+                        {/* {errors.typeBlog && touched.typeBlog ? (
+                          <div className="invalid-feedback d-block">
+                            {errors.typeBlog}
+                          </div>
+                        ) : null} */}
+                      </FormGroup>
+                    ) : null}
                   </div>
 
                   <div className="d-flex" style={{ gap: "12px" }}>

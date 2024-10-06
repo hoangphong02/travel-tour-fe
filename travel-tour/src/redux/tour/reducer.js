@@ -13,6 +13,13 @@ const initialState = {
   isGetDetailTourSuccess: false,
   isGetDetailTourFailure: false,
   getDetailTourState: {},
+
+  // Get All Food
+  isGetAllTourMainRequest: false,
+  isGetAllTourMainSuccess: false,
+  isGetAllTourMainFailure: false,
+  getAllTourMainState: {},
+
   // Create Food
   isCreateTourRequest: false,
   isCreateTourSuccess: false,
@@ -25,6 +32,11 @@ const initialState = {
   isDeleteTourRequest: false,
   isDeleteTourSuccess: false,
   isDeleteTourFailure: false,
+  // Get All Food
+  isGetSlidesTourRequest: false,
+  isGetSlidesTourSuccess: false,
+  isGetSlidesTourFailure: false,
+  getSlidesTourState: {},
 
   // Local
   errorMessages: [],
@@ -51,6 +63,49 @@ const reducer = handleActions(
       isGetAllTourRequest: false,
       isGetAllTourSuccess: false,
       isGetAllTourFailure: true,
+      errorMessages: payload,
+    }),
+    // #region : Get All slides
+    [Actions.getSlidesTourRequest]: (state) => ({
+      ...state,
+      isGetSlidesTourRequest: true,
+      isGetSlidesTourSuccess: false,
+      isGetSlidesTourFailure: false,
+    }),
+    [Actions.getSlidesTourSuccess]: (state, { payload }) => ({
+      ...state,
+      isGetSlidesTourRequest: false,
+      isGetSlidesTourSuccess: true,
+      isGetSlidesTourFailure: false,
+      getSlidesTourState: payload,
+    }),
+    [Actions.getSlidesTourFailure]: (state, { payload }) => ({
+      ...state,
+      isGetSlidesTourRequest: false,
+      isGetSlidesTourSuccess: false,
+      isGetSlidesTourFailure: true,
+      errorMessages: payload,
+    }),
+
+    // #region : Get All Food
+    [Actions.getAllTourMainRequest]: (state) => ({
+      ...state,
+      isGetAllTourMainRequest: true,
+      isGetAllTourMainSuccess: false,
+      isGetAllTourMainFailure: false,
+    }),
+    [Actions.getAllTourMainSuccess]: (state, { payload }) => ({
+      ...state,
+      isGetAllTourMainRequest: false,
+      isGetAllTourMainSuccess: true,
+      isGetAllTourMainFailure: false,
+      getAllTourMainState: payload,
+    }),
+    [Actions.getAllTourMainFailure]: (state, { payload }) => ({
+      ...state,
+      isGetAllTourMainRequest: false,
+      isGetAllTourMainSuccess: false,
+      isGetAllTourMainFailure: true,
       errorMessages: payload,
     }),
     // #region : Get detail tour
