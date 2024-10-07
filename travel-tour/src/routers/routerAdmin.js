@@ -1,6 +1,7 @@
 import { v4 as uuidv4 } from "uuid";
 import { routesAdmin } from "~/configs";
 import {
+  AdminAddGuide,
   AdminBlog,
   AdminBooking,
   AdminCategoryBlog,
@@ -45,5 +46,10 @@ export const routerAdmin = [
     id: `user-${uuidv4()}`,
     path: routesAdmin.adminTour,
     component: AdminTour,
+  },
+  {
+    id: `user-${uuidv4()}`,
+    path: routesAdmin.adminAddGuide,
+    component: AdminAddGuide,
   },
 ];

@@ -14,6 +14,34 @@ export const getDetailBookingFailure = createAction(
   "GET_DETAIL_BOOKING_FAILURE"
 );
 
+export const getAllBookingGroupRequest = createAction(
+  "GET_ALL_BOOKING_GROUP_REQUEST"
+);
+export const getAllBookingGroupSuccess = createAction(
+  "GET_ALL_BOOKING_GROUP_SUCCESS"
+);
+export const getAllBookingGroupFailure = createAction(
+  "GET_ALL_BOOKING_GROUP_FAILURE"
+);
+
+export const getUserGuideBookingRequest = createAction(
+  "GET_USER_GUIDE_BOOKING_REQUEST"
+);
+export const getUserGuideBookingSuccess = createAction(
+  "GET_USER_GUIDE_BOOKING_SUCCESS"
+);
+export const getUserGuideBookingFailure = createAction(
+  "GET_USER_GUIDE_BOOKING_FAILURE"
+);
+export const resetGetUserGuideBooking = createAction(
+  "RESET_GET_USER_GUIDE_BOOKING"
+);
+
+export const addGuideBookingRequest = createAction("ADD_GUIDE_BOOKING_REQUEST");
+export const addGuideBookingSuccess = createAction("ADD_GUIDE_BOOKING_SUCCESS");
+export const addGuideBookingFailure = createAction("ADD_GUIDE_BOOKING_FAILURE");
+export const resetAddGuideBooking = createAction("RESET_ADD_GUIDE_BOOKING");
+
 export const createBookingRequest = createAction("CREATE_BOOKING_REQUEST");
 export const createBookingSuccess = createAction("CREATE_BOOKING_SUCCESS");
 export const createBookingFailure = createAction("CREATE_BOOKING_FAILURE");

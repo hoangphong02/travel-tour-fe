@@ -263,7 +263,6 @@ export const ModalActions = ({
     }
   };
 
-  console.log("dataFỏm", dataForm);
   return (
     <>
       <Modal

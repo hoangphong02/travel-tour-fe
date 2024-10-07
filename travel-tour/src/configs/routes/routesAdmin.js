@@ -6,4 +6,5 @@ export const routesAdmin = {
   adminBlog: "/admin/blog",
   adminBooking: "/admin/booking",
   adminCategoryTour: "/admin/category-tour",
+  adminAddGuide: "/admin/add-guide",
 };

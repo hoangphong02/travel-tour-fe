@@ -198,7 +198,7 @@ const UserHomePage = () => {
                     <img src={item?.thumbnail} alt="" />
                     <div className="option-info">
                       <span>{item.name}</span>
-                      <span>3 Tour</span>
+                      <span>{item?.tour_count} Tour </span>
                     </div>
                   </div>
                 );

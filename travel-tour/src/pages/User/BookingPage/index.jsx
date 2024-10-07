@@ -102,12 +102,14 @@ const BookingPage = () => {
     let price =
       Number(formik.values.adult_ticket) *
         getDetailTourState?.data?.base_price_adult +
+      Number(formik.values.adult_ticket) *
+        getDetailTourState?.data?.hotel_level[0]?.price_adult +
       Number(formik.values.child_ticket) *
-        getDetailTourState?.data?.base_price_child;
+        getDetailTourState?.data?.base_price_child +
+      Number(formik.values.child_ticket) *
+        getDetailTourState?.data?.hotel_level[0]?.price_child;
     setTotal(price);
   }, [formik.values.adult_ticket, formik.values.child_ticket]);
-
-  console.log(getDetailTourState);
 
   return (
     <div className="booking-page-wrapper">
@@ -188,7 +190,6 @@ const BookingPage = () => {
           </div>
           <div className="bottom">
             <span>
-              <strong>Mã booking 12342423</strong>{" "}
               <span style={{ color: "red" }}>
                 (Quý khách vui lòng nhớ số booking để tiện cho các giao dịch sau
                 này)
@@ -230,7 +231,7 @@ const BookingPage = () => {
             </div>
             <div className="list-option-price">
               <div className="option">
-                <span className="title">Giá người lớn</span>
+                <span className="title">Giá tour (Người lớn)</span>
                 <div className="input-price">
                   <input
                     disabled
@@ -246,7 +247,7 @@ const BookingPage = () => {
                 </div>
               </div>
               <div className="option">
-                <span className="title"> Giá trẻ em</span>
+                <span className="title"> Giá tour (Trẻ em)</span>
                 <div className="input-price">
                   <input
                     disabled
@@ -254,6 +255,45 @@ const BookingPage = () => {
                       Number(
                         getDetailTourState?.data?.base_price_child > 0
                           ? getDetailTourState?.data?.base_price_child
+                          : 0
+                      )?.toLocaleString("vi-VN") || 0
+                    }
+                  />
+                  <div className="unit">VND</div>
+                </div>
+              </div>
+            </div>
+
+            <div className="list-option-price">
+              <div className="option">
+                <span className="title">Giá khách sạn (Người lớn)</span>
+                <div className="input-price">
+                  <input
+                    disabled
+                    value={
+                      Number(
+                        getDetailTourState?.data?.hotel_level[0]?.price_adult >
+                          0
+                          ? getDetailTourState?.data?.hotel_level[0]
+                              ?.price_adult
+                          : 0
+                      )?.toLocaleString("vi-VN") || 0
+                    }
+                  />
+                  <div className="unit">VND</div>
+                </div>
+              </div>
+              <div className="option">
+                <span className="title"> Giá khách sạn (Trẻ em)</span>
+                <div className="input-price">
+                  <input
+                    disabled
+                    value={
+                      Number(
+                        getDetailTourState?.data?.hotel_level[0]?.price_child >
+                          0
+                          ? getDetailTourState?.data?.hotel_level[0]
+                              ?.price_child
                           : 0
                       )?.toLocaleString("vi-VN") || 0
                     }

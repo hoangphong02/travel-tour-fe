@@ -123,6 +123,20 @@ export const SideBar = memo(() => {
           >
             Book tour
           </CDBSidebarMenuItem>
+          <CDBSidebarMenuItem
+            icon="chart-line"
+            iconType="solid"
+            onClick={() => history.push(routesAdmin.adminAddGuide)}
+            style={{
+              backgroundColor:
+                pathname === routesAdmin.adminAddGuide
+                  ? "#08428c"
+                  : "transparent",
+              color: pathname === routesAdmin.adminAddGuide ? "#fff" : "#000",
+            }}
+          >
+            Thêm hướng dẫn viên
+          </CDBSidebarMenuItem>
         </CDBSidebarMenu>
       </CDBSidebarContent>
     </CDBSidebar>

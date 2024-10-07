@@ -19,6 +19,22 @@ function* getAllBookings({ payload }) {
   }
 }
 
+function* getAllBookingGroup({ payload }) {
+  try {
+    const response = yield call(
+      typeof payload === "string"
+        ? () => axiosMicro.get(`/booking/groups?${payload}`)
+        : () => axiosMicro.get("/booking/groups", { params: payload })
+    );
+    yield put(Actions.getAllBookingGroupSuccess(response.data));
+  } catch (error) {
+    if (error?.response?.data) {
+      const messages = error.response.data;
+      yield put(Actions.getAllBookingGroupFailure(messages));
+    }
+  }
+}
+
 function* getDetailBookings({ payload }) {
   try {
     const response = yield call(
@@ -52,6 +68,23 @@ function* createBooking({ payload }) {
   }
 }
 
+function* getUserGuideBooking({ payload }) {
+  try {
+    const response = yield call(() => axiosMicro.post("/user/list", payload));
+    if (response?.data?.status === "OK") {
+      yield put(Actions.getUserGuideBookingSuccess(response.data));
+    } else {
+      const messages = response.data.messages;
+      yield put(Actions.getUserGuideBookingFailure(messages));
+    }
+  } catch (error) {
+    if (error?.response?.data) {
+      const messages = error.response.data;
+      yield put(Actions.getUserGuideBookingFailure(messages));
+    }
+  }
+}
+
 function* updateBooking({ payload }) {
   try {
     const response = yield call(() =>
@@ -78,6 +111,24 @@ function* deleteBooking({ payload }) {
   }
 }
 
+function* addGuideBooking({ payload }) {
+  try {
+    const response = yield call(() =>
+      axiosMicro.post("/booking/group/assignment", payload)
+    );
+    if (response?.data?.status === "OK") {
+      yield put(Actions.addGuideBookingSuccess(response.data));
+    } else {
+      const messages = response.data.messages;
+      yield put(Actions.addGuideBookingFailure(messages));
+    }
+  } catch (error) {
+    if (error?.response?.data) {
+      const messages = error.response.data;
+      yield put(Actions.addGuideBookingFailure(messages));
+    }
+  }
+}
 // eslint-disable-next-line func-names
 export default function* () {
   yield takeLatest(Actions.getAllBookingRequest, getAllBookings);
@@ -85,4 +136,7 @@ export default function* () {
   yield takeLatest(Actions.createBookingRequest, createBooking);
   yield takeLatest(Actions.updateBookingRequest, updateBooking);
   yield takeLatest(Actions.deleteBookingRequest, deleteBooking);
+  yield takeLatest(Actions.getAllBookingGroupRequest, getAllBookingGroup);
+  yield takeLatest(Actions.addGuideBookingRequest, addGuideBooking);
+  yield takeLatest(Actions.getUserGuideBookingRequest, getUserGuideBooking);
 }

@@ -9,6 +9,11 @@ const initialState = {
   isGetAllBookingFailure: false,
   getAllBookingState: {},
   // Get All Food
+  isGetAllBookingGroupRequest: false,
+  isGetAllBookingGroupSuccess: false,
+  isGetAllBookingGroupFailure: false,
+  getAllBookingGroupState: {},
+  // Get All Food
   isGetDetailBookingRequest: false,
   isGetDetailBookingSuccess: false,
   isGetDetailBookingFailure: false,
@@ -25,7 +30,16 @@ const initialState = {
   isDeleteBookingRequest: false,
   isDeleteBookingSuccess: false,
   isDeleteBookingFailure: false,
+  // Create Food
+  isAddGuideBookingRequest: false,
+  isAddGuideBookingSuccess: false,
+  isAddGuideBookingFailure: false,
 
+  // Get user guide
+  isGetUserGuideBookingRequest: false,
+  isGetUserGuideBookingSuccess: false,
+  isGetUserGuideBookingFailure: false,
+  getUserGuideBookingState: {},
   // Local
   errorMessages: [],
 };
@@ -51,6 +65,27 @@ const reducer = handleActions(
       isGetAllBookingRequest: false,
       isGetAllBookingSuccess: false,
       isGetAllBookingFailure: true,
+      errorMessages: payload,
+    }),
+    // #region : Get All booking group
+    [Actions.getAllBookingGroupRequest]: (state) => ({
+      ...state,
+      isGetAllBookingGroupRequest: true,
+      isGetAllBookingGroupSuccess: false,
+      isGetAllBookingGroupFailure: false,
+    }),
+    [Actions.getAllBookingGroupSuccess]: (state, { payload }) => ({
+      ...state,
+      isGetAllBookingGroupRequest: false,
+      isGetAllBookingGroupSuccess: true,
+      isGetAllBookingGroupFailure: false,
+      getAllBookingGroupState: payload,
+    }),
+    [Actions.getAllBookingGroupFailure]: (state, { payload }) => ({
+      ...state,
+      isGetAllBookingGroupRequest: false,
+      isGetAllBookingGroupSuccess: false,
+      isGetAllBookingGroupFailure: true,
       errorMessages: payload,
     }),
     // #region : Get detail tour
@@ -100,6 +135,36 @@ const reducer = handleActions(
       isCreateBookingRequest: false,
       isCreateBookingSuccess: false,
       isCreateBookingFailure: false,
+      errorMessages: [],
+    }),
+
+    // #endregion
+    // #region : Create Food
+    [Actions.getUserGuideBookingRequest]: (state) => ({
+      ...state,
+      isGetUserGuideBookingRequest: true,
+      isGetUserGuideBookingSuccess: false,
+      isGetUserGuideBookingFailure: false,
+    }),
+    [Actions.getUserGuideBookingSuccess]: (state, { payload }) => ({
+      ...state,
+      isGetUserGuideBookingRequest: false,
+      isGetUserGuideBookingSuccess: true,
+      isGetUserGuideBookingFailure: false,
+      getUserGuideBookingState: payload,
+    }),
+    [Actions.getUserGuideBookingFailure]: (state, { payload }) => ({
+      ...state,
+      isGetUserGuideBookingRequest: false,
+      isGetUserGuideBookingSuccess: false,
+      isGetUserGuideBookingFailure: true,
+      errorMessages: payload,
+    }),
+    [Actions.resetGetUserGuideBooking]: (state) => ({
+      ...state,
+      isGetUserGuideBookingRequest: false,
+      isGetUserGuideBookingSuccess: false,
+      isGetUserGuideBookingFailure: false,
       errorMessages: [],
     }),
     // #endregion
@@ -156,6 +221,35 @@ const reducer = handleActions(
       isDeleteBookingRequest: false,
       isDeleteBookingSuccess: false,
       isDeleteBookingFailure: false,
+      errorMessages: [],
+    }),
+
+    // #endregion
+    // #region : Create Food
+    [Actions.addGuideBookingRequest]: (state) => ({
+      ...state,
+      isAddGuideBookingRequest: true,
+      isAddGuideBookingSuccess: false,
+      isAddGuideBookingFailure: false,
+    }),
+    [Actions.addGuideBookingSuccess]: (state) => ({
+      ...state,
+      isAddGuideBookingRequest: false,
+      isAddGuideBookingSuccess: true,
+      isAddGuideBookingFailure: false,
+    }),
+    [Actions.addGuideBookingFailure]: (state, { payload }) => ({
+      ...state,
+      isAddGuideBookingRequest: false,
+      isAddGuideBookingSuccess: false,
+      isAddGuideBookingFailure: true,
+      errorMessages: payload,
+    }),
+    [Actions.resetAddGuideBooking]: (state) => ({
+      ...state,
+      isAddGuideBookingRequest: false,
+      isAddGuideBookingSuccess: false,
+      isAddGuideBookingFailure: false,
       errorMessages: [],
     }),
 
