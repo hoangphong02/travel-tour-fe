@@ -166,7 +166,10 @@ export const ModalActions = ({
                   </div>
 
                   <FormGroup className="error-l-100">
-                    <Label>Ảnh minh họa:</Label>
+                    <Label>
+                      Ảnh minh họa:
+                      <span style={{ color: "red", fontWeight: "600" }}>*</span>
+                    </Label>
                     <Input
                       type="file"
                       id="exampleCustomFileBrowser1"

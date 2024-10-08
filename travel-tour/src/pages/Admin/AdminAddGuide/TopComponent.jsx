@@ -1,13 +1,9 @@
 import React from "react";
-import { Button } from "react-bootstrap";
 
 const TopComponent = ({ handleShowModalActions }) => {
   return (
     <div className="body">
-      <h3>Quản lý danh sách thêm hướng dẫn viên</h3>
-      <div>
-        <Button onClick={() => handleShowModalActions("add")}>Thêm</Button>
-      </div>
+      <h3>Thêm hướng dẫn viên</h3>
     </div>
   );
 };

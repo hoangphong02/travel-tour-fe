@@ -1,9 +1,13 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useParams } from "react-router-dom/cjs/react-router-dom.min";
+import {
+  useHistory,
+  useParams,
+} from "react-router-dom/cjs/react-router-dom.min";
 import banner1 from "~/assets/logo/image3.jpg";
 import RenderQuillItem from "~/components/common/RenderQuill";
 import { getDetailBlogsRequest } from "~/redux/blog/actions";
+import { getAllTourMainRequest } from "~/redux/tour/actions";
 
 const BlogDetailPage = () => {
   const {
@@ -17,11 +21,22 @@ const BlogDetailPage = () => {
   const ref = useRef();
   const { id } = useParams();
   const dispatch = useDispatch();
+  const history = useHistory();
   useEffect(() => {
     if (id) {
       dispatch(getDetailBlogsRequest({ id }));
     }
   }, [id]);
+
+  const { getAllTourMainState } = useSelector((store) => store.tour);
+
+  useEffect(() => {
+    dispatch(
+      getAllTourMainRequest({
+        limit: 5,
+      })
+    );
+  }, []);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -137,51 +152,32 @@ const BlogDetailPage = () => {
               <span>TOUR DU LỊCH XEM NHIỀU</span>
             </div>
             <div className="list-tour">
-              <div className="tour">
-                <img src={banner1} alt="" />
-                <div>
-                  <span>TOUR MIỀN TÂY 1 NGÀY</span>
-                  <span>
-                    Giá: <span className="price">450.000đ</span>
-                  </span>
-                </div>
-              </div>
-              <div className="tour">
-                <img src={banner1} alt="" />
-                <div>
-                  <span>TOUR MIỀN TÂY 1 NGÀY</span>
-                  <span>
-                    Giá: <span className="price">450.000đ</span>
-                  </span>
-                </div>
-              </div>
-              <div className="tour">
-                <img src={banner1} alt="" />
-                <div>
-                  <span>TOUR MIỀN TÂY 1 NGÀY</span>
-                  <span>
-                    Giá: <span className="price">450.000đ</span>
-                  </span>
-                </div>
-              </div>
-              <div className="tour">
-                <img src={banner1} alt="" />
-                <div>
-                  <span>TOUR MIỀN TÂY 1 NGÀY</span>
-                  <span>
-                    Giá: <span className="price">450.000đ</span>
-                  </span>
-                </div>
-              </div>
-              <div className="tour">
-                <img src={banner1} alt="" />
-                <div>
-                  <span>TOUR MIỀN TÂY 1 NGÀY</span>
-                  <span>
-                    Giá: <span className="price">450.000đ</span>
-                  </span>
-                </div>
-              </div>
+              {getAllTourMainState?.data?.map((item, index) => {
+                return (
+                  <div
+                    className="tour"
+                    key={index}
+                    onClick={() => history.push(`/tour-detail/${item?._id}`)}
+                  >
+                    <img
+                      src={
+                        item?.image?.find((image) => image.type === "banner")
+                          ?.url
+                      }
+                      alt=""
+                    />
+                    <div>
+                      <span>{item?.name}</span>
+                      <span>
+                        Giá:{" "}
+                        <span className="price">
+                          {item?.base_price_adult?.toLocaleString("vi-VN")} VNĐ
+                        </span>
+                      </span>
+                    </div>
+                  </div>
+                );
+              })}
             </div>
           </div>
         </div>

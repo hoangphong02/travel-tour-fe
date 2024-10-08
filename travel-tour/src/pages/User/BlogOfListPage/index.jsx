@@ -24,7 +24,6 @@ const BlogOfListPage = () => {
     dispatch(getAllBlogsRequest());
   }, []);
 
-  console.log("getAllCategoryState", getAllCategoryState);
   return (
     <div className="blog-page">
       <div className="section">

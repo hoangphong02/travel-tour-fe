@@ -46,7 +46,7 @@ export const SideBar = memo(() => {
             Dashboard
           </CDBSidebarMenuItem>
           <CDBSidebarMenuItem
-            icon="sticky-note"
+            icon="list"
             onClick={() => history.push(routesAdmin.adminCategoryTour)}
             style={{
               backgroundColor:
@@ -71,7 +71,7 @@ export const SideBar = memo(() => {
             Tour
           </CDBSidebarMenuItem>
           <CDBSidebarMenuItem
-            icon="chart-line"
+            icon="list"
             iconType="solid"
             onClick={() => history.push(routesAdmin.adminCategoryBlog)}
             style={{
@@ -98,7 +98,7 @@ export const SideBar = memo(() => {
             Blog
           </CDBSidebarMenuItem>
           <CDBSidebarMenuItem
-            icon="chart-line"
+            icon="user"
             iconType="solid"
             onClick={() => history.push(routesAdmin.adminStaff)}
             style={{
@@ -110,7 +110,7 @@ export const SideBar = memo(() => {
             Nhân viên
           </CDBSidebarMenuItem>
           <CDBSidebarMenuItem
-            icon="chart-line"
+            icon="car"
             iconType="solid"
             onClick={() => history.push(routesAdmin.adminBooking)}
             style={{
@@ -124,7 +124,7 @@ export const SideBar = memo(() => {
             Book tour
           </CDBSidebarMenuItem>
           <CDBSidebarMenuItem
-            icon="chart-line"
+            icon="user-secret"
             iconType="solid"
             onClick={() => history.push(routesAdmin.adminAddGuide)}
             style={{

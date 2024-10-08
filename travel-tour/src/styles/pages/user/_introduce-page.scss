@@ -129,8 +129,7 @@
                 border: 1px solid #d5d5d5;
                 padding: 10px;
                 border-radius: 10px;
-
-
+                width: 100%;
 
                 .title {
                     font-size: 18px;
@@ -148,6 +147,10 @@
                     .tour {
                         display: flex;
                         gap: 10px;
+                        img {
+                                width: 150px;
+                                height: 100px;
+                            }
 
                         div {
                             display: flex;
@@ -158,24 +161,28 @@
                                 color: red;
                                 font-weight: 500;
                             }
+                           
                         }
                     }
                 }
             }
 
             .scroll-section-right {
-                transform: 0.5s;
                 transition: 1s ease-in;
                 background-color: #fff;
-                position: fixed;
+                position: sticky;
                 top: 150px;
                 z-index: 2;
+                max-width: 350px ;
             }
 
             img {
                 height: 100px;
+                width: 100%;
+                max-width: 150px;
             }
         }
     }
 
 }
+

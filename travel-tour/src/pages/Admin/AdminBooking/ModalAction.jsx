@@ -171,7 +171,7 @@ export const ModalActions = ({
               type === "add"
                 ? {}
                 : getAllUsersState?.data
-                    .filter((item) => item._id === data?.tour_guide?._id)
+                    ?.filter((item) => item._id === data?.tour_guide?._id)
                     ?.map((user) => {
                       return {
                         value: user?._id,

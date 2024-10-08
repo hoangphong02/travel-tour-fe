@@ -20,6 +20,8 @@
     }
 
     .search{
+        display: flex;
+        gap: 16px;
         padding: 16px 40px;
         .body{
             border: 1px solid var(--color-secondary-black);
@@ -43,6 +45,11 @@
                     
                 }
             }
+        }
+        .filter{
+            display: flex;
+            gap: 16px;
+
         }
     }
 

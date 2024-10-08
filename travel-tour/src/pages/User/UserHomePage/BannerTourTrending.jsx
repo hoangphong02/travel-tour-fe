@@ -10,7 +10,6 @@ const BannerTourTrending = () => {
   const { getAllTourMainState } = useSelector((store) => store.tour);
   const history = useHistory();
 
-  console.log("getAllTourMainState", getAllTourMainState);
   const handleClickTourDetail = (id) => {
     history.push(`/tour-detail/${id}`);
   };

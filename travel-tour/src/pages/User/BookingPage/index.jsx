@@ -93,7 +93,6 @@ const BookingPage = () => {
           "days"
         );
       }
-      console.log(payload);
       dispatch(createBookingRequest(payload));
     },
   });
@@ -363,7 +362,7 @@ const BookingPage = () => {
             />
             <input
               type="text"
-              placeholder="Họ tên Email*"
+              placeholder="Email*"
               value={formik.values.email}
               onChange={(e) => formik.setFieldValue("email", e.target.value)}
               disabled={isCreateBookingSuccess || isCreateBookingRequest}

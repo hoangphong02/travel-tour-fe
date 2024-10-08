@@ -15,6 +15,8 @@ export const UserLayout = (props) => {
   const dispatch = useDispatch();
   const location = useLocation();
   const { pathname } = location;
+  const [isScroll, setIsScroll] = useState(false);
+
   const [isAuth, setIsAuth] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
 
@@ -27,6 +29,14 @@ export const UserLayout = (props) => {
       checkAuth();
     }
   }, []);
+  window.addEventListener("scroll", function () {
+    let scrollTop = window.scrollY || document.documentElement.scrollTop;
+    if (scrollTop > 80) {
+      setIsScroll(true);
+    } else {
+      setIsScroll(false);
+    }
+  });
 
   // useEffect(() => {
   //   if (isGetProfileSuccess) {
@@ -52,7 +62,7 @@ export const UserLayout = (props) => {
     // if (isLoading) return <LoadingPage />;
     return (
       <div
-        className={`user-layout${pathname.includes(routesUser.ordersList.concat("/")) || pathname.includes(routesUser.cart) || pathname.includes(routesUser.historyPoint) || pathname.includes(routesUser.profile) || pathname.includes(routesUser.information) || pathname.includes(routesUser.addressesManager) || pathname.includes(routesUser.productType.replace(":productTypeId", "")) || pathname.includes(routesUser.vouchersList.concat("/")) || pathname.includes(routesUser.history.concat("/")) || pathname.includes(routesUser.giftsList.concat("/")) ? " hide-footer-action" : ""}`}
+        className={`user-layout${pathname.includes(routesUser.ordersList.concat("/")) || pathname.includes(routesUser.cart) || pathname.includes(routesUser.historyPoint) || pathname.includes(routesUser.profile) || pathname.includes(routesUser.information) || pathname.includes(routesUser.addressesManager) || pathname.includes(routesUser.productType.replace(":productTypeId", "")) || pathname.includes(routesUser.vouchersList.concat("/")) || pathname.includes(routesUser.history.concat("/")) || pathname.includes(routesUser.giftsList.concat("/")) ? " hide-footer-action" : ""} ${isScroll ? "scroll" : ""}`}
       >
         {pathname.includes(routesUser.admin) ||
         pathname.includes(

@@ -13,12 +13,9 @@ import { getAllTourRequest } from "~/redux/tour/actions";
 import {
   getAllBookingGroupRequest,
   getUserGuideBookingRequest,
-  resetCreateBooking,
-  resetUpdateBooking,
+  resetAddGuideBooking,
 } from "~/redux/booking/actions";
-import moment from "moment";
-import { ListStatusBooking } from "~/constants";
-import { getAllUserRequest } from "~/redux/user/actions";
+import { Form, FormGroup } from "react-bootstrap";
 
 const AdminAddGuide = () => {
   const [isShowModalAction, setIsShowModalAction] = useState(false);
@@ -26,29 +23,19 @@ const AdminAddGuide = () => {
   const [type, setType] = useState();
   const [search, setSearch] = useState("");
   const searchDebounce = useDebounce(search, 500);
-  const {
-    isGetAllBookingSuccess,
-    getAllBookingState,
-    isCreateBookingSuccess,
-    isCreateBookingFailure,
-    isUpdateBookingSuccess,
-    isUpdateBookingFailure,
-  } = useSelector((store) => store.booking);
+
   const {
     getAllBookingGroupState,
     isGetAllBookingGroupSuccess,
     getUserGuideBookingState,
+    isAddGuideBookingSuccess,
+    isAddGuideBookingFailure,
   } = useSelector((store) => store.booking);
-
-  const { getAllCategoryTourState } = useSelector(
-    (store) => store.categoryTour
-  );
 
   const [callApi, setCallApi] = useState(false);
   const [dataActive, setDataActive] = useState(null);
   const [dataTable, setDataTable] = useState([]);
   const [indexPage, setIndexPage] = useState(1);
-  const [options, setOptions] = useState([]);
 
   const [filter, setFilter] = useState(false);
 
@@ -76,21 +63,6 @@ const AdminAddGuide = () => {
     }
   }, [dataActive]);
 
-  console.log(getUserGuideBookingState);
-
-  useEffect(() => {
-    if (getAllCategoryTourState?.data) {
-      setOptions(
-        getAllCategoryTourState?.data.map((item) => {
-          return {
-            value: item?._id,
-            label: item?.name,
-          };
-        })
-      );
-    }
-  }, [getAllCategoryTourState.data]);
-
   useEffect(() => {
     setCallApi(true);
   }, [filter]);
@@ -116,7 +88,6 @@ const AdminAddGuide = () => {
         limit: 0,
       };
       dispatch(getAllTourRequest(params));
-      dispatch(getAllUserRequest(params));
     } else {
       setDataActive();
     }
@@ -133,34 +104,6 @@ const AdminAddGuide = () => {
       Header: "Tên nhóm",
       accessor: "group_number",
       cellClass: "list-item-heading w-10",
-    },
-    {
-      Header: "Ngày bắt đầu",
-      accessor: "start_date",
-      cellClass: "list-item-heading w-10",
-      Cell: ({ value }) => {
-        return (
-          <div
-            className="d-flex flex-column text-align-left"
-            style={{ gap: "10px" }}
-          >
-            {moment(value).format("DD/MM/YYYY")}
-          </div>
-        );
-      },
-    },
-    {
-      Header: "Ngày kết thúc",
-      accessor: "end_date",
-      cellClass: "list-item-heading w-5",
-      Cell: ({ value }) => (
-        <div
-          className="d-flex flex-column text-align-left"
-          style={{ gap: "10px" }}
-        >
-          {moment(value).format("DD/MM/YYYY")}
-        </div>
-      ),
     },
     {
       Header: "Hướng dẫn viên",
@@ -230,37 +173,20 @@ const AdminAddGuide = () => {
   }, [isGetAllBookingGroupSuccess]);
 
   useEffect(() => {
-    if (isCreateBookingSuccess) {
-      toast.success("Đặt tour thành công");
-      setIsShowModalConfirm(false);
-      setCallApi(true);
-      setIsShowModalAction(false);
-      dispatch(resetCreateBooking());
-    }
-  }, [isCreateBookingSuccess]);
-
-  useEffect(() => {
-    if (isCreateBookingFailure) {
-      toast.error("Đặt tour thất bại");
-      dispatch(resetCreateBooking());
-    }
-  }, [isCreateBookingFailure]);
-
-  useEffect(() => {
-    if (isUpdateBookingSuccess) {
-      toast.success("Cập nhật đặt tour thành công");
+    if (isAddGuideBookingSuccess) {
+      toast.success("Thêm hướng dẫn viên tour thành công");
       setCallApi(true);
       setIsShowModalConfirm(false);
       setIsShowModalAction(false);
-      dispatch(resetUpdateBooking());
+      dispatch(resetAddGuideBooking());
     }
-  }, [isUpdateBookingSuccess]);
+  }, [isAddGuideBookingSuccess]);
   useEffect(() => {
-    if (isUpdateBookingFailure) {
+    if (isAddGuideBookingFailure) {
       toast.error("Cập nhật đặt tour thất bại");
-      dispatch(resetUpdateBooking());
+      dispatch(resetAddGuideBooking());
     }
-  }, [isUpdateBookingFailure]);
+  }, [isAddGuideBookingFailure]);
 
   const handleClickRow = (value) => {
     setDataActive(value);
@@ -287,7 +213,28 @@ const AdminAddGuide = () => {
             <CSSearchOutline />
           </span>
         </div>
+        <div className="filter">
+          <FormGroup className="d-flex gap-2">
+            <Form.Check
+              type="radio"
+              aria-label="radio 1"
+              checked={filter === false}
+              onClick={() => setFilter(!filter)}
+            />
+            <label htmlFor="">Chưa có hướng dẫn viên</label>
+          </FormGroup>
+          <FormGroup className="d-flex gap-2">
+            <Form.Check
+              type="radio"
+              aria-label="radio 1"
+              checked={filter === true}
+              onClick={() => setFilter(!filter)}
+            />
+            <label htmlFor="">Đã có hướng dẫn viên</label>
+          </FormGroup>
+        </div>
       </div>
+      <div></div>
       <div className="table">
         <ReactTableWithPaginationCard
           data={dataTable}
@@ -300,7 +247,7 @@ const AdminAddGuide = () => {
         />
       </div>
 
-      {/* {isShowModalAction && type && (
+      {isShowModalAction && type && (
         <ModalActions
           isOpen
           type={type}
@@ -308,9 +255,8 @@ const AdminAddGuide = () => {
           data={dataActive}
           isShowModalConfirm={isShowModalConfirm}
           setIsShowModalConfirm={setIsShowModalConfirm}
-          options={options}
         />
-      )} */}
+      )}
     </div>
   );
 };
