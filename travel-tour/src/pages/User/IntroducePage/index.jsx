@@ -54,8 +54,6 @@ const IntroducePage = () => {
     };
   }, []);
 
-  console.log(isScrollRight, isScrollSectionRight);
-
   return (
     <div className="introduce-page-wrapper">
       <div className="introduce-page-wrapper-body">

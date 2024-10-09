@@ -67,8 +67,6 @@ export const ModalActions = ({
     dispatch(addGuideBookingRequest(payload));
   };
 
-  console.log("data", data);
-
   return (
     <>
       <Modal
