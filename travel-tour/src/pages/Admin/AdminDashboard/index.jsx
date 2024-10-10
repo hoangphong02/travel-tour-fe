@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { CSOrderOutline } from "~/components/iconography/Outline";
 import { CSDollarSolid, CSLayersSolid } from "~/components/iconography/Solid";
@@ -21,9 +21,6 @@ const AdminDashboard = () => {
     (store) => store.tour
   );
 
-  const currentDate = new Date();
-  const currentMonth = currentDate.getMonth() + 1;
-  const currentYear = currentDate.getFullYear();
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getAllBookingRequest({ limit: 0 }));
@@ -97,7 +94,7 @@ const AdminDashboard = () => {
         </div>
         <div className="card">
           <div className="card-inner">
-            <h3>TOUR TRONG THÁNG</h3>
+            <h3>SỐ LƯỢT BOOKING / THÁNG</h3>
             <CSOrderOutline className="card_icon" />
           </div>
           <h2>{getStatisticalState?.data?.bookingMonth}</h2>

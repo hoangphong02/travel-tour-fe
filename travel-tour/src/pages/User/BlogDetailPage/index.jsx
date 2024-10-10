@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
+import { Button } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import {
   useHistory,
@@ -8,6 +9,7 @@ import banner1 from "~/assets/logo/image3.jpg";
 import RenderQuillItem from "~/components/common/RenderQuill";
 import { getDetailBlogsRequest } from "~/redux/blog/actions";
 import { getAllTourMainRequest } from "~/redux/tour/actions";
+import TourSuggest from "./TourSuggest";
 
 const BlogDetailPage = () => {
   const {
@@ -22,6 +24,10 @@ const BlogDetailPage = () => {
   const { id } = useParams();
   const dispatch = useDispatch();
   const history = useHistory();
+  const handleClickTourDetail = (id) => {
+    history.push(`/tour-detail/${id}`);
+  };
+
   useEffect(() => {
     if (id) {
       dispatch(getDetailBlogsRequest({ id }));
@@ -88,6 +94,43 @@ const BlogDetailPage = () => {
 
             <div className="image-about-us">
               <img src={getDetailBlogState?.data?.image[0]?.url} />
+            </div>
+
+            <div className="title-tour-intro">
+              <span className="title">Tour liên quan</span>
+              <div className="line-1"></div>
+              <div className="line-2"></div>
+            </div>
+            <div className="list-tour-suggest">
+              {getDetailBlogState?.data?.tourSuggest?.length > 6 ? (
+                <div className="list-tour-suggest">
+                  <TourSuggest />
+                </div>
+              ) : (
+                <div className="list-tour-little">
+                  {getDetailBlogState?.data?.tourSuggest?.map((item, index) => {
+                    return (
+                      <div className="tour-suggest" key={index}>
+                        <img
+                          src={
+                            item?.image?.find((item) => item?.type === "banner")
+                              ?.url ||
+                            item?.image?.find((item) => item?.type === "photos")
+                              ?.url
+                          }
+                          alt=""
+                        />
+                        <span>{item?.name}</span>
+                        <Button
+                          onClick={() => handleClickTourDetail(item?._id)}
+                        >
+                          Xem thêm
+                        </Button>
+                      </div>
+                    );
+                  })}
+                </div>
+              )}
             </div>
 
             <div className="form-comment">

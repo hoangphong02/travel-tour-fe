@@ -15,7 +15,7 @@ const ProgramTour = () => {
     if (getDetailTourState) {
       const image = getDetailTourState?.data?.image?.find(
         (item) => item.type === "banner"
-      ).url;
+      )?.url;
       if (image) {
         setBanner(image);
       }
