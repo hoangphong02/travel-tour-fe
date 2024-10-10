@@ -12,6 +12,10 @@ export const getAllTourMainRequest = createAction("GET_ALL_TOUR_MAIN_REQUEST");
 export const getAllTourMainSuccess = createAction("GET_ALL_TOUR_MAIN_SUCCESS");
 export const getAllTourMainFailure = createAction("GET_ALL_TOUR_MAIN_FAILURE");
 
+export const getAllTourFlopRequest = createAction("GET_ALL_TOUR_FLOP_REQUEST");
+export const getAllTourFlopSuccess = createAction("GET_ALL_TOUR_FLOP_SUCCESS");
+export const getAllTourFlopFailure = createAction("GET_ALL_TOUR_FLOP_FAILURE");
+
 export const createTourRequest = createAction("CREATE_TOUR_REQUEST");
 export const createTourSuccess = createAction("CREATE_TOUR_SUCCESS");
 export const createTourFailure = createAction("CREATE_TOUR_FAILURE");

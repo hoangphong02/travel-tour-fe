@@ -18,6 +18,11 @@ const initialState = {
   isGetDetailBookingSuccess: false,
   isGetDetailBookingFailure: false,
   getDetailBookingState: {},
+  // Get Statistic
+  isGetStatisticalRequest: false,
+  isGetStatisticalSuccess: false,
+  isGetStatisticalFailure: false,
+  getStatisticalState: {},
   // Create Food
   isCreateBookingRequest: false,
   isCreateBookingSuccess: false,
@@ -46,6 +51,27 @@ const initialState = {
 
 const reducer = handleActions(
   {
+    // #region : Get All Food
+    [Actions.getStatisticalRequest]: (state) => ({
+      ...state,
+      isGetStatisticalRequest: true,
+      isGetStatisticalSuccess: false,
+      isGetStatisticalFailure: false,
+    }),
+    [Actions.getStatisticalSuccess]: (state, { payload }) => ({
+      ...state,
+      isGetStatisticalRequest: false,
+      isGetStatisticalSuccess: true,
+      isGetStatisticalFailure: false,
+      getStatisticalState: payload,
+    }),
+    [Actions.getStatisticalFailure]: (state, { payload }) => ({
+      ...state,
+      isGetStatisticalRequest: false,
+      isGetStatisticalSuccess: false,
+      isGetStatisticalFailure: true,
+      errorMessages: payload,
+    }),
     // #region : Get All Food
     [Actions.getAllBookingRequest]: (state) => ({
       ...state,

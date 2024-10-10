@@ -37,6 +37,10 @@ export const resetGetUserGuideBooking = createAction(
   "RESET_GET_USER_GUIDE_BOOKING"
 );
 
+export const getStatisticalRequest = createAction("GET_STATISTICAL_REQUEST");
+export const getStatisticalSuccess = createAction("GET_STATISTICAL_SUCCESS");
+export const getStatisticalFailure = createAction("GET_STATISTICAL_FAILURE");
+
 export const addGuideBookingRequest = createAction("ADD_GUIDE_BOOKING_REQUEST");
 export const addGuideBookingSuccess = createAction("ADD_GUIDE_BOOKING_SUCCESS");
 export const addGuideBookingFailure = createAction("ADD_GUIDE_BOOKING_FAILURE");

@@ -35,6 +35,22 @@ function* getAllToursMain({ payload }) {
   }
 }
 
+function* getAllToursFlop({ payload }) {
+  try {
+    const response = yield call(
+      typeof payload === "string"
+        ? () => axiosMicro.get(`/tour/flop?${payload}`)
+        : () => axiosMicro.get("/tour/flop", { params: payload })
+    );
+    yield put(Actions.getAllTourFlopSuccess(response.data));
+  } catch (error) {
+    if (error?.response?.data) {
+      const messages = error.response.data;
+      yield put(Actions.getAllTourFlopFailure(messages));
+    }
+  }
+}
+
 function* getDetailTours({ payload }) {
   try {
     const response = yield call(
@@ -118,4 +134,5 @@ export default function* () {
   yield takeLatest(Actions.deleteTourRequest, deleteTour);
   yield takeLatest(Actions.getSlidesTourRequest, getSlidesTour);
   yield takeLatest(Actions.getAllTourMainRequest, getAllToursMain);
+  yield takeLatest(Actions.getAllTourFlopRequest, getAllToursFlop);
 }

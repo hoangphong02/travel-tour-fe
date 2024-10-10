@@ -2,15 +2,23 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { CSOrderOutline } from "~/components/iconography/Outline";
 import { CSDollarSolid, CSLayersSolid } from "~/components/iconography/Solid";
-import { getAllBookingRequest } from "~/redux/booking/actions";
-import { getAllTourMainRequest, getAllTourRequest } from "~/redux/tour/actions";
+import {
+  getAllBookingRequest,
+  getStatisticalRequest,
+} from "~/redux/booking/actions";
+import {
+  getAllTourFlopRequest,
+  getAllTourMainRequest,
+  getAllTourRequest,
+} from "~/redux/tour/actions";
 import RevenueStatisticsChart from "./RevenueStatisticsChart";
 
 const AdminDashboard = () => {
-  const { getAllBookingState } = useSelector((store) => store.booking);
-  const { getAllTourState, getAllTourMainState } = useSelector(
-    (store) => store.tour
+  const { getAllBookingState, getStatisticalState } = useSelector(
+    (store) => store.booking
   );
+  const { getAllTourState, getAllTourMainState, getAllTourFlopState } =
+    useSelector((store) => store.tour);
   const [totalPrice, setTotalPrice] = useState(0);
   const [totalPriceOfMonth, setTotalPriceOfMonth] = useState(0);
   const [totalTourOfMonth, setTotalTourOfMonth] = useState(0);
@@ -22,6 +30,8 @@ const AdminDashboard = () => {
     dispatch(getAllBookingRequest({ limit: 0 }));
     dispatch(getAllTourRequest({ limit: 0 }));
     dispatch(getAllTourMainRequest());
+    dispatch(getAllTourFlopRequest());
+    dispatch(getStatisticalRequest());
   }, []);
 
   const monthMap = {
@@ -96,7 +106,7 @@ const AdminDashboard = () => {
       setTotalTourOfMonth(totalTourOfMonth);
     }
   }, [getAllBookingState]);
-
+  console.log("getAllTourFlopState", getStatisticalState);
   return (
     <div className="page-dashboard">
       <div className="main-cards">
@@ -105,28 +115,34 @@ const AdminDashboard = () => {
             <h3>DOANH THU</h3>
             <CSDollarSolid className="card_icon" />
           </div>
-          <h2>{totalPrice?.toLocaleString("vi-VN")} VNĐ</h2>
+          <h2>
+            {getStatisticalState?.data?.revenueTotal?.toLocaleString("vi-VN")}{" "}
+            VNĐ
+          </h2>
         </div>
         <div className="card">
           <div className="card-inner">
             <h3>DOANH THU THÁNG</h3>
             <CSDollarSolid className="card_icon" />
           </div>
-          <h2>{totalPriceOfMonth?.toLocaleString("vi-VN")} VNĐ</h2>
+          <h2>
+            {getStatisticalState?.data?.revenueMonth?.toLocaleString("vi-VN")}{" "}
+            VNĐ
+          </h2>
         </div>
         <div className="card">
           <div className="card-inner">
             <h3>TOUR TRONG THÁNG</h3>
             <CSOrderOutline className="card_icon" />
           </div>
-          <h2>{totalTourOfMonth}</h2>
+          <h2>{getStatisticalState?.data?.bookingMonth}</h2>
         </div>
         <div className="card">
           <div className="card-inner">
             <h3>TOUR</h3>
             <CSLayersSolid className="card_icon" />
           </div>
-          <h2>{getAllTourState?.data?.length}</h2>
+          <h2>{getStatisticalState?.data?.totalTours}</h2>
         </div>
       </div>
 
@@ -166,7 +182,7 @@ const AdminDashboard = () => {
         <div className="list-tour-main">
           <span className="title">TOUR ÍT ĐƯỢC QUAN TÂM</span>
           <div className="tour-main">
-            {getAllTourMainState?.data?.map((item, index) => {
+            {getAllTourFlopState?.data?.map((item, index) => {
               return (
                 <div className="body">
                   <img

@@ -20,6 +20,12 @@ const initialState = {
   isGetAllTourMainFailure: false,
   getAllTourMainState: {},
 
+  // Get All Food
+  isGetAllTourFlopRequest: false,
+  isGetAllTourFlopSuccess: false,
+  isGetAllTourFlopFailure: false,
+  getAllTourFlopState: {},
+
   // Create Food
   isCreateTourRequest: false,
   isCreateTourSuccess: false,
@@ -106,6 +112,28 @@ const reducer = handleActions(
       isGetAllTourMainRequest: false,
       isGetAllTourMainSuccess: false,
       isGetAllTourMainFailure: true,
+      errorMessages: payload,
+    }),
+
+    // #region : Get All Food
+    [Actions.getAllTourFlopRequest]: (state) => ({
+      ...state,
+      isGetAllTourFlopRequest: true,
+      isGetAllTourFlopSuccess: false,
+      isGetAllTourFlopFailure: false,
+    }),
+    [Actions.getAllTourFlopSuccess]: (state, { payload }) => ({
+      ...state,
+      isGetAllTourFlopRequest: false,
+      isGetAllTourFlopSuccess: true,
+      isGetAllTourFlopFailure: false,
+      getAllTourFlopState: payload,
+    }),
+    [Actions.getAllTourFlopFailure]: (state, { payload }) => ({
+      ...state,
+      isGetAllTourFlopRequest: false,
+      isGetAllTourFlopSuccess: false,
+      isGetAllTourFlopFailure: true,
       errorMessages: payload,
     }),
     // #region : Get detail tour

@@ -96,8 +96,8 @@ export const ModalActions = ({
       payment_method_name: payment_method_name?.value,
       tour_guide: tour_guide?.value,
       group_number,
-      start_date,
-      end_date,
+      start_date: moment(start_date).format("MM/DD/YYYY"),
+      end_date: moment(end_date).format("MM/DD/YYYY"),
       note,
       address,
     };

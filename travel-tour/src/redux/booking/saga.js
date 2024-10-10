@@ -85,6 +85,23 @@ function* getUserGuideBooking({ payload }) {
   }
 }
 
+function* getStatistical({ payload }) {
+  try {
+    const response = yield call(() => axiosMicro.get("/statistical", payload));
+    if (response?.data?.status === "OK") {
+      yield put(Actions.getStatisticalSuccess(response.data));
+    } else {
+      const messages = response.data.messages;
+      yield put(Actions.getStatisticalFailure(messages));
+    }
+  } catch (error) {
+    if (error?.response?.data) {
+      const messages = error.response.data;
+      yield put(Actions.getStatisticalFailure(messages));
+    }
+  }
+}
+
 function* updateBooking({ payload }) {
   try {
     const response = yield call(() =>
@@ -139,4 +156,5 @@ export default function* () {
   yield takeLatest(Actions.getAllBookingGroupRequest, getAllBookingGroup);
   yield takeLatest(Actions.addGuideBookingRequest, addGuideBooking);
   yield takeLatest(Actions.getUserGuideBookingRequest, getUserGuideBooking);
+  yield takeLatest(Actions.getStatisticalRequest, getStatistical);
 }
