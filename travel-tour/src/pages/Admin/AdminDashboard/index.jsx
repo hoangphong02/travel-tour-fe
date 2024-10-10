@@ -17,11 +17,10 @@ const AdminDashboard = () => {
   const { getAllBookingState, getStatisticalState } = useSelector(
     (store) => store.booking
   );
-  const { getAllTourState, getAllTourMainState, getAllTourFlopState } =
-    useSelector((store) => store.tour);
-  const [totalPrice, setTotalPrice] = useState(0);
-  const [totalPriceOfMonth, setTotalPriceOfMonth] = useState(0);
-  const [totalTourOfMonth, setTotalTourOfMonth] = useState(0);
+  const { getAllTourMainState, getAllTourFlopState } = useSelector(
+    (store) => store.tour
+  );
+
   const currentDate = new Date();
   const currentMonth = currentDate.getMonth() + 1;
   const currentYear = currentDate.getFullYear();
@@ -52,16 +51,18 @@ const AdminDashboard = () => {
   const totalOrdersMonthly = {};
   Array.isArray(getAllBookingState?.data) &&
     getAllBookingState?.data?.forEach((order) => {
-      const orderDate = new Date(order?.createdAt);
-      const month = orderDate.getMonth() + 1;
-      const monthKey = `thang${month}`;
-      if (totalOrdersMonthly[monthKey]) {
-        totalOrdersMonthly[monthKey].price += order?.total_price;
-      } else {
-        totalOrdersMonthly[monthKey] = {
-          name: monthKey,
-          price: order?.total_price,
-        };
+      if (order?.payment_date) {
+        const orderDate = new Date(order?.payment_date);
+        const month = orderDate.getMonth() + 1;
+        const monthKey = `thang${month}`;
+        if (totalOrdersMonthly[monthKey]) {
+          totalOrdersMonthly[monthKey].price += order?.total_price;
+        } else {
+          totalOrdersMonthly[monthKey] = {
+            name: monthKey,
+            price: order?.total_price,
+          };
+        }
       }
     });
   const dataTotalOrderMonth = Object.values(totalOrdersMonthly);
@@ -70,42 +71,6 @@ const AdminDashboard = () => {
     name: monthMap[item.name],
   }));
 
-  useEffect(() => {
-    if (getAllBookingState?.data) {
-      const total = getAllBookingState?.data?.reduce((total, order) => {
-        return total + order?.total_price;
-      }, 0);
-      setTotalPrice(total);
-      const totalPriceOfMonth = getAllBookingState?.data?.reduce(
-        (total, order) => {
-          const updatedAtDate = new Date(order.updatedAt);
-          const orderMonth = updatedAtDate.getMonth() + 1;
-          const orderYear = updatedAtDate.getFullYear();
-          if (orderMonth === currentMonth && orderYear === currentYear) {
-            return total + order.total_price;
-          } else {
-            return total;
-          }
-        },
-        0
-      );
-      setTotalPriceOfMonth(totalPriceOfMonth);
-      const totalTourOfMonth = getAllBookingState?.data?.reduce(
-        (total, order) => {
-          const updatedAtDate = new Date(order.updatedAt);
-          const orderMonth = updatedAtDate.getMonth() + 1;
-          const orderYear = updatedAtDate.getFullYear();
-          if (orderMonth === currentMonth && orderYear === currentYear) {
-            return total + 1;
-          } else {
-            return total;
-          }
-        },
-        0
-      );
-      setTotalTourOfMonth(totalTourOfMonth);
-    }
-  }, [getAllBookingState]);
   console.log("getAllTourFlopState", getStatisticalState);
   return (
     <div className="page-dashboard">
