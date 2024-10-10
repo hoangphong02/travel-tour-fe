@@ -46,7 +46,7 @@ const AdminDashboard = () => {
       const month = orderDate.getMonth() + 1;
       const monthKey = `thang${month}`;
       if (totalOrdersMonthly[monthKey]) {
-        totalOrdersMonthly[monthKey].pv += order?.total_price;
+        totalOrdersMonthly[monthKey].price += order?.total_price;
       } else {
         totalOrdersMonthly[monthKey] = {
           name: monthKey,
@@ -96,6 +96,7 @@ const AdminDashboard = () => {
       setTotalTourOfMonth(totalTourOfMonth);
     }
   }, [getAllBookingState]);
+
   return (
     <div className="page-dashboard">
       <div className="main-cards">
