@@ -102,10 +102,16 @@ export const ModalActions = ({
       address,
     };
 
+    const payloadUpdate = {
+      start_date: moment(start_date).format("MM/DD/YYYY"),
+      end_date: moment(end_date).format("MM/DD/YYYY"),
+      address,
+    };
+
     if (type === "add") {
       dispatch(createBookingRequest(payload));
     } else {
-      dispatch(updateBookingRequest({ id: data._id, body: payload }));
+      dispatch(updateBookingRequest({ id: data._id, body: payloadUpdate }));
     }
   };
 
