@@ -68,7 +68,6 @@ const AdminDashboard = () => {
     name: monthMap[item.name],
   }));
 
-  console.log("getAllTourFlopState", getStatisticalState);
   return (
     <div className="page-dashboard">
       <div className="main-cards">

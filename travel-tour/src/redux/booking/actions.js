@@ -50,11 +50,27 @@ export const createBookingRequest = createAction("CREATE_BOOKING_REQUEST");
 export const createBookingSuccess = createAction("CREATE_BOOKING_SUCCESS");
 export const createBookingFailure = createAction("CREATE_BOOKING_FAILURE");
 export const resetCreateBooking = createAction("RESET_CREATE_BOOKING");
+export const resetStateCreateBooking = createAction(
+  "RESET_STATE_CREATE_BOOKING"
+);
 
 export const updateBookingRequest = createAction("UPDATE_BOOKING_REQUEST");
 export const updateBookingSuccess = createAction("UPDATE_BOOKING_SUCCESS");
 export const updateBookingFailure = createAction("UPDATE_BOOKING_FAILURE");
 export const resetUpdateBooking = createAction("RESET_UPDATE_BOOKING");
+
+export const updatePaymentBookingRequest = createAction(
+  "UPDATE_PAYMENT_BOOKING_REQUEST"
+);
+export const updatePaymentBookingSuccess = createAction(
+  "UPDATE_PAYMENT_BOOKING_SUCCESS"
+);
+export const updatePaymentBookingFailure = createAction(
+  "UPDATE_PAYMENT_BOOKING_FAILURE"
+);
+export const resetUpdatePaymentBooking = createAction(
+  "RESET_UPDATE_PAYMENT_BOOKING"
+);
 
 export const deleteBookingRequest = createAction("DELETE_BOOKING_REQUEST");
 export const deleteBookingSuccess = createAction("DELETE_BOOKING_SUCCESS");

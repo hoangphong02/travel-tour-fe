@@ -146,6 +146,20 @@ function* addGuideBooking({ payload }) {
     }
   }
 }
+
+function* updatePaymentBooking({ payload }) {
+  try {
+    const response = yield call(() =>
+      axiosMicro.put(`/booking/${payload.id}/paid`, payload.body)
+    );
+    yield put(Actions.updatePaymentBookingSuccess(response.data));
+  } catch (error) {
+    if (error?.response?.data) {
+      const messages = error.response.data;
+      yield put(Actions.updatePaymentBookingFailure(messages));
+    }
+  }
+}
 // eslint-disable-next-line func-names
 export default function* () {
   yield takeLatest(Actions.getAllBookingRequest, getAllBookings);
@@ -157,4 +171,5 @@ export default function* () {
   yield takeLatest(Actions.addGuideBookingRequest, addGuideBooking);
   yield takeLatest(Actions.getUserGuideBookingRequest, getUserGuideBooking);
   yield takeLatest(Actions.getStatisticalRequest, getStatistical);
+  yield takeLatest(Actions.updatePaymentBookingRequest, updatePaymentBooking);
 }

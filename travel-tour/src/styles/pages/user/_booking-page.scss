@@ -364,4 +364,11 @@
         }
 
     }
+
+    .paypal-buttons{
+        &:last-child{
+
+            display: none !important;
+        }
+    }
 }

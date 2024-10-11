@@ -2,6 +2,7 @@ import { useFormik } from "formik";
 import moment from "moment";
 import React, { useEffect, useState } from "react";
 import { Button } from "react-bootstrap";
+import { PayPalButton } from "react-paypal-button-v2";
 import { useDispatch, useSelector } from "react-redux";
 import {
   useHistory,
@@ -12,6 +13,9 @@ import { LIST_OPTION_RANK_HOTEL, ListTransport } from "~/constants";
 import {
   createBookingRequest,
   resetCreateBooking,
+  resetStateCreateBooking,
+  resetUpdatePaymentBooking,
+  updatePaymentBookingRequest,
 } from "~/redux/booking/actions";
 import { getDetailTourRequest } from "~/redux/tour/actions";
 
@@ -19,16 +23,15 @@ const BookingPage = () => {
   const history = useHistory();
   const { id } = useParams();
   const dispatch = useDispatch();
-  const {
-    isGetDetailTourRequest,
-    isGetDetailTourSuccess,
-    isGetDetailTourFailure,
-    getDetailTourState,
-  } = useSelector((store) => store.tour);
+  const [sdkReady, setSdkReady] = useState(false);
+  const { getDetailTourState } = useSelector((store) => store.tour);
   const {
     isCreateBookingRequest,
     isCreateBookingSuccess,
-    isCreateBookingFailure,
+    createBookingState,
+    isUpdatePaymentBookingRequest,
+    isUpdatePaymentBookingSuccess,
+    isUpdatePaymentBookingFailure,
   } = useSelector((store) => store.booking);
   const [total, setTotal] = useState(0);
 
@@ -46,6 +49,13 @@ const BookingPage = () => {
       dispatch(resetCreateBooking());
     }
   }, [isCreateBookingSuccess]);
+  useEffect(() => {
+    if (isUpdatePaymentBookingSuccess) {
+      toast.success("Thanh toán thành công");
+      dispatch(resetUpdatePaymentBooking());
+      dispatch(resetStateCreateBooking());
+    }
+  }, [isUpdatePaymentBookingSuccess]);
 
   const initialValues = {
     fullname: "",
@@ -109,6 +119,35 @@ const BookingPage = () => {
         getDetailTourState?.data?.hotel_level[0]?.price_child;
     setTotal(price);
   }, [formik.values.adult_ticket, formik.values.child_ticket]);
+
+  const addPayPalScript = async () => {
+    const script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src = `https://www.paypal.com/sdk/js?client-id=${process.env.REACT_APP_CLIENT_ID}`;
+    script.async = true;
+    script.onload = () => {
+      setSdkReady(true);
+    };
+    document.body.appendChild(script);
+  };
+
+  useEffect(() => {
+    if (!window.paypal) {
+      addPayPalScript();
+    } else {
+      setSdkReady(true);
+    }
+  }, []);
+
+  const onPaymentPaypalSuccess = (id) => {
+    const payload = {
+      id: createBookingState?.data?._id,
+      body: {
+        transactionId: id,
+      },
+    };
+    dispatch(updatePaymentBookingRequest(payload));
+  };
 
   return (
     <div className="booking-page-wrapper">
@@ -382,15 +421,32 @@ const BookingPage = () => {
             />
           </div>
 
-          <div className="bottom" onClick={formik.handleSubmit}>
+          <div
+            className={`bottom  ${createBookingState?.data ? "d-none" : ""}`}
+            onClick={formik.handleSubmit}
+          >
             <button>ĐẶT TOUR</button>
           </div>
         </div>
-        {isCreateBookingSuccess && (
+        {createBookingState?.data && sdkReady ? (
           <div>
-            <Button>Thanh toán</Button>
+            <PayPalButton
+              amount={Math.round(createBookingState?.data?.total_price / 30000)}
+              onSuccess={(details, data) => {
+                onPaymentPaypalSuccess(data?.paymentID);
+                return fetch("/paypal-transaction-complete", {
+                  method: "post",
+                  body: JSON.stringify({
+                    orderID: data.orderID,
+                  }),
+                });
+              }}
+              onError={() => {
+                toast.error("Thanh toán thất bại");
+              }}
+            />
           </div>
-        )}
+        ) : null}
       </div>
     </div>
   );

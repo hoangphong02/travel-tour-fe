@@ -27,6 +27,7 @@ const initialState = {
   isCreateBookingRequest: false,
   isCreateBookingSuccess: false,
   isCreateBookingFailure: false,
+  createBookingState: {},
   // Update Food
   isUpdateBookingRequest: false,
   isUpdateBookingSuccess: false,
@@ -45,6 +46,10 @@ const initialState = {
   isGetUserGuideBookingSuccess: false,
   isGetUserGuideBookingFailure: false,
   getUserGuideBookingState: {},
+  //
+  isUpdatePaymentBookingRequest: false,
+  isUpdatePaymentBookingSuccess: false,
+  isUpdatePaymentBookingFailure: false,
   // Local
   errorMessages: [],
 };
@@ -143,11 +148,12 @@ const reducer = handleActions(
       isCreateBookingSuccess: false,
       isCreateBookingFailure: false,
     }),
-    [Actions.createBookingSuccess]: (state) => ({
+    [Actions.createBookingSuccess]: (state, { payload }) => ({
       ...state,
       isCreateBookingRequest: false,
       isCreateBookingSuccess: true,
       isCreateBookingFailure: false,
+      createBookingState: payload,
     }),
     [Actions.createBookingFailure]: (state, { payload }) => ({
       ...state,
@@ -163,7 +169,14 @@ const reducer = handleActions(
       isCreateBookingFailure: false,
       errorMessages: [],
     }),
-
+    [Actions.resetStateCreateBooking]: (state) => ({
+      ...state,
+      isCreateBookingRequest: false,
+      isCreateBookingSuccess: false,
+      isCreateBookingFailure: false,
+      createBookingState: {},
+      errorMessages: [],
+    }),
     // #endregion
     // #region : Create Food
     [Actions.getUserGuideBookingRequest]: (state) => ({
@@ -219,6 +232,33 @@ const reducer = handleActions(
       isUpdateBookingRequest: false,
       isUpdateBookingSuccess: false,
       isUpdateBookingFailure: false,
+      errorMessages: [],
+    }),
+    // #region : Update Food
+    [Actions.updatePaymentBookingRequest]: (state) => ({
+      ...state,
+      isUpdatePaymentBookingRequest: true,
+      isUpdatePaymentBookingSuccess: false,
+      isUpdatePaymentBookingFailure: false,
+    }),
+    [Actions.updatePaymentBookingSuccess]: (state) => ({
+      ...state,
+      isUpdatePaymentBookingRequest: false,
+      isUpdatePaymentBookingSuccess: true,
+      isUpdatePaymentBookingFailure: false,
+    }),
+    [Actions.updatePaymentBookingFailure]: (state, { payload }) => ({
+      ...state,
+      isUpdatePaymentBookingRequest: false,
+      isUpdatePaymentBookingSuccess: false,
+      isUpdatePaymentBookingFailure: true,
+      errorMessages: payload,
+    }),
+    [Actions.resetUpdatePaymentBooking]: (state) => ({
+      ...state,
+      isUpdatePaymentBookingRequest: false,
+      isUpdatePaymentBookingSuccess: false,
+      isUpdatePaymentBookingFailure: false,
       errorMessages: [],
     }),
     // #endregion
