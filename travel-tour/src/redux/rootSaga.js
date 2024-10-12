@@ -9,6 +9,7 @@ import categoryTour from "./categoryTour/saga";
 import blog from "./blog/saga";
 import tour from "./tour/saga";
 import booking from "./booking/saga";
+import comment from "./comment/saga";
 
 export default function* rootSaga() {
   yield all([
@@ -22,5 +23,6 @@ export default function* rootSaga() {
     blog(),
     tour(),
     booking(),
+    comment(),
   ]);
 }

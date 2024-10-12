@@ -94,7 +94,7 @@ const TourDetailPage = () => {
         <OptionTour option={option} setOption={setOption} />
       </div>
       <div>
-        <CommentTour />
+        <CommentTour id={getDetailTourState?.data?._id} />
       </div>
     </div>
   );

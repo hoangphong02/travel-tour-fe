@@ -1,7 +1,5 @@
-import { useEffect } from "react";
 import { Spinner } from "react-bootstrap";
-import { useDispatch, useSelector } from "react-redux";
-import { toast } from "react-toastify";
+import { useSelector } from "react-redux";
 import { Alert, Button, Modal, ModalBody, ModalFooter } from "reactstrap";
 
 export const ModalConfirmPaymentCash = ({
@@ -9,11 +7,9 @@ export const ModalConfirmPaymentCash = ({
   handleClose,
   handleConfirmPaymentCash,
 }) => {
-  const {
-    isUpdateBookingRequest,
-    isUpdateBookingSuccess,
-    isUpdateBookingFailure,
-  } = useSelector((store) => store.booking);
+  const { isUpdateBookingRequest, isUpdateBookingFailure } = useSelector(
+    (store) => store.booking
+  );
 
   return (
     <Modal
