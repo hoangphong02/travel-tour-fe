@@ -106,6 +106,8 @@ export const ModalActions = ({
       start_date: moment(start_date).format("MM/DD/YYYY"),
       end_date: moment(end_date).format("MM/DD/YYYY"),
       address,
+      payment_status,
+      payment_method_name,
     };
 
     if (type === "add") {
@@ -263,6 +265,7 @@ export const ModalActions = ({
                         </span>
                       </Label>
                       <Field
+                        disabled={type !== "add"}
                         className="form-control"
                         name="fullname"
                         placeholder="Nhập tên người đặt"
@@ -302,6 +305,7 @@ export const ModalActions = ({
                         </span>
                       </Label>
                       <Field
+                        disabled={type !== "add"}
                         className="form-control"
                         name="email"
                         placeholder="Nhập email người đặt"
@@ -320,6 +324,7 @@ export const ModalActions = ({
                         </span>
                       </Label>
                       <Field
+                        disabled={type !== "add"}
                         className="form-control"
                         name="phone"
                         placeholder="Nhập số điện thoại người đặt"
@@ -340,6 +345,7 @@ export const ModalActions = ({
                         </span>
                       </Label>
                       <Field
+                        disabled={type !== "add"}
                         className="form-control"
                         name="adult_ticket"
                         placeholder="Nhập số lượng vé người lớn"
@@ -358,6 +364,7 @@ export const ModalActions = ({
                         </span>
                       </Label>
                       <Field
+                        disabled={type !== "add"}
                         className="form-control"
                         name="child_ticket"
                         placeholder="Nhập số lượng vé trẻ em"
@@ -420,6 +427,7 @@ export const ModalActions = ({
                         </span>
                       </Label>
                       <Select
+                        isDisabled={type !== "add"}
                         options={LIST_OPTION_RANK_HOTEL}
                         onChange={(e) => setFieldValue("hotel_level", e)}
                         value={values.hotel_level}
@@ -462,6 +470,7 @@ export const ModalActions = ({
                         </span>
                       </Label>
                       <Field
+                        disabled={type !== "add"}
                         className="form-control"
                         name="total_price"
                         placeholder="Nhập tổng giá tour"
@@ -481,6 +490,7 @@ export const ModalActions = ({
                           </span>
                         </Label>
                         <Field
+                          disabled={type !== "add"}
                           className="form-control"
                           name="transactionId"
                           placeholder="Nhập mã thanh toán"
@@ -544,6 +554,7 @@ export const ModalActions = ({
                         </span>
                       </Label>
                       <textarea
+                        disabled={type !== "add"}
                         className="form-control"
                         name="note"
                         value={values.note}

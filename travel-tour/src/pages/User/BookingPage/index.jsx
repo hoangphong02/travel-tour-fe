@@ -14,10 +14,13 @@ import {
   createBookingRequest,
   resetCreateBooking,
   resetStateCreateBooking,
+  resetUpdateBooking,
   resetUpdatePaymentBooking,
+  updateBookingRequest,
   updatePaymentBookingRequest,
 } from "~/redux/booking/actions";
 import { getDetailTourRequest } from "~/redux/tour/actions";
+import { ModalConfirmPaymentCash } from "./ModalConfirmPaymentCash";
 
 const BookingPage = () => {
   const history = useHistory();
@@ -32,9 +35,28 @@ const BookingPage = () => {
     isUpdatePaymentBookingRequest,
     isUpdatePaymentBookingSuccess,
     isUpdatePaymentBookingFailure,
+    isUpdateBookingRequest,
+    isUpdateBookingSuccess,
+    isUpdateBookingFailure,
   } = useSelector((store) => store.booking);
   const [total, setTotal] = useState(0);
+  const [showModalPaymentCash, setShowModalPaymentCash] = useState(false);
+  const handleShowConfirmPaymentCash = () => {
+    setShowModalPaymentCash(true);
+  };
+  const handleCloseShow = () => {
+    setShowModalPaymentCash(false);
+  };
 
+  const handleConfirmPaymentCash = () => {
+    const payload = {
+      id: createBookingState?.data?._id,
+      body: {
+        payment_method_name: "cash",
+      },
+    };
+    dispatch(updateBookingRequest(payload));
+  };
   useEffect(() => {
     if (id === ":id") {
       history.push("/tour");
@@ -56,6 +78,21 @@ const BookingPage = () => {
       dispatch(resetStateCreateBooking());
     }
   }, [isUpdatePaymentBookingSuccess]);
+
+  useEffect(() => {
+    if (isUpdateBookingSuccess) {
+      toast.success("Cập nhật phương thức thanh toán thành công");
+      dispatch(resetUpdateBooking());
+      dispatch(resetStateCreateBooking());
+      handleCloseShow();
+    }
+  }, [isUpdateBookingSuccess]);
+
+  useEffect(() => {
+    if (isUpdateBookingFailure) {
+      toast.success("Cập nhật phương thức thanh toán thất bại");
+    }
+  }, [isUpdateBookingFailure]);
 
   const initialValues = {
     fullname: "",
@@ -428,8 +465,21 @@ const BookingPage = () => {
             <button>ĐẶT TOUR</button>
           </div>
         </div>
+        {createBookingState?.data ? (
+          <div style={{ width: "100%", padding: "16px" }}>
+            <Button
+              onClick={handleShowConfirmPaymentCash}
+              style={{
+                width: "100%",
+                padding: "10px ",
+              }}
+            >
+              Thanh toán bằng tiền mặt
+            </Button>
+          </div>
+        ) : null}
         {createBookingState?.data && sdkReady ? (
-          <div>
+          <div style={{ padding: "16px" }}>
             <PayPalButton
               amount={Math.round(createBookingState?.data?.total_price / 30000)}
               onSuccess={(details, data) => {
@@ -448,6 +498,13 @@ const BookingPage = () => {
           </div>
         ) : null}
       </div>
+      {showModalPaymentCash && (
+        <ModalConfirmPaymentCash
+          isOpen={true}
+          handleClose={handleCloseShow}
+          handleConfirmPaymentCash={handleConfirmPaymentCash}
+        />
+      )}
     </div>
   );
 };
