@@ -1,4 +1,5 @@
 import { useEffect } from "react";
+import { Spinner } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import { Alert, Button, Modal, ModalBody, ModalFooter } from "reactstrap";
@@ -46,7 +47,11 @@ export const ModalConfirmPaymentCash = ({
               <span className="bounce2" />
               <span className="bounce3" />
             </span>
-            <span className="label">Xác nhận</span>
+            {isUpdateBookingRequest ? (
+              <Spinner size="12" />
+            ) : (
+              <span className="label">Xác nhận</span>
+            )}
           </Button>
           <Button
             outline

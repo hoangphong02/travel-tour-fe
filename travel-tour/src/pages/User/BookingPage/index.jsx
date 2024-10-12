@@ -1,7 +1,7 @@
 import { useFormik } from "formik";
 import moment from "moment";
 import React, { useEffect, useState } from "react";
-import { Button } from "react-bootstrap";
+import { Button, Spinner } from "react-bootstrap";
 import { PayPalButton } from "react-paypal-button-v2";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -462,7 +462,13 @@ const BookingPage = () => {
             className={`bottom  ${createBookingState?.data ? "d-none" : ""}`}
             onClick={formik.handleSubmit}
           >
-            <button>ĐẶT TOUR</button>
+            <button>
+              {isCreateBookingRequest ? (
+                <Spinner size="18" />
+              ) : (
+                <span>Đặt tour</span>
+              )}
+            </button>
           </div>
         </div>
         {createBookingState?.data ? (
