@@ -19,4 +19,9 @@ export const deleteCommentsSuccess = createAction("DELETE_COMMENTS_SUCCESS");
 export const deleteCommentsFailure = createAction("DELETE_COMMENTS_FAILURE");
 export const resetDeleteComments = createAction("RESET_DELETE_COMMENTS");
 
+export const replyCommentsRequest = createAction("REPLY_COMMENTS_REQUEST");
+export const replyCommentsSuccess = createAction("REPLY_COMMENTS_SUCCESS");
+export const replyCommentsFailure = createAction("REPLY_COMMENTS_FAILURE");
+export const resetReplyComments = createAction("RESET_REPLY_COMMENTS");
+
 export const resetCommentsState = createAction("RESET_COMMENTS_STATE");

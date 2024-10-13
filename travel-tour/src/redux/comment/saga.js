@@ -62,10 +62,30 @@ function* deleteComment({ payload }) {
   }
 }
 
+function* replyComment({ payload }) {
+  try {
+    const response = yield call(() =>
+      axiosMicro.post(`/comment/${payload.id}/reply`, payload.body)
+    );
+    if (response?.data?.status === "OK") {
+      yield put(Actions.replyCommentsSuccess(response.data));
+    } else {
+      const messages = response.data.messages;
+      yield put(Actions.replyCommentsFailure(messages));
+    }
+  } catch (error) {
+    if (error?.response?.data) {
+      const messages = error.response.data;
+      yield put(Actions.replyCommentsFailure(messages));
+    }
+  }
+}
 // eslint-disable-next-line func-names
 export default function* () {
   yield takeLatest(Actions.getAllCommentsRequest, getAllComments);
   yield takeLatest(Actions.createCommentsRequest, createComment);
   yield takeLatest(Actions.updateCommentsRequest, updateComment);
   yield takeLatest(Actions.deleteCommentsRequest, deleteComment);
+  yield takeLatest(Actions.deleteCommentsRequest, deleteComment);
+  yield takeLatest(Actions.replyCommentsRequest, replyComment);
 }

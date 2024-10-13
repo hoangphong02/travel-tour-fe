@@ -20,6 +20,10 @@ const initialState = {
   isDeleteCommentsRequest: false,
   isDeleteCommentsSuccess: false,
   isDeleteCommentsFailure: false,
+  // Create Comments
+  isReplyCommentsRequest: false,
+  isReplyCommentsSuccess: false,
+  isReplyCommentsFailure: false,
 
   // Local
   errorMessages: [],
@@ -74,6 +78,34 @@ const reducer = handleActions(
       isCreateCommentsRequest: false,
       isCreateCommentsSuccess: false,
       isCreateCommentsFailure: false,
+      errorMessages: [],
+    }),
+    // #endregion
+    // #region : Create Comments
+    [Actions.replyCommentsRequest]: (state) => ({
+      ...state,
+      isReplyCommentsRequest: true,
+      isReplyCommentsSuccess: false,
+      isReplyCommentsFailure: false,
+    }),
+    [Actions.replyCommentsSuccess]: (state) => ({
+      ...state,
+      isReplyCommentsRequest: false,
+      isReplyCommentsSuccess: true,
+      isReplyCommentsFailure: false,
+    }),
+    [Actions.replyCommentsFailure]: (state, { payload }) => ({
+      ...state,
+      isReplyCommentsRequest: false,
+      isReplyCommentsSuccess: false,
+      isReplyCommentsFailure: true,
+      errorMessages: payload,
+    }),
+    [Actions.resetReplyComments]: (state) => ({
+      ...state,
+      isReplyCommentsRequest: false,
+      isReplyCommentsSuccess: false,
+      isReplyCommentsFailure: false,
       errorMessages: [],
     }),
     // #endregion

@@ -7,6 +7,7 @@ import {
 } from "react-router-dom/cjs/react-router-dom.min";
 import { useDispatch, useSelector } from "react-redux";
 import { getDetailTourRequest } from "~/redux/tour/actions";
+import { getAllCommentsRequest } from "~/redux/comment/actions";
 
 const TourDetailPage = () => {
   const [option, setOption] = useState("program");
@@ -22,11 +23,32 @@ const TourDetailPage = () => {
     isGetDetailTourFailure,
     getDetailTourState,
   } = useSelector((store) => store.tour);
+  const {
+    getAllCommentsState,
+    isCreateCommentsSuccess,
+    isReplyCommentsSuccess,
+  } = useSelector((store) => store.comment);
+
   useEffect(() => {
     if (id) {
       dispatch(getDetailTourRequest({ id: id }));
     }
   }, [id]);
+
+  useEffect(() => {
+    if (getDetailTourState?.data) {
+      const params = {
+        limit: 0,
+        tour_code: getDetailTourState?.data?.tour_code,
+      };
+      dispatch(getAllCommentsRequest(params));
+    }
+  }, [
+    getDetailTourState?.data,
+    isCreateCommentsSuccess,
+    isReplyCommentsSuccess,
+  ]);
+
   const handleBooking = (id) => {
     history.push(`/booking/${id}`);
   };
