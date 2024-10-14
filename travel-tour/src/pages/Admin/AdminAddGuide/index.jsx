@@ -16,6 +16,7 @@ import {
   resetAddGuideBooking,
 } from "~/redux/booking/actions";
 import { Form, FormGroup } from "react-bootstrap";
+import moment from "moment";
 
 const AdminAddGuide = () => {
   const [isShowModalAction, setIsShowModalAction] = useState(false);
@@ -36,8 +37,9 @@ const AdminAddGuide = () => {
   const [dataActive, setDataActive] = useState(null);
   const [dataTable, setDataTable] = useState([]);
   const [indexPage, setIndexPage] = useState(1);
-
+  const [totalPage, setTotalPage] = useState(1);
   const [filter, setFilter] = useState(false);
+  const [date, setDate] = useState("");
 
   const limit = 10;
   const dispatch = useDispatch();
@@ -53,6 +55,18 @@ const AdminAddGuide = () => {
   }, [searchDebounce]);
 
   useEffect(() => {
+    if (dataTable) {
+      const page = Math.floor(dataTable?.length / 10);
+      const index = dataTable?.length % 10;
+      if (index > 0) {
+        setTotalPage(page + 1);
+      } else {
+        setTotalPage(page);
+      }
+    }
+  }, [dataTable]);
+
+  useEffect(() => {
     if (dataActive) {
       const payload = {
         tourId: dataActive?.bookings[0]?.tour_id?._id,
@@ -65,7 +79,7 @@ const AdminAddGuide = () => {
 
   useEffect(() => {
     setCallApi(true);
-  }, [filter]);
+  }, [filter, date]);
 
   useEffect(() => {
     if (callApi) {
@@ -76,6 +90,9 @@ const AdminAddGuide = () => {
       };
       if (searchDebounce) {
         params.name = searchDebounce;
+      }
+      if (date) {
+        params.start_date = moment(date).format("MM/DD/YYYY");
       }
       dispatch(getAllBookingGroupRequest(params));
       setCallApi(false);
@@ -213,6 +230,14 @@ const AdminAddGuide = () => {
             <CSSearchOutline />
           </span>
         </div>
+        <FormGroup className="d-flex gap-2">
+          <label htmlFor="">Lọc theo ngày </label>
+          <input
+            type="date"
+            value={date}
+            onChange={(e) => setDate(e.target.value)}
+          />
+        </FormGroup>
         <div className="filter">
           <FormGroup className="d-flex gap-2">
             <Form.Check
@@ -237,11 +262,11 @@ const AdminAddGuide = () => {
       <div></div>
       <div className="table">
         <ReactTableWithPaginationCard
-          data={dataTable}
+          data={dataTable.slice(indexPage * 10 - 10, indexPage * 10)}
           columns={columns}
           onClickRow={handleClickRow}
           indexPage={indexPage}
-          // maxPage={getAllFoodsState?.totalPage}
+          maxPage={totalPage}
           handlePaginationNext={handleChangePage}
           // showPagination={getAllFoodsState?.totalPage > 1 ? true : false}
         />
