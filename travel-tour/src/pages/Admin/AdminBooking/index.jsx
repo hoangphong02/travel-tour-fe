@@ -4,28 +4,24 @@ import { ReactTableWithPaginationCard } from "~/components/common";
 import {
   CSEditOutline,
   CSSearchOutline,
-  CSTrash2Outline,
 } from "~/components/iconography/Outline";
 import { ModalActions } from "./ModalAction";
 import { ModalDelete } from "./ModalDelete";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import { useDebounce } from "~/helpers/hooks";
-import logo from "~/assets/logo/no-avatar.png";
 import { getAllCategoryTourRequest } from "~/redux/categoryTour/actions";
-import {
-  getAllTourRequest,
-  resetCreateTour,
-  resetUpdateTour,
-} from "~/redux/tour/actions";
+import { getAllTourRequest } from "~/redux/tour/actions";
 import {
   getAllBookingRequest,
   resetCreateBooking,
   resetUpdateBooking,
 } from "~/redux/booking/actions";
 import moment from "moment";
-import { ListStatusBooking } from "~/constants";
+import { ListSearch, ListStatusBooking } from "~/constants";
 import { getAllUserRequest } from "~/redux/user/actions";
+import Select from "react-select";
+import { FormGroup } from "react-bootstrap";
 
 const AdminBooking = () => {
   const [isShowModalAction, setIsShowModalAction] = useState(false);
@@ -33,6 +29,13 @@ const AdminBooking = () => {
   const [isShowModalConfirm, setIsShowModalConfirm] = useState(false);
   const [type, setType] = useState();
   const [search, setSearch] = useState("");
+  const [start, setStart] = useState("");
+  const [end, setEnd] = useState("");
+  const [typeSearch, setTypeSearch] = useState({
+    value: "tour_name",
+    label: "Tên tour",
+  });
+
   const searchDebounce = useDebounce(search, 500);
   const {
     isGetAllBookingRequest,
@@ -57,6 +60,7 @@ const AdminBooking = () => {
   const [dataTable, setDataTable] = useState([]);
   const [indexPage, setIndexPage] = useState(1);
   const [options, setOptions] = useState([]);
+  const [status, setStatus] = useState("");
 
   const limit = 10;
   const dispatch = useDispatch();
@@ -76,11 +80,7 @@ const AdminBooking = () => {
 
   useEffect(() => {
     setCallApi(true);
-  }, []);
-
-  useEffect(() => {
-    setCallApi(true);
-  }, [searchDebounce]);
+  }, [searchDebounce, status, start, end]);
 
   useEffect(() => {
     if (getAllCategoryTourState?.data) {
@@ -102,7 +102,20 @@ const AdminBooking = () => {
         page: indexPage,
       };
       if (searchDebounce) {
-        params.name = searchDebounce;
+        if (typeSearch.value === "tour_name") {
+          params.tour_name = searchDebounce;
+        } else {
+          params.tour_code = searchDebounce;
+        }
+      }
+      if (status) {
+        params.status = status.value;
+      }
+      if (start) {
+        params.sdate = moment(start).format("MM/DD/YYYY");
+      }
+      if (end) {
+        params.edate = moment(end).format("MM/DD/YYYY");
       }
       dispatch(getAllBookingRequest(params));
       setCallApi(false);
@@ -291,14 +304,19 @@ const AdminBooking = () => {
     setIndexPage(idxPage);
     setCallApi(true);
   };
-
   return (
-    <div className="admin-food-page">
+    <div className="admin-booking-page">
       <div className="top">
         <TopComponent handleShowModalActions={handleShowModalActions} />
       </div>
       <div className="search">
         <div className="body">
+          <Select
+            className="select-type"
+            options={ListSearch}
+            onChange={(e) => setTypeSearch(e)}
+            value={typeSearch}
+          ></Select>
           <input
             type="text"
             placeholder="Nhập tìm kiếm"
@@ -309,6 +327,30 @@ const AdminBooking = () => {
             <CSSearchOutline />
           </span>
         </div>
+        <div className="d-flex gap-2 align-items-center select-filter">
+          <span>Trạng thái:</span>
+          <Select
+            options={ListStatusBooking}
+            onChange={(e) => setStatus(e)}
+            value={status}
+          ></Select>
+        </div>
+        <FormGroup className="d-flex gap-2 align-items-center">
+          <label htmlFor="">Ngày bắt đầu: </label>
+          <input
+            type="date"
+            value={start}
+            onChange={(e) => setStart(e.target.value)}
+          />
+        </FormGroup>
+        <FormGroup className="d-flex gap-2 align-items-center">
+          <label htmlFor="">Ngày kết thúc: </label>
+          <input
+            type="date"
+            value={end}
+            onChange={(e) => setEnd(e.target.value)}
+          />
+        </FormGroup>
       </div>
       <div className="table">
         <ReactTableWithPaginationCard
@@ -316,9 +358,9 @@ const AdminBooking = () => {
           columns={columns}
           onClickRow={handleClickRow}
           indexPage={indexPage}
-          // maxPage={getAllFoodsState?.totalPage}
           handlePaginationNext={handleChangePage}
-          // showPagination={getAllFoodsState?.totalPage > 1 ? true : false}
+          maxPage={getAllBookingState?.totalPage}
+          showPagination={getAllBookingState?.totalPage > 1 ? true : false}
         />
       </div>
 

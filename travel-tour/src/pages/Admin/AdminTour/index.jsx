@@ -277,9 +277,9 @@ const AdminTour = () => {
           columns={columns}
           onClickRow={handleClickRow}
           indexPage={indexPage}
-          // maxPage={getAllFoodsState?.totalPage}
+          maxPage={getAllTourState?.totalPage}
           handlePaginationNext={handleChangePage}
-          // showPagination={getAllFoodsState?.totalPage > 1 ? true : false}
+          showPagination={getAllTourState?.totalPage > 1 ? true : false}
         />
       </div>
 

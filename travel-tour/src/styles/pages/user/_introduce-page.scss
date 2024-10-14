@@ -110,6 +110,7 @@
                             height: 40px;
                             overflow: hidden;
                             font-size: 13px;
+                            padding:0  8px;
                         }
                         img{
                             height: 100px;
@@ -141,6 +142,8 @@
                                     .slick-slide {
                                         border-radius: 20px;
                                         overflow: hidden;
+                                            box-shadow: 2px 2px 5px 2px rgba(128, 128, 128, 0.5);
+                                                padding-bottom: 20px;
                     
                                         .item-tour-trending {
                                             height: 300px;

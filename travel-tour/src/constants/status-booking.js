@@ -31,3 +31,14 @@ export const ListNameBooking = [
     label: "Thanh toán tiền mặt",
   },
 ];
+
+export const ListSearch = [
+  {
+    value: "tour_name",
+    label: "Tên tour",
+  },
+  {
+    value: "tour_code",
+    label: "Mã tour",
+  },
+];

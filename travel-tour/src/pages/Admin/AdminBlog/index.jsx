@@ -9,11 +9,6 @@ import {
 import { ModalActions } from "./ModalAction";
 import { ModalDelete } from "./ModalDelete";
 import { useDispatch, useSelector } from "react-redux";
-// import {
-//   getAllFoodsRequest,
-//   resetCreateFoods,
-//   resetUpdateFoods,
-// } from "~/redux/food/actions";
 import { toast } from "react-toastify";
 import { useDebounce } from "~/helpers/hooks";
 import { getAllCategoryRequest } from "~/redux/categoryBlog/actions";
@@ -236,9 +231,9 @@ const AdminBlog = () => {
           columns={columns}
           onClickRow={handleClickRow}
           indexPage={indexPage}
-          // maxPage={getAllFoodsState?.totalPage}
+          maxPage={getAllBlogsState?.totalPage}
           handlePaginationNext={handleChangePage}
-          // showPagination={getAllFoodsState?.totalPage > 1 ? true : false}
+          showPagination={getAllBlogsState?.totalPage > 1 ? true : false}
         />
       </div>
 

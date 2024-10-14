@@ -151,7 +151,7 @@ const IntroducePage = () => {
               </div>
             </div>
 
-            <div className="form-comment">
+            {/* <div className="form-comment">
               <div className="form-comment-body">
                 <div>
                   <span style={{ fontSize: "20px", fontWeight: "600" }}>
@@ -201,7 +201,7 @@ const IntroducePage = () => {
                   </div>
                 </div>
               </div>
-            </div>
+            </div> */}
           </div>
         </div>
         <div className="introduce-page-wrapper-body-right">
