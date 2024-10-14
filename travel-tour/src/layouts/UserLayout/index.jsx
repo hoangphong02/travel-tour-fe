@@ -38,26 +38,13 @@ export const UserLayout = (props) => {
     }
   });
 
-  // useEffect(() => {
-  //   if (isGetProfileSuccess) {
-  //     if (profileResponse?.data) {
-  //       const isLogin = localStorage.getItem('is_login');
-  //       const accessToken = localStorage.getItem('accessToken');
-  //       if (isLogin && accessToken) {
-  //         setIsAuth(true);
-  //       }
-  //     }
-  //     setIsLoading(false);
-  //   } else if (isGetProfileFailure) {
-  //     setIsLoading(false);
-  //   }
-  // }, [isGetProfileSuccess, isGetProfileFailure]);
+  const scrollUp = () => {
+    window.scrollTo(0, 0);
+  };
 
-  // useEffect(() => {
-  //   if (isAuth && isLoading) {
-  //   }
-  // }, [isAuth]);
-
+  useEffect(() => {
+    scrollUp();
+  }, []);
   const render = () => {
     // if (isLoading) return <LoadingPage />;
     return (
