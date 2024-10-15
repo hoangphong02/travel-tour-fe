@@ -24,6 +24,16 @@ export const updateInformationUserRequest = createAction(
   "UPDATE_INFORMATION_USER_REQUEST"
 );
 
+export const getWorkSchedulesRequest = createAction(
+  "GET_WORK_SCHEDULES_REQUEST"
+);
+export const getWorkSchedulesSuccess = createAction(
+  "GET_WORK_SCHEDULES_SUCCESS"
+);
+export const getWorkSchedulesFailure = createAction(
+  "GET_WORK_SCHEDULES_FAILURE"
+);
+
 export const changePointRequest = createAction("CHANGE_POINT_REQUEST");
 
 export const resetUserState = createAction("RESET_USER_STATE");

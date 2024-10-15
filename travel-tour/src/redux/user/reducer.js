@@ -20,6 +20,11 @@ const initialState = {
   isGetAllUsersFailure: false,
   getAllUsersState: {},
   //
+
+  isGetWorkSchedulesRequest: false,
+  isGetWorkSchedulesSuccess: false,
+  isGetWorkSchedulesFailure: false,
+  getWorkSchedulesState: {},
   errorMessages: [],
 };
 
@@ -43,6 +48,28 @@ const reducer = handleActions(
       isGetAllUsersRequest: false,
       isGetAllUsersSuccess: false,
       isGetAllUsersFailure: true,
+      errorMessages: payload,
+    }),
+    // get work schedules
+    [Actions.getWorkSchedulesRequest]: (state) => ({
+      ...state,
+      isGetWorkSchedulesRequest: true,
+      isGetWorkSchedulesSuccess: false,
+      isGetWorkSchedulesFailure: false,
+      getWorkSchedulesState: {},
+    }),
+    [Actions.getWorkSchedulesSuccess]: (state, { payload }) => ({
+      ...state,
+      isGetWorkSchedulesRequest: false,
+      isGetWorkSchedulesSuccess: true,
+      isGetWorkSchedulesFailure: false,
+      getWorkSchedulesState: payload,
+    }),
+    [Actions.getWorkSchedulesFailure]: (state, { payload }) => ({
+      ...state,
+      isGetWorkSchedulesRequest: false,
+      isGetWorkSchedulesSuccess: false,
+      isGetWorkSchedulesFailure: true,
       errorMessages: payload,
     }),
     // #region : Get Profile

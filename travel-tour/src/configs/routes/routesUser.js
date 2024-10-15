@@ -24,4 +24,5 @@ export const routesUser = {
   blogsOfList: "/blogs/:id",
   picturePage: "/picture-page",
   blogDetail: "/blog-detail/:id",
+  WorkSchedule: "/work-schedule",
 };

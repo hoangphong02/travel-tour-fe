@@ -59,10 +59,14 @@ export const HeaderAction = memo(() => {
     setIsShowModalLogout(false);
   };
 
+  const handleWorkSchedule = () => {
+    history.push(routesUser.WorkSchedule);
+  };
+
   return (
     <section
       id="header-action"
-      className={`header-action--wrapper ${isScroll ? "isScroll" : ""} ${pathname.includes(routesUser.introduce) || pathname.includes(routesUser.tablePriceTour) || pathname.includes(routesUser.contact) || pathname.includes("booking") || pathname.includes(routesUser.tour) || pathname.includes(routesUser.blogs) || pathname.includes(routesUser.picturePage) ? "header-not-home" : ""}`}
+      className={`header-action--wrapper ${isScroll ? "isScroll" : ""} ${pathname.includes(routesUser.introduce) || pathname.includes(routesUser.WorkSchedule) || pathname.includes(routesUser.tablePriceTour) || pathname.includes(routesUser.contact) || pathname.includes("booking") || pathname.includes(routesUser.tour) || pathname.includes(routesUser.blogs) || pathname.includes(routesUser.picturePage) ? "header-not-home" : ""}`}
     >
       <div className="header-action--inner flex-center-space h-full">
         <div className="header-action--inner--top">
@@ -119,7 +123,9 @@ export const HeaderAction = memo(() => {
                       Quản lý hệ thống
                     </Dropdown.Item>
                   )}
-                  <Dropdown.Item href="#/action-2">Lịch công tác</Dropdown.Item>
+                  <Dropdown.Item onClick={handleWorkSchedule}>
+                    Lịch công tác
+                  </Dropdown.Item>
                   <Dropdown.Item onClick={() => setIsShowModalLogout(true)}>
                     Đăng xuất
                   </Dropdown.Item>
@@ -138,7 +144,7 @@ export const HeaderAction = memo(() => {
 
         <div className="header-action--inner--bottom">
           <div
-            className={`logo ${!pathname.includes(routesUser.introduce) && !pathname.includes(routesUser.tablePriceTour) && !pathname.includes(routesUser.contact) && !pathname.includes("booking") && !pathname.includes(routesUser.tour) && !pathname.includes(routesUser.blogs) && !pathname.includes(routesUser.picturePage) ? "filter-logo" : ""}`}
+            className={`logo ${!pathname.includes(routesUser.introduce) && !pathname.includes(routesUser.tablePriceTour) && !pathname.includes(routesUser.WorkSchedule) && !pathname.includes(routesUser.contact) && !pathname.includes("booking") && !pathname.includes(routesUser.tour) && !pathname.includes(routesUser.blogs) && !pathname.includes(routesUser.picturePage) ? "filter-logo" : ""}`}
           >
             <img
               src={logoTour}

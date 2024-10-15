@@ -44,9 +44,26 @@ function* getAllUsers({ payload }) {
     }
   }
 }
+
+function* getWorkSchedules({ payload }) {
+  try {
+    const response = yield call(
+      typeof payload === "string"
+        ? () => axiosMicro.get(`/user/guide?${payload}`)
+        : () => axiosMicro.get("/user/guide", { params: payload })
+    );
+    yield put(Actions.getWorkSchedulesSuccess(response.data));
+  } catch (error) {
+    if (error?.response?.data) {
+      const messages = error.response.data;
+      yield put(Actions.getWorkSchedulesFailure(messages));
+    }
+  }
+}
 // eslint-disable-next-line func-names
 export default function* () {
   yield takeLatest(Actions.getProfileRequest, getProfile);
   yield takeLatest(Actions.getConfigRequest, getConfig);
   yield takeLatest(Actions.getAllUserRequest, getAllUsers);
+  yield takeLatest(Actions.getWorkSchedulesRequest, getWorkSchedules);
 }

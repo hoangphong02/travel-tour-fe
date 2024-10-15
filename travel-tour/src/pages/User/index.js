@@ -10,6 +10,7 @@ import BlogsPage from "./BlogPage";
 import PicturePage from "./PicturePage";
 import BlogDetailPage from "./BlogDetailPage";
 import BlogOfListPage from "./BlogOfListPage";
+import WorkSchedule from "./WorkSchedule";
 
 export {
   UserHomePage,
@@ -24,4 +25,5 @@ export {
   PicturePage,
   BlogDetailPage,
   BlogOfListPage,
+  WorkSchedule,
 };

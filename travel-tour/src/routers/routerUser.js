@@ -14,6 +14,7 @@ import {
   BlogOfListPage,
 } from "~/pages/User";
 import TourOfListPage from "~/pages/User/TourOfList";
+import WorkSchedulePage from "~/pages/User/WorkSchedule";
 
 export const routerUser = [
   {
@@ -75,5 +76,10 @@ export const routerUser = [
     id: `user-${uuidv4()}`,
     path: routesUser.blogDetail,
     component: BlogDetailPage,
+  },
+  {
+    id: `user-${uuidv4()}`,
+    path: routesUser.WorkSchedule,
+    component: WorkSchedulePage,
   },
 ];
