@@ -44,6 +44,13 @@ export const ModalActions = ({ isOpen, type, handleClose, data }) => {
         /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
         "Email không hợp lệ"
       ),
+    password: Yup.string()
+      .required("Mật khẩu không được để trống")
+      .min(5, "Phải ít nhất 5 ký tự"),
+    confirmPassword: Yup.string()
+      .required("Mật khẩu xác nhận không được để trống")
+      .oneOf([Yup.ref("password")], "Mật khẩu xác nhận không khớp")
+      .min(5, "Phải ít nhất 5 ký tự"),
   });
 
   const uploadToCloudinary = async (file, uploadPreset, uploadUrl) => {
@@ -255,44 +262,6 @@ export const ModalActions = ({ isOpen, type, handleClose, data }) => {
                       </FormGroup>
                     </>
                   ) : null}
-
-                  {/* <FormGroup className="error-l-100">
-                    <Label>Ảnh đại diện:</Label>
-                    <Input
-                      type="file"
-                      id="exampleCustomFileBrowser1"
-                      name="image"
-                      onChange={(e) => handleUpload(e)}
-                    />
-
-                    {imagePreview && (
-                      <div
-                        className="image-preview"
-                        style={{
-                          marginTop: "40px",
-                        }}
-                      >
-                        <img
-                          src={imagePreview}
-                          alt=""
-                          style={{ height: "100px", width: "auto" }}
-                        />
-                        <div
-                          className="image-preview-remove"
-                          onClick={() => {
-                            setImagePreview("");
-                          }}
-                        >
-                          x
-                        </div>
-                      </div>
-                    )}
-                    {errors.desc && touched.desc ? (
-                      <div className="invalid-feedback d-block">
-                        {errors.desc}
-                      </div>
-                    ) : null}
-                  </FormGroup> */}
                 </ModalBody>
                 <ModalFooter>
                   {type === "edit" && (

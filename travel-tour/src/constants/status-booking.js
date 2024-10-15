@@ -1,7 +1,7 @@
 export const ListStatusBooking = [
   {
     value: "pending",
-    label: "Chưa xác nhận",
+    label: "Chờ xác nhận",
   },
   {
     value: "payment_confirmed",
@@ -9,7 +9,7 @@ export const ListStatusBooking = [
   },
   {
     value: "payment_failed",
-    label: "Chưa thanh toán",
+    label: "Thanh toán thất bại",
   },
   {
     value: "employee_confirmed",

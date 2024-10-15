@@ -57,7 +57,7 @@ const useImageUpload = (quill, uploadPreset, uploadUrl) => {
   };
 };
 
-const Editor = ({ value, setValue }) => {
+const Editor = ({ value, setValue, onBlur }) => {
   const quillRef = useRef(null);
 
   useImageUpload(
@@ -129,6 +129,7 @@ const Editor = ({ value, setValue }) => {
         onChange={handleChange}
         modules={modules}
         formats={formats}
+        onBlur={onBlur}
       />
       {/* <button onClick={getEditorContents}>Get Content</button> */}
     </div>

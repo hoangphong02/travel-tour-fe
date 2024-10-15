@@ -21,9 +21,22 @@ import { createBlogsRequest, updateBlogsRequest } from "~/redux/blog/actions";
 export const PHONE_REGEX = /((0)+([1-9]{1})+([0-9]{8})\b)/g;
 
 const SignupSchema = Yup.object().shape({
-  // name: Yup.string()
-  //   .required("Tên không được để trống")
-  //   .max(200, "Tên không quá 200 ký tự".replace("$x", 200)),
+  title: Yup.string().required("Tên không được để trống"),
+  name: Yup.string().required("Tên không được để trống"),
+  category: Yup.object()
+    .test(
+      "is-not-empty",
+      "Danh mục blog không được để trống",
+      (value) => value && Object.keys(value).length > 0
+    )
+    .required("Danh mục blog không được để trống"),
+  typeBlog: Yup.object()
+    .test(
+      "is-not-empty",
+      "Loại bài blog không được để trống",
+      (value) => value && Object.keys(value).length > 0
+    )
+    .required("Loại bài blog không được để trống"),
 });
 
 export const ModalActions = ({
@@ -180,7 +193,7 @@ export const ModalActions = ({
                   ) || {},
             addressString: type === "add" ? "" : data?.addressString || "",
           }}
-          // validationSchema={SignupSchema}
+          validationSchema={SignupSchema}
           onSubmit={onSubmit}
         >
           {({ setFieldValue, setFieldTouched, values, errors, touched }) => {
@@ -207,11 +220,11 @@ export const ModalActions = ({
                         name="title"
                         placeholder="Nhập tiêu đề"
                       />
-                      {/* {errors.title && touched.title ? (
+                      {errors.title && touched.title ? (
                         <div className="invalid-feedback d-block">
                           {errors.title}
                         </div>
-                      ) : null} */}
+                      ) : null}
                     </FormGroup>
                   </div>
                   <div className="d-flex" style={{ gap: "12px" }}>
@@ -227,11 +240,11 @@ export const ModalActions = ({
                         name="name"
                         placeholder="Nhập tên"
                       />
-                      {/* {errors.name && touched.name ? (
+                      {errors.name && touched.name ? (
                         <div className="invalid-feedback d-block">
                           {errors.name}
                         </div>
-                      ) : null} */}
+                      ) : null}
                     </FormGroup>
                   </div>
 
@@ -247,12 +260,14 @@ export const ModalActions = ({
                         options={ListTypeBlog}
                         onChange={(e) => setFieldValue("typeBlog", e)}
                         value={values.typeBlog}
+                        name="typeBlog"
+                        onBlur={() => setFieldTouched("typeBlog", true)}
                       ></Select>
-                      {/* {errors.typeBlog && touched.typeBlog ? (
+                      {errors.typeBlog && touched.typeBlog ? (
                         <div className="invalid-feedback d-block">
                           {errors.typeBlog}
                         </div>
-                      ) : null} */}
+                      ) : null}
                     </FormGroup>
                     <FormGroup className="w-100 error-l-100">
                       <Label>
@@ -265,12 +280,13 @@ export const ModalActions = ({
                         options={options}
                         value={values.category}
                         onChange={(e) => setFieldValue("category", e)}
+                        onBlur={() => setFieldTouched("category", true)}
                       ></Select>
-                      {/* {errors.title && touched.title ? (
+                      {errors.category && touched.category ? (
                         <div className="invalid-feedback d-block">
-                          {errors.title}
+                          {errors.category}
                         </div>
-                      ) : null} */}
+                      ) : null}
                     </FormGroup>
                   </div>
                   {values.typeBlog.value === "Place" ? (
@@ -307,7 +323,7 @@ export const ModalActions = ({
                   </FormGroup>
 
                   <FormGroup className="error-l-100">
-                    <Label>Ảnh minh họa:</Label>
+                    <Label>Ảnh minh họa: </Label>
                     <Input
                       type="file"
                       id="exampleCustomFileBrowser1"

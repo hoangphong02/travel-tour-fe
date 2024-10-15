@@ -23,9 +23,17 @@ import {
 export const PHONE_REGEX = /((0)+([1-9]{1})+([0-9]{8})\b)/g;
 
 const SignupSchema = Yup.object().shape({
-  // name: Yup.string()
-  //   .required("Tên không được để trống")
-  //   .max(200, "Tên không quá 200 ký tự".replace("$x", 200)),
+  tour_guide: Yup.mixed()
+    .test("is-not-empty", "Hướng dẫn viên không được để trống", (value) => {
+      if (typeof value === "object" && value !== null) {
+        return Object.keys(value).length > 0;
+      }
+      if (typeof value === "array") {
+        return Object.keys(value).length > 0;
+      }
+      return false;
+    })
+    .required("Hướng dẫn viên không được để trống"),
 });
 
 export const ModalActions = ({
@@ -115,7 +123,7 @@ export const ModalActions = ({
                     }) || {},
             user: data?.bookings[0]?.tour_guide?.name || "",
           }}
-          // validationSchema={SignupSchema}
+          validationSchema={SignupSchema}
           onSubmit={onSubmit}
         >
           {({ setFieldValue, setFieldTouched, values, errors, touched }) => {
@@ -170,25 +178,28 @@ export const ModalActions = ({
                           name="user"
                         />
                       ) : (
-                        <Select
-                          options={getUserGuideBookingState?.data?.availableEmployees?.map(
-                            (item) => {
-                              return {
-                                value: item?._id,
-                                label: item?.name,
-                              };
-                            }
-                          )}
-                          onChange={(e) => setFieldValue("tour_guide", e)}
-                          value={values.tour_guide}
-                          placeholder="Chọn hướng dẫn viên"
-                        ></Select>
+                        <>
+                          <Select
+                            options={getUserGuideBookingState?.data?.availableEmployees?.map(
+                              (item) => {
+                                return {
+                                  value: item?._id,
+                                  label: item?.name,
+                                };
+                              }
+                            )}
+                            onChange={(e) => setFieldValue("tour_guide", e)}
+                            value={values.tour_guide}
+                            placeholder="Chọn hướng dẫn viên"
+                            onBlur={() => setFieldTouched("tour_guide", true)}
+                          ></Select>
+                          {errors.tour_guide && touched.tour_guide ? (
+                            <div className="invalid-feedback d-block">
+                              {errors.tour_guide}
+                            </div>
+                          ) : null}
+                        </>
                       )}
-                      {/* {errors.title && touched.title ? (
-                        <div className="invalid-feedback d-block">
-                          {errors.title}
-                        </div>
-                      ) : null} */}
                     </FormGroup>
                   </div>
 

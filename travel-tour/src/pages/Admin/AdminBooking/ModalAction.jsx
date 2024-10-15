@@ -28,9 +28,43 @@ import {
 export const PHONE_REGEX = /((0)+([1-9]{1})+([0-9]{8})\b)/g;
 
 const SignupSchema = Yup.object().shape({
-  // name: Yup.string()
-  //   .required("Tên không được để trống")
-  //   .max(200, "Tên không quá 200 ký tự".replace("$x", 200)),
+  tour_id: Yup.object()
+    .test(
+      "is-not-empty",
+      "Tour không được để trống",
+      (value) => value && Object.keys(value).length > 0
+    )
+    .required("Tour không được để trống"),
+  fullname: Yup.string().required("Tên người đặt không được để trống"),
+  address: Yup.string().required("Địa chỉ người đặt không được để trống"),
+  email: Yup.string().required("Email người đặt không được để trống"),
+  phone: Yup.string().required("Số điện thoại người đặt không được để trống"),
+  adult_ticket: Yup.number().min(1, "Số vé người lớn phải lớn hơn 0"),
+  start_date: Yup.string().required("Ngày bắt đầu không được để trống"),
+  end_date: Yup.string().required("Ngày kết thúc không được để trống"),
+  hotel_level: Yup.object()
+    .test(
+      "is-not-empty",
+      "Loại khách sạn không được để trống",
+      (value) => value && Object.keys(value).length > 0
+    )
+    .required("Loại khách sạn không được để trống"),
+  total_price: Yup.number().min(1, "Giá tour phải lớn hơn 0"),
+  payment_status: Yup.object()
+    .test(
+      "is-not-empty",
+      "Trạng thái thanh toán không được trống",
+      (value) => value && Object.keys(value).length > 0
+    )
+    .required("Trạng thái thanh toán không được trống"),
+  payment_method_name: Yup.object()
+    .test(
+      "is-not-empty",
+      "Tên phương thức thanh toán không được trống",
+      (value) => value && Object.keys(value).length > 0
+    )
+    .required("Tên phương thức thanh toán không được trống"),
+  note: Yup.string().required("Mô tả không được để trống"),
 });
 
 export const ModalActions = ({
@@ -188,7 +222,7 @@ export const ModalActions = ({
                     }) || {},
             note: type === "add" ? "" : data?.note || "",
           }}
-          // validationSchema={SignupSchema}
+          validationSchema={SignupSchema}
           onSubmit={onSubmit}
         >
           {({ setFieldValue, setFieldTouched, values, errors, touched }) => {
@@ -221,12 +255,13 @@ export const ModalActions = ({
                         onChange={(e) => setFieldValue("tour_id", e)}
                         value={values.tour_id}
                         placeholder="Chọn tour du lịch"
+                        onBlur={() => setFieldTouched("tour_id", true)}
                       ></Select>
-                      {/* {errors.title && touched.title ? (
+                      {errors.tour_id && touched.tour_id ? (
                         <div className="invalid-feedback d-block">
-                          {errors.title}
+                          {errors.tour_id}
                         </div>
-                      ) : null} */}
+                      ) : null}
                     </FormGroup>
                     {type !== "add" ? (
                       <FormGroup className="w-100 error-l-100">
@@ -270,11 +305,11 @@ export const ModalActions = ({
                         name="fullname"
                         placeholder="Nhập tên người đặt"
                       />
-                      {/* {errors.name && touched.name ? (
+                      {errors.fullname && touched.fullname ? (
                         <div className="invalid-feedback d-block">
-                          {errors.name}
+                          {errors.fullname}
                         </div>
-                      ) : null} */}
+                      ) : null}
                     </FormGroup>
                     <FormGroup className="w-100 error-l-100">
                       <Label>
@@ -288,11 +323,11 @@ export const ModalActions = ({
                         name="address"
                         placeholder="Nhập địa chỉ người đặt"
                       />
-                      {/* {errors.name && touched.name ? (
+                      {errors.address && touched.address ? (
                         <div className="invalid-feedback d-block">
-                          {errors.name}
+                          {errors.address}
                         </div>
-                      ) : null} */}
+                      ) : null}
                     </FormGroup>
                   </div>
 
@@ -310,11 +345,11 @@ export const ModalActions = ({
                         name="email"
                         placeholder="Nhập email người đặt"
                       />
-                      {/* {errors.typeBlog && touched.typeBlog ? (
+                      {errors.email && touched.email ? (
                         <div className="invalid-feedback d-block">
-                          {errors.typeBlog}
+                          {errors.email}
                         </div>
-                      ) : null} */}
+                      ) : null}
                     </FormGroup>
                     <FormGroup className="w-100 error-l-100">
                       <Label>
@@ -329,11 +364,11 @@ export const ModalActions = ({
                         name="phone"
                         placeholder="Nhập số điện thoại người đặt"
                       />
-                      {/* {errors.name && touched.name ? (
+                      {errors.phone && touched.phone ? (
                         <div className="invalid-feedback d-block">
-                          {errors.name}
+                          {errors.phone}
                         </div>
-                      ) : null} */}
+                      ) : null}
                     </FormGroup>
                   </div>
                   <div className="d-flex" style={{ gap: "12px" }}>
@@ -350,19 +385,14 @@ export const ModalActions = ({
                         name="adult_ticket"
                         placeholder="Nhập số lượng vé người lớn"
                       />
-                      {/* {errors.typeBlog && touched.typeBlog ? (
+                      {errors.adult_ticket && touched.adult_ticket ? (
                         <div className="invalid-feedback d-block">
-                          {errors.typeBlog}
+                          {errors.adult_ticket}
                         </div>
-                      ) : null} */}
+                      ) : null}
                     </FormGroup>
                     <FormGroup className="w-100 error-l-100">
-                      <Label>
-                        Vé trẻ em:{" "}
-                        <span style={{ color: "red", fontWeight: "600" }}>
-                          *
-                        </span>
-                      </Label>
+                      <Label>Vé trẻ em: </Label>
                       <Field
                         disabled={type !== "add"}
                         className="form-control"
@@ -391,11 +421,11 @@ export const ModalActions = ({
                         name="start_date"
                         placeholder="Nhập ngày bắt đầu"
                       />
-                      {/* {errors.name && touched.name ? (
+                      {errors.start_date && touched.start_date ? (
                         <div className="invalid-feedback d-block">
-                          {errors.name}
+                          {errors.start_date}
                         </div>
-                      ) : null} */}
+                      ) : null}
                     </FormGroup>
                     <FormGroup className="w-100 error-l-100">
                       <Label>
@@ -410,11 +440,11 @@ export const ModalActions = ({
                         name="end_date"
                         placeholder="Nhập ngày kết thúc"
                       />
-                      {/* {errors.name && touched.name ? (
+                      {errors.end_date && touched.end_date ? (
                         <div className="invalid-feedback d-block">
-                          {errors.name}
+                          {errors.end_date}
                         </div>
-                      ) : null} */}
+                      ) : null}
                     </FormGroup>
                   </div>
 
@@ -431,12 +461,13 @@ export const ModalActions = ({
                         options={LIST_OPTION_RANK_HOTEL}
                         onChange={(e) => setFieldValue("hotel_level", e)}
                         value={values.hotel_level}
+                        onBlur={() => setFieldTouched("hotel_level", true)}
                       ></Select>
-                      {/* {errors.typeBlog && touched.typeBlog ? (
+                      {errors.hotel_level && touched.hotel_level ? (
                         <div className="invalid-feedback d-block">
-                          {errors.typeBlog}
+                          {errors.hotel_level}
                         </div>
-                      ) : null} */}
+                      ) : null}
                     </FormGroup>
                     {type !== "add" ? (
                       <FormGroup className="w-100 error-l-100">
@@ -475,11 +506,11 @@ export const ModalActions = ({
                         name="total_price"
                         placeholder="Nhập tổng giá tour"
                       />
-                      {/* {errors.typeBlog && touched.typeBlog ? (
+                      {errors.total_price && touched.total_price ? (
                         <div className="invalid-feedback d-block">
-                          {errors.typeBlog}
+                          {errors.total_price}
                         </div>
-                      ) : null} */}
+                      ) : null}
                     </FormGroup>
                     {type !== "add" ? (
                       <FormGroup className="w-100 error-l-100">
@@ -515,12 +546,13 @@ export const ModalActions = ({
                         options={ListStatusBooking}
                         onChange={(e) => setFieldValue("payment_status", e)}
                         value={values.payment_status}
+                        onBlur={() => setFieldTouched("payment_status", true)}
                       ></Select>
-                      {/* {errors.typeBlog && touched.typeBlog ? (
+                      {errors.payment_status && touched.payment_status ? (
                         <div className="invalid-feedback d-block">
-                          {errors.typeBlog}
+                          {errors.payment_status}
                         </div>
-                      ) : null} */}
+                      ) : null}
                     </FormGroup>
                     <FormGroup className="w-100 error-l-100">
                       <Label>
@@ -536,12 +568,16 @@ export const ModalActions = ({
                           setFieldValue("payment_method_name", e)
                         }
                         value={values.payment_method_name}
+                        onBlur={() =>
+                          setFieldTouched("payment_method_name", true)
+                        }
                       ></Select>
-                      {/* {errors.typeBlog && touched.typeBlog ? (
+                      {errors.payment_method_name &&
+                      touched.payment_method_name ? (
                         <div className="invalid-feedback d-block">
-                          {errors.typeBlog}
+                          {errors.payment_method_name}
                         </div>
-                      ) : null} */}
+                      ) : null}
                     </FormGroup>
                   </div>
 
@@ -560,12 +596,13 @@ export const ModalActions = ({
                         value={values.note}
                         onChange={(e) => setFieldValue("note", e.target.value)}
                         placeholder="Nhập mô tả"
+                        onBlur={() => setFieldTouched("note", true)}
                       />
-                      {/* {errors.title && touched.title ? (
+                      {errors.note && touched.note ? (
                         <div className="invalid-feedback d-block">
-                          {errors.title}
+                          {errors.note}
                         </div>
-                      ) : null} */}
+                      ) : null}
                     </FormGroup>
                   </div>
                 </ModalBody>

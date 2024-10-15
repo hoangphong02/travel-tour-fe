@@ -336,7 +336,7 @@ const AdminBooking = () => {
           ></Select>
         </div>
         <FormGroup className="d-flex gap-2 align-items-center">
-          <label htmlFor="">Ngày bắt đầu: </label>
+          <label htmlFor="">Ngày đặt tour từ: </label>
           <input
             type="date"
             value={start}
@@ -344,7 +344,7 @@ const AdminBooking = () => {
           />
         </FormGroup>
         <FormGroup className="d-flex gap-2 align-items-center">
-          <label htmlFor="">Ngày kết thúc: </label>
+          <label htmlFor="">Đến: </label>
           <input
             type="date"
             value={end}

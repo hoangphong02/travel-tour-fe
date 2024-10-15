@@ -26,9 +26,66 @@ import { createTourRequest, updateTourRequest } from "~/redux/tour/actions";
 export const PHONE_REGEX = /((0)+([1-9]{1})+([0-9]{8})\b)/g;
 
 const SignupSchema = Yup.object().shape({
-  // name: Yup.string()
-  //   .required("Tên không được để trống")
-  //   .max(200, "Tên không quá 200 ký tự".replace("$x", 200)),
+  name: Yup.string()
+    .required("Tên không được để trống")
+    .max(200, "Tên không quá 200 ký tự".replace("$x", 200)),
+  tour_code: Yup.string()
+    .required("Mã tour không được để trống")
+    .max(20, "Tên không quá 20 ký tự".replace("$x", 20)),
+  shedule_on_week: Yup.string().required(
+    "Thời gian trong tuần không được để trống"
+  ),
+  day: Yup.mixed()
+    .test("is-valid-day", "Số ngày không được để trống", (value) => {
+      if (typeof value === "object" && value !== null) {
+        return Object.keys(value).length > 0;
+      }
+      if (typeof value === "number") {
+        return value > 0;
+      }
+      return false;
+    })
+    .required("Số ngày không được để trống"),
+  category: Yup.object()
+    .test(
+      "is-not-empty",
+      "Danh mục tour không được để trống",
+      (value) => value && Object.keys(value).length > 0
+    )
+    .required("Danh mục tour không được để trống"),
+
+  transportation: Yup.object()
+    .test(
+      "is-not-empty",
+      "Phương tiện không được để trống",
+      (value) => value && Object.keys(value).length > 0
+    )
+    .required("Phương tiện không được để trống"),
+  start_location: Yup.string().required("Vị trí bắt đầu không được để trống"),
+  end_location: Yup.string().required("Vị trí kết thúc không được để trống"),
+  base_price_adult: Yup.string().required(
+    "Giá vé người lớn không được để trống"
+  ),
+  base_price_child: Yup.string().required("Giá vé trẻ em không được để trống"),
+  start_date: Yup.string().required("Ngày bắt đầu không được để trống"),
+  end_date: Yup.string().required("Ngày kết thúc không được để trống"),
+  star: Yup.object()
+    .test(
+      "is-not-empty",
+      "Loại khách sạn không được để trống",
+      (value) => value && Object.keys(value).length > 0
+    )
+    .required("Loại khách sạn không được để trống"),
+  price_adult: Yup.string().required("Giá người lớn không được để trống"),
+  price_child: Yup.string().required("Giá trẻ em không được để trống"),
+  provinceId: Yup.array()
+    .test(
+      "is-not-empty",
+      "Tỉnh thành không được để trống",
+      (value) => value && Object.keys(value).length > 0
+    )
+    .required("Tỉnh thành không được để trống"),
+  // editor: Yup.string().required("Mô tả không được để trống"),
 });
 
 export const ModalActions = ({
@@ -326,7 +383,7 @@ export const ModalActions = ({
                     (item) => item.value === data?.transportation
                   ) || 0,
           }}
-          // validationSchema={SignupSchema}
+          validationSchema={SignupSchema}
           onSubmit={onSubmit}
         >
           {({ setFieldValue, setFieldTouched, values, errors, touched }) => {
@@ -353,11 +410,11 @@ export const ModalActions = ({
                         name="tour_code"
                         placeholder="Nhập mã tour"
                       />
-                      {/* {errors.title && touched.title ? (
+                      {errors.tour_code && touched.tour_code ? (
                         <div className="invalid-feedback d-block">
-                          {errors.title}
+                          {errors.tour_code}
                         </div>
-                      ) : null} */}
+                      ) : null}
                     </FormGroup>
                   </div>
                   <div className="d-flex" style={{ gap: "12px" }}>
@@ -373,11 +430,11 @@ export const ModalActions = ({
                         name="name"
                         placeholder="Nhập tên tour"
                       />
-                      {/* {errors.name && touched.name ? (
+                      {errors.name && touched.name ? (
                         <div className="invalid-feedback d-block">
                           {errors.name}
                         </div>
-                      ) : null} */}
+                      ) : null}
                     </FormGroup>
                   </div>
 
@@ -394,12 +451,13 @@ export const ModalActions = ({
                         onChange={(e) => setFieldValue("category", e)}
                         value={values.category}
                         placeholder="Chọn danh mục tour"
+                        onBlur={() => setFieldTouched("category", true)}
                       ></Select>
-                      {/* {errors.typeBlog && touched.typeBlog ? (
+                      {errors.category && touched.category ? (
                         <div className="invalid-feedback d-block">
-                          {errors.typeBlog}
+                          {errors.category}
                         </div>
-                      ) : null} */}
+                      ) : null}
                     </FormGroup>
                     <FormGroup className="w-100 error-l-100">
                       <Label>
@@ -413,11 +471,11 @@ export const ModalActions = ({
                         name="shedule_on_week"
                         placeholder="Nhập thời gian trong tuần"
                       />
-                      {/* {errors.name && touched.name ? (
+                      {errors.shedule_on_week && touched.shedule_on_week ? (
                         <div className="invalid-feedback d-block">
-                          {errors.name}
+                          {errors.shedule_on_week}
                         </div>
-                      ) : null} */}
+                      ) : null}
                     </FormGroup>
                   </div>
 
@@ -434,11 +492,11 @@ export const ModalActions = ({
                         name="start_location"
                         placeholder="Nhập vị trí xuất phát"
                       />
-                      {/* {errors.name && touched.name ? (
+                      {errors.start_location && touched.start_location ? (
                         <div className="invalid-feedback d-block">
-                          {errors.name}
+                          {errors.start_location}
                         </div>
-                      ) : null} */}
+                      ) : null}
                     </FormGroup>
                     <FormGroup className="w-100 error-l-100">
                       <Label>
@@ -452,11 +510,11 @@ export const ModalActions = ({
                         name="end_location"
                         placeholder="Nhập vị trí kết thúc"
                       />
-                      {/* {errors.name && touched.name ? (
+                      {errors.end_location && touched.end_location ? (
                         <div className="invalid-feedback d-block">
-                          {errors.name}
+                          {errors.end_location}
                         </div>
-                      ) : null} */}
+                      ) : null}
                     </FormGroup>
                   </div>
 
@@ -472,12 +530,13 @@ export const ModalActions = ({
                         options={ListTransport}
                         onChange={(e) => setFieldValue("transportation", e)}
                         value={values.transportation}
+                        onBlur={() => setFieldTouched("transportation", true)}
                       ></Select>
-                      {/* {errors.typeBlog && touched.typeBlog ? (
+                      {errors.transportation && touched.transportation ? (
                         <div className="invalid-feedback d-block">
-                          {errors.typeBlog}
+                          {errors.transportation}
                         </div>
-                      ) : null} */}
+                      ) : null}
                     </FormGroup>
                     <FormGroup className="w-100 error-l-100">
                       <Label>
@@ -490,12 +549,13 @@ export const ModalActions = ({
                         options={ListDayTour}
                         onChange={(e) => setFieldValue("day", e)}
                         value={values.day}
+                        onBlur={() => setFieldTouched("day", true)}
                       ></Select>
-                      {/* {errors.typeBlog && touched.typeBlog ? (
+                      {errors.day && touched.day ? (
                         <div className="invalid-feedback d-block">
-                          {errors.typeBlog}
+                          {errors.day}
                         </div>
-                      ) : null} */}
+                      ) : null}
                     </FormGroup>
                   </div>
 
@@ -512,11 +572,11 @@ export const ModalActions = ({
                         name="base_price_adult"
                         placeholder="Nhập giá vé người lớn"
                       />
-                      {/* {errors.typeBlog && touched.typeBlog ? (
+                      {errors.base_price_adult && touched.base_price_adult ? (
                         <div className="invalid-feedback d-block">
-                          {errors.typeBlog}
+                          {errors.base_price_adult}
                         </div>
-                      ) : null} */}
+                      ) : null}
                     </FormGroup>
                     <FormGroup className="w-100 error-l-100">
                       <Label>
@@ -530,11 +590,11 @@ export const ModalActions = ({
                         name="base_price_child"
                         placeholder="Nhập giá vé trẻ em"
                       />
-                      {/* {errors.typeBlog && touched.typeBlog ? (
+                      {errors.base_price_child && touched.base_price_child ? (
                         <div className="invalid-feedback d-block">
-                          {errors.typeBlog}
+                          {errors.base_price_child}
                         </div>
-                      ) : null} */}
+                      ) : null}
                     </FormGroup>
                   </div>
 
@@ -552,11 +612,11 @@ export const ModalActions = ({
                         placeholder="Chọn ngày bắt đầu  "
                         type="date"
                       />
-                      {/* {errors.typeBlog && touched.typeBlog ? (
+                      {errors.start_date && touched.start_date ? (
                         <div className="invalid-feedback d-block">
-                          {errors.typeBlog}
+                          {errors.start_date}
                         </div>
-                      ) : null} */}
+                      ) : null}
                     </FormGroup>
                     <FormGroup className="w-100 error-l-100">
                       <Label>
@@ -571,11 +631,11 @@ export const ModalActions = ({
                         placeholder="Chọn ngày kết thúc"
                         type="date"
                       />
-                      {/* {errors.typeBlog && touched.typeBlog ? (
+                      {errors.end_date && touched.end_date ? (
                         <div className="invalid-feedback d-block">
-                          {errors.typeBlog}
+                          {errors.end_date}
                         </div>
-                      ) : null} */}
+                      ) : null}
                     </FormGroup>
                   </div>
 
@@ -591,12 +651,13 @@ export const ModalActions = ({
                         options={LIST_OPTION_RANK_HOTEL}
                         onChange={(e) => setFieldValue("star", e)}
                         value={values.star}
+                        onBlur={() => setFieldTouched("star", true)}
                       ></Select>
-                      {/* {errors.typeBlog && touched.typeBlog ? (
+                      {errors.star && touched.star ? (
                         <div className="invalid-feedback d-block">
-                          {errors.typeBlog}
+                          {errors.star}
                         </div>
-                      ) : null} */}
+                      ) : null}
                     </FormGroup>
 
                     <FormGroup className="w-100 error-l-100">
@@ -613,12 +674,13 @@ export const ModalActions = ({
                           setFieldValue("provinceId", e);
                         }}
                         isMulti
+                        onBlur={() => setFieldTouched("provinceId", true)}
                       ></Select>
-                      {/* {errors.email && touched.email ? (
+                      {errors.provinceId && touched.provinceId ? (
                         <div className="invalid-feedback d-block">
-                          {errors.email}
+                          {errors.provinceId}
                         </div>
-                      ) : null} */}
+                      ) : null}
                     </FormGroup>
                   </div>
                   <div className="d-flex" style={{ gap: "12px" }}>
@@ -634,11 +696,11 @@ export const ModalActions = ({
                         name="price_adult"
                         placeholder="Nhập giá khách sạn người lớn"
                       />
-                      {/* {errors.typeBlog && touched.typeBlog ? (
+                      {errors.price_adult && touched.price_adult ? (
                         <div className="invalid-feedback d-block">
-                          {errors.typeBlog}
+                          {errors.price_adult}
                         </div>
-                      ) : null} */}
+                      ) : null}
                     </FormGroup>
                     <FormGroup className="w-100 error-l-100">
                       <Label>
@@ -652,11 +714,11 @@ export const ModalActions = ({
                         name="price_child"
                         placeholder="Nhập giá khách sạn trẻ em"
                       />
-                      {/* {errors.typeBlog && touched.typeBlog ? (
+                      {errors.price_child && touched.price_child ? (
                         <div className="invalid-feedback d-block">
-                          {errors.typeBlog}
+                          {errors.price_child}
                         </div>
-                      ) : null} */}
+                      ) : null}
                     </FormGroup>
                   </div>
 
@@ -682,12 +744,12 @@ export const ModalActions = ({
                       <Editor
                         value={arrSchedules[i]?.detail || ""}
                         setValue={(e) => {
-                          const updatedSchedules = [...arrSchedules]; // Copy the array
+                          const updatedSchedules = [...arrSchedules];
                           updatedSchedules[i] = {
                             day: i,
                             detail: e,
-                          }; // Update the correct index
-                          setArrSchedules(updatedSchedules); // Set the new array to state
+                          };
+                          setArrSchedules(updatedSchedules);
                         }}
                       />
                     </FormGroup>
