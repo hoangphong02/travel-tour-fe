@@ -100,7 +100,7 @@ const AdminAddGuide = () => {
   }, [callApi, indexPage]);
 
   useEffect(() => {
-    if (isShowModalAction) {
+    if (indexPage) {
       const params = {
         limit: 0,
       };
@@ -108,7 +108,7 @@ const AdminAddGuide = () => {
     } else {
       setDataActive();
     }
-  }, [isShowModalAction]);
+  }, [indexPage]);
 
   const columns = useMemo(() => [
     {

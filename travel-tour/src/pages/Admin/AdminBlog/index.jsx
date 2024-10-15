@@ -103,10 +103,10 @@ const AdminBlog = () => {
   }, [callApi, indexPage]);
 
   useEffect(() => {
-    if (isShowModalAction) {
+    if (indexPage) {
       dispatch(getAllCategoryRequest());
     }
-  }, [isShowModalAction]);
+  }, [indexPage]);
 
   const columns = useMemo(() => [
     {

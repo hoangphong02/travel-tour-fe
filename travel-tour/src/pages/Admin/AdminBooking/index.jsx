@@ -123,7 +123,7 @@ const AdminBooking = () => {
   }, [callApi, indexPage]);
 
   useEffect(() => {
-    if (isShowModalAction) {
+    if (isShowModalAction || indexPage) {
       const params = {
         limit: 0,
       };
@@ -133,7 +133,7 @@ const AdminBooking = () => {
     } else {
       setDataActive();
     }
-  }, [isShowModalAction]);
+  }, [isShowModalAction, indexPage]);
 
   const columns = useMemo(() => [
     {

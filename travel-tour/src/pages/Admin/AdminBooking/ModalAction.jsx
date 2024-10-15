@@ -28,12 +28,21 @@ import {
 export const PHONE_REGEX = /((0)+([1-9]{1})+([0-9]{8})\b)/g;
 
 const SignupSchema = Yup.object().shape({
-  tour_id: Yup.object()
-    .test(
-      "is-not-empty",
-      "Tour không được để trống",
-      (value) => value && Object.keys(value).length > 0
-    )
+  tour_id: Yup.mixed()
+    .test("is-object-or-array", "Tour không được để trống", (value) => {
+      if (Array.isArray(value)) {
+        return (
+          value.length > 0 &&
+          typeof value[0] === "object" &&
+          Object.keys(value[0]).length > 0
+        );
+      }
+      return (
+        typeof value === "object" &&
+        value !== null &&
+        Object.keys(value).length > 0
+      );
+    })
     .required("Tour không được để trống"),
   fullname: Yup.string().required("Tên người đặt không được để trống"),
   address: Yup.string().required("Địa chỉ người đặt không được để trống"),
@@ -140,8 +149,8 @@ export const ModalActions = ({
       start_date: moment(start_date).format("MM/DD/YYYY"),
       end_date: moment(end_date).format("MM/DD/YYYY"),
       address,
-      payment_status,
-      payment_method_name,
+      payment_status: payment_status?.value,
+      payment_method_name: payment_method_name?.value,
     };
 
     if (type === "add") {

@@ -97,12 +97,12 @@ const AdminTour = () => {
   }, [callApi, indexPage]);
 
   useEffect(() => {
-    if (isShowModalAction) {
+    if (indexPage) {
       dispatch(getAllCategoryTourRequest());
     } else {
       setDataActive();
     }
-  }, [isShowModalAction]);
+  }, [indexPage]);
 
   const columns = useMemo(() => [
     {
