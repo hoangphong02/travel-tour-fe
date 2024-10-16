@@ -31,6 +31,7 @@ const BookingPage = () => {
   const {
     isCreateBookingRequest,
     isCreateBookingSuccess,
+    isCreateBookingFailure,
     createBookingState,
     isUpdatePaymentBookingRequest,
     isUpdatePaymentBookingSuccess,
@@ -72,12 +73,25 @@ const BookingPage = () => {
     }
   }, [isCreateBookingSuccess]);
   useEffect(() => {
+    if (isCreateBookingFailure) {
+      toast.error("Đặt tour thất bại vui lòng kiểm tra đầy đủ thông tin");
+      dispatch(resetCreateBooking());
+    }
+  }, [isCreateBookingFailure]);
+  useEffect(() => {
     if (isUpdatePaymentBookingSuccess) {
       toast.success("Thanh toán thành công");
       dispatch(resetUpdatePaymentBooking());
       dispatch(resetStateCreateBooking());
     }
   }, [isUpdatePaymentBookingSuccess]);
+
+  useEffect(() => {
+    if (isUpdatePaymentBookingFailure) {
+      toast.error("Thanh toán thất bại");
+      dispatch(resetUpdatePaymentBooking());
+    }
+  }, [isUpdatePaymentBookingFailure]);
 
   useEffect(() => {
     if (isUpdateBookingSuccess) {
@@ -90,7 +104,7 @@ const BookingPage = () => {
 
   useEffect(() => {
     if (isUpdateBookingFailure) {
-      toast.success("Cập nhật phương thức thanh toán thất bại");
+      toast.error("Cập nhật phương thức thanh toán thất bại");
     }
   }, [isUpdateBookingFailure]);
 
