@@ -487,7 +487,7 @@ const BookingPage = () => {
         {createBookingState?.data && sdkReady ? (
           <div style={{ padding: "16px" }}>
             <PayPalButton
-              amount={Math.round(createBookingState?.data?.total_price / 30000)}
+              amount={Math.round(createBookingState?.data?.total_price / 25000)}
               onSuccess={(details, data) => {
                 onPaymentPaypalSuccess(data?.paymentID);
                 return fetch("/paypal-transaction-complete", {

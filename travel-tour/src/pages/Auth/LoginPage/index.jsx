@@ -1,12 +1,16 @@
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Alert, Button, Form } from "react-bootstrap";
 import { loginRequest, resetAuthState } from "~/redux/auth/actions";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 import { routesUser } from "~/configs";
 import { toast } from "react-toastify";
+import {
+  CSEyeOffOutline,
+  CSEyeOutline,
+} from "~/components/iconography/Outline";
 
 const LoginPage = () => {
   const { isGetProfileSuccess, profileResponse, isGetProfileFailure } =
@@ -14,6 +18,7 @@ const LoginPage = () => {
   const { isLoginRequest, isLoginFailure, isLoginSuccess } = useSelector(
     (store) => store.auth
   );
+  const [showPassword, setShowPassword] = useState(false);
   const dispatch = useDispatch();
   const history = useHistory();
   const formik = useFormik({
@@ -72,16 +77,27 @@ const LoginPage = () => {
               formik.setFieldValue("email", e.target.value.toString())
             }
           />
-          <input
-            className="input"
-            type="password"
-            name="password"
-            id="password"
-            placeholder="Password"
-            onChange={(e) =>
-              formik.setFieldValue("password", e.target.value.toString())
-            }
-          />
+          <div className="password">
+            <input
+              className="input"
+              type={showPassword ? "text" : "password"}
+              name="password"
+              id="password"
+              placeholder="Password"
+              onChange={(e) =>
+                formik.setFieldValue("password", e.target.value.toString())
+              }
+            />
+            {showPassword ? (
+              <span onClick={() => setShowPassword(false)}>
+                <CSEyeOutline />
+              </span>
+            ) : (
+              <span onClick={() => setShowPassword(true)}>
+                <CSEyeOffOutline />
+              </span>
+            )}
+          </div>
           <Button type="submit">Đăng nhập</Button>
         </Form>
       </div>

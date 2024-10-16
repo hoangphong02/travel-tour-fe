@@ -1,12 +1,16 @@
 import moment from "moment";
 import React, { useEffect, useMemo, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 import { ReactTableWithPaginationCard } from "~/components/common";
+import { routesUser } from "~/configs";
 import { getAllTourRequest } from "~/redux/tour/actions";
 import { getWorkSchedulesRequest } from "~/redux/user/actions";
 
 const WorkSchedulePage = () => {
-  const { getWorkSchedulesState } = useSelector((store) => store.user);
+  const { getWorkSchedulesState, profileResponse } = useSelector(
+    (store) => store.user
+  );
   const { getAllTourState } = useSelector((store) => store.tour);
   const [callApi, setCallApi] = useState(false);
   const [startDate, setStartDate] = useState(new Date());
@@ -14,13 +18,18 @@ const WorkSchedulePage = () => {
   const [indexPage, setIndexPage] = useState(1);
   const [dataTable, setDataTable] = useState([]);
   const dispatch = useDispatch();
+  const history = useHistory();
   useEffect(() => {
     if (startDate || endDate) {
       setCallApi(true);
     }
   }, [startDate, endDate]);
+  useEffect(() => {
+    if (!profileResponse?.data) {
+      history.push(routesUser.home);
+    }
+  }, [profileResponse]);
 
-  console.log("getWorkSchedulesState", getWorkSchedulesState, getAllTourState);
   useEffect(() => {
     const params = {
       limit: 0,
@@ -148,6 +157,7 @@ const WorkSchedulePage = () => {
       },
     },
   ]);
+
   return (
     <div className="work-schedule-page">
       <div className="filter">

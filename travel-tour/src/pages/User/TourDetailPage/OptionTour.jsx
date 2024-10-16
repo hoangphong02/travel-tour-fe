@@ -21,7 +21,7 @@ const OptionTour = ({ option, setOption }) => {
           <RequireTour />
         ): null
       } */}
-      {option === "picture" ? <PictureTour /> : null}
+      {/* {option === "picture" ? <PictureTour /> : null} */}
       {/* <Editor value={value} setValue={setValue}/> */}
     </div>
   );

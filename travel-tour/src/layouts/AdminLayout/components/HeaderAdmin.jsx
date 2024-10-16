@@ -62,7 +62,9 @@ export const HeaderAdmin = memo(() => {
   const handleClose = () => {
     setIsShowModalLogout(false);
   };
-
+  const handleWorkSchedule = () => {
+    history.push(routesUser.WorkSchedule);
+  };
   return (
     <section id="header-admin">
       <div className="header-admin--inner">
@@ -87,7 +89,9 @@ export const HeaderAdmin = memo(() => {
             {profileResponse?.data?.role === "admin" && (
               <Dropdown.Item href="/admin">Quản lý hệ thống</Dropdown.Item>
             )}
-            <Dropdown.Item href="#/action-2">Lịch công tác</Dropdown.Item>
+            <Dropdown.Item onClick={handleWorkSchedule}>
+              Lịch công tác
+            </Dropdown.Item>
             <Dropdown.Item onClick={() => setIsShowModalLogout(true)}>
               Đăng xuất
             </Dropdown.Item>

@@ -104,12 +104,12 @@ const TourDetailPage = () => {
           >
             <span>Điều kiện tour</span>
           </div> */}
-          <div
+          {/* <div
             className={`option ${option === "picture" ? "active" : ""}`}
             onClick={() => handleChangeOption("picture")}
           >
             <span>Hình ảnh tour</span>
-          </div>
+          </div> */}
         </div>
       </div>
       <div className="list-option-tour">
