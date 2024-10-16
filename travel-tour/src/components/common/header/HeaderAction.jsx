@@ -166,9 +166,12 @@ export const HeaderAction = memo(() => {
             <div className="item">
               <span onClick={() => history.push(routesUser.tour)}>TOUR</span>
               <ul className="ul-tour">
-                {getAllCategoryTourState?.data?.map((item) => {
+                {getAllCategoryTourState?.data?.map((item, index) => {
                   return (
-                    <li onClick={() => history.push(`/tour/${item?._id}`)}>
+                    <li
+                      onClick={() => history.push(`/tour/${item?._id}`)}
+                      key={index}
+                    >
                       {item.name}
                     </li>
                   );

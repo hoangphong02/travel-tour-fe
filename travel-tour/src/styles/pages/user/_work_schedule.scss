@@ -108,4 +108,19 @@
                   }
               }
           }
-}
+
+        }
+        .modal-list-user{
+          display: flex;
+          flex-direction: column;
+          gap: 16px;
+
+          .item-user{
+              display: flex;
+              flex-direction: column;
+              text-align: left;
+              border: 1px solid #cbcbcb;
+              padding: 8px;
+              border-radius: 12px;
+          }
+        }

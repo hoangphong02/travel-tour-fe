@@ -1,8 +1,10 @@
 import moment from "moment";
 import React, { useEffect, useMemo, useState } from "react";
+import { Button, Modal, OverlayTrigger, Tooltip } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 import { ReactTableWithPaginationCard } from "~/components/common";
+import { CSEyeSolid } from "~/components/iconography/Solid";
 import { routesUser } from "~/configs";
 import { getAllTourRequest } from "~/redux/tour/actions";
 import { getWorkSchedulesRequest } from "~/redux/user/actions";
@@ -17,6 +19,9 @@ const WorkSchedulePage = () => {
   const [endDate, setEndDate] = useState("");
   const [indexPage, setIndexPage] = useState(1);
   const [dataTable, setDataTable] = useState([]);
+  const [dataActive, setDataActive] = useState();
+  const [show, setShow] = useState(false);
+
   const dispatch = useDispatch();
   const history = useHistory();
   useEffect(() => {
@@ -106,13 +111,22 @@ const WorkSchedulePage = () => {
             className="d-flex flex-column text-align-left"
             style={{ gap: "10px" }}
           >
-            <span>
-              <strong>Tên:</strong> {row?.original?.bookings[0]?.fullname}
-            </span>
-            <span>
-              <strong>Số điện thoại:</strong>{" "}
-              {row?.original?.bookings[0]?.phone}
-            </span>
+            <OverlayTrigger
+              placement="right"
+              delay={{ show: 250, hide: 400 }}
+              overlay={renderTooltip}
+            >
+              <Button
+                onClick={handleShow}
+                variant="none"
+                style={{
+                  padding: "0 24px",
+                  width: "fit-content",
+                }}
+              >
+                <CSEyeSolid className="fill-white" />
+              </Button>
+            </OverlayTrigger>
           </div>
         );
       },
@@ -157,6 +171,23 @@ const WorkSchedulePage = () => {
       },
     },
   ]);
+  const handleClickRow = (value) => {
+    setDataActive(value);
+  };
+
+  const renderTooltip = (props) => (
+    <Tooltip id="button-tooltip" {...props}>
+      Xem chi tiết danh sách
+    </Tooltip>
+  );
+
+  const handleShow = () => {
+    setShow(true);
+  };
+  const handleClose = () => {
+    setShow(false);
+    setDataActive();
+  };
 
   return (
     <div className="work-schedule-page">
@@ -197,11 +228,87 @@ const WorkSchedulePage = () => {
           // handlePaginationNext={handleChangePage}
           // isLoading={isGetAllOrdersListRequest}
           divided
-          // onClickRow={handleClickRow}
+          onClickRow={handleClickRow}
         />
       </div>
+      {show && dataActive && (
+        <ModalListUser data={dataActive} handleClose={handleClose} />
+      )}
     </div>
   );
 };
 
 export default WorkSchedulePage;
+
+function ModalListUser({ data, handleClose }) {
+  return (
+    <Modal
+      show
+      onHide={handleClose}
+      aria-labelledby="contained-modal-title-vcenter"
+      centered
+    >
+      <Modal.Header closeButton>
+        <Modal.Title>Danh sách khách hàng</Modal.Title>
+      </Modal.Header>
+      <Modal.Body>
+        <div
+          className="modal-list-user"
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            textAlign: "center",
+          }}
+        >
+          {data?.bookings?.map((item, index) => {
+            return (
+              <div key={index} className="item-user">
+                <span>
+                  <strong>Tên: </strong>
+                  {item?.fullname}
+                </span>
+                <span>
+                  <strong>Số điện thoại: </strong>
+                  {item?.phone}
+                </span>
+                <span>
+                  <strong>Email: </strong>
+                  {item?.email}
+                </span>
+                <span>
+                  <strong>Mô tả: </strong>
+                  {item?.note}
+                </span>
+                <span>
+                  <strong>Vé người lớn: </strong>
+                  {item?.adult_ticket}
+                </span>
+                <span>
+                  <strong>Vé trẻ em: </strong>
+                  {item?.child_ticket}
+                </span>
+                <span>
+                  <strong>Tổng giá: </strong>
+                  {item?.total_price.toLocaleString("VI-VN")} VNĐ
+                </span>
+              </div>
+            );
+          })}
+        </div>
+      </Modal.Body>
+      <Modal.Footer style={{ display: "flex", justifyContent: "space-around" }}>
+        <Button
+          onClick={handleClose}
+          style={{
+            width: "45%",
+            background: "#fff",
+            border: "1px solid #000",
+            color: "#000",
+          }}
+        >
+          Trở về
+        </Button>
+      </Modal.Footer>
+    </Modal>
+  );
+}

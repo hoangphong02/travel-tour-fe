@@ -1,7 +1,7 @@
 export const ListStatusBooking = [
   {
     value: "pending",
-    label: "Chờ xác nhận",
+    label: "Chờ thanh toán",
   },
   {
     value: "payment_confirmed",

@@ -76,11 +76,12 @@ const UserHomePage = () => {
         <div className="list-tour-main-body">
           <div className="list-tour-main-body-left">
             {getAllTourState?.data?.length
-              ? getAllTourState?.data?.slice(0, 1)?.map((item) => {
+              ? getAllTourState?.data?.slice(0, 1)?.map((item, index) => {
                   return (
                     <div
                       className="items"
                       onClick={() => handleClickTourDetail(item?._id)}
+                      key={index}
                     >
                       <img
                         src={
@@ -111,9 +112,10 @@ const UserHomePage = () => {
           <div className="list-tour-main-body-right">
             <div className="list-tour-main-body-right-top">
               {getAllTourState?.data?.length
-                ? getAllTourState?.data?.slice(1, 3)?.map((item) => {
+                ? getAllTourState?.data?.slice(1, 3)?.map((item, index) => {
                     return (
                       <div
+                        key={index}
                         className="items"
                         onClick={() => handleClickTourDetail(item?._id)}
                       >
@@ -147,9 +149,10 @@ const UserHomePage = () => {
 
             <div className="list-tour-main-body-right-bottom">
               {getAllTourState?.data?.length
-                ? getAllTourState?.data?.slice(3, 5)?.map((item) => {
+                ? getAllTourState?.data?.slice(3, 5)?.map((item, index) => {
                     return (
                       <div
+                        key={index}
                         className="items"
                         onClick={() => handleClickTourDetail(item?._id)}
                       >
@@ -210,9 +213,10 @@ const UserHomePage = () => {
       <div className="list-blog">
         <span className="title">BLOG</span>
         <div className="category-blog">
-          {getAllCategoryState?.data?.map((item) => {
+          {getAllCategoryState?.data?.map((item, index) => {
             return (
               <div
+                key={index}
                 className="category-blog-item"
                 onClick={() => history.push(`/blogs/${item?._id}`)}
               >
@@ -233,9 +237,10 @@ const UserHomePage = () => {
         </div>
         <div className="list-blog-body">
           {getAllBlogsState?.data?.length
-            ? getAllBlogsState?.data?.map((item) => {
+            ? getAllBlogsState?.data?.map((item, index) => {
                 return (
                   <div
+                    key={index}
                     className="blog-items"
                     onClick={() => history.push(`/blog-detail/${item._id}`)}
                   >

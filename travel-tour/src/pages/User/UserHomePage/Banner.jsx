@@ -53,9 +53,9 @@ const Banner = () => {
   return (
     <div className="slider-home-page">
       <Slider {...settings}>
-        {getSlidesTourState?.data?.map((item) => {
+        {getSlidesTourState?.data?.map((item, index) => {
           return (
-            <div className="slider-home-item">
+            <div className="slider-home-item" key={index}>
               <img src={item?.image[0]?.url} alt="" />
               <div className="information-tour-slide">
                 <span className="category">
