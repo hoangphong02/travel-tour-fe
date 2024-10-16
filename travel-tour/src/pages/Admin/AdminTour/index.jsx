@@ -230,7 +230,7 @@ const AdminTour = () => {
 
   useEffect(() => {
     if (isCreateTourFailure) {
-      toast.error("Thêm bài tour thất bại");
+      toast.error("Thêm tour thất bại");
       dispatch(resetCreateTour());
     }
   }, [isCreateTourFailure]);
@@ -246,7 +246,7 @@ const AdminTour = () => {
   }, [isUpdateTourSuccess]);
   useEffect(() => {
     if (isUpdateTourFailure) {
-      toast.error("Cập nhật bài tour thất bại");
+      toast.error("Cập nhật tour thất bại");
       dispatch(resetUpdateTour());
     }
   }, [isUpdateTourFailure]);

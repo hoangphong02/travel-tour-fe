@@ -263,7 +263,7 @@ export const ModalActions = ({
       >
         <ModalBody>
           <h3>{`Xác nhận ${type === "add" ? "thêm" : "chỉnh sửa"} danh mục Blog`}</h3>
-          <p>{`Bạn chắc chắn ${type === "add" ? "thêm" : "chỉnh sửa"} Blog`}</p>
+          <p>{`Bạn chắc chắn ${type === "add" ? "thêm" : "chỉnh sửa"} danh mục Blog`}</p>
         </ModalBody>
         <ModalFooter>
           <div className="d-flex align-content-center justify-content-between flex-grow-1">

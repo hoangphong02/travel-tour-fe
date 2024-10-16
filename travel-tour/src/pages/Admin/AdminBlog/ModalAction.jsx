@@ -423,8 +423,8 @@ export const ModalActions = ({
         toggle={() => setIsShowModalConfirm(false)}
       >
         <ModalBody>
-          <h3>{`Xác nhận ${type === "add" ? "thêm" : "chỉnh sửa"} nhân viên`}</h3>
-          <p>{`Bạn chắc chắn ${type === "add" ? "thêm" : "chỉnh sửa"} nhân viên`}</p>
+          <h3>{`Xác nhận ${type === "add" ? "thêm" : "chỉnh sửa"} bài blog`}</h3>
+          <p>{`Bạn chắc chắn ${type === "add" ? "thêm" : "chỉnh sửa"} bài blog`}</p>
         </ModalBody>
         {/* <ModalFooter>
           <div className="d-flex align-content-center justify-content-between flex-grow-1">

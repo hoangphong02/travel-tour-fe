@@ -174,7 +174,7 @@ const AdminCategoryTour = () => {
 
   useEffect(() => {
     if (isUpdateCategoryTourSuccess) {
-      toast.success("Cập nhật danh mục thành công");
+      toast.success("Cập nhật danh mục tour thành công");
       setCallApi(true);
       setIsShowModalConfirm(false);
       setIsShowModalAction(false);

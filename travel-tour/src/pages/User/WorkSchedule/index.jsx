@@ -2,16 +2,17 @@ import moment from "moment";
 import React, { useEffect, useMemo, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { ReactTableWithPaginationCard } from "~/components/common";
+import { getAllTourRequest } from "~/redux/tour/actions";
 import { getWorkSchedulesRequest } from "~/redux/user/actions";
 
 const WorkSchedulePage = () => {
   const { getWorkSchedulesState } = useSelector((store) => store.user);
+  const { getAllTourState } = useSelector((store) => store.tour);
   const [callApi, setCallApi] = useState(false);
   const [startDate, setStartDate] = useState(new Date());
   const [endDate, setEndDate] = useState("");
   const [indexPage, setIndexPage] = useState(1);
   const [dataTable, setDataTable] = useState([]);
-
   const dispatch = useDispatch();
   useEffect(() => {
     if (startDate || endDate) {
@@ -19,7 +20,13 @@ const WorkSchedulePage = () => {
     }
   }, [startDate, endDate]);
 
-  console.log("getWorkSchedulesState", getWorkSchedulesState);
+  console.log("getWorkSchedulesState", getWorkSchedulesState, getAllTourState);
+  useEffect(() => {
+    const params = {
+      limit: 0,
+    };
+    dispatch(getAllTourRequest(params));
+  }, [startDate]);
   useEffect(() => {
     if (callApi) {
       const params = {
@@ -45,17 +52,17 @@ const WorkSchedulePage = () => {
       Cell: (row) => row.row.index + 1,
     },
     {
-      Header: "Nhân viên",
+      Header: "HƯỚNG DẪN VIÊN",
       accessor: "name",
       cellClass: "list-item-heading w-5",
     },
     {
-      Header: "Số điện thoại nhân viên",
+      Header: "SỐ ĐIỆN THOẠI (HDV)",
       accessor: "phone",
       cellClass: "list-item-heading w-5",
     },
     {
-      Header: "Thời gian tour",
+      Header: "THỜI GIAN",
       accessor: "",
       cellClass: "list-item-heading w-5",
       Cell: ({ row }) => {
@@ -65,17 +72,23 @@ const WorkSchedulePage = () => {
             style={{ gap: "10px" }}
           >
             <span>
-              <strong>Bắt đầu:</strong> {row?.original?.bookings[0]?.start_date}
+              <strong>Bắt đầu:</strong>{" "}
+              {moment(row?.original?.bookings[0]?.start_date).format(
+                "DD/MM/YYYY"
+              )}
             </span>
             <span>
-              <strong>Kết thúc:</strong> {row?.original?.bookings[0]?.end_date}
+              <strong>Kết thúc:</strong>{" "}
+              {moment(row?.original?.bookings[0]?.end_date).format(
+                "DD/MM/YYYY"
+              )}{" "}
             </span>
           </div>
         );
       },
     },
     {
-      Header: "Khách đặt tour",
+      Header: "KHÁCH HÀNG",
       accessor: "",
       cellClass: "list-item-heading w-5",
       Cell: ({ row }) => {
@@ -96,7 +109,7 @@ const WorkSchedulePage = () => {
       },
     },
     {
-      Header: "Mã tour",
+      Header: "TÊN TOUR",
       accessor: "",
       cellClass: "list-item-heading w-5",
       Cell: ({ row }) => {
@@ -105,7 +118,13 @@ const WorkSchedulePage = () => {
             className="d-flex flex-column text-align-left"
             style={{ gap: "10px" }}
           >
-            <span>{row?.original?.bookings[0]?.tour_id}</span>
+            <span>
+              {
+                getAllTourState?.data?.find(
+                  (item) => item?._id === row?.original?.bookings[0]?.tour_id
+                )?.name
+              }
+            </span>
           </div>
         );
       },
@@ -120,7 +139,10 @@ const WorkSchedulePage = () => {
             className="d-flex flex-column text-align-left"
             style={{ gap: "10px" }}
           >
-            <span>{row?.original?.bookings[0]?.total_price}</span>
+            <span>
+              {row?.original?.bookings[0]?.total_price?.toLocaleString("VI-VN")}{" "}
+              VNĐ
+            </span>
           </div>
         );
       },
@@ -128,40 +150,46 @@ const WorkSchedulePage = () => {
   ]);
   return (
     <div className="work-schedule-page">
-      <div>
+      <div className="filter">
         <div className="title">
-          <span>Lịch công tác</span>
-        </div>
-        <div className="d-flex">
           <div>
-            <label htmlFor="">Ngày bắt đầu</label>
+            <span>LỊCH CÔNG TÁC</span>
+            <span className="line-1"></span>
+            <span className="line-2"></span>
+          </div>
+        </div>
+        <div className="filter-date">
+          <div>
+            <label htmlFor="">Ngày bắt đầu: </label>
             <input
               type="date"
-              value={startDate}
-              onChange={(e) => setStartDate(e.target.value)}
+              value={moment(startDate).format("YYYY-MM-DD")}
+              onChange={(e) => setStartDate(new Date(e.target.value))}
             />
           </div>
           <div>
-            <label htmlFor="">Ngày kết thúc</label>
+            <label htmlFor="">Ngày kết thúc: </label>
             <input
               type="date"
-              value={endDate}
-              onChange={(e) => setEndDate(e.target.value)}
+              value={moment(endDate).format("YYYY-MM-DD")}
+              onChange={(e) => setEndDate(new Date(e.target.value))}
             />
           </div>
         </div>
       </div>
-      <ReactTableWithPaginationCard
-        columns={columns}
-        data={dataTable}
-        indexPage={indexPage}
-        maxPage={getWorkSchedulesState?.totalPage}
-        showPagination={false}
-        // handlePaginationNext={handleChangePage}
-        // isLoading={isGetAllOrdersListRequest}
-        divided
-        // onClickRow={handleClickRow}
-      />
+      <div className="table">
+        <ReactTableWithPaginationCard
+          columns={columns}
+          data={dataTable}
+          indexPage={indexPage}
+          maxPage={getWorkSchedulesState?.totalPage}
+          showPagination={false}
+          // handlePaginationNext={handleChangePage}
+          // isLoading={isGetAllOrdersListRequest}
+          divided
+          // onClickRow={handleClickRow}
+        />
+      </div>
     </div>
   );
 };
