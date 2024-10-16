@@ -67,8 +67,6 @@ const SignupSchema = Yup.object().shape({
     "Giá vé người lớn không được để trống"
   ),
   base_price_child: Yup.string().required("Giá vé trẻ em không được để trống"),
-  start_date: Yup.string().required("Ngày bắt đầu không được để trống"),
-  end_date: Yup.string().required("Ngày kết thúc không được để trống"),
   star: Yup.object()
     .test(
       "is-not-empty",
@@ -247,8 +245,6 @@ export const ModalActions = ({
       end_location,
       base_price_adult,
       base_price_child,
-      start_date,
-      end_date,
       star,
       price_adult,
       price_child,
@@ -265,8 +261,6 @@ export const ModalActions = ({
       end_location,
       base_price_adult,
       base_price_child,
-      start_date,
-      end_date,
       provinceId: provinceId.map((item) => item.value),
       transportation: transportation?.value,
       hotel_level: [
@@ -352,14 +346,6 @@ export const ModalActions = ({
               type === "add" ? "" : data?.base_price_adult || "",
             base_price_child:
               type === "add" ? "" : data?.base_price_child || "",
-            start_date:
-              type === "add"
-                ? ""
-                : moment(data?.start_date).format("YYYY-MM-DD") || "",
-            end_date:
-              type === "add"
-                ? ""
-                : moment(data?.end_date).format("YYYY-MM-DD") || "",
             star:
               type === "add"
                 ? ""
@@ -598,7 +584,7 @@ export const ModalActions = ({
                     </FormGroup>
                   </div>
 
-                  <div className="d-flex" style={{ gap: "12px" }}>
+                  {/* <div className="d-flex" style={{ gap: "12px" }}>
                     <FormGroup className="w-100 error-l-100">
                       <Label>
                         Chọn ngày bắt đầu:{" "}
@@ -637,7 +623,7 @@ export const ModalActions = ({
                         </div>
                       ) : null}
                     </FormGroup>
-                  </div>
+                  </div> */}
 
                   <div className="d-flex" style={{ gap: "12px" }}>
                     <FormGroup className="w-100 error-l-100">
@@ -941,8 +927,8 @@ export const ModalActions = ({
         toggle={() => setIsShowModalConfirm(false)}
       >
         <ModalBody>
-          <h3>{`Xác nhận ${type === "add" ? "thêm" : "chỉnh sửa"} nhân viên`}</h3>
-          <p>{`Bạn chắc chắn ${type === "add" ? "thêm" : "chỉnh sửa"} nhân viên`}</p>
+          <h3>{`Xác nhận ${type === "add" ? "thêm" : "chỉnh sửa"} tour`}</h3>
+          <p>{`Bạn chắc chắn ${type === "add" ? "thêm" : "chỉnh sửa"} tour`}</p>
         </ModalBody>
         {/* <ModalFooter>
           <div className="d-flex align-content-center justify-content-between flex-grow-1">

@@ -200,7 +200,7 @@ const AdminAddGuide = () => {
   }, [isAddGuideBookingSuccess]);
   useEffect(() => {
     if (isAddGuideBookingFailure) {
-      toast.error("Cập nhật đặt tour thất bại");
+      toast.error("Thêm hướng dẫn viên tour thất bại");
       dispatch(resetAddGuideBooking());
     }
   }, [isAddGuideBookingFailure]);

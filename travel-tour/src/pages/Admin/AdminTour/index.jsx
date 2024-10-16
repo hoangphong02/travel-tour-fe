@@ -70,6 +70,12 @@ const AdminTour = () => {
   }, [searchDebounce]);
 
   useEffect(() => {
+    if (!isShowModalAction) {
+      setDataActive();
+    }
+  }, [isShowModalAction]);
+
+  useEffect(() => {
     if (getAllCategoryTourState?.data) {
       setOptions(
         getAllCategoryTourState?.data.map((item) => {
@@ -224,7 +230,7 @@ const AdminTour = () => {
 
   useEffect(() => {
     if (isCreateTourFailure) {
-      toast.error("Thêm bài blog thất bại");
+      toast.error("Thêm bài tour thất bại");
       dispatch(resetCreateTour());
     }
   }, [isCreateTourFailure]);
@@ -240,7 +246,7 @@ const AdminTour = () => {
   }, [isUpdateTourSuccess]);
   useEffect(() => {
     if (isUpdateTourFailure) {
-      toast.error("Cập nhật bài blog thất bại");
+      toast.error("Cập nhật bài tour thất bại");
       dispatch(resetUpdateTour());
     }
   }, [isUpdateTourFailure]);

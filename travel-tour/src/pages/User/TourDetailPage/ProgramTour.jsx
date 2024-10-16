@@ -14,7 +14,7 @@ const ProgramTour = () => {
   useEffect(() => {
     if (getDetailTourState) {
       const image = getDetailTourState?.data?.image?.find(
-        (item) => item.type === "banner"
+        (item) => item.type === "photos"
       )?.url;
       if (image) {
         setBanner(image);
