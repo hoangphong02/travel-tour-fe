@@ -182,6 +182,18 @@ const WorkSchedulePage = () => {
                 <span>
                   <strong>Email: </strong> {row.original?.email}
                 </span>
+                <span>
+                  <strong>Vé người lớn: </strong> {row.original?.adult_ticket}
+                </span>
+                <span>
+                  <strong>Vé trẻ em: </strong> {row.original?.child_ticket}
+                </span>
+                <span>
+                  <strong>Địa chỉ: </strong> {row.original?.address}
+                </span>
+                <span>
+                  <strong>Ghi chú: </strong> {row.original?.note}
+                </span>
               </>
             )}
           </div>

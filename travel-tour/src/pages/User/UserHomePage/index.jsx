@@ -227,6 +227,11 @@ const UserHomePage = () => {
                 />
                 <div className="info-blog">
                   <span className="name">{item.name.toUpperCase()}</span>
+                  <span className="description">
+                    {item.description?.length > 190
+                      ? `${item.description?.slice(0, 190)} ...`
+                      : item.description}
+                  </span>
                   <div className="btn-more">
                     <span>Xem thêm</span>
                   </div>
