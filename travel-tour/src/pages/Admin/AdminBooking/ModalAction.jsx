@@ -73,7 +73,6 @@ const SignupSchema = Yup.object().shape({
       (value) => value && Object.keys(value).length > 0
     )
     .required("Tên phương thức thanh toán không được trống"),
-  note: Yup.string().required("Mô tả không được để trống"),
 });
 
 export const ModalActions = ({
@@ -592,26 +591,15 @@ export const ModalActions = ({
 
                   <div className="d-flex" style={{ gap: "12px" }}>
                     <FormGroup className="w-100 error-l-100">
-                      <Label>
-                        Mô tả:{" "}
-                        <span style={{ color: "red", fontWeight: "600" }}>
-                          *
-                        </span>
-                      </Label>
+                      <Label>Ghi chú: </Label>
                       <textarea
                         disabled={type !== "add"}
                         className="form-control"
                         name="note"
                         value={values.note}
                         onChange={(e) => setFieldValue("note", e.target.value)}
-                        placeholder="Nhập mô tả"
-                        onBlur={() => setFieldTouched("note", true)}
+                        placeholder="Nhập ghi chú"
                       />
-                      {errors.note && touched.note ? (
-                        <div className="invalid-feedback d-block">
-                          {errors.note}
-                        </div>
-                      ) : null}
                     </FormGroup>
                   </div>
                 </ModalBody>

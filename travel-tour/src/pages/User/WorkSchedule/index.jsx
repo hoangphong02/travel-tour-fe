@@ -69,11 +69,39 @@ const WorkSchedulePage = () => {
       Header: "HƯỚNG DẪN VIÊN",
       accessor: "name",
       cellClass: "list-item-heading w-5",
+      Cell: ({ value }) => {
+        return (
+          <div
+            className="d-flex flex-column text-align-left"
+            style={{ gap: "10px" }}
+          >
+            {profileResponse?.data?.role === "admin" ? (
+              <span>{value}</span>
+            ) : (
+              <span>{profileResponse?.data?.name}</span>
+            )}
+          </div>
+        );
+      },
     },
     {
       Header: "SỐ ĐIỆN THOẠI (HDV)",
       accessor: "phone",
       cellClass: "list-item-heading w-5",
+      Cell: ({ value }) => {
+        return (
+          <div
+            className="d-flex flex-column text-align-left"
+            style={{ gap: "10px" }}
+          >
+            {profileResponse?.data?.role === "admin" ? (
+              <span>{value}</span>
+            ) : (
+              <span>{profileResponse?.data?.phone}</span>
+            )}
+          </div>
+        );
+      },
     },
     {
       Header: "THỜI GIAN",
@@ -85,18 +113,33 @@ const WorkSchedulePage = () => {
             className="d-flex flex-column text-align-left"
             style={{ gap: "10px" }}
           >
-            <span>
-              <strong>Bắt đầu:</strong>{" "}
-              {moment(row?.original?.bookings[0]?.start_date).format(
-                "DD/MM/YYYY"
-              )}
-            </span>
-            <span>
-              <strong>Kết thúc:</strong>{" "}
-              {moment(row?.original?.bookings[0]?.end_date).format(
-                "DD/MM/YYYY"
-              )}{" "}
-            </span>
+            {profileResponse?.data?.role === "admin" ? (
+              <>
+                <span>
+                  <strong>Bắt đầu:</strong>{" "}
+                  {moment(row?.original?.bookings[0]?.start_date).format(
+                    "DD/MM/YYYY"
+                  )}
+                </span>
+                <span>
+                  <strong>Kết thúc:</strong>{" "}
+                  {moment(row?.original?.bookings[0]?.end_date).format(
+                    "DD/MM/YYYY"
+                  )}{" "}
+                </span>
+              </>
+            ) : (
+              <>
+                <span>
+                  <strong>Bắt đầu:</strong>{" "}
+                  {moment(row?.original?.start_date).format("DD/MM/YYYY")}
+                </span>
+                <span>
+                  <strong>Kết thúc:</strong>{" "}
+                  {moment(row?.original?.end_date).format("DD/MM/YYYY")}{" "}
+                </span>
+              </>
+            )}
           </div>
         );
       },
@@ -111,22 +154,36 @@ const WorkSchedulePage = () => {
             className="d-flex flex-column text-align-left"
             style={{ gap: "10px" }}
           >
-            <OverlayTrigger
-              placement="right"
-              delay={{ show: 250, hide: 400 }}
-              overlay={renderTooltip}
-            >
-              <Button
-                onClick={handleShow}
-                variant="none"
-                style={{
-                  padding: "0 24px",
-                  width: "fit-content",
-                }}
+            {profileResponse?.data?.role === "admin" ? (
+              <OverlayTrigger
+                placement="right"
+                delay={{ show: 250, hide: 400 }}
+                overlay={renderTooltip}
               >
-                <CSEyeSolid className="fill-white" />
-              </Button>
-            </OverlayTrigger>
+                <Button
+                  onClick={handleShow}
+                  variant="none"
+                  style={{
+                    padding: "0 24px",
+                    width: "fit-content",
+                  }}
+                >
+                  <CSEyeSolid className="fill-white" />
+                </Button>
+              </OverlayTrigger>
+            ) : (
+              <>
+                <span>
+                  <strong>Tên: </strong> {row.original?.fullname}
+                </span>
+                <span>
+                  <strong>Số điện thoại: </strong> {row.original?.phone}
+                </span>
+                <span>
+                  <strong>Email: </strong> {row.original?.email}
+                </span>
+              </>
+            )}
           </div>
         );
       },
@@ -141,13 +198,14 @@ const WorkSchedulePage = () => {
             className="d-flex flex-column text-align-left"
             style={{ gap: "10px" }}
           >
-            <span>
-              {
-                getAllTourState?.data?.find(
+            {profileResponse?.data?.role === "admin"
+              ? getAllTourState?.data?.find(
                   (item) => item?._id === row?.original?.bookings[0]?.tour_id
                 )?.name
-              }
-            </span>
+              : getAllTourState?.data?.find(
+                  (item) => item?._id === row?.original?.tour_id
+                )?.name}
+            <span></span>
           </div>
         );
       },
@@ -162,10 +220,18 @@ const WorkSchedulePage = () => {
             className="d-flex flex-column text-align-left"
             style={{ gap: "10px" }}
           >
-            <span>
-              {row?.original?.bookings[0]?.total_price?.toLocaleString("VI-VN")}{" "}
-              VNĐ
-            </span>
+            {profileResponse?.data?.role === "admin" ? (
+              <span>
+                {row?.original?.bookings[0]?.total_price?.toLocaleString(
+                  "VI-VN"
+                )}{" "}
+                VNĐ
+              </span>
+            ) : (
+              <span>
+                {row?.original?.total_price?.toLocaleString("VI-VN")} VNĐ
+              </span>
+            )}
           </div>
         );
       },

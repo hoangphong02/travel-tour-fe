@@ -11,11 +11,15 @@ function* loginRequest({ payload }) {
     const response = yield call(() =>
       axiosMicro.post("/user/sign-in", payload)
     );
-    const { access_token: accessToken, refresh_token: refreshToken } =
-      response.data;
-    localStorage.setItem(STORAGE_KEY.ACCESS_TOKEN, `Bearer ${accessToken}`);
-    localStorage.setItem(STORAGE_KEY.REFRESH_TOKEN, refreshToken);
-    yield put(Actions.loginSuccess(response.data));
+    if (response.data.status === "OK") {
+      const { access_token: accessToken, refresh_token: refreshToken } =
+        response.data;
+      localStorage.setItem(STORAGE_KEY.ACCESS_TOKEN, `Bearer ${accessToken}`);
+      localStorage.setItem(STORAGE_KEY.REFRESH_TOKEN, refreshToken);
+      yield put(Actions.loginSuccess(response.data));
+    } else {
+      yield put(Actions.loginFailure());
+    }
   } catch (e) {
     if (e?.response?.data) {
       const messages = e.response.data;

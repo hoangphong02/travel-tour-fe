@@ -97,11 +97,12 @@ export const ModalActions = ({
   };
 
   const handleSubmit = () => {
-    const { name } = dataForm;
+    const { name, description } = dataForm;
 
     if (type === "add") {
       const payload = {
         name,
+        description,
         thumbnail: urlImage,
       };
 
@@ -109,6 +110,7 @@ export const ModalActions = ({
     } else {
       const payload = {
         name,
+        description,
         thumbnail: urlImage,
       };
       dispatch(updateCategoryRequest({ id: data._id, body: payload }));
@@ -127,6 +129,7 @@ export const ModalActions = ({
         <Formik
           initialValues={{
             name: type === "add" ? "" : data?.name || "",
+            description: type === "add" ? "" : data?.description || "",
           }}
           validationSchema={SignupSchema}
           onSubmit={onSubmit}
@@ -162,6 +165,18 @@ export const ModalActions = ({
                       ) : null}
                     </FormGroup>
                   </div>
+                  <FormGroup className="w-100 error-l-100">
+                    <Label>Mô tả: </Label>
+                    <textarea
+                      className="form-control"
+                      name="description"
+                      value={values.description}
+                      onChange={(e) =>
+                        setFieldValue("description", e.target.value)
+                      }
+                      placeholder="Nhập mô tả"
+                    />
+                  </FormGroup>
 
                   <FormGroup className="error-l-100">
                     <Label>
