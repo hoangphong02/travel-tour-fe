@@ -17,7 +17,14 @@ import { registerRequest, updateUserRequest } from "~/redux/auth/actions";
 import logo from "~/assets/logo/no-avatar.png";
 export const PHONE_REGEX = /((0)+([1-9]{1})+([0-9]{8})\b)/g;
 
-export const ModalActions = ({ isOpen, type, handleClose, data }) => {
+export const ModalActions = ({
+  isOpen,
+  type,
+  handleClose,
+  data,
+  urlImage,
+  setUrlImage,
+}) => {
   const {
     isRegisterRequest,
     isRegisterFailure,
@@ -27,10 +34,10 @@ export const ModalActions = ({ isOpen, type, handleClose, data }) => {
 
   const dispatch = useDispatch();
   const [isShowModalConfirm, setIsShowModalConfirm] = useState(false);
-  const [urlImage, setUrlImage] = useState();
+  // const [urlImage, setUrlImage] = useState();
   const [dataForm, setDataForm] = useState(null);
   const fileInputRef = useRef(null);
-  const SignupSchema = Yup.object().shape({
+  const SignupSchemaAdd = Yup.object().shape({
     name: Yup.string()
       .trim()
       .required("Tên nhân viên không được để trống")
@@ -44,13 +51,13 @@ export const ModalActions = ({ isOpen, type, handleClose, data }) => {
         /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
         "Email không hợp lệ"
       ),
-    password: Yup.string()
-      .required("Mật khẩu không được để trống")
-      .min(5, "Phải ít nhất 5 ký tự"),
-    confirmPassword: Yup.string()
-      .required("Mật khẩu xác nhận không được để trống")
-      .oneOf([Yup.ref("password")], "Mật khẩu xác nhận không khớp")
-      .min(5, "Phải ít nhất 5 ký tự"),
+    // password: Yup.string()
+    //   .required("Mật khẩu không được để trống")
+    //   .min(5, "Phải ít nhất 5 ký tự"),
+    // confirmPassword: Yup.string()
+    //   .required("Mật khẩu xác nhận không được để trống")
+    //   .oneOf([Yup.ref("password")], "Mật khẩu xác nhận không khớp")
+    //   .min(5, "Phải ít nhất 5 ký tự"),
   });
 
   const uploadToCloudinary = async (file, uploadPreset, uploadUrl) => {
@@ -124,14 +131,14 @@ export const ModalActions = ({ isOpen, type, handleClose, data }) => {
         <Formik
           initialValues={{
             name: type === "add" ? "" : data?.name || "",
-            password: type === "add" ? "" : data?.password || "",
+            password: "",
             phone: type === "add" ? "" : data?.phone || "",
             email: type === "add" ? "" : data?.email || "",
-            confirmPassword: type === "add" ? "" : data?.confirmPassword || "",
+            confirmPassword: "",
 
             // avatar: type === "create" ? "" : data?.avatar || "",
           }}
-          validationSchema={SignupSchema}
+          validationSchema={SignupSchemaAdd}
           onSubmit={onSubmit}
         >
           {({ setFieldValue, setFieldTouched, values, errors, touched }) => {

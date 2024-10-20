@@ -142,11 +142,11 @@ const AdminBooking = () => {
       cellClass: "list-item-heading w-5",
       Cell: (row) => row.row.index + 1,
     },
-    {
-      Header: "Mã",
-      accessor: "_id",
-      cellClass: "list-item-heading w-5",
-    },
+    // {
+    //   Header: "Mã",
+    //   accessor: "_id",
+    //   cellClass: "list-item-heading w-5",
+    // },
     {
       Header: "Tên tour",
       accessor: "tour_id",

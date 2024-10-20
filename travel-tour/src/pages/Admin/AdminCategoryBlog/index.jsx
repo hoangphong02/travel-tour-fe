@@ -92,11 +92,11 @@ const AdminCategoryBlog = () => {
       cellClass: "list-item-heading w-5",
       Cell: (row) => row.row.index + 1,
     },
-    {
-      Header: "MÃ",
-      accessor: "_id",
-      cellClass: "list-item-heading w-5",
-    },
+    // {
+    //   Header: "MÃ",
+    //   accessor: "_id",
+    //   cellClass: "list-item-heading w-5",
+    // },
     {
       Header: "TÊN",
       accessor: "name",

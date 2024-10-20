@@ -117,11 +117,11 @@ const AdminTour = () => {
       cellClass: "list-item-heading w-5",
       Cell: (row) => row.row.index + 1,
     },
-    {
-      Header: "Mã",
-      accessor: "_id",
-      cellClass: "list-item-heading w-5",
-    },
+    // {
+    //   Header: "Mã",
+    //   accessor: "_id",
+    //   cellClass: "list-item-heading w-5",
+    // },
     {
       Header: "Hình ảnh",
       accessor: "image",

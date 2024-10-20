@@ -21,6 +21,7 @@ const AdminFood = () => {
   const [isShowModalConfirm, setIsShowModalConfirm] = useState(false);
   const [type, setType] = useState();
   const [search, setSearch] = useState("");
+  const [urlImage, setUrlImage] = useState();
   const searchDebounce = useDebounce(search, 500);
   const { isGetAllUsersSuccess, getAllUsersState } = useSelector(
     (store) => store.user
@@ -52,6 +53,13 @@ const AdminFood = () => {
   const handleShowModalDelete = () => {
     setIsShowModalDelete(true);
   };
+
+  useEffect(() => {
+    if (!isShowModalAction) {
+      setUrlImage();
+      setDataActive();
+    }
+  }, [isShowModalAction]);
 
   useEffect(() => {
     setCallApi(true);
@@ -98,11 +106,11 @@ const AdminFood = () => {
         </div>
       ),
     },
-    {
-      Header: "Mã",
-      accessor: "_id",
-      cellClass: "list-item-heading w-5",
-    },
+    // {
+    //   Header: "Mã",
+    //   accessor: "_id",
+    //   cellClass: "list-item-heading w-5",
+    // },
     {
       Header: "Tên",
       accessor: "name",
@@ -234,6 +242,8 @@ const AdminFood = () => {
           data={dataActive}
           isShowModalConfirm={isShowModalConfirm}
           setIsShowModalConfirm={setIsShowModalConfirm}
+          urlImage={urlImage}
+          setUrlImage={setUrlImage}
         />
       )}
       {isShowModalDelete && (
