@@ -92,9 +92,9 @@ const BlogDetailPage = () => {
 
             <RenderQuillItem detail={getDetailBlogState?.data?.description} />
 
-            <div className="image-about-us">
+            {/* <div className="image-about-us">
               <img src={getDetailBlogState?.data?.image[0]?.url} />
-            </div>
+            </div> */}
 
             <div className="title-tour-intro">
               <span className="title">Tour liên quan</span>
