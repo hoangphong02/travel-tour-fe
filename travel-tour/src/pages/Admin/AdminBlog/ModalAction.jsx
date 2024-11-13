@@ -21,22 +21,22 @@ import { createBlogsRequest, updateBlogsRequest } from "~/redux/blog/actions";
 export const PHONE_REGEX = /((0)+([1-9]{1})+([0-9]{8})\b)/g;
 
 const SignupSchema = Yup.object().shape({
-  title: Yup.string().required("Tên không được để trống"),
-  name: Yup.string().required("Tên không được để trống"),
+  title: Yup.string().required("Name cannot be blank"),
+  name: Yup.string().required("Name cannot be blank"),
   category: Yup.object()
     .test(
       "is-not-empty",
-      "Danh mục blog không được để trống",
+      "Blog categories cannot be empty",
       (value) => value && Object.keys(value).length > 0
     )
-    .required("Danh mục blog không được để trống"),
+    .required("Blog categories cannot be empty"),
   typeBlog: Yup.object()
     .test(
       "is-not-empty",
-      "Loại bài blog không được để trống",
+      "Blog post type cannot be empty",
       (value) => value && Object.keys(value).length > 0
     )
-    .required("Loại bài blog không được để trống"),
+    .required("Blog post type cannot be empty"),
 });
 
 export const ModalActions = ({
@@ -67,11 +67,11 @@ export const ModalActions = ({
   const ListTypeBlog = [
     {
       value: "Place",
-      label: "Địa điểm",
+      label: "Place",
     },
     {
       value: "Food",
-      label: "Món ăn",
+      label: "Food",
     },
   ];
 
@@ -171,7 +171,7 @@ export const ModalActions = ({
         size="xl"
         className="modal-actions-product"
       >
-        <ModalHeader>{`${type === "add" ? "Thêm" : "Chỉnh sửa"} bài blog`}</ModalHeader>
+        <ModalHeader>{`${type === "add" ? "Add" : "Update"} blog`}</ModalHeader>
         <Formik
           initialValues={{
             title: type === "add" ? "" : data?.title || "",
@@ -210,7 +210,7 @@ export const ModalActions = ({
                   <div className="d-flex" style={{ gap: "12px" }}>
                     <FormGroup className="w-100 error-l-100">
                       <Label>
-                        Tiêu đề:{" "}
+                        Title:{" "}
                         <span style={{ color: "red", fontWeight: "600" }}>
                           *
                         </span>
@@ -218,7 +218,7 @@ export const ModalActions = ({
                       <Field
                         className="form-control"
                         name="title"
-                        placeholder="Nhập tiêu đề"
+                        placeholder="Enter title"
                       />
                       {errors.title && touched.title ? (
                         <div className="invalid-feedback d-block">
@@ -230,7 +230,7 @@ export const ModalActions = ({
                   <div className="d-flex" style={{ gap: "12px" }}>
                     <FormGroup className="w-100 error-l-100">
                       <Label>
-                        Tên bài blog:{" "}
+                        Blog post name:{" "}
                         <span style={{ color: "red", fontWeight: "600" }}>
                           *
                         </span>
@@ -238,7 +238,7 @@ export const ModalActions = ({
                       <Field
                         className="form-control"
                         name="name"
-                        placeholder="Nhập tên"
+                        placeholder="Enter name"
                       />
                       {errors.name && touched.name ? (
                         <div className="invalid-feedback d-block">
@@ -251,7 +251,7 @@ export const ModalActions = ({
                   <div className="d-flex" style={{ gap: "12px" }}>
                     <FormGroup className="w-100 error-l-100">
                       <Label>
-                        Loại bài blog:{" "}
+                        Type blog:{" "}
                         <span style={{ color: "red", fontWeight: "600" }}>
                           *
                         </span>
@@ -271,7 +271,7 @@ export const ModalActions = ({
                     </FormGroup>
                     <FormGroup className="w-100 error-l-100">
                       <Label>
-                        Danh mục blog:{" "}
+                        Category blog:{" "}
                         <span style={{ color: "red", fontWeight: "600" }}>
                           *
                         </span>
@@ -293,7 +293,7 @@ export const ModalActions = ({
                     <div className="d-flex" style={{ gap: "12px" }}>
                       <FormGroup className="w-100 error-l-100">
                         <Label>
-                          Tỉnh thành:{" "}
+                          Province:{" "}
                           <span style={{ color: "red", fontWeight: "600" }}>
                             *
                           </span>
@@ -313,7 +313,7 @@ export const ModalActions = ({
                   ) : null}
                   <FormGroup className="error-l-100">
                     <Label>
-                      Mô tả:{" "}
+                      Description:{" "}
                       <span style={{ color: "red", fontWeight: "600" }}>*</span>
                     </Label>
                     <Editor
@@ -323,7 +323,7 @@ export const ModalActions = ({
                   </FormGroup>
 
                   <FormGroup className="error-l-100">
-                    <Label>Ảnh minh họa: </Label>
+                    <Label>Image: </Label>
                     <Input
                       type="file"
                       id="exampleCustomFileBrowser1"
@@ -373,7 +373,7 @@ export const ModalActions = ({
                       className="btn-shadow btn-multiple-state "
                       type="submit"
                     >
-                      <span className="label">Cập nhật</span>
+                      <span className="label">Update</span>
                     </Button>
                   )}
                   {type !== "edit" && (
@@ -397,7 +397,7 @@ export const ModalActions = ({
                         <span className="bounce2" />
                         <span className="bounce3" />
                       </span>
-                      <span className="label">Thêm</span>
+                      <span className="label">Add</span>
                     </Button>
                   )}
                   <Button
@@ -406,7 +406,7 @@ export const ModalActions = ({
                     className="btn-shadow btn-multiple-state"
                     onClick={handleClose}
                   >
-                    Trở về
+                    Back
                   </Button>
                 </ModalFooter>
               </Form>
@@ -423,8 +423,8 @@ export const ModalActions = ({
         toggle={() => setIsShowModalConfirm(false)}
       >
         <ModalBody>
-          <h3>{`Xác nhận ${type === "add" ? "thêm" : "chỉnh sửa"} bài blog`}</h3>
-          <p>{`Bạn chắc chắn ${type === "add" ? "thêm" : "chỉnh sửa"} bài blog`}</p>
+          <h3>{`Confirm ${type === "add" ? "add" : "update"} post blog`}</h3>
+          <p>{`You are sure ${type === "add" ? "add" : "update"} post blog`}</p>
         </ModalBody>
         {/* <ModalFooter>
           <div className="d-flex align-content-center justify-content-between flex-grow-1">
@@ -483,7 +483,7 @@ export const ModalActions = ({
                 <span className="bounce2" />
                 <span className="bounce3" />
               </span>
-              <span className="label">Xác nhận</span>
+              <span className="label">Confirm</span>
             </Button>
             <Button
               color="primary"
@@ -499,7 +499,7 @@ export const ModalActions = ({
               }
               onClick={() => setIsShowModalConfirm(false)}
             >
-              Trở về
+              Back
             </Button>
           </div>
         </ModalFooter>

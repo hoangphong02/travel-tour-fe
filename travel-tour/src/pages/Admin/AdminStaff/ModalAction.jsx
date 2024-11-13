@@ -40,16 +40,16 @@ export const ModalActions = ({
   const SignupSchemaAdd = Yup.object().shape({
     name: Yup.string()
       .trim()
-      .required("Tên nhân viên không được để trống")
-      .min(2, "Phải ít nhất 2 ký tự"),
+      .required("Employee name cannot be left blank")
+      .min(2, "Must be at least 2 characters"),
     phone: Yup.string()
-      .required("Số điện thoại không được để trống")
-      .min(10, "Phải ít nhất 10 ký tự"),
+      .required("Phone number cannot be left blank")
+      .min(10, "Must be at least 10 characters"),
     email: Yup.string()
-      .required("Email không thể để trống")
+      .required("Email cannot be blank")
       .matches(
         /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
-        "Email không hợp lệ"
+        "Invalid email"
       ),
     // password: Yup.string()
     //   .required("Mật khẩu không được để trống")
@@ -127,7 +127,7 @@ export const ModalActions = ({
   return (
     <>
       <Modal centered isOpen={isOpen} size="md" className="modal-actions-staff">
-        <ModalHeader>{`${type === "add" ? "Thêm" : "Chỉnh sửa"} nhân viên`}</ModalHeader>
+        <ModalHeader>{`${type === "add" ? "Add" : "Update"} employee`}</ModalHeader>
         <Formik
           initialValues={{
             name: type === "add" ? "" : data?.name || "",
@@ -148,8 +148,8 @@ export const ModalActions = ({
                   {(isRegisterFailure || isUpdateUserFailure) && (
                     <Alert color="danger">
                       {type === "add"
-                        ? "Thêm nhận viên thất bại"
-                        : "Cập nhật nhân viên thất bại"}
+                        ? "Add member failed"
+                        : "Employee update failed"}
                     </Alert>
                   )}
                   <FormGroup className="form-avatar">
@@ -183,13 +183,13 @@ export const ModalActions = ({
 
                   <FormGroup className="w-100 error-l-100">
                     <Label>
-                      Tên nhân viên:{" "}
+                      Name employee:{" "}
                       <span style={{ color: "red", fontWeight: "600" }}>*</span>
                     </Label>
                     <Field
                       className="form-control"
                       name="name"
-                      placeholder="Tên nhân viên"
+                      placeholder="Name employee"
                     />
                     {errors.name && touched.name ? (
                       <div className="invalid-feedback d-block">
@@ -205,7 +205,7 @@ export const ModalActions = ({
                     <Field
                       className="form-control"
                       name="email"
-                      placeholder="Nhập email"
+                      placeholder="Enter email"
                     />
                     {errors.email && touched.email ? (
                       <div className="invalid-feedback d-block">
@@ -215,13 +215,13 @@ export const ModalActions = ({
                   </FormGroup>
                   <FormGroup className="w-100 error-l-100">
                     <Label>
-                      Số điện thoại:{" "}
+                      Phone:{" "}
                       <span style={{ color: "red", fontWeight: "600" }}>*</span>
                     </Label>
                     <Field
                       className="form-control"
                       name="phone"
-                      placeholder="Nhập số điện thoại"
+                      placeholder="Enter phone"
                     />
                     {errors.phone && touched.phone ? (
                       <div className="invalid-feedback d-block">
@@ -233,7 +233,7 @@ export const ModalActions = ({
                     <>
                       <FormGroup className="error-l-100">
                         <Label>
-                          Mật khẩu:{" "}
+                          Password:{" "}
                           <span style={{ color: "red", fontWeight: "600" }}>
                             *
                           </span>
@@ -241,7 +241,7 @@ export const ModalActions = ({
                         <Field
                           className="form-control"
                           name="password"
-                          placeholder="Nhập mật khẩu"
+                          placeholder="Enter password"
                         />
                         {errors.password && touched.password ? (
                           <div className="invalid-feedback d-block">
@@ -251,7 +251,7 @@ export const ModalActions = ({
                       </FormGroup>
                       <FormGroup className="error-l-100">
                         <Label>
-                          Mật khẩu xác nhận:{" "}
+                          Confirm password:{" "}
                           <span style={{ color: "red", fontWeight: "600" }}>
                             *
                           </span>
@@ -259,7 +259,7 @@ export const ModalActions = ({
                         <Field
                           className="form-control"
                           name="confirmPassword"
-                          placeholder="Nhập mật khẩu xác nhận"
+                          placeholder="Enter confirm password"
                         />
                         {errors.confirmPassword && touched.confirmPassword ? (
                           <div className="invalid-feedback d-block">
@@ -283,7 +283,7 @@ export const ModalActions = ({
                       className="btn-shadow btn-multiple-state "
                       type="submit"
                     >
-                      <span className="label">Cập nhật</span>
+                      <span className="label">Update</span>
                     </Button>
                   )}
                   {type !== "edit" && (
@@ -307,7 +307,7 @@ export const ModalActions = ({
                         <span className="bounce2" />
                         <span className="bounce3" />
                       </span>
-                      <span className="label">Thêm</span>
+                      <span className="label">ADD</span>
                     </Button>
                   )}
                   <Button
@@ -316,7 +316,7 @@ export const ModalActions = ({
                     className="btn-shadow btn-multiple-state"
                     onClick={handleClose}
                   >
-                    Trở về
+                    Back
                   </Button>
                 </ModalFooter>
               </Form>
@@ -333,8 +333,8 @@ export const ModalActions = ({
         toggle={() => setIsShowModalConfirm(false)}
       >
         <ModalBody>
-          <h4>{`Xác nhận ${type === "add" ? "thêm" : "chỉnh sửa"} nhân viên`}</h4>
-          <p>{`Bạn chắc chắn ${type === "add" ? "thêm" : "chỉnh sửa"} nhân viên`}</p>
+          <h4>{`Confirm ${type === "add" ? "add" : "update"} employee`}</h4>
+          <p>{`You are sure ${type === "add" ? "add" : "update"} employee`}</p>
         </ModalBody>
         <ModalFooter>
           <div className="d-flex align-content-center justify-content-between flex-grow-1">
@@ -354,7 +354,7 @@ export const ModalActions = ({
                 <span className="bounce2" />
                 <span className="bounce3" />
               </span>
-              <span className="label">Xác nhận</span>
+              <span className="label">Confirm</span>
             </Button>
             <Button
               color="primary"
@@ -370,7 +370,7 @@ export const ModalActions = ({
               }
               onClick={() => setIsShowModalConfirm(false)}
             >
-              Trở về
+              Back
             </Button>
           </div>
         </ModalFooter>

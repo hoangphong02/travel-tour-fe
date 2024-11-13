@@ -20,7 +20,7 @@ export const ModalDelete = ({ data, isOpen, handleClose, setCallApi }) => {
     if (isDeleteBookingSuccess) {
       handleClose();
       setCallApi(true);
-      toast.success("Xóa đặt tour du lịch thành công");
+      toast.success("Deleted tour booking successfully");
       dispatch(resetDeleteBooking());
     }
   }, [isDeleteBookingSuccess]);
@@ -39,10 +39,10 @@ export const ModalDelete = ({ data, isOpen, handleClose, setCallApi }) => {
     >
       <ModalBody>
         {isDeleteBookingFailure && (
-          <Alert color="danger">Xóa đặt tour du lịch thất bại</Alert>
+          <Alert color="danger">Delete failed tour bookings</Alert>
         )}
-        <h3 className="color-danger">Xác nhận xóa đặt tour du lịch</h3>
-        <p>Bạn chắc chắc xóa đặt tour du lịch</p>
+        <h3 className="color-danger">Confirm deletion of tour booking</h3>
+        <p>You must definitely delete your tour booking</p>
       </ModalBody>
       <ModalFooter>
         <div className="d-flex align-content-center justify-content-end flex-grow-1 gap-2">
@@ -59,7 +59,7 @@ export const ModalDelete = ({ data, isOpen, handleClose, setCallApi }) => {
               <span className="bounce2" />
               <span className="bounce3" />
             </span>
-            <span className="label">Xác nhận</span>
+            <span className="label">Confirm</span>
           </Button>
           <Button
             color="danger"
@@ -71,7 +71,7 @@ export const ModalDelete = ({ data, isOpen, handleClose, setCallApi }) => {
             style={isDeleteBookingRequest ? { cursor: "no-drop" } : {}}
             onClick={handleClose}
           >
-            Trở về
+            Back
           </Button>
         </div>
       </ModalFooter>

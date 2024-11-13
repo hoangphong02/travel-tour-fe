@@ -59,93 +59,93 @@ const IntroducePage = () => {
       <div className="introduce-page-wrapper-body">
         <div className="introduce-page-wrapper-body-left">
           <div className="title">
-            <span>VỀ CHÚNG TÔI</span>
+            <span>ABOUT US</span>
           </div>
           <div className="bottom">
             <div className="name-company">
-              <span>CÔNG TY TNHH DU LỊCH TOUR MIỀN TÂY</span>
+              <span>MEKONG TOURISM COMPANY LIMITED</span>
             </div>
             <div>
-              <strong>Thời gian thành lập và quá trình phát triển</strong>
+              <strong>Establishment time and development process</strong>
               <br />
               <span>
-                Công ty <strong>TNHH du lịch Tour Miền Tây</strong> được thành
-                lập năm 2024, với tên gọi <strong>Tour Miền Tây</strong>. Tuy
-                mới thành lập cách đây không lâu, nhưng sau quá trình hình thành
-                và phát triển, <strong>Tour miền Tây</strong> không ngừng nghiên
-                cứu và luôn là đơn vị đi đầu trong lĩnh vực ứng dụng công nghệ
-                hiện đại kết hợp với dịch vụ. Chúng tôi luôn ưu tiên cung cấp
-                những ý tưởng du lịch độc đáo và sáng tạo nhằm đem lại trải
-                nghiệm độc đáo cho du khách khi trải nghiệm du lịch Miền Tây
+                Company <strong>Mekong Tourism Company Limited</strong> was
+                established in 2024, with the name{" "}
+                <strong>Mekong Delta Tour</strong>. Although newly established
+                not long ago, after a process of formation and development,{" "}
+                <strong>Mekong Delta Tour</strong> constantly researching and
+                always being a leader in the field of applying modern technology
+                combined with services. We always prioritize providing unique
+                and creative travel ideas to bring unique experiences to
+                visitors when traveling to the West.
               </span>
-              <strong>Lĩnh vực hoạt động</strong>
+              <strong>Field of activity</strong>
               <br />
               <span>
-                <strong>Tour Miền Tây</strong> hoạt động như một nhà điều hành
-                tour du lịch trong và ngoài nước, chuyên tổ chức các tour du
-                lịch miền Tây như:
+                <strong>Mekong Delta Tour</strong>
+                operates as a domestic and foreign tour operator, specializing
+                in organizing Western tours such as:
               </span>
               <ul>
-                <li> Tour miền tây 1 ngày: CẦN THƠ - BẾN TRE</li>
+                <li> 1 day western tour: CAN THƠ - BEN TRE</li>
                 <li>
                   {" "}
-                  Tour miền tây 2 ngày 1 đêm: CẦN THƠ - BẾN TRE - BẠC LIÊU
+                  Tour western 2 days 1 night: CAN THƠ - BEN TRE - BAC LIEU
                 </li>
                 <li>
                   {" "}
-                  Tour miền tây 3 ngày 2 đêm: CẦN THƠ - SÓC TRĂNG - BẾN TRE -
-                  BẠC LIÊU - CÀ MAU
+                  Western tour 3 days 2 nights: CAN THO - SOC TRANG - BEN TRE -
+                  BAC LIEU - CA MAU
                 </li>
                 <li>
                   {" "}
-                  Tour tham quan vườn trái cây miền Tây, các khu du lịch sinh
-                  thái
+                  Tour to visit Western fruit gardens and eco-tourism areas
                 </li>
               </ul>
               <span>
-                Bên cạnh đó, chúng tôi còn có các dịch vụ hỗ trợ đi kèm để có
-                thể đảm bảo mang đến trải nghiệm dịch vụ tốt nhất cho khách hàng
-                như:
+                In addition, we also have accompanying support services to
+                ensure the best service experience for customers such as:
               </span>
               <ul>
-                <li>Dịch vụ tư vấn</li>
-                <li>Dịch vụ hỗ trợ khách hàng</li>
-                <li>Quản lý lữ hành và các gói dịch vụ tùy chỉnh</li>
+                <li>Consulting services</li>
+                <li>Customer support service</li>
+                <li>Travel management and customized service packages</li>
               </ul>
               <span>
-                <strong>Tour Miền Tây</strong> tự tin có thể đáp ứng đa dạng của
-                khách khi tham quan Miền Tây. Không những thế, chúng tôi còn
-                cung cấp các giải pháp du lịch để nhằm mang đến cho khách hàng
-                chuyến du lịch như ý. Tất cả đều được điều chỉnh một cách chuyên
-                nghiệp phù hợp nhu cầu và mang lại sự thoải mái, tiện lợi cho du
-                khách, cho dù đó là những chuyến du lịch chọn gói hay du lịch tự
-                túc.
+                <strong>Mekong Delta Tour</strong>
+                confidently able to meet the diversity of guests when visiting
+                the West. Not only that, we also provide travel solutions to
+                bring customers the trip they desire. All are professionally
+                adjusted to suit the needs and bring comfort and convenience to
+                travelers, whether they are package tours or independent travel.
               </span>
-              <span>Tiêu chí hoạt động</span>
+              <span>Operational criteria</span>
               <span>
-                Với phương châm mang lại những giá trị tốt nhất cho du khách.
-                Tour Miền Tây luôn cung cấp những gì tốt nhất, thuận tiện nhất
-                đồng thời tìm kiếm những điểm đến và trải nghiệm với tiêu chí:
+                With the motto of bringing the best values ​​to tourists,
+                Western Tour always provides the best and most convenient things
+                while looking for destinations and experiences with the
+                following criteria:
               </span>
               <ul>
-                <li>Chất lượng là quan tâm hàng đầu.</li>
-                <li>Giá tour cạnh tranh nhất.</li>
-                <li>Tour thiết kế theo yêu cầu.</li>
-                <li>Khởi hành hàng ngày.</li>
-                <li>Đặt tour nhanh chóng và thuận tiện.</li>
-                <li>Thanh toán linh hoạt.</li>
-                <li>Tưu vấn và hỗ trợ tối đa cho du khách</li>
+                <li>Quality is our top priority.</li>
+                <li>Most competitive tour prices.</li>
+                <li>Custom-designed tours.</li>
+                <li>Daily departures.</li>
+                <li>Fast and convenient booking.</li>
+                <li>Flexible payment options.</li>
+                <li>Comprehensive consultation and support for travelers.</li>
               </ul>
-              <strong>Thành quả đạt được.</strong>
+              <strong>Our Achievements</strong>
               <br />
               <span>
-                Xuyên suốt quá trình hoạt động <strong>Tour Miền Tây</strong>{" "}
-                may mắn nhận được sựu tin tưởng và ủng hộ của hơn 500 nghìn
-                khách hàng. Đây là nguồn động viên to lớn và là động lực để{" "}
-                <strong>Tour Miền Tây</strong> ngày càng hoàn thiện và phát
-                triển. Chúng tôi luôn hi vọng có thể mang lại cho quý khách hàng
-                những chuyến du lịch miền Tây chọn vẹn nhất
+                Throughout its operation, <strong>Mekong Delta Tours</strong>{" "}
+                has been fortunate to earn the trust and support of over 500,000
+                customers. This is a tremendous encouragement and a motivation
+                for <strong>Mekong Delta Tours</strong> to continuously improve
+                and grow. We always hope to offer our customers the most
+                complete and memorable trips to the Mekong Delta.
               </span>
+
               <div className="image-about-us">
                 <img src={banner1} />
               </div>
@@ -210,7 +210,7 @@ const IntroducePage = () => {
             ref={ref}
           >
             <div className="title">
-              <span>TOUR DU LỊCH XEM NHIỀU</span>
+              <span>TOURS WATCH MORE</span>
             </div>
             <div className="list-tour">
               {getAllTourMainState?.data?.map((item, index) => {
@@ -230,7 +230,7 @@ const IntroducePage = () => {
                     <div>
                       <span>{item?.name}</span>
                       <span>
-                        Giá:{" "}
+                        Price:{" "}
                         <span className="price">
                           {item?.base_price_adult?.toLocaleString("vi-VN")} VNĐ
                         </span>

@@ -31,42 +31,42 @@ const PriceTourPage = () => {
   };
   const columns = useMemo(() => [
     {
-      Header: "STT",
+      Header: "ORDINAL NUMBER",
       accessor: "",
       cellClass: "list-item-heading w-5",
       Cell: (row) => row.row.index + 1,
     },
     {
-      Header: "MÃ",
+      Header: "CODE",
       accessor: "tour_code",
       cellClass: "list-item-heading w-5",
     },
     {
-      Header: "LỊCH TRÌNH TOUR",
+      Header: "TOUR SCHEDULE",
       accessor: "name",
       cellClass: "list-item-heading w-5",
     },
     {
-      Header: "THỜI GIAN",
+      Header: "TIME",
       accessor: "schedules",
       cellClass: "list-item-heading w-5",
       Cell: ({ value }) => {
         return (
           <span>
             {value?.length > 1
-              ? `${value?.length} Ngày ${value?.length - 1} Đêm`
-              : `${value?.length} Ngày`}
+              ? `${value?.length} days  ${value?.length - 1} night`
+              : `${value?.length} days `}
           </span>
         );
       },
     },
     {
-      Header: "LỊCH KHỞI HÀNH",
+      Header: "DEPARTURE SCHEDULE",
       accessor: "shedule_on_week",
       cellClass: "list-item-heading w-5",
     },
     {
-      Header: "PHƯƠNG TIỆN",
+      Header: "VEHICLE",
       accessor: "transportation",
       cellClass: "list-item-heading w-5",
       Cell: ({ value }) => {
@@ -78,7 +78,7 @@ const PriceTourPage = () => {
       },
     },
     {
-      Header: "GIÁ TOUR",
+      Header: "PRICE TOUR",
       accessor: "base_price_adult",
       cellClass: "list-item-heading w-5",
       Cell: ({ value }) => {
@@ -86,7 +86,7 @@ const PriceTourPage = () => {
       },
     },
     {
-      Header: "HÀNH ĐỘNG",
+      Header: "ACTION",
       accessor: "_id",
       Cell: ({ value }) => (
         <div
@@ -99,7 +99,7 @@ const PriceTourPage = () => {
             className="icon-button"
             onClick={() => handleDetailTour(value)}
           >
-            XEM TOUR
+            SEE TOUR
           </Button>
         </div>
       ),
@@ -124,7 +124,7 @@ const PriceTourPage = () => {
       <div className="price-tour-page-wrapper-inner">
         <div className="title">
           <div>
-            <span>BẢNG GIÁ</span>
+            <span>PRICE LIST</span>
             <span className="line-1"></span>
             <span className="line-2"></span>
           </div>

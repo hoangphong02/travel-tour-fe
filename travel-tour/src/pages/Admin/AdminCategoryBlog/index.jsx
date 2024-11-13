@@ -87,7 +87,7 @@ const AdminCategoryBlog = () => {
 
   const columns = useMemo(() => [
     {
-      Header: "STT",
+      Header: "Ordinal number",
       accessor: "",
       cellClass: "list-item-heading w-5",
       Cell: (row) => row.row.index + 1,
@@ -98,12 +98,12 @@ const AdminCategoryBlog = () => {
     //   cellClass: "list-item-heading w-5",
     // },
     {
-      Header: "TÊN",
+      Header: "Name",
       accessor: "name",
       cellClass: "list-item-heading w-5",
     },
     {
-      Header: "Ảnh minh họa",
+      Header: "Image",
       accessor: "thumbnail",
       cellClass: "list-item-heading w-5 d-flex",
       Cell: ({ value }) => (
@@ -121,7 +121,7 @@ const AdminCategoryBlog = () => {
     },
 
     {
-      Header: "HOẠT ĐỘNG",
+      Header: "Action",
       accessor: "action",
       Cell: () => (
         <div
@@ -157,7 +157,7 @@ const AdminCategoryBlog = () => {
 
   useEffect(() => {
     if (isCreateCategorySuccess) {
-      toast.success("Thêm danh mục thành công");
+      toast.success("Add category blog successfully");
       setIsShowModalConfirm(false);
       setCallApi(true);
       setIsShowModalAction(false);
@@ -167,14 +167,14 @@ const AdminCategoryBlog = () => {
 
   useEffect(() => {
     if (isCreateCategoryFailure) {
-      toast.error("Thêm danh mục thất bại");
+      toast.error("Add failure category");
       dispatch(resetCreateCategory());
     }
   }, [isCreateCategoryFailure]);
 
   useEffect(() => {
     if (isUpdateCategorySuccess) {
-      toast.success("Cập nhật danh mục thành công");
+      toast.success("Updated directory successfully");
       setCallApi(true);
       setIsShowModalConfirm(false);
       setIsShowModalAction(false);
@@ -199,7 +199,7 @@ const AdminCategoryBlog = () => {
         <div className="body">
           <input
             type="text"
-            placeholder="Nhập tìm kiếm"
+            placeholder="Enter search"
             value={search}
             onChange={(e) => setSearch(e.target.value)}
           />

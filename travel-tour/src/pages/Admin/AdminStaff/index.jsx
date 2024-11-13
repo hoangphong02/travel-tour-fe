@@ -84,13 +84,13 @@ const AdminFood = () => {
 
   const columns = useMemo(() => [
     {
-      Header: "STT",
+      Header: "Ordinal number",
       accessor: "",
       cellClass: "list-item-heading w-5",
       Cell: (row) => row.row.index + 1,
     },
     {
-      Header: "Ảnh đại diện",
+      Header: "Avatar",
       accessor: "avatar",
       cellClass: "list-item-heading w-5",
       Cell: ({ value }) => (
@@ -112,7 +112,7 @@ const AdminFood = () => {
     //   cellClass: "list-item-heading w-5",
     // },
     {
-      Header: "Tên",
+      Header: "Name",
       accessor: "name",
       cellClass: "list-item-heading w-5",
     },
@@ -122,13 +122,13 @@ const AdminFood = () => {
       cellClass: "list-item-heading w-5",
     },
     {
-      Header: "Số điện thoại",
+      Header: "Phone",
       accessor: "phone",
       cellClass: "list-item-heading w-5",
     },
 
     {
-      Header: "HOẠT ĐỘNG",
+      Header: "Action",
       accessor: "action",
       Cell: () => (
         <div
@@ -164,7 +164,7 @@ const AdminFood = () => {
 
   useEffect(() => {
     if (isRegisterSuccess) {
-      toast.success("Thêm nhân viên thành công");
+      toast.success("Add employees successfully");
       setIsShowModalConfirm(false);
       setCallApi(true);
       setIsShowModalAction(false);
@@ -174,14 +174,14 @@ const AdminFood = () => {
 
   useEffect(() => {
     if (isRegisterFailure) {
-      toast.error("Thêm nhân viên thất bại");
+      toast.error("Add employees failure");
       dispatch(resetRegisterState());
     }
   }, [isRegisterFailure]);
 
   useEffect(() => {
     if (isUpdateUserSuccess) {
-      toast.success("Cập nhật nhân viên thành công");
+      toast.success("Employee update successful");
       setCallApi(true);
       setIsShowModalConfirm(false);
       setIsShowModalAction(false);
@@ -191,7 +191,7 @@ const AdminFood = () => {
 
   useEffect(() => {
     if (isUpdateUserFailure) {
-      toast.error("Cập nhật nhân viên thất bại");
+      toast.error("Employee update failed");
       dispatch(resetUpdateUserState());
     }
   }, [isUpdateUserFailure]);
@@ -213,7 +213,7 @@ const AdminFood = () => {
         <div className="body">
           <input
             type="text"
-            placeholder="Nhập tìm kiếm"
+            placeholder="Enter search"
             value={search}
             onChange={(e) => setSearch(e.target.value)}
           />

@@ -52,7 +52,7 @@ export const HeaderAction = memo(() => {
 
   const handleLogout = () => {
     dispatch(logoutRequest());
-    toast.success("Đăng xuất thành công!", {
+    toast.success("Sign out success!", {
       position: "top-center",
     });
     dispatch(resetUserState());
@@ -75,7 +75,7 @@ export const HeaderAction = memo(() => {
               <CSPhoneOutline />
               <span>0742 483 578</span>
             </div>
-            <div className="btn-contact">Liên hệ</div>
+            <div className="btn-contact">Contact</div>
           </div>
           <div className="header-action--inner--top--right">
             {profileResponse?.data ? (
@@ -120,14 +120,14 @@ export const HeaderAction = memo(() => {
                 <Dropdown.Menu style={{ zIndex: "6" }}>
                   {profileResponse?.data?.role === "admin" && (
                     <Dropdown.Item href="/admin">
-                      Quản lý hệ thống
+                      System management
                     </Dropdown.Item>
                   )}
                   <Dropdown.Item onClick={handleWorkSchedule}>
-                    Lịch công tác
+                    Work schedule
                   </Dropdown.Item>
                   <Dropdown.Item onClick={() => setIsShowModalLogout(true)}>
-                    Đăng xuất
+                    Sign out
                   </Dropdown.Item>
                 </Dropdown.Menu>
               </Dropdown>
@@ -155,13 +155,13 @@ export const HeaderAction = memo(() => {
           </div>
           <div className="list-option">
             <div className="item" onClick={() => history.push(routesUser.home)}>
-              <span>TRANG CHỦ</span>
+              <span>HOME</span>
             </div>
             <div
               className="item"
               onClick={() => history.push(routesUser.introduce)}
             >
-              <span>GIỚI THIỆU</span>
+              <span>INTRODUCE</span>
             </div>
             <div className="item">
               <span onClick={() => history.push(routesUser.tour)}>TOUR</span>
@@ -182,13 +182,13 @@ export const HeaderAction = memo(() => {
               className="item"
               onClick={() => history.push(routesUser.tablePriceTour)}
             >
-              <span>BẢNG GIÁ</span>
+              <span>PRICE LIST</span>
             </div>
             <div
               className="item"
               onClick={() => history.push(routesUser.booking)}
             >
-              <span>ĐẶT TOUR</span>
+              <span>BOOK TOUR</span>
             </div>
             <div className="item">
               <span onClick={() => history.push(routesUser.blogs)}>BLOG</span>
@@ -209,13 +209,13 @@ export const HeaderAction = memo(() => {
               className="item"
               onClick={() => history.push(routesUser.picturePage)}
             >
-              <span>HÌNH ẢNH</span>
+              <span>IMAGES</span>
             </div>
             <div
               className="item"
               onClick={() => history.push(routesUser.contact)}
             >
-              LIÊN HỆ
+              CONTACT
             </div>
           </div>
         </div>
@@ -238,9 +238,9 @@ export const HeaderAction = memo(() => {
               textAlign: "center",
             }}
           >
-            <span style={{ fontWeight: "bold" }}>Xác nhận</span>
+            <span style={{ fontWeight: "bold" }}>Confirm</span>
             <span style={{ fontSize: "13px" }}>
-              Bạn có chắc chắn muốn đăng xuất tài khoản không
+              Are you sure you want to sign out of your account?
             </span>
           </div>
         </Modal.Body>
@@ -256,7 +256,7 @@ export const HeaderAction = memo(() => {
               color: "rgb(157 157 157)",
             }}
           >
-            Hủy
+            Cancel
           </Button>
           <Button
             onClick={handleLogout}
@@ -266,7 +266,7 @@ export const HeaderAction = memo(() => {
               border: "none",
             }}
           >
-            Đăng xuất
+            Sign out
           </Button>
         </Modal.Footer>
       </Modal>

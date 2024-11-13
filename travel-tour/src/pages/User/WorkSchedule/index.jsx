@@ -60,13 +60,13 @@ const WorkSchedulePage = () => {
 
   const columns = useMemo(() => [
     {
-      Header: "STT",
+      Header: "Ordinal number",
       accessor: "",
       cellClass: "list-item-heading w-5",
       Cell: (row) => row.row.index + 1,
     },
     {
-      Header: "HƯỚNG DẪN VIÊN",
+      Header: "GUIDE",
       accessor: "name",
       cellClass: "list-item-heading w-5",
       Cell: ({ value }) => {
@@ -85,7 +85,7 @@ const WorkSchedulePage = () => {
       },
     },
     {
-      Header: "SỐ ĐIỆN THOẠI (HDV)",
+      Header: "PHONE (GUIDE)",
       accessor: "phone",
       cellClass: "list-item-heading w-5",
       Cell: ({ value }) => {
@@ -104,7 +104,7 @@ const WorkSchedulePage = () => {
       },
     },
     {
-      Header: "THỜI GIAN",
+      Header: "TIME",
       accessor: "",
       cellClass: "list-item-heading w-5",
       Cell: ({ row }) => {
@@ -116,13 +116,13 @@ const WorkSchedulePage = () => {
             {profileResponse?.data?.role === "admin" ? (
               <>
                 <span>
-                  <strong>Bắt đầu:</strong>{" "}
+                  <strong>Start:</strong>{" "}
                   {moment(row?.original?.bookings[0]?.start_date).format(
                     "DD/MM/YYYY"
                   )}
                 </span>
                 <span>
-                  <strong>Kết thúc:</strong>{" "}
+                  <strong>End:</strong>{" "}
                   {moment(row?.original?.bookings[0]?.end_date).format(
                     "DD/MM/YYYY"
                   )}{" "}
@@ -131,11 +131,11 @@ const WorkSchedulePage = () => {
             ) : (
               <>
                 <span>
-                  <strong>Bắt đầu:</strong>{" "}
+                  <strong>Start:</strong>{" "}
                   {moment(row?.original?.start_date).format("DD/MM/YYYY")}
                 </span>
                 <span>
-                  <strong>Kết thúc:</strong>{" "}
+                  <strong>End:</strong>{" "}
                   {moment(row?.original?.end_date).format("DD/MM/YYYY")}{" "}
                 </span>
               </>
@@ -145,7 +145,7 @@ const WorkSchedulePage = () => {
       },
     },
     {
-      Header: "KHÁCH HÀNG",
+      Header: "CLIENT",
       accessor: "",
       cellClass: "list-item-heading w-5",
       Cell: ({ row }) => {
@@ -174,25 +174,25 @@ const WorkSchedulePage = () => {
             ) : (
               <>
                 <span>
-                  <strong>Tên: </strong> {row.original?.fullname}
+                  <strong>Name: </strong> {row.original?.fullname}
                 </span>
                 <span>
-                  <strong>Số điện thoại: </strong> {row.original?.phone}
+                  <strong>Phone: </strong> {row.original?.phone}
                 </span>
                 <span>
                   <strong>Email: </strong> {row.original?.email}
                 </span>
                 <span>
-                  <strong>Vé người lớn: </strong> {row.original?.adult_ticket}
+                  <strong>Adult ticket: </strong> {row.original?.adult_ticket}
                 </span>
                 <span>
-                  <strong>Vé trẻ em: </strong> {row.original?.child_ticket}
+                  <strong>Child tickets: </strong> {row.original?.child_ticket}
                 </span>
                 <span>
-                  <strong>Địa chỉ: </strong> {row.original?.address}
+                  <strong>Address: </strong> {row.original?.address}
                 </span>
                 <span>
-                  <strong>Ghi chú: </strong> {row.original?.note}
+                  <strong>Note: </strong> {row.original?.note}
                 </span>
               </>
             )}
@@ -201,7 +201,7 @@ const WorkSchedulePage = () => {
       },
     },
     {
-      Header: "TÊN TOUR",
+      Header: "TOUR NAME",
       accessor: "",
       cellClass: "list-item-heading w-5",
       Cell: ({ row }) => {
@@ -223,7 +223,7 @@ const WorkSchedulePage = () => {
       },
     },
     {
-      Header: "GIÁ TOUR",
+      Header: "PRICE TOUR",
       accessor: "",
       cellClass: "list-item-heading w-5",
       Cell: ({ row }) => {
@@ -255,7 +255,7 @@ const WorkSchedulePage = () => {
 
   const renderTooltip = (props) => (
     <Tooltip id="button-tooltip" {...props}>
-      Xem chi tiết danh sách
+      See detailed list
     </Tooltip>
   );
 
@@ -272,14 +272,14 @@ const WorkSchedulePage = () => {
       <div className="filter">
         <div className="title">
           <div>
-            <span>LỊCH CÔNG TÁC</span>
+            <span>WORK SCHEDULE</span>
             <span className="line-1"></span>
             <span className="line-2"></span>
           </div>
         </div>
         <div className="filter-date">
           <div>
-            <label htmlFor="">Ngày bắt đầu: </label>
+            <label htmlFor="">Start date: </label>
             <input
               type="date"
               value={moment(startDate).format("YYYY-MM-DD")}
@@ -287,7 +287,7 @@ const WorkSchedulePage = () => {
             />
           </div>
           <div>
-            <label htmlFor="">Ngày kết thúc: </label>
+            <label htmlFor="">End date: </label>
             <input
               type="date"
               value={moment(endDate).format("YYYY-MM-DD")}
@@ -327,7 +327,7 @@ function ModalListUser({ data, handleClose }) {
       centered
     >
       <Modal.Header closeButton>
-        <Modal.Title>Danh sách khách hàng</Modal.Title>
+        <Modal.Title>Customer list</Modal.Title>
       </Modal.Header>
       <Modal.Body>
         <div
@@ -342,11 +342,11 @@ function ModalListUser({ data, handleClose }) {
             return (
               <div key={index} className="item-user">
                 <span>
-                  <strong>Tên: </strong>
+                  <strong>Name: </strong>
                   {item?.fullname}
                 </span>
                 <span>
-                  <strong>Số điện thoại: </strong>
+                  <strong>Phone: </strong>
                   {item?.phone}
                 </span>
                 <span>
@@ -354,19 +354,19 @@ function ModalListUser({ data, handleClose }) {
                   {item?.email}
                 </span>
                 <span>
-                  <strong>Mô tả: </strong>
+                  <strong>Description: </strong>
                   {item?.note}
                 </span>
                 <span>
-                  <strong>Vé người lớn: </strong>
+                  <strong>Adult ticket: </strong>
                   {item?.adult_ticket}
                 </span>
                 <span>
-                  <strong>Vé trẻ em: </strong>
+                  <strong>Child tickets: </strong>
                   {item?.child_ticket}
                 </span>
                 <span>
-                  <strong>Tổng giá: </strong>
+                  <strong>Total price: </strong>
                   {item?.total_price.toLocaleString("VI-VN")} VNĐ
                 </span>
               </div>
@@ -384,7 +384,7 @@ function ModalListUser({ data, handleClose }) {
             color: "#000",
           }}
         >
-          Trở về
+          Back
         </Button>
       </Modal.Footer>
     </Modal>

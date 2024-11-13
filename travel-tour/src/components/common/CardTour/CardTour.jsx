@@ -21,17 +21,17 @@ export const CardTour = memo((tour) => {
       <div className="info-card">
         <span className="title">{tour?.tour?.name}</span>
         <span className="price">
-          Giá gốc:{" "}
+          Original price:{" "}
           <strong>
             {tour?.tour?.base_price_adult.toLocaleString("vi-VN")} VND
           </strong>
         </span>
-        <Button>Đặt tour</Button>
+        <Button>Book tour</Button>
       </div>
       <div className="bottom">
         <div className="left">
           <CSUser2Outline />
-          <span>Lượng người quan tâm</span>
+          <span>Number of people interested</span>
         </div>
         <div className="right">
           <div>

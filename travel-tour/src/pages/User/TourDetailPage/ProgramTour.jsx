@@ -24,7 +24,7 @@ const ProgramTour = () => {
   return (
     <div className="program-tour">
       <div className="program-tour-title">
-        <span>Chương trình tour</span>
+        <span>Tour program</span>
       </div>
       <div className="program-tour-body">
         <div className="program-tour-body-left">
@@ -35,11 +35,14 @@ const ProgramTour = () => {
             return (
               <div className="section" key={index}>
                 <div className="section-left">
-                  <span>Ngày {index + 1}</span>
+                  <span>Day {index + 1}</span>
                 </div>
                 <div className="section-right">
                   <div className="title">
-                    <span>Chi tiết ngày {index + 1}</span>
+                    <span>
+                      Details day
+                      {index + 1}
+                    </span>
                   </div>
                   <RenderQuillItem key={item._id} detail={item.detail} />
                 </div>

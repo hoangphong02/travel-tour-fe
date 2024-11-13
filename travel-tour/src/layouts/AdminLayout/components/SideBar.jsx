@@ -57,7 +57,7 @@ export const SideBar = memo(() => {
                 pathname === routesAdmin.adminCategoryTour ? "#fff" : "#000",
             }}
           >
-            Danh mục tour
+            Category tour
           </CDBSidebarMenuItem>
           <CDBSidebarMenuItem
             icon="sticky-note"
@@ -83,7 +83,7 @@ export const SideBar = memo(() => {
                 pathname === routesAdmin.adminCategoryBlog ? "#fff" : "#000",
             }}
           >
-            Danh mục blog
+            Category blog
           </CDBSidebarMenuItem>
           <CDBSidebarMenuItem
             icon="chart-line"
@@ -107,7 +107,7 @@ export const SideBar = memo(() => {
               color: pathname === routesAdmin.adminStaff ? "#fff" : "#000",
             }}
           >
-            Nhân viên
+            Employees
           </CDBSidebarMenuItem>
           <CDBSidebarMenuItem
             icon="car"
@@ -135,7 +135,7 @@ export const SideBar = memo(() => {
               color: pathname === routesAdmin.adminAddGuide ? "#fff" : "#000",
             }}
           >
-            Thêm hướng dẫn viên
+            Add tour guide
           </CDBSidebarMenuItem>
         </CDBSidebarMenu>
       </CDBSidebarContent>

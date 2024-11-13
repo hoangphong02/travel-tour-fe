@@ -16,7 +16,7 @@ const InfomationTour = () => {
   return (
     <div className="information-tour">
       <div className="information-tour-title">
-        <span>Thông tin tour</span>
+        <span>Tour information</span>
       </div>
       <div className="information-tour-body">
         <div>

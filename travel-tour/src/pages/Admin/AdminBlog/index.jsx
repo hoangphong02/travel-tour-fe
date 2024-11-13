@@ -110,7 +110,7 @@ const AdminBlog = () => {
 
   const columns = useMemo(() => [
     {
-      Header: "STT",
+      Header: "Ordinal number",
       accessor: "",
       cellClass: "list-item-heading w-5",
       Cell: (row) => row.row.index + 1,
@@ -121,18 +121,18 @@ const AdminBlog = () => {
     //   cellClass: "list-item-heading w-5",
     // },
     {
-      Header: "TÊN",
+      Header: "Name",
       accessor: "name",
       cellClass: "list-item-heading w-5",
     },
     {
-      Header: "Tiêu đề",
+      Header: "Title",
       accessor: "title",
       cellClass: "list-item-heading w-5",
     },
 
     {
-      Header: "HOẠT ĐỘNG",
+      Header: "Action",
       accessor: "action",
       Cell: () => (
         <div
@@ -168,7 +168,7 @@ const AdminBlog = () => {
 
   useEffect(() => {
     if (isCreateBlogsSuccess) {
-      toast.success("Thêm bài blog thành công");
+      toast.success("Added blog successfully");
       setIsShowModalConfirm(false);
       setCallApi(true);
       setIsShowModalAction(false);
@@ -178,14 +178,14 @@ const AdminBlog = () => {
 
   useEffect(() => {
     if (isCreateBlogsFailure) {
-      toast.error("Thêm bài blog thất bại");
+      toast.error("Added blog failure");
       dispatch(resetCreateBlogs());
     }
   }, [isCreateBlogsFailure]);
 
   useEffect(() => {
     if (isUpdateBlogsSuccess) {
-      toast.success("Cập nhật bài blog thành công");
+      toast.success("Updated blog successfully");
       setCallApi(true);
       setIsShowModalConfirm(false);
       setIsShowModalAction(false);
@@ -194,7 +194,7 @@ const AdminBlog = () => {
   }, [isUpdateBlogsSuccess]);
   useEffect(() => {
     if (isUpdateBlogsFailure) {
-      toast.error("Cập nhật bài blog thất bại");
+      toast.error("Updated blog failure");
       dispatch(resetUpdateBlogs());
     }
   }, [isUpdateBlogsFailure]);
@@ -216,7 +216,7 @@ const AdminBlog = () => {
         <div className="body">
           <input
             type="text"
-            placeholder="Nhập tìm kiếm"
+            placeholder="Enter search"
             value={search}
             onChange={(e) => setSearch(e.target.value)}
           />

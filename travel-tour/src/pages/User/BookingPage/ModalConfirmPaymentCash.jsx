@@ -21,12 +21,10 @@ export const ModalConfirmPaymentCash = ({
     >
       <ModalBody>
         {isUpdateBookingFailure && (
-          <Alert color="danger">
-            Xác nhận thanh toán bằng tiền mặt thất bại
-          </Alert>
+          <Alert color="danger">Cash payment confirmation failed</Alert>
         )}
-        <h3 className="color-danger">Xác nhận thanh toán bằng tiền mặt</h3>
-        <p>Bạn chắc chắc muốn thanh toán bằng tiền mặt</p>
+        <h3 className="color-danger">Confirm payment in cash</h3>
+        <p>You definitely want to pay in cash</p>
       </ModalBody>
       <ModalFooter>
         <div className="d-flex align-content-center justify-content-end flex-grow-1 gap-2">
@@ -46,7 +44,7 @@ export const ModalConfirmPaymentCash = ({
             {isUpdateBookingRequest ? (
               <Spinner size="12" />
             ) : (
-              <span className="label">Xác nhận</span>
+              <span className="label">Confirm</span>
             )}
           </Button>
           <Button
@@ -58,7 +56,7 @@ export const ModalConfirmPaymentCash = ({
             style={isUpdateBookingRequest ? { cursor: "no-drop" } : {}}
             onClick={handleClose}
           >
-            Trở về
+            Back
           </Button>
         </div>
       </ModalFooter>

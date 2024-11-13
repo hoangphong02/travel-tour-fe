@@ -49,14 +49,14 @@ const CommentTour = ({ id }) => {
 
   useEffect(() => {
     if (isCreateCommentsSuccess) {
-      toast.success("Gửi comment thành công");
+      toast.success("Comment sent successfully");
       dispatch(resetCreateComments());
       resetForm();
     }
   }, [isCreateCommentsSuccess]);
   useEffect(() => {
     if (isCreateCommentsFailure) {
-      toast.error("Gửi comment thất bại");
+      toast.error("Send comment failed");
       dispatch(resetCreateComments());
     }
   }, [isCreateCommentsFailure]);
@@ -83,14 +83,14 @@ const CommentTour = ({ id }) => {
 
   useEffect(() => {
     if (isReplyCommentsSuccess) {
-      toast.success("Trả lời bình luận thành công");
+      toast.success("Reply to comment successfully");
       handleCloseReply();
       dispatch(resetReplyComments());
     }
   }, [isReplyCommentsSuccess]);
   useEffect(() => {
     if (isReplyCommentsFailure) {
-      toast.error("Trả lời bình luận thất bại");
+      toast.error("Reply to comment failed");
       dispatch(resetReplyComments());
     }
   }, [isReplyCommentsFailure]);
@@ -101,15 +101,15 @@ const CommentTour = ({ id }) => {
         <div className="form-comment-body">
           <div>
             <span style={{ fontSize: "20px", fontWeight: "600" }}>
-              QUÝ KHÁCH CÓ ĐIỀU CHƯA RÕ VỀ TOUR. HÃY ĐẶT CÂU HỎI CHÚNG TÔI SẼ
-              TRẢ LỜI SỚM NHẤT.
+              YOU HAVE SOMETHING UNKNOWN ABOUT THE TOUR. PLEASE ASK A QUESTION
+              AND WE WILL ANSWER ASAP.
             </span>
           </div>
 
           <div className="section-1">
             <div>
               <span style={{ fontSize: "18px", fontWeight: "600" }}>
-                1. Nhập họ tên
+                1. Enter full name
               </span>
               <input
                 type="text"
@@ -119,7 +119,7 @@ const CommentTour = ({ id }) => {
             </div>
             <div>
               <span style={{ fontSize: "18px", fontWeight: "600" }}>
-                2. Nhập email
+                2. Enter email
               </span>
               <input
                 type="text"
@@ -129,7 +129,7 @@ const CommentTour = ({ id }) => {
             </div>
             <div>
               <span style={{ fontSize: "18px", fontWeight: "600" }}>
-                3. Nhập số điện thoại
+                3. Enter phone
               </span>
               <input
                 type="text"
@@ -141,7 +141,7 @@ const CommentTour = ({ id }) => {
           <div className="section-2">
             <div>
               <span style={{ fontSize: "18px", fontWeight: "600" }}>
-                4. Viết nhận xét của bạn vào bên dưới
+                4. Write your review below
               </span>
               <textarea
                 type="text"
@@ -163,7 +163,7 @@ const CommentTour = ({ id }) => {
                     color: "rgb(156 204 219)",
                   }}
                 >
-                  GỬI NGAY
+                  SEND
                 </span>
               )}
             </Button>
@@ -233,7 +233,7 @@ const CommentTour = ({ id }) => {
                               : "",
                         }}
                       >
-                        Gửi trả lời
+                        Send reply
                       </span>
                       <div style={{ marginTop: "12px" }}>
                         {item?.replyBy?.length
@@ -296,7 +296,7 @@ const CommentTour = ({ id }) => {
                     <div className="reply-comment">
                       <textarea
                         type="text"
-                        placeholder="Nhập câu trả lời"
+                        placeholder="Enter your answer"
                         value={value}
                         onChange={(e) => setValue(e.target.value)}
                       />
@@ -305,10 +305,10 @@ const CommentTour = ({ id }) => {
                           {isReplyCommentsRequest ? (
                             <Spinner size="12" />
                           ) : (
-                            <span>Gửi trả lời</span>
+                            <span>Send reply</span>
                           )}
                         </Button>
-                        <Button onClick={handleCloseReply}>Hủy bỏ</Button>
+                        <Button onClick={handleCloseReply}>Cancel</Button>
                       </div>
                     </div>
                   )}

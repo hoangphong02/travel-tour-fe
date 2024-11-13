@@ -18,7 +18,7 @@ export const CardBlog = memo(({ blog }) => {
         <span className="name">{blog?.name}</span>
         <span className="line"></span>
         <span className="des">{blog?.title}</span>
-        <Button>Xem thêm</Button>
+        <Button>See more</Button>
       </div>
     </div>
   );

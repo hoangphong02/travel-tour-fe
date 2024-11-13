@@ -97,7 +97,7 @@ const BlogDetailPage = () => {
             </div> */}
 
             <div className="title-tour-intro">
-              <span className="title">Tour liên quan</span>
+              <span className="title">Related tours</span>
               <div className="line-1"></div>
               <div className="line-2"></div>
             </div>
@@ -124,7 +124,7 @@ const BlogDetailPage = () => {
                         <Button
                           onClick={() => handleClickTourDetail(item?._id)}
                         >
-                          Xem thêm
+                          See more
                         </Button>
                       </div>
                     );
@@ -192,7 +192,7 @@ const BlogDetailPage = () => {
             ref={ref}
           >
             <div className="title">
-              <span>TOUR DU LỊCH XEM NHIỀU</span>
+              <span>TOURS WATCH MORE</span>
             </div>
             <div className="list-tour">
               {getAllTourMainState?.data?.map((item, index) => {
@@ -212,7 +212,7 @@ const BlogDetailPage = () => {
                     <div>
                       <span>{item?.name}</span>
                       <span>
-                        Giá:{" "}
+                        Price:{" "}
                         <span className="price">
                           {item?.base_price_adult?.toLocaleString("vi-VN")} VNĐ
                         </span>

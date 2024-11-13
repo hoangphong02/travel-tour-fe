@@ -1,10 +1,10 @@
 export const ListTransport = [
   {
     value: "car",
-    label: "Xe ô tô",
+    label: "Car",
   },
   {
     value: "plane",
-    label: "Máy bay",
+    label: "Plane",
   },
 ];

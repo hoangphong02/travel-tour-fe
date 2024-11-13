@@ -74,13 +74,13 @@ const BannerTourTrending = () => {
                 <span>{item?.name}</span>
                 <span>
                   {" "}
-                  Giá: {item.base_price_adult.toLocaleString("vi-VN")} VND
+                  Price: {item.base_price_adult.toLocaleString("vi-VN")} VND
                 </span>
                 <div
                   className="btn-book"
                   onClick={() => handleClickTourDetail(item?._id)}
                 >
-                  <span>Đặt ngay</span>
+                  <span>Book now</span>
                 </div>
               </div>
             </div>

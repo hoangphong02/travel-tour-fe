@@ -22,8 +22,8 @@ export const PHONE_REGEX = /((0)+([1-9]{1})+([0-9]{8})\b)/g;
 
 const SignupSchema = Yup.object().shape({
   name: Yup.string()
-    .required("Tên không được để trống")
-    .max(200, "Tên không quá 200 ký tự".replace("$x", 200)),
+    .required("Name cannot be blank")
+    .max(200, "Name must not exceed 200 characters".replace("$x", 200)),
 });
 
 export const ModalActions = ({
@@ -124,7 +124,7 @@ export const ModalActions = ({
         size="xl"
         className="modal-actions-product"
       >
-        <ModalHeader>{`${type === "add" ? "Thêm" : "Chỉnh sửa"} danh mục tour`}</ModalHeader>
+        <ModalHeader>{`${type === "add" ? "Add" : "Update"} category tour`}</ModalHeader>
         <Formik
           initialValues={{
             name: type === "add" ? "" : data?.name || "",
@@ -140,14 +140,14 @@ export const ModalActions = ({
                     isUpdateCategoryTourFailure) && (
                     <Alert color="danger">
                       {type === "add"
-                        ? "Thêm danh mục Tour"
-                        : "Cập nhật danh mục Tour"}
+                        ? "Add Tour category"
+                        : "Update Tour category"}
                     </Alert>
                   )}
                   <div className="d-flex" style={{ gap: "12px" }}>
                     <FormGroup className="w-100 error-l-100">
                       <Label>
-                        Tên danh mục:{" "}
+                        Category name:{" "}
                         <span style={{ color: "red", fontWeight: "600" }}>
                           *
                         </span>
@@ -155,7 +155,7 @@ export const ModalActions = ({
                       <Field
                         className="form-control"
                         name="name"
-                        placeholder="Nhập tiêu đề"
+                        placeholder="Enter category name"
                       />
                       {errors.name && touched.name ? (
                         <div className="invalid-feedback d-block">
@@ -167,7 +167,7 @@ export const ModalActions = ({
 
                   <FormGroup className="error-l-100">
                     <Label>
-                      Ảnh minh họa:
+                      Thumbnail:
                       <span style={{ color: "red", fontWeight: "600" }}>*</span>
                     </Label>
                     <Input
@@ -219,7 +219,7 @@ export const ModalActions = ({
                       className="btn-shadow btn-multiple-state "
                       type="submit"
                     >
-                      <span className="label">Cập nhật</span>
+                      <span className="label">Update</span>
                     </Button>
                   )}
                   {type !== "edit" && (
@@ -244,7 +244,7 @@ export const ModalActions = ({
                         <span className="bounce2" />
                         <span className="bounce3" />
                       </span>
-                      <span className="label">Thêm</span>
+                      <span className="label">Add</span>
                     </Button>
                   )}
                   <Button
@@ -253,7 +253,7 @@ export const ModalActions = ({
                     className="btn-shadow btn-multiple-state"
                     onClick={handleClose}
                   >
-                    Trở về
+                    Back
                   </Button>
                 </ModalFooter>
               </Form>
@@ -270,8 +270,8 @@ export const ModalActions = ({
         toggle={() => setIsShowModalConfirm(false)}
       >
         <ModalBody>
-          <h3>{`Xác nhận ${type === "add" ? "thêm" : "chỉnh sửa"} danh mục Tour`}</h3>
-          <p>{`Bạn chắc chắn ${type === "add" ? "thêm" : "chỉnh sửa"} danh mục Tour`}</p>
+          <h3>{`Confirm ${type === "add" ? "add" : "update"} category Tour`}</h3>
+          <p>{`You are sure ${type === "add" ? "add" : "update"} category Tour`}</p>
         </ModalBody>
         <ModalFooter>
           <div className="d-flex align-content-center justify-content-between flex-grow-1">
@@ -293,7 +293,7 @@ export const ModalActions = ({
                 <span className="bounce2" />
                 <span className="bounce3" />
               </span>
-              <span className="label">Xác nhận</span>
+              <span className="label">Confirm</span>
             </Button>
             <Button
               color="primary"
@@ -313,7 +313,7 @@ export const ModalActions = ({
               }
               onClick={() => setIsShowModalConfirm(false)}
             >
-              Trở về
+              Back
             </Button>
           </div>
         </ModalFooter>

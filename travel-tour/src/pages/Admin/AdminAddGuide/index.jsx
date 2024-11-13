@@ -112,18 +112,18 @@ const AdminAddGuide = () => {
 
   const columns = useMemo(() => [
     {
-      Header: "STT",
+      Header: "Ordinal number",
       accessor: "",
       cellClass: "list-item-heading w-5",
       Cell: (row) => row.row.index + 1,
     },
     {
-      Header: "Tên nhóm",
+      Header: "Group name",
       accessor: "group_number",
       cellClass: "list-item-heading w-10",
     },
     {
-      Header: "Hướng dẫn viên",
+      Header: "Tour guide",
       accessor: "bookings",
       cellClass: "list-item-heading w-5",
       Cell: ({ value }) => (
@@ -136,7 +136,7 @@ const AdminAddGuide = () => {
       ),
     },
     {
-      Header: "Tên tour",
+      Header: "Tour name",
       accessor: "",
       cellClass: "list-item-heading w-5",
       Cell: ({ row }) => (
@@ -149,7 +149,7 @@ const AdminAddGuide = () => {
       ),
     },
     {
-      Header: "HOẠT ĐỘNG",
+      Header: "Action",
       accessor: "action",
       Cell: () => (
         <div
@@ -191,7 +191,7 @@ const AdminAddGuide = () => {
 
   useEffect(() => {
     if (isAddGuideBookingSuccess) {
-      toast.success("Thêm hướng dẫn viên tour thành công");
+      toast.success("Add tour guide successfully");
       setCallApi(true);
       setIsShowModalConfirm(false);
       setIsShowModalAction(false);
@@ -200,7 +200,7 @@ const AdminAddGuide = () => {
   }, [isAddGuideBookingSuccess]);
   useEffect(() => {
     if (isAddGuideBookingFailure) {
-      toast.error("Thêm hướng dẫn viên tour thất bại");
+      toast.error("Add tour guide failure");
       dispatch(resetAddGuideBooking());
     }
   }, [isAddGuideBookingFailure]);
@@ -222,7 +222,7 @@ const AdminAddGuide = () => {
         <div className="body">
           <input
             type="text"
-            placeholder="Nhập tìm kiếm"
+            placeholder="Enter search"
             value={search}
             onChange={(e) => setSearch(e.target.value)}
           />
@@ -231,7 +231,7 @@ const AdminAddGuide = () => {
           </span>
         </div>
         <FormGroup className="d-flex gap-2">
-          <label htmlFor="">Lọc theo ngày </label>
+          <label htmlFor="">Filter by date</label>
           <input
             type="date"
             value={date}
@@ -246,7 +246,7 @@ const AdminAddGuide = () => {
               checked={filter === false}
               onClick={() => setFilter(!filter)}
             />
-            <label htmlFor="">Chưa có hướng dẫn viên</label>
+            <label htmlFor="">No tour guide yet</label>
           </FormGroup>
           <FormGroup className="d-flex gap-2">
             <Form.Check
@@ -255,7 +255,7 @@ const AdminAddGuide = () => {
               checked={filter === true}
               onClick={() => setFilter(!filter)}
             />
-            <label htmlFor="">Đã có hướng dẫn viên</label>
+            <label htmlFor="">A tour guide is available</label>
           </FormGroup>
         </div>
       </div>

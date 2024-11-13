@@ -1,254 +1,254 @@
 export const LIST_PROVINCE = [
   {
     value: "01",
-    label: "Thành phố Hà Nội",
+    label: "Hanoi City",
   },
   {
     value: "79",
-    label: "Thành phố Hồ Chí Minh",
+    label: "Ho Chi Minh City",
   },
   {
     value: "31",
-    label: "Thành phố Hải Phòng",
+    label: "Hai Phong City",
   },
   {
     value: "48",
-    label: "Thành phố Đà Nẵng",
+    label: "Da Nang City",
   },
   {
     value: "92",
-    label: "Thành phố Cần Thơ",
+    label: "Can Tho City",
   },
   {
     value: "02",
-    label: "Tỉnh Hà Giang",
+    label: "Ha Giang Province",
   },
   {
     value: "04",
-    label: "Tỉnh Cao Bằng",
+    label: "Cao Bang Province",
   },
   {
     value: "06",
-    label: "Tỉnh Bắc Kạn",
+    label: "Bac Kan Province",
   },
   {
     value: "08",
-    label: "Tỉnh Tuyên Quang",
+    label: "Tuyen Quang Province",
   },
   {
     value: "10",
-    label: "Tỉnh Lào Cai",
+    label: "Lao Cai Province",
   },
   {
     value: "11",
-    label: "Tỉnh Điện Biên",
+    label: "Dien Bien Province",
   },
   {
     value: "12",
-    label: "Tỉnh Lai Châu",
+    label: "Lai Chau Province",
   },
   {
     value: "14",
-    label: "Tỉnh Sơn La",
+    label: "Son La Province",
   },
   {
     value: "15",
-    label: "Tỉnh Yên Bái",
+    label: "Yen Bai Province",
   },
   {
     value: "17",
-    label: "Tỉnh Hoà Bình",
+    label: "Hoa Binh Province",
   },
   {
     value: "19",
-    label: "Tỉnh Thái Nguyên",
+    label: "Thai Nguyen Province",
   },
   {
     value: "20",
-    label: "Tỉnh Lạng Sơn",
+    label: "Lang Son Province",
   },
   {
     value: "22",
-    label: "Tỉnh Quảng Ninh",
+    label: "Quang Ninh Province",
   },
   {
     value: "24",
-    label: "Tỉnh Bắc Giang",
+    label: "Bac Giang Province",
   },
   {
     value: "25",
-    label: "Tỉnh Phú Thọ",
+    label: "Phu Tho Province",
   },
   {
     value: "26",
-    label: "Tỉnh Vĩnh Phúc",
+    label: "Vinh Phuc Province",
   },
   {
     value: "27",
-    label: "Tỉnh Bắc Ninh",
+    label: "Bac Ninh Province",
   },
   {
     value: "30",
-    label: "Tỉnh Hải Dương",
+    label: "Hai Duong Province",
   },
   {
     value: "33",
-    label: "Tỉnh Hưng Yên",
+    label: "Hung Yen Province",
   },
   {
     value: "34",
-    label: "Tỉnh Thái Bình",
+    label: "Thai Binh Province",
   },
   {
     value: "35",
-    label: "Tỉnh Hà Nam",
+    label: "Ha Nam Province",
   },
   {
     value: "36",
-    label: "Tỉnh Nam Định",
+    label: "Nam Dinh Province",
   },
   {
     value: "37",
-    label: "Tỉnh Ninh Bình",
+    label: "Ninh Binh Province",
   },
   {
     value: "38",
-    label: "Tỉnh Thanh Hóa",
+    label: "Thanh Hoa Province",
   },
   {
     value: "40",
-    label: "Tỉnh Nghệ An",
+    label: "Nghe An Province",
   },
   {
     value: "42",
-    label: "Tỉnh Hà Tĩnh",
+    label: "Ha Tinh Province",
   },
   {
     value: "44",
-    label: "Tỉnh Quảng Bình",
+    label: "Quang Binh Province",
   },
   {
     value: "45",
-    label: "Tỉnh Quảng Trị",
+    label: "Quang Tri Province",
   },
   {
     value: "46",
-    label: "Tỉnh Thừa Thiên Huế",
+    label: "Thua Thien Hue Province",
   },
   {
     value: "49",
-    label: "Tỉnh Quảng Nam",
+    label: "Quang Nam Province",
   },
   {
     value: "51",
-    label: "Tỉnh Quảng Ngãi",
+    label: "Quang Ngai Province",
   },
   {
     value: "52",
-    label: "Tỉnh Bình Định",
+    label: "Binh Dinh Province",
   },
   {
     value: "54",
-    label: "Tỉnh Phú Yên",
+    label: "Phu Yen Province",
   },
   {
     value: "56",
-    label: "Tỉnh Khánh Hòa",
+    label: "Khanh Hoa Province",
   },
   {
     value: "58",
-    label: "Tỉnh Ninh Thuận",
+    label: "Ninh Thuan Province",
   },
   {
     value: "60",
-    label: "Tỉnh Bình Thuận",
+    label: "Binh Thuan Province",
   },
   {
     value: "62",
-    label: "Tỉnh Kon Tum",
+    label: "Kon Tum Province",
   },
   {
     value: "64",
-    label: "Tỉnh Gia Lai",
+    label: "Gia Lai Province",
   },
   {
     value: "66",
-    label: "Tỉnh Đắk Lắk",
+    label: "Dak Lak Province",
   },
   {
     value: "67",
-    label: "Tỉnh Đắk Nông",
+    label: "Dak Nong Province",
   },
   {
     value: "68",
-    label: "Tỉnh Lâm Đồng",
+    label: "Lam Dong Province",
   },
   {
     value: "70",
-    label: "Tỉnh Bình Phước",
+    label: "Binh Phuoc Province",
   },
   {
     value: "72",
-    label: "Tỉnh Tây Ninh",
+    label: "Tay Ninh Province",
   },
   {
     value: "74",
-    label: "Tỉnh Bình Dương",
+    label: "Binh Duong Province",
   },
   {
     value: "75",
-    label: "Tỉnh Đồng Nai",
+    label: "Dong Nai Province",
   },
   {
     value: "77",
-    label: "Tỉnh Bà Rịa - Vũng Tàu",
+    label: "Ba Ria - Vung Tau Province",
   },
   {
     value: "80",
-    label: "Tỉnh Long An",
+    label: "Long An Province",
   },
   {
     value: "82",
-    label: "Tỉnh Tiền Giang",
+    label: "Tien Giang Province",
   },
   {
     value: "83",
-    label: "Tỉnh Bến Tre",
+    label: "Ben Tre Province",
   },
   {
     value: "84",
-    label: "Tỉnh Trà Vinh",
+    label: "Tra Vinh Province",
   },
   {
     value: "86",
-    label: "Tỉnh Vĩnh Long",
+    label: "Vinh Long Province",
   },
   {
     value: "87",
-    label: "Tỉnh Đồng Tháp",
+    label: "Dong Thap Province",
   },
   {
     value: "89",
-    label: "Tỉnh An Giang",
+    label: "An Giang Province",
   },
   {
     value: "91",
-    label: "Tỉnh Kiên Giang",
+    label: "Kien Giang Province",
   },
   {
     value: "93",
-    label: "Tỉnh Hậu Giang",
+    label: "Hau Giang Province",
   },
   {
     value: "94",
-    label: "Tỉnh Sóc Trăng",
+    label: "Soc Trang Province",
   },
   {
     value: "95",
-    label: "Tỉnh Bạc Liêu",
+    label: "Bac Lieu Province",
   },
   {
     value: "96",
-    label: "Tỉnh Cà Mau",
+    label: "Ca Mau Province",
   },
 ];

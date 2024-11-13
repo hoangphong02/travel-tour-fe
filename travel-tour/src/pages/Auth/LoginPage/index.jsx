@@ -50,7 +50,7 @@ const LoginPage = () => {
   useEffect(() => {
     if (isLoginSuccess) {
       history.push(routesUser.home);
-      toast.success("Đăng nhập thành công", {
+      toast.success("Sign in successfully", {
         position: "top-center",
       });
       dispatch(resetAuthState());
@@ -60,11 +60,11 @@ const LoginPage = () => {
   return (
     <div className="login-page">
       <div className="body">
-        <div className="heading">Đăng nhập</div>
+        <div className="heading">LOGIN</div>
         <Form noValidate onSubmit={formik.handleSubmit}>
           {isLoginFailure && (
             <Alert variant="danger">
-              Đăng nhập thất bại. Vui lòng kiểm tra thông tin đăng nhập
+              Login failed. Please check your login information
             </Alert>
           )}
           <input
@@ -98,7 +98,7 @@ const LoginPage = () => {
               </span>
             )}
           </div>
-          <Button type="submit">Đăng nhập</Button>
+          <Button type="submit">Login</Button>
         </Form>
       </div>
     </div>

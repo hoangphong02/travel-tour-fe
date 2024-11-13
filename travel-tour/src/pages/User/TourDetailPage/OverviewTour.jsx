@@ -12,7 +12,7 @@ const OverviewTour = () => {
   return (
     <div className="overview-tour">
       <div className="overview-tour-title">
-        <span>Tổng quan tour</span>
+        <span>Tour overview</span>
       </div>
       <div className="overview-tour-body">
         <RenderQuillItem detail={getDetailTourState?.data?.description} />

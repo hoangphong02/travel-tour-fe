@@ -52,7 +52,7 @@ export const HeaderAdmin = memo(() => {
 
   const handleLogout = () => {
     dispatch(logoutRequest());
-    toast.success("Đăng xuất thành công!", {
+    toast.success("Sign out success!", {
       position: "top-center",
     });
     dispatch(resetUserState());
@@ -87,13 +87,13 @@ export const HeaderAdmin = memo(() => {
 
           <Dropdown.Menu style={{ zIndex: "6" }}>
             {profileResponse?.data?.role === "admin" && (
-              <Dropdown.Item href="/admin">Quản lý hệ thống</Dropdown.Item>
+              <Dropdown.Item href="/admin">System management</Dropdown.Item>
             )}
             <Dropdown.Item onClick={handleWorkSchedule}>
-              Lịch công tác
+              Work schedule
             </Dropdown.Item>
             <Dropdown.Item onClick={() => setIsShowModalLogout(true)}>
-              Đăng xuất
+              Sign out
             </Dropdown.Item>
           </Dropdown.Menu>
         </Dropdown>
@@ -116,9 +116,9 @@ export const HeaderAdmin = memo(() => {
               textAlign: "center",
             }}
           >
-            <span style={{ fontWeight: "bold" }}>Xác nhận</span>
+            <span style={{ fontWeight: "bold" }}>Confirm</span>
             <span style={{ fontSize: "13px" }}>
-              Bạn có chắc chắn muốn đăng xuất tài khoản không
+              Are you sure you want to sign out of your account?
             </span>
           </div>
         </Modal.Body>
@@ -134,7 +134,7 @@ export const HeaderAdmin = memo(() => {
               color: "rgb(157 157 157)",
             }}
           >
-            Hủy
+            Cancel
           </Button>
           <Button
             onClick={handleLogout}
@@ -144,7 +144,7 @@ export const HeaderAdmin = memo(() => {
               border: "none",
             }}
           >
-            Đăng xuất
+            Sign out
           </Button>
         </Modal.Footer>
       </Modal>

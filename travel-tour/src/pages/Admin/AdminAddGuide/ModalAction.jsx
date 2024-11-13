@@ -24,7 +24,7 @@ export const PHONE_REGEX = /((0)+([1-9]{1})+([0-9]{8})\b)/g;
 
 const SignupSchema = Yup.object().shape({
   tour_guide: Yup.mixed()
-    .test("is-not-empty", "Hướng dẫn viên không được để trống", (value) => {
+    .test("is-not-empty", "Tour guide cannot be left blank", (value) => {
       if (typeof value === "object" && value !== null) {
         return Object.keys(value).length > 0;
       }
@@ -33,7 +33,7 @@ const SignupSchema = Yup.object().shape({
       }
       return false;
     })
-    .required("Hướng dẫn viên không được để trống"),
+    .required("Tour guide cannot be left blank"),
 });
 
 export const ModalActions = ({
@@ -83,7 +83,7 @@ export const ModalActions = ({
         size="xl"
         className="modal-actions-product"
       >
-        <ModalHeader>{`${type === "add" ? "Thêm" : "Thêm"} hướng dẫn viên`}</ModalHeader>
+        <ModalHeader>{`${type === "add" ? "Add" : "Add"} tour guide`}</ModalHeader>
         <Formik
           initialValues={{
             tour_id:
@@ -133,8 +133,8 @@ export const ModalActions = ({
                   {isAddGuideBookingFailure && (
                     <Alert color="danger">
                       {type === "add"
-                        ? "Thêm hướng dẫn viên thất bại"
-                        : "Thêm hướng dẫn viên thất bại"}
+                        ? "Add tour guide failure"
+                        : "Add tour guide failure"}
                     </Alert>
                   )}
                   <div className="d-flex" style={{ gap: "12px" }}>
@@ -155,7 +155,7 @@ export const ModalActions = ({
                         })}
                         onChange={(e) => setFieldValue("tour_id", e)}
                         value={values.tour_id}
-                        placeholder="Chọn tour du lịch"
+                        placeholder="Choose a tour"
                       ></Select>
                       {/* {errors.title && touched.title ? (
                         <div className="invalid-feedback d-block">
@@ -165,7 +165,7 @@ export const ModalActions = ({
                     </FormGroup>
                     <FormGroup className="w-100 error-l-100">
                       <Label>
-                        Hướng dẫn viên:{" "}
+                        Tour guide:{" "}
                         <span style={{ color: "red", fontWeight: "600" }}>
                           *
                         </span>
@@ -174,7 +174,7 @@ export const ModalActions = ({
                         <Field
                           disabled
                           className="form-control"
-                          placeholder="Nhập ngày bắt đầu"
+                          placeholder="Enter the start date"
                           name="user"
                         />
                       ) : (
@@ -190,7 +190,7 @@ export const ModalActions = ({
                             )}
                             onChange={(e) => setFieldValue("tour_guide", e)}
                             value={values.tour_guide}
-                            placeholder="Chọn hướng dẫn viên"
+                            placeholder="Choose tour guide"
                             onBlur={() => setFieldTouched("tour_guide", true)}
                           ></Select>
                           {errors.tour_guide && touched.tour_guide ? (
@@ -206,7 +206,7 @@ export const ModalActions = ({
                   <div className="d-flex" style={{ gap: "12px" }}>
                     <FormGroup className="w-100 error-l-100">
                       <Label>
-                        Ngày bắt đầu:{" "}
+                        Start date:{" "}
                         <span style={{ color: "red", fontWeight: "600" }}>
                           *
                         </span>
@@ -216,7 +216,7 @@ export const ModalActions = ({
                         type="date"
                         className="form-control"
                         name="start_date"
-                        placeholder="Nhập ngày bắt đầu"
+                        placeholder="Enter the start date"
                       />
                       {/* {errors.name && touched.name ? (
                         <div className="invalid-feedback d-block">
@@ -226,7 +226,7 @@ export const ModalActions = ({
                     </FormGroup>
                     <FormGroup className="w-100 error-l-100">
                       <Label>
-                        Ngày kết thúc:{" "}
+                        End date:{" "}
                         <span style={{ color: "red", fontWeight: "600" }}>
                           *
                         </span>
@@ -236,7 +236,7 @@ export const ModalActions = ({
                         type="date"
                         className="form-control"
                         name="end_date"
-                        placeholder="Nhập ngày kết thúc"
+                        placeholder="Enter the end date"
                       />
                       {/* {errors.name && touched.name ? (
                         <div className="invalid-feedback d-block">
@@ -248,7 +248,7 @@ export const ModalActions = ({
                   <div className="d-flex" style={{ gap: "12px" }}>
                     <FormGroup className="w-100 error-l-100">
                       <Label>
-                        Tên nhóm:{" "}
+                        Group name:{" "}
                         <span style={{ color: "red", fontWeight: "600" }}>
                           *
                         </span>
@@ -257,7 +257,7 @@ export const ModalActions = ({
                         disabled
                         className="form-control"
                         name="group_number"
-                        placeholder="Nhập tên nhóm"
+                        placeholder="Enter group name"
                       />
                       {/* {errors.name && touched.name ? (
                         <div className="invalid-feedback d-block">
@@ -283,7 +283,7 @@ export const ModalActions = ({
                       className="btn-shadow btn-multiple-state "
                       type="submit"
                     >
-                      <span className="label">Cập nhật</span>
+                      <span className="label">Update</span>
                     </Button>
                   )}
                   {type !== "edit" && (
@@ -307,7 +307,7 @@ export const ModalActions = ({
                         <span className="bounce2" />
                         <span className="bounce3" />
                       </span>
-                      <span className="label">Thêm</span>
+                      <span className="label">Add</span>
                     </Button>
                   )}
                   <Button
@@ -316,7 +316,7 @@ export const ModalActions = ({
                     className="btn-shadow btn-multiple-state"
                     onClick={handleClose}
                   >
-                    Trở về
+                    Back
                   </Button>
                 </ModalFooter>
               </Form>
@@ -333,8 +333,8 @@ export const ModalActions = ({
         toggle={() => setIsShowModalConfirm(false)}
       >
         <ModalBody>
-          <h3>{`Xác nhận thêm hướng dẫn viên`}</h3>
-          <p>Bạn chắc chắc thêm hướng dẫn viên vào nhóm</p>
+          <h3>{`Confirm additional tour guides`}</h3>
+          <p>You must definitely add a tour guide to the group</p>
         </ModalBody>
 
         <ModalFooter>
@@ -356,7 +356,7 @@ export const ModalActions = ({
                 <span className="bounce2" />
                 <span className="bounce3" />
               </span>
-              <span className="label">Xác nhận</span>
+              <span className="label">Confirm</span>
             </Button>
             <Button
               color="primary"
@@ -368,7 +368,7 @@ export const ModalActions = ({
               style={isAddGuideBookingRequest ? { cursor: "no-drop" } : {}}
               onClick={() => setIsShowModalConfirm(false)}
             >
-              Trở về
+              Back
             </Button>
           </div>
         </ModalFooter>

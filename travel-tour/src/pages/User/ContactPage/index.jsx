@@ -19,21 +19,21 @@ const ContactPage = () => {
           <div className="description">Dark Mode</div>
         </div>
 
-        <h1>Liên hệ chúng tôi</h1>
+        <h1>Contact us</h1>
         <p>
-          Có kế hoạch đến thăm miền Tây sớm? Nhận những lời khuyên nội bộ về nơi
-          sẽ đến, những việc cần làm và tìm những ưu đãi tốt nhất cho chuyến
-          phiêu lưu tiếp theo của bạn.
+          Planning to visit the West soon? Get insider tips on where to go will
+          arrive, what to do and find the best deals for your trip your next
+          adventure.
         </p>
 
         <form id="contact-form" method="post" onSubmit={handleSubmit}>
           <div className="item-form">
-            <label htmlFor="name">Họ và tên</label>
+            <label htmlFor="name">Full name</label>
             <input
               type="text"
               id="name"
               name="name"
-              placeholder="Tên của bạn"
+              placeholder="Full name"
               required
             />
           </div>
@@ -43,16 +43,16 @@ const ContactPage = () => {
               type="email"
               id="email"
               name="email"
-              placeholder="Email của bạn"
+              placeholder="Email"
               required
             />
           </div>
 
           <div className="item-form">
-            <label htmlFor="message">Mong muốn</label>
+            <label htmlFor="message">Desire</label>
             <textarea
               rows="6"
-              placeholder="Mong muốn của bạn"
+              placeholder="Your wishes"
               id="message"
               name="message"
               required
@@ -60,7 +60,7 @@ const ContactPage = () => {
           </div>
           <div className="item-form">
             <button type="submit" id="submit" name="submit">
-              Gửi
+              Send
             </button>
           </div>
         </form>

@@ -58,7 +58,7 @@ const TourDetailPage = () => {
       <div className="tour-detail-page-wrapper-top">
         <span className="name-tour">{getDetailTourState?.data?.name}</span>
         <span className="price-tour">
-          Giá tour gốc:{" "}
+          Original tour price:{" "}
           <span className="price">
             {getDetailTourState?.data?.base_price_adult.toLocaleString("vi-VN")}{" "}
             VNĐ
@@ -68,7 +68,7 @@ const TourDetailPage = () => {
           className="btn-book-tour"
           onClick={() => handleBooking(getDetailTourState?.data?._id)}
         >
-          <span>Đặt ngay</span>
+          <span>Book now</span>
         </div>
       </div>
 
@@ -78,25 +78,25 @@ const TourDetailPage = () => {
             className={`option ${option === "program" ? "active" : ""}`}
             onClick={() => handleChangeOption("program")}
           >
-            <span>Chương trình tour</span>
+            <span>Tour program</span>
           </div>
           <div
             className={`option ${option === "priceTable" ? "active" : ""}`}
             onClick={() => handleChangeOption("priceTable")}
           >
-            <span>Bảng giá</span>
+            <span>Price list</span>
           </div>
           <div
             className={`option ${option === "information" ? "active" : ""}`}
             onClick={() => handleChangeOption("information")}
           >
-            <span>Thông tin tour</span>
+            <span>Tour information</span>
           </div>
           <div
             className={`option ${option === "overview" ? "active" : ""}`}
             onClick={() => handleChangeOption("overview")}
           >
-            <span>Tổng quan tour</span>
+            <span>Tour overview</span>
           </div>
           {/* <div
             className={`option ${option === "require" ? "active" : ""}`}

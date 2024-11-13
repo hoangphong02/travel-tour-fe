@@ -1,44 +1,44 @@
 export const ListStatusBooking = [
   {
     value: "pending",
-    label: "Chờ thanh toán",
+    label: "Pending",
   },
   {
     value: "payment_confirmed",
-    label: "Đã thanh toán",
+    label: "Paid",
   },
   {
     value: "payment_failed",
-    label: "Thanh toán thất bại",
+    label: "Payment failed",
   },
   {
     value: "employee_confirmed",
-    label: "Đã xác nhận",
+    label: "Confirmed",
   },
 ];
 
 export const ListNameBooking = [
   {
     value: "vnpay",
-    label: "Thanh toán qua ví Vnpay",
+    label: "Payment via Vnpay e-wallet",
   },
   {
     value: "paypal",
-    label: "Thanh toán qua ví Paypal",
+    label: "Payment via Paypal e-wallet",
   },
   {
     value: "cash",
-    label: "Thanh toán tiền mặt",
+    label: "Cash payment",
   },
 ];
 
 export const ListSearch = [
   {
     value: "tour_name",
-    label: "Tên tour",
+    label: "Tour name",
   },
   {
     value: "tour_code",
-    label: "Mã tour",
+    label: "Tour code",
   },
 ];

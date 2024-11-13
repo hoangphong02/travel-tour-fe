@@ -112,7 +112,7 @@ const AdminTour = () => {
 
   const columns = useMemo(() => [
     {
-      Header: "STT",
+      Header: "Ordinal number",
       accessor: "",
       cellClass: "list-item-heading w-5",
       Cell: (row) => row.row.index + 1,
@@ -123,7 +123,7 @@ const AdminTour = () => {
     //   cellClass: "list-item-heading w-5",
     // },
     {
-      Header: "Hình ảnh",
+      Header: "Image",
       accessor: "image",
       cellClass: "list-item-heading w-5",
       Cell: ({ value }) => (
@@ -140,17 +140,17 @@ const AdminTour = () => {
       ),
     },
     {
-      Header: "Mã code",
+      Header: "Code",
       accessor: "tour_code",
       cellClass: "list-item-heading w-5",
     },
     {
-      Header: "TÊN",
+      Header: "Name",
       accessor: "name",
       cellClass: "list-item-heading w-5",
     },
     {
-      Header: "Danh mục",
+      Header: "Category",
       accessor: "category",
       cellClass: "list-item-heading w-5",
       Cell: ({ value }) => (
@@ -163,7 +163,7 @@ const AdminTour = () => {
       ),
     },
     {
-      Header: "Vị trí",
+      Header: "Position",
       accessor: "",
       cellClass: "list-item-heading w-5",
       Cell: ({ row }) => {
@@ -173,10 +173,10 @@ const AdminTour = () => {
             style={{ gap: "10px" }}
           >
             <div>
-              <strong>Bắt đầu:</strong> {row?.original?.start_location}
+              <strong>Start:</strong> {row?.original?.start_location}
             </div>
             <div>
-              <strong>Kết thúc:</strong> {row?.original?.end_location}
+              <strong>End:</strong> {row?.original?.end_location}
             </div>
           </div>
         );
@@ -184,7 +184,7 @@ const AdminTour = () => {
     },
 
     {
-      Header: "HOẠT ĐỘNG",
+      Header: "Action",
       accessor: "action",
       Cell: () => (
         <div
@@ -220,7 +220,7 @@ const AdminTour = () => {
 
   useEffect(() => {
     if (isCreateTourSuccess) {
-      toast.success("Thêm tour thành công");
+      toast.success("Added successful tour");
       setIsShowModalConfirm(false);
       setCallApi(true);
       setIsShowModalAction(false);
@@ -230,14 +230,14 @@ const AdminTour = () => {
 
   useEffect(() => {
     if (isCreateTourFailure) {
-      toast.error("Thêm tour thất bại");
+      toast.error("Add tour failed");
       dispatch(resetCreateTour());
     }
   }, [isCreateTourFailure]);
 
   useEffect(() => {
     if (isUpdateTourSuccess) {
-      toast.success("Cập nhật tour thành công");
+      toast.success("Successful tour update");
       setCallApi(true);
       setIsShowModalConfirm(false);
       setIsShowModalAction(false);
@@ -246,7 +246,7 @@ const AdminTour = () => {
   }, [isUpdateTourSuccess]);
   useEffect(() => {
     if (isUpdateTourFailure) {
-      toast.error("Cập nhật tour thất bại");
+      toast.error("Tour update failed");
       dispatch(resetUpdateTour());
     }
   }, [isUpdateTourFailure]);
@@ -268,7 +268,7 @@ const AdminTour = () => {
         <div className="body">
           <input
             type="text"
-            placeholder="Nhập tìm kiếm"
+            placeholder="Enter search"
             value={search}
             onChange={(e) => setSearch(e.target.value)}
           />

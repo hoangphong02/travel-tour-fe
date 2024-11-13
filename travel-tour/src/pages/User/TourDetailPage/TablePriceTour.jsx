@@ -33,13 +33,13 @@ const TablePriceTour = () => {
 
   const columns = useMemo(() => [
     {
-      Header: "STT",
+      Header: "Ordinal number",
       accessor: "#",
       cellClass: "list-item-heading w-5",
       Cell: (row) => row.row.index + 1,
     },
     {
-      Header: "Khách sạn",
+      Header: "Hotel",
       accessor: "star",
       cellClass: "list-item-heading w-5",
       Cell: ({ value }) => {
@@ -51,7 +51,7 @@ const TablePriceTour = () => {
       },
     },
     {
-      Header: "Giá người lớn",
+      Header: "Adult price",
       accessor: "price_adult",
       cellClass: "list-item-heading w-5",
       Cell: ({ value }) => {
@@ -59,7 +59,7 @@ const TablePriceTour = () => {
       },
     },
     {
-      Header: "Giá trẻ em",
+      Header: "Child price",
       accessor: "price_child",
       cellClass: "list-item-heading w-5",
       Cell: ({ value }) => {
@@ -67,13 +67,13 @@ const TablePriceTour = () => {
       },
     },
     {
-      Header: "Suất ăn",
+      Header: "Meals",
       accessor: "",
       cellClass: "list-item-heading w-5",
-      Cell: (row) => <span>Trọn gói</span>,
+      Cell: (row) => <span>Full package</span>,
     },
     {
-      Header: "Hành động",
+      Header: "Action",
       accessor: "_id",
       Cell: ({ value }) => {
         return (
@@ -87,7 +87,7 @@ const TablePriceTour = () => {
               className="icon-button"
               onClick={() => handleBooking(getDetailTourState?.data?._id)}
             >
-              ĐẶT NGAY
+              Book now
             </Button>
           </div>
         );
@@ -97,7 +97,7 @@ const TablePriceTour = () => {
   return (
     <div className="table-price-tour">
       <div className="table-price-tour-title">
-        <span>Bảng giá</span>
+        <span>Price list</span>
       </div>
       <div className="table-price-tour-body">
         <div className="table-price-tour-body-main">

@@ -87,7 +87,7 @@ const AdminCategoryTour = () => {
 
   const columns = useMemo(() => [
     {
-      Header: "STT",
+      Header: "Ordinal number",
       accessor: "",
       cellClass: "list-item-heading w-5",
       Cell: (row) => row.row.index + 1,
@@ -98,12 +98,12 @@ const AdminCategoryTour = () => {
     //   cellClass: "list-item-heading w-5",
     // },
     {
-      Header: "TÊN",
+      Header: "Name",
       accessor: "name",
       cellClass: "list-item-heading w-5",
     },
     {
-      Header: "Ảnh minh họa",
+      Header: "Thumbnail",
       accessor: "thumbnail",
       cellClass: "list-item-heading w-5 d-flex",
       Cell: ({ value }) => (
@@ -121,7 +121,7 @@ const AdminCategoryTour = () => {
     },
 
     {
-      Header: "HOẠT ĐỘNG",
+      Header: "Action",
       accessor: "action",
       Cell: () => (
         <div
@@ -157,7 +157,7 @@ const AdminCategoryTour = () => {
 
   useEffect(() => {
     if (isCreateCategoryTourSuccess) {
-      toast.success("Thêm danh mục tour thành công");
+      toast.success("Added tour list successfully");
       setIsShowModalConfirm(false);
       setCallApi(true);
       setIsShowModalAction(false);
@@ -167,14 +167,14 @@ const AdminCategoryTour = () => {
 
   useEffect(() => {
     if (isCreateCategoryTourFailure) {
-      toast.error("Thêm danh mục tour thất bại");
+      toast.error("Add failed tour category");
       dispatch(resetCreateCategoryTour());
     }
   }, [isCreateCategoryTourFailure]);
 
   useEffect(() => {
     if (isUpdateCategoryTourSuccess) {
-      toast.success("Cập nhật danh mục tour thành công");
+      toast.success("Successfully updated tour list");
       setCallApi(true);
       setIsShowModalConfirm(false);
       setIsShowModalAction(false);
@@ -184,7 +184,7 @@ const AdminCategoryTour = () => {
 
   useEffect(() => {
     if (isUpdateCategoryTourFailure) {
-      toast.error("Cập nhật danh mục tour thất bại");
+      toast.error("Update failed tour list");
       dispatch(resetUpdateCategoryTour());
     }
   }, [isUpdateCategoryTourFailure]);
@@ -206,7 +206,7 @@ const AdminCategoryTour = () => {
         <div className="body">
           <input
             type="text"
-            placeholder="Nhập tìm kiếm"
+            placeholder="Enter search"
             value={search}
             onChange={(e) => setSearch(e.target.value)}
           />

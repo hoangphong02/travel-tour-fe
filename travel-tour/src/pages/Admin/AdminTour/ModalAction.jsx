@@ -27,16 +27,14 @@ export const PHONE_REGEX = /((0)+([1-9]{1})+([0-9]{8})\b)/g;
 
 const SignupSchema = Yup.object().shape({
   name: Yup.string()
-    .required("Tên không được để trống")
-    .max(200, "Tên không quá 200 ký tự".replace("$x", 200)),
+    .required("Name cannot be blank")
+    .max(200, "Name must not exceed 200 characters".replace("$x", 200)),
   tour_code: Yup.string()
-    .required("Mã tour không được để trống")
-    .max(20, "Tên không quá 20 ký tự".replace("$x", 20)),
-  shedule_on_week: Yup.string().required(
-    "Thời gian trong tuần không được để trống"
-  ),
+    .required("Tour code cannot be left blank")
+    .max(20, "Name must not exceed 20 characters".replace("$x", 20)),
+  shedule_on_week: Yup.string().required("Time of week cannot be left blank"),
   day: Yup.mixed()
-    .test("is-valid-day", "Số ngày không được để trống", (value) => {
+    .test("is-valid-day", "Days cannot be left blank", (value) => {
       if (typeof value === "object" && value !== null) {
         return Object.keys(value).length > 0;
       }
@@ -45,44 +43,48 @@ const SignupSchema = Yup.object().shape({
       }
       return false;
     })
-    .required("Số ngày không được để trống"),
+    .required("Days cannot be left blank"),
   category: Yup.object()
     .test(
       "is-not-empty",
-      "Danh mục tour không được để trống",
+      "Tour categories cannot be empty",
       (value) => value && Object.keys(value).length > 0
     )
-    .required("Danh mục tour không được để trống"),
+    .required("Tour categories cannot be empty"),
 
   transportation: Yup.object()
     .test(
       "is-not-empty",
-      "Phương tiện không được để trống",
+      "Vehicles cannot be left empty",
       (value) => value && Object.keys(value).length > 0
     )
-    .required("Phương tiện không được để trống"),
-  start_location: Yup.string().required("Vị trí bắt đầu không được để trống"),
-  end_location: Yup.string().required("Vị trí kết thúc không được để trống"),
-  base_price_adult: Yup.string().required(
-    "Giá vé người lớn không được để trống"
+    .required("Vehicles cannot be left empty"),
+  start_location: Yup.string().required(
+    "The starting position cannot be empty"
   ),
-  base_price_child: Yup.string().required("Giá vé trẻ em không được để trống"),
+  end_location: Yup.string().required("The end position cannot be empty"),
+  base_price_adult: Yup.string().required(
+    "Adult ticket prices cannot be left blank"
+  ),
+  base_price_child: Yup.string().required(
+    "Child ticket prices cannot be left blank"
+  ),
   star: Yup.object()
     .test(
       "is-not-empty",
-      "Loại khách sạn không được để trống",
+      "Hotel type cannot be left blank",
       (value) => value && Object.keys(value).length > 0
     )
-    .required("Loại khách sạn không được để trống"),
-  price_adult: Yup.string().required("Giá người lớn không được để trống"),
-  price_child: Yup.string().required("Giá trẻ em không được để trống"),
+    .required("Hotel type cannot be left blank"),
+  price_adult: Yup.string().required("Adult prices cannot be left blank"),
+  price_child: Yup.string().required("Child prices cannot be left blank"),
   provinceId: Yup.array()
     .test(
       "is-not-empty",
-      "Tỉnh thành không được để trống",
+      "Province cannot be left blank",
       (value) => value && Object.keys(value).length > 0
     )
-    .required("Tỉnh thành không được để trống"),
+    .required("Province cannot be left blank"),
   // editor: Yup.string().required("Mô tả không được để trống"),
 });
 
@@ -113,31 +115,31 @@ export const ModalActions = ({
   const ListDayTour = [
     {
       value: 1,
-      label: "1 ngày",
+      label: "one day",
     },
     {
       value: 2,
-      label: "2 ngày",
+      label: "two day",
     },
     {
       value: 3,
-      label: "3 ngày",
+      label: "three day",
     },
     {
       value: 4,
-      label: "4 ngày",
+      label: "four day",
     },
     {
       value: 5,
-      label: "5 ngày",
+      label: "fine day",
     },
     {
       value: 6,
-      label: "6 ngày",
+      label: "six day",
     },
     {
       value: 7,
-      label: "7 ngày",
+      label: "seven day",
     },
   ];
 
@@ -322,7 +324,7 @@ export const ModalActions = ({
         size="xl"
         className="modal-actions-product"
       >
-        <ModalHeader>{`${type === "add" ? "Thêm" : "Chỉnh sửa"} tour`}</ModalHeader>
+        <ModalHeader>{`${type === "add" ? "Add" : "Update"} tour`}</ModalHeader>
         <Formik
           initialValues={{
             tour_code: type === "add" ? "" : data?.tour_code || "",
@@ -379,14 +381,14 @@ export const ModalActions = ({
                   {(isCreateFoodFailure || isUpdateTourFailure) && (
                     <Alert color="danger">
                       {type === "add"
-                        ? "Thêm tour thất bại"
-                        : "Cập nhật tour thất bại"}
+                        ? "Add tour failed"
+                        : "Update tour failed"}
                     </Alert>
                   )}
                   <div className="d-flex" style={{ gap: "12px" }}>
                     <FormGroup className="w-100 error-l-100">
                       <Label>
-                        Mã tour:{" "}
+                        Tour code:{" "}
                         <span style={{ color: "red", fontWeight: "600" }}>
                           *
                         </span>
@@ -394,7 +396,7 @@ export const ModalActions = ({
                       <Field
                         className="form-control"
                         name="tour_code"
-                        placeholder="Nhập mã tour"
+                        placeholder="Enter code tour"
                       />
                       {errors.tour_code && touched.tour_code ? (
                         <div className="invalid-feedback d-block">
@@ -406,7 +408,7 @@ export const ModalActions = ({
                   <div className="d-flex" style={{ gap: "12px" }}>
                     <FormGroup className="w-100 error-l-100">
                       <Label>
-                        Tên tour:{" "}
+                        Tour name:{" "}
                         <span style={{ color: "red", fontWeight: "600" }}>
                           *
                         </span>
@@ -414,7 +416,7 @@ export const ModalActions = ({
                       <Field
                         className="form-control"
                         name="name"
-                        placeholder="Nhập tên tour"
+                        placeholder="Enter tour name"
                       />
                       {errors.name && touched.name ? (
                         <div className="invalid-feedback d-block">
@@ -427,7 +429,7 @@ export const ModalActions = ({
                   <div className="d-flex" style={{ gap: "12px" }}>
                     <FormGroup className="w-100 error-l-100">
                       <Label>
-                        Danh mục tour:{" "}
+                        Category tour:{" "}
                         <span style={{ color: "red", fontWeight: "600" }}>
                           *
                         </span>
@@ -436,7 +438,7 @@ export const ModalActions = ({
                         options={options}
                         onChange={(e) => setFieldValue("category", e)}
                         value={values.category}
-                        placeholder="Chọn danh mục tour"
+                        placeholder="Choose category tpur"
                         onBlur={() => setFieldTouched("category", true)}
                       ></Select>
                       {errors.category && touched.category ? (
@@ -447,7 +449,7 @@ export const ModalActions = ({
                     </FormGroup>
                     <FormGroup className="w-100 error-l-100">
                       <Label>
-                        Thời gian trong tuần:{" "}
+                        Time of the week:{" "}
                         <span style={{ color: "red", fontWeight: "600" }}>
                           *
                         </span>
@@ -455,7 +457,7 @@ export const ModalActions = ({
                       <Field
                         className="form-control"
                         name="shedule_on_week"
-                        placeholder="Nhập thời gian trong tuần"
+                        placeholder="Enter the time of the week"
                       />
                       {errors.shedule_on_week && touched.shedule_on_week ? (
                         <div className="invalid-feedback d-block">
@@ -468,7 +470,7 @@ export const ModalActions = ({
                   <div className="d-flex" style={{ gap: "12px" }}>
                     <FormGroup className="w-100 error-l-100">
                       <Label>
-                        Vị trí xuất phát:{" "}
+                        Start position:{" "}
                         <span style={{ color: "red", fontWeight: "600" }}>
                           *
                         </span>
@@ -476,7 +478,7 @@ export const ModalActions = ({
                       <Field
                         className="form-control"
                         name="start_location"
-                        placeholder="Nhập vị trí xuất phát"
+                        placeholder="Enter start position"
                       />
                       {errors.start_location && touched.start_location ? (
                         <div className="invalid-feedback d-block">
@@ -486,7 +488,7 @@ export const ModalActions = ({
                     </FormGroup>
                     <FormGroup className="w-100 error-l-100">
                       <Label>
-                        Vị trí kết thúc:{" "}
+                        End position:{" "}
                         <span style={{ color: "red", fontWeight: "600" }}>
                           *
                         </span>
@@ -494,7 +496,7 @@ export const ModalActions = ({
                       <Field
                         className="form-control"
                         name="end_location"
-                        placeholder="Nhập vị trí kết thúc"
+                        placeholder="Enter end position"
                       />
                       {errors.end_location && touched.end_location ? (
                         <div className="invalid-feedback d-block">
@@ -507,7 +509,7 @@ export const ModalActions = ({
                   <div className="d-flex" style={{ gap: "12px" }}>
                     <FormGroup className="w-100 error-l-100">
                       <Label>
-                        Chọn phương tiện:{" "}
+                        Select transportation :{" "}
                         <span style={{ color: "red", fontWeight: "600" }}>
                           *
                         </span>
@@ -526,7 +528,7 @@ export const ModalActions = ({
                     </FormGroup>
                     <FormGroup className="w-100 error-l-100">
                       <Label>
-                        Chọn số ngày:{" "}
+                        Select the number of days:{" "}
                         <span style={{ color: "red", fontWeight: "600" }}>
                           *
                         </span>
@@ -548,7 +550,7 @@ export const ModalActions = ({
                   <div className="d-flex" style={{ gap: "12px" }}>
                     <FormGroup className="w-100 error-l-100">
                       <Label>
-                        Giá vé người lớn:{" "}
+                        Adult ticket price:{" "}
                         <span style={{ color: "red", fontWeight: "600" }}>
                           *
                         </span>
@@ -556,7 +558,7 @@ export const ModalActions = ({
                       <Field
                         className="form-control"
                         name="base_price_adult"
-                        placeholder="Nhập giá vé người lớn"
+                        placeholder="Enter Adult ticket price"
                       />
                       {errors.base_price_adult && touched.base_price_adult ? (
                         <div className="invalid-feedback d-block">
@@ -566,7 +568,7 @@ export const ModalActions = ({
                     </FormGroup>
                     <FormGroup className="w-100 error-l-100">
                       <Label>
-                        Giá vé trẻ em:{" "}
+                        Child ticket price :{" "}
                         <span style={{ color: "red", fontWeight: "600" }}>
                           *
                         </span>
@@ -574,7 +576,7 @@ export const ModalActions = ({
                       <Field
                         className="form-control"
                         name="base_price_child"
-                        placeholder="Nhập giá vé trẻ em"
+                        placeholder="Enter child fare"
                       />
                       {errors.base_price_child && touched.base_price_child ? (
                         <div className="invalid-feedback d-block">
@@ -628,7 +630,7 @@ export const ModalActions = ({
                   <div className="d-flex" style={{ gap: "12px" }}>
                     <FormGroup className="w-100 error-l-100">
                       <Label>
-                        Chọn khách sạn:{" "}
+                        Choose a hotel:{" "}
                         <span style={{ color: "red", fontWeight: "600" }}>
                           *
                         </span>
@@ -648,7 +650,7 @@ export const ModalActions = ({
 
                     <FormGroup className="w-100 error-l-100">
                       <Label>
-                        Tỉnh thành:{" "}
+                        Province:{" "}
                         <span style={{ color: "red", fontWeight: "600" }}>
                           *
                         </span>
@@ -672,7 +674,7 @@ export const ModalActions = ({
                   <div className="d-flex" style={{ gap: "12px" }}>
                     <FormGroup className="w-100 error-l-100">
                       <Label>
-                        Nhập giá khách sạn người lớn:{" "}
+                        Adult hotel prices:{" "}
                         <span style={{ color: "red", fontWeight: "600" }}>
                           *
                         </span>
@@ -680,7 +682,7 @@ export const ModalActions = ({
                       <Field
                         className="form-control"
                         name="price_adult"
-                        placeholder="Nhập giá khách sạn người lớn"
+                        placeholder="Enter adult hotel prices"
                       />
                       {errors.price_adult && touched.price_adult ? (
                         <div className="invalid-feedback d-block">
@@ -690,7 +692,7 @@ export const ModalActions = ({
                     </FormGroup>
                     <FormGroup className="w-100 error-l-100">
                       <Label>
-                        Nhập giá khách sạn trẻ em:{" "}
+                        Children's hotel prices:{" "}
                         <span style={{ color: "red", fontWeight: "600" }}>
                           *
                         </span>
@@ -698,7 +700,7 @@ export const ModalActions = ({
                       <Field
                         className="form-control"
                         name="price_child"
-                        placeholder="Nhập giá khách sạn trẻ em"
+                        placeholder="Enter Children's hotel prices"
                       />
                       {errors.price_child && touched.price_child ? (
                         <div className="invalid-feedback d-block">
@@ -710,7 +712,7 @@ export const ModalActions = ({
 
                   <FormGroup className="error-l-100">
                     <Label>
-                      Mô tả:{" "}
+                      Description:{" "}
                       <span style={{ color: "red", fontWeight: "600" }}>*</span>
                     </Label>
                     <Editor
@@ -722,7 +724,7 @@ export const ModalActions = ({
                   {Array.from({ length: values?.day?.value }).map((_, i) => (
                     <FormGroup className="error-l-100" key={i}>
                       <Label>
-                        {`Nhập chi tiết ngày ${i + 1}`}:{" "}
+                        {`Enter date details ${i + 1}`}:{" "}
                         <span style={{ color: "red", fontWeight: "600" }}>
                           *
                         </span>
@@ -743,7 +745,7 @@ export const ModalActions = ({
 
                   <FormGroup className="error-l-100">
                     <Label>
-                      Ảnh minh họa:{" "}
+                      Image:{" "}
                       <span style={{ color: "red", fontWeight: "600" }}>*</span>
                     </Label>
                     <Input
@@ -784,7 +786,7 @@ export const ModalActions = ({
 
                   <FormGroup className="error-l-100">
                     <Label>
-                      Ảnh banner quảng bá:{" "}
+                      Promotional banner photo:{" "}
                       <span style={{ color: "red", fontWeight: "600" }}>*</span>
                     </Label>
                     <Input
@@ -825,7 +827,7 @@ export const ModalActions = ({
 
                   <FormGroup className="error-l-100">
                     <Label>
-                      Ảnh slide quảng bá:{" "}
+                      Promotional slide photo:{" "}
                       <span style={{ color: "red", fontWeight: "600" }}>*</span>
                     </Label>
                     <Input
@@ -877,7 +879,7 @@ export const ModalActions = ({
                       className="btn-shadow btn-multiple-state "
                       type="submit"
                     >
-                      <span className="label">Cập nhật</span>
+                      <span className="label">Update</span>
                     </Button>
                   )}
                   {type !== "edit" && (
@@ -901,7 +903,7 @@ export const ModalActions = ({
                         <span className="bounce2" />
                         <span className="bounce3" />
                       </span>
-                      <span className="label">Thêm</span>
+                      <span className="label">Add</span>
                     </Button>
                   )}
                   <Button
@@ -910,7 +912,7 @@ export const ModalActions = ({
                     className="btn-shadow btn-multiple-state"
                     onClick={handleClose}
                   >
-                    Trở về
+                    Back
                   </Button>
                 </ModalFooter>
               </Form>
@@ -927,8 +929,8 @@ export const ModalActions = ({
         toggle={() => setIsShowModalConfirm(false)}
       >
         <ModalBody>
-          <h3>{`Xác nhận ${type === "add" ? "thêm" : "chỉnh sửa"} tour`}</h3>
-          <p>{`Bạn chắc chắn ${type === "add" ? "thêm" : "chỉnh sửa"} tour`}</p>
+          <h3>{`Confirm ${type === "add" ? "add" : "update"} tour`}</h3>
+          <p>{`You are sure ${type === "add" ? "add" : "update"} tour`}</p>
         </ModalBody>
         {/* <ModalFooter>
           <div className="d-flex align-content-center justify-content-between flex-grow-1">
@@ -987,7 +989,7 @@ export const ModalActions = ({
                 <span className="bounce2" />
                 <span className="bounce3" />
               </span>
-              <span className="label">Xác nhận</span>
+              <span className="label">Confirm</span>
             </Button>
             <Button
               color="primary"
@@ -1003,7 +1005,7 @@ export const ModalActions = ({
               }
               onClick={() => setIsShowModalConfirm(false)}
             >
-              Trở về
+              Back
             </Button>
           </div>
         </ModalFooter>

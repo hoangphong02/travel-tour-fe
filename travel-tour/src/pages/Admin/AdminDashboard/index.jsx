@@ -73,7 +73,7 @@ const AdminDashboard = () => {
       <div className="main-cards">
         <div className="card">
           <div className="card-inner">
-            <h3>DOANH THU</h3>
+            <h3>REVENUE</h3>
             <CSDollarSolid className="card_icon" />
           </div>
           <h2>
@@ -83,7 +83,7 @@ const AdminDashboard = () => {
         </div>
         <div className="card">
           <div className="card-inner">
-            <h3>DOANH THU THÁNG</h3>
+            <h3>MONTHLY REVENUE</h3>
             <CSDollarSolid className="card_icon" />
           </div>
           <h2>
@@ -93,7 +93,7 @@ const AdminDashboard = () => {
         </div>
         <div className="card">
           <div className="card-inner">
-            <h3>SỐ LƯỢT BOOKING / THÁNG</h3>
+            <h3>NUMBER OF BOOKINGS / MONTH</h3>
             <CSOrderOutline className="card_icon" />
           </div>
           <h2>{getStatisticalState?.data?.bookingMonth}</h2>
@@ -110,7 +110,7 @@ const AdminDashboard = () => {
       <div className="chart-total-price-of-month">
         <div>
           <p style={{ padding: "0 20px", marginBottom: "0" }}>
-            BIỂU ĐỒ DOANH THU THEO THÁNG
+            REVENUE CHART BY MONTH
           </p>
           <div style={{ height: "300px", marginTop: "30px" }}>
             <RevenueStatisticsChart data={dataToTalPriceOrderMonth.reverse()} />
@@ -120,7 +120,7 @@ const AdminDashboard = () => {
 
       <div className="list-tour">
         <div className="list-tour-main">
-          <span className="title">TOUR NỔI BẬT</span>
+          <span className="title">TOUR HIGHLIGHTS</span>
           <div className="tour-main">
             {getAllTourMainState?.data?.map((item, index) => {
               return (
@@ -133,7 +133,7 @@ const AdminDashboard = () => {
                   />
                   <div className="name">
                     <span>{item?.name}</span>
-                    <span>Lượt quan tâm: {item?.view}</span>
+                    <span>Interested turn: {item?.view}</span>
                   </div>
                 </div>
               );
@@ -141,7 +141,7 @@ const AdminDashboard = () => {
           </div>
         </div>
         <div className="list-tour-main">
-          <span className="title">TOUR ÍT ĐƯỢC QUAN TÂM</span>
+          <span className="title">TOUR OF LITTLE INTEREST</span>
           <div className="tour-main">
             {getAllTourFlopState?.data?.map((item, index) => {
               return (
@@ -154,7 +154,7 @@ const AdminDashboard = () => {
                   />
                   <div className="name">
                     <span>{item?.name}</span>
-                    <span>Lượt quan tâm: {item?.view}</span>
+                    <span>Interested turn: {item?.view}</span>
                   </div>
                 </div>
               );

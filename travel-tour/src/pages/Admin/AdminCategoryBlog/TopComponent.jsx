@@ -4,9 +4,9 @@ import { Button } from "react-bootstrap";
 const TopComponent = ({ handleShowModalActions }) => {
   return (
     <div className="body">
-      <h3>Quản lý danh mục Blog</h3>
+      <h3>Manage Blog categories</h3>
       <div>
-        <Button onClick={() => handleShowModalActions("add")}>Thêm</Button>
+        <Button onClick={() => handleShowModalActions("add")}>ADD</Button>
       </div>
     </div>
   );

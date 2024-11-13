@@ -74,7 +74,7 @@ function TourSuggest() {
               />
               <span>{item?.name}</span>
               <Button onClick={() => handleClickTourDetail(item?._id)}>
-                Xem thêm
+                See more
               </Button>
             </div>
           );

@@ -33,7 +33,7 @@ const AdminBooking = () => {
   const [end, setEnd] = useState("");
   const [typeSearch, setTypeSearch] = useState({
     value: "tour_name",
-    label: "Tên tour",
+    label: "Tour name",
   });
 
   const searchDebounce = useDebounce(search, 500);
@@ -137,7 +137,7 @@ const AdminBooking = () => {
 
   const columns = useMemo(() => [
     {
-      Header: "STT",
+      Header: "Ordinal number",
       accessor: "",
       cellClass: "list-item-heading w-5",
       Cell: (row) => row.row.index + 1,
@@ -148,7 +148,7 @@ const AdminBooking = () => {
     //   cellClass: "list-item-heading w-5",
     // },
     {
-      Header: "Tên tour",
+      Header: "Tour name",
       accessor: "tour_id",
       cellClass: "list-item-heading w-10",
       Cell: ({ value }) => (
@@ -159,11 +159,11 @@ const AdminBooking = () => {
           <span>{value?.name}</span>
           <div className="d-flex flex-column">
             <span>
-              <strong>Giá người lớn:</strong>{" "}
+              <strong>Adult price:</strong>{" "}
               {value?.base_price_adult.toLocaleString("vi-VN")} VNĐ
             </span>
             <span>
-              <strong>Giá trẻ em:</strong>{" "}
+              <strong>Child price:</strong>{" "}
               {value?.base_price_child.toLocaleString("vi-VN")} VNĐ
             </span>
           </div>
@@ -171,7 +171,7 @@ const AdminBooking = () => {
       ),
     },
     {
-      Header: "SL vé",
+      Header: "Number of tickets",
       accessor: "",
       cellClass: "list-item-heading w-10",
       Cell: ({ row }) => {
@@ -181,17 +181,17 @@ const AdminBooking = () => {
             style={{ gap: "10px" }}
           >
             <span>
-              <strong>Người lớn:</strong> {row?.original?.adult_ticket}
+              <strong>Adult:</strong> {row?.original?.adult_ticket}
             </span>
             <span>
-              <strong>Trẻ em:</strong> {row?.original?.child_ticket}
+              <strong>Child:</strong> {row?.original?.child_ticket}
             </span>
           </div>
         );
       },
     },
     {
-      Header: "Tổng giá",
+      Header: "Total price",
       accessor: "total_price",
       cellClass: "list-item-heading w-5",
       Cell: ({ value }) => (
@@ -204,7 +204,7 @@ const AdminBooking = () => {
       ),
     },
     {
-      Header: "Trạng thái",
+      Header: "Status",
       accessor: "payment_status",
       cellClass: "list-item-heading w-5",
       Cell: ({ value }) => (
@@ -217,7 +217,7 @@ const AdminBooking = () => {
       ),
     },
     {
-      Header: "Ngày đặt",
+      Header: "Booking date",
       accessor: "createdAt",
       cellClass: "list-item-heading w-5",
       Cell: ({ value }) => (
@@ -230,7 +230,7 @@ const AdminBooking = () => {
       ),
     },
     {
-      Header: "HOẠT ĐỘNG",
+      Header: "Action",
       accessor: "action",
       Cell: () => (
         <div
@@ -266,7 +266,7 @@ const AdminBooking = () => {
 
   useEffect(() => {
     if (isCreateBookingSuccess) {
-      toast.success("Đặt tour thành công");
+      toast.success("Booked tour successfully");
       setIsShowModalConfirm(false);
       setCallApi(true);
       setIsShowModalAction(false);
@@ -276,14 +276,14 @@ const AdminBooking = () => {
 
   useEffect(() => {
     if (isCreateBookingFailure) {
-      toast.error("Đặt tour thất bại");
+      toast.error("Tour booking failed");
       dispatch(resetCreateBooking());
     }
   }, [isCreateBookingFailure]);
 
   useEffect(() => {
     if (isUpdateBookingSuccess) {
-      toast.success("Cập nhật đặt tour thành công");
+      toast.success("Updated successful tour booking");
       setCallApi(true);
       setIsShowModalConfirm(false);
       setIsShowModalAction(false);
@@ -292,7 +292,7 @@ const AdminBooking = () => {
   }, [isUpdateBookingSuccess]);
   useEffect(() => {
     if (isUpdateBookingFailure) {
-      toast.error("Cập nhật đặt tour thất bại");
+      toast.error("Update tour booking failed");
       dispatch(resetUpdateBooking());
     }
   }, [isUpdateBookingFailure]);
@@ -319,7 +319,7 @@ const AdminBooking = () => {
           ></Select>
           <input
             type="text"
-            placeholder="Nhập tìm kiếm"
+            placeholder="Enter search"
             value={search}
             onChange={(e) => setSearch(e.target.value)}
           />
@@ -328,7 +328,7 @@ const AdminBooking = () => {
           </span>
         </div>
         <div className="d-flex gap-2 align-items-center select-filter">
-          <span>Trạng thái:</span>
+          <span>Status:</span>
           <Select
             options={ListStatusBooking}
             onChange={(e) => setStatus(e)}
@@ -336,7 +336,7 @@ const AdminBooking = () => {
           ></Select>
         </div>
         <FormGroup className="d-flex gap-2 align-items-center">
-          <label htmlFor="">Ngày đặt tour từ: </label>
+          <label htmlFor=""> Tour booking date from: </label>
           <input
             type="date"
             value={start}
@@ -344,7 +344,7 @@ const AdminBooking = () => {
           />
         </FormGroup>
         <FormGroup className="d-flex gap-2 align-items-center">
-          <label htmlFor="">Đến: </label>
+          <label htmlFor="">To: </label>
           <input
             type="date"
             value={end}

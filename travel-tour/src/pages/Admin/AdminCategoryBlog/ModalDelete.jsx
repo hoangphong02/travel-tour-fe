@@ -20,7 +20,7 @@ export const ModalDelete = ({ data, isOpen, handleClose, setCallApi }) => {
     if (isDeleteCategorySuccess) {
       handleClose();
       setCallApi(true);
-      toast.success("Xóa thành công danh mục blog");
+      toast.success("Successfully deleted blog category");
       dispatch(resetDeleteCategory());
     }
   }, [isDeleteCategorySuccess]);
@@ -39,10 +39,10 @@ export const ModalDelete = ({ data, isOpen, handleClose, setCallApi }) => {
     >
       <ModalBody>
         {isDeleteCategoryFailure && (
-          <Alert color="danger">Xóa danh mục Blog thất bại</Alert>
+          <Alert color="danger">Delete failed Blog category</Alert>
         )}
-        <h3 className="color-danger">Xác nhận xóa danh mục Blog</h3>
-        <p>Bạn chắc chắc xóa danh mục blog</p>
+        <h3 className="color-danger">Confirm deletion of Blog category</h3>
+        <p>You must definitely delete the blog category</p>
       </ModalBody>
       <ModalFooter>
         <div className="d-flex align-content-center justify-content-end flex-grow-1 gap-2">
@@ -59,7 +59,7 @@ export const ModalDelete = ({ data, isOpen, handleClose, setCallApi }) => {
               <span className="bounce2" />
               <span className="bounce3" />
             </span>
-            <span className="label">Xác nhận</span>
+            <span className="label">Confirm</span>
           </Button>
           <Button
             color="danger"
@@ -71,7 +71,7 @@ export const ModalDelete = ({ data, isOpen, handleClose, setCallApi }) => {
             style={isDeleteCategoryRequest ? { cursor: "no-drop" } : {}}
             onClick={handleClose}
           >
-            Trở về
+            Back
           </Button>
         </div>
       </ModalFooter>

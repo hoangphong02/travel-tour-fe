@@ -68,19 +68,19 @@ const BookingPage = () => {
 
   useEffect(() => {
     if (isCreateBookingSuccess) {
-      toast.success("Đặt tour thành công");
+      toast.success("Booked tour successfully");
       dispatch(resetCreateBooking());
     }
   }, [isCreateBookingSuccess]);
   useEffect(() => {
     if (isCreateBookingFailure) {
-      toast.error("Đặt tour thất bại vui lòng kiểm tra đầy đủ thông tin");
+      toast.error("If your tour booking fails, please check all information");
       dispatch(resetCreateBooking());
     }
   }, [isCreateBookingFailure]);
   useEffect(() => {
     if (isUpdatePaymentBookingSuccess) {
-      toast.success("Thanh toán thành công");
+      toast.success("Payment successful");
       dispatch(resetUpdatePaymentBooking());
       dispatch(resetStateCreateBooking());
     }
@@ -88,14 +88,14 @@ const BookingPage = () => {
 
   useEffect(() => {
     if (isUpdatePaymentBookingFailure) {
-      toast.error("Thanh toán thất bại");
+      toast.error("Payment failed");
       dispatch(resetUpdatePaymentBooking());
     }
   }, [isUpdatePaymentBookingFailure]);
 
   useEffect(() => {
     if (isUpdateBookingSuccess) {
-      toast.success("Cập nhật phương thức thanh toán thành công");
+      toast.success("Update payment method successfully");
       dispatch(resetUpdateBooking());
       dispatch(resetStateCreateBooking());
       handleCloseShow();
@@ -104,7 +104,7 @@ const BookingPage = () => {
 
   useEffect(() => {
     if (isUpdateBookingFailure) {
-      toast.error("Cập nhật phương thức thanh toán thất bại");
+      toast.error("Payment method update failed");
     }
   }, [isUpdateBookingFailure]);
 
@@ -205,23 +205,23 @@ const BookingPage = () => {
       <div className="booking-page-wrapper-left">
         <div className="booking-page-wrapper-left-section-1">
           <div className="top">
-            <span className="title">DỊCH VỤ TOUR</span>
+            <span className="title">TOUR SERVICES</span>
             {/* <Select options={options} defaultValue={options[0]} /> */}
           </div>
           <div className="bottom">
             <div className="tour-require">
-              <span className="title">Tour yêu cầu</span>
+              <span className="title">Tour request</span>
               <input
                 disabled
                 type="text"
-                placeholder="Tour yêu cầu"
+                placeholder="Tour request"
                 value={getDetailTourState?.data?.name}
               />
             </div>
 
             <div className="list-option">
               <div className="option">
-                <span className="title">Khách sạn</span>
+                <span className="title">Hotel</span>
                 {/* <Select
                   options={LIST_OPTION_RANK_HOTEL}
                   value={
@@ -246,7 +246,7 @@ const BookingPage = () => {
               </div>
 
               <div className="option">
-                <span className="title">Số ngày đi tour</span>
+                <span className="title">Number of days on tour</span>
                 {/* <Select
                   options={optionDayTour}
                   defaultValue={optionDayTour[0]}
@@ -258,7 +258,7 @@ const BookingPage = () => {
                 />
               </div>
               <div className="option">
-                <span className="title">Phương tiện</span>
+                <span className="title">Vehicle</span>
                 {/* <Select
                   options={optionVehicelTour}
                   defaultValue={optionVehicelTour[0]}
@@ -275,18 +275,18 @@ const BookingPage = () => {
 
         <div className="booking-page-wrapper-left-section-2">
           <div className="top">
-            <span className="title">Chi tiết tour</span>
+            <span className="title">Tour details</span>
           </div>
           <div className="bottom">
             <span>
               <span style={{ color: "red" }}>
-                (Quý khách vui lòng nhớ số booking để tiện cho các giao dịch sau
-                này)
+                (Please remember your booking number for convenience in future
+                transactions this)
               </span>
             </span>
             <div className="list-option">
               <div className="option">
-                <span>Người lớn</span>
+                <span>Adult</span>
                 <input
                   type="number"
                   placeholder="0"
@@ -297,7 +297,7 @@ const BookingPage = () => {
                 />
               </div>
               <div className="option">
-                <span>Trẻ em</span>
+                <span>Children</span>
                 <input
                   type="number"
                   placeholder="0"
@@ -308,7 +308,7 @@ const BookingPage = () => {
                 />
               </div>
               <div className="option">
-                <span>Chọn ngày đi</span>
+                <span>Select travel date</span>
                 <input
                   type="date"
                   value={formik.values.start_date}
@@ -320,7 +320,7 @@ const BookingPage = () => {
             </div>
             <div className="list-option-price">
               <div className="option">
-                <span className="title">Giá tour (Người lớn)</span>
+                <span className="title">Tour price (Adults)</span>
                 <div className="input-price">
                   <input
                     disabled
@@ -336,7 +336,7 @@ const BookingPage = () => {
                 </div>
               </div>
               <div className="option">
-                <span className="title"> Giá tour (Trẻ em)</span>
+                <span className="title"> Tour price (Children)</span>
                 <div className="input-price">
                   <input
                     disabled
@@ -355,7 +355,7 @@ const BookingPage = () => {
 
             <div className="list-option-price">
               <div className="option">
-                <span className="title">Giá khách sạn (Người lớn)</span>
+                <span className="title">Hotel price (Adult)</span>
                 <div className="input-price">
                   <input
                     disabled
@@ -373,7 +373,7 @@ const BookingPage = () => {
                 </div>
               </div>
               <div className="option">
-                <span className="title"> Giá khách sạn (Trẻ em)</span>
+                <span className="title"> Hotel price (Children)</span>
                 <div className="input-price">
                   <input
                     disabled
@@ -394,7 +394,7 @@ const BookingPage = () => {
 
             <div className="list-total-price">
               <div className="body">
-                <span className="title">Tổng giá</span>
+                <span className="title">Total price</span>
                 <div className="input-price">
                   <input
                     placeholder="0"
@@ -417,15 +417,15 @@ const BookingPage = () => {
           </div>
           <div className="bottom">
             <span>
-              * Xin vui lòng nhập họ tên khách hàng phải đúng như tên trong
-              CMND/CCCD.
+              * Please enter the customer's full name as it appears ID
+              card/Citizen identification card.
             </span>
-            <span>* Quý khách vui lòng mang đầy đủ giấy tờ tùy thân.</span>
+            <span>* Please bring complete identification documents.</span>
             <span>
-              * Hãy để lại thông tin chính xác để nhân viên của chúng tôi liên
-              hệ lại cho bạn trong thời gian sớm nhất.
+              * Please leave accurate information for our staff to contact get
+              back to you as soon as possible.
             </span>
-            <span>* Booking có giá trị khi được nhân viên xác nhận.</span>
+            <span>* Booking is valid when confirmed by staff.</span>
           </div>
         </div>
       </div>
@@ -433,19 +433,19 @@ const BookingPage = () => {
       <div className="booking-page-wrapper-right">
         <div className="booking-page-wrapper-right-body">
           <div className="top">
-            <span>THÔNG TIN LIÊN LẠC</span>
+            <span>CONTACT INFORMATION</span>
           </div>
           <div className="form">
             <input
               type="text"
-              placeholder="Họ tên*"
+              placeholder="Name*"
               value={formik.values.fullname}
               onChange={(e) => formik.setFieldValue("fullname", e.target.value)}
               disabled={isCreateBookingSuccess || isCreateBookingRequest}
             />
             <input
               type="text"
-              placeholder="Điện thoại*"
+              placeholder="Phone*"
               value={formik.values.phone}
               onChange={(e) => formik.setFieldValue("phone", e.target.value)}
               disabled={isCreateBookingSuccess || isCreateBookingRequest}
@@ -459,13 +459,13 @@ const BookingPage = () => {
             />
             <input
               type="text"
-              placeholder="Địa chỉ"
+              placeholder="Address"
               value={formik.values.address}
               onChange={(e) => formik.setFieldValue("address", e.target.value)}
               disabled={isCreateBookingSuccess || isCreateBookingRequest}
             />
             <textarea
-              placeholder="Ghi chú"
+              placeholder="Note"
               value={formik.values.note}
               onChange={(e) => formik.setFieldValue("note", e.target.value)}
               disabled={isCreateBookingSuccess || isCreateBookingRequest}
@@ -480,7 +480,7 @@ const BookingPage = () => {
               {isCreateBookingRequest ? (
                 <Spinner size="18" />
               ) : (
-                <span>Đặt tour</span>
+                <span>Book tour</span>
               )}
             </button>
           </div>
@@ -494,7 +494,7 @@ const BookingPage = () => {
                 padding: "10px ",
               }}
             >
-              Thanh toán bằng tiền mặt
+              Payment in cash
             </Button>
           </div>
         ) : null}
@@ -512,7 +512,7 @@ const BookingPage = () => {
                 });
               }}
               onError={() => {
-                toast.error("Thanh toán thất bại");
+                toast.error("Payment failed");
               }}
             />
           </div>

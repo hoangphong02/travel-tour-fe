@@ -12,14 +12,14 @@ export const ModalDelete = ({ data, isOpen, handleClose, setCallApi }) => {
   useEffect(() => {
     if (isDeleteUserSuccess) {
       setCallApi(true);
-      toast.success("Xóa nhân viên thành công");
+      toast.success("Successfully deleted employee");
       handleClose();
       dispatch(resetDeleteUserState());
     }
   }, [isDeleteUserSuccess]);
   useEffect(() => {
     if (isDeleteUserFailure) {
-      toast.error("Xóa nhân viên thất bại");
+      toast.error("Delete employee failed");
       dispatch(resetDeleteUserState());
     }
   }, [isDeleteUserFailure]);
@@ -42,8 +42,8 @@ export const ModalDelete = ({ data, isOpen, handleClose, setCallApi }) => {
             {translate("product.noti.delete.failure")}
           </Alert>
         )} */}
-        <h3 className="color-danger">Xác nhận xóa nhân viên</h3>
-        <p>Bạn chắc chắc xóa nhân viên</p>
+        <h3 className="color-danger">Confirm delete employee </h3>
+        <p>You must definitely delete the employee</p>
       </ModalBody>
       <ModalFooter>
         <div className="d-flex align-content-center justify-content-between flex-grow-1">
@@ -60,7 +60,7 @@ export const ModalDelete = ({ data, isOpen, handleClose, setCallApi }) => {
               <span className="bounce2" />
               <span className="bounce3" />
             </span>
-            <span className="label">Xác nhận</span>
+            <span className="label">Confirm</span>
           </Button>
           <Button
             color="danger"
@@ -72,7 +72,7 @@ export const ModalDelete = ({ data, isOpen, handleClose, setCallApi }) => {
             style={isDeleteUserRequest ? { cursor: "no-drop" } : {}}
             onClick={handleClose}
           >
-            Trở về
+            Back
           </Button>
         </div>
       </ModalFooter>

@@ -65,14 +65,14 @@ const UserHomePage = () => {
       </div>
 
       <div className="list-tour-trending-month">
-        <span className="title">TOUR NỔI BẬT TRONG THÁNG</span>
+        <span className="title">FEATURED TOURS OF THE MONTH</span>
         <div className="banner-tour-trending-in-month">
           <BannerTourTrending />
         </div>
       </div>
 
       <div className="list-tour-main">
-        <span className="title">TOUR CHÍNH</span>
+        <span className="title">MAIN TOUR</span>
         <div className="list-tour-main-body">
           <div className="list-tour-main-body-left">
             {getAllTourState?.data?.length
@@ -96,11 +96,11 @@ const UserHomePage = () => {
                           <span>{item.name.toUpperCase()}</span>
                         </div>
                         <span>
-                          Giá: {item.base_price_adult.toLocaleString("vi-VN")}{" "}
+                          Price: {item.base_price_adult.toLocaleString("vi-VN")}{" "}
                           VND
                         </span>
                         <div className="btn-book">
-                          <span>Đặt ngay</span>
+                          <span>Book now</span>
                         </div>
                       </div>
                       <div className="bg"></div>
@@ -133,11 +133,11 @@ const UserHomePage = () => {
                             <span>{item.name.toUpperCase()}</span>
                           </div>
                           <span>
-                            Giá: {item.base_price_adult.toLocaleString("vi-VN")}{" "}
-                            VND
+                            Price:{" "}
+                            {item.base_price_adult.toLocaleString("vi-VN")} VND
                           </span>
                           <div className="btn-book">
-                            <span>Đặt ngay</span>
+                            <span>Book now</span>
                           </div>
                         </div>
                         <div className="bg"></div>
@@ -170,11 +170,11 @@ const UserHomePage = () => {
                             <span>{item.name.toUpperCase()}</span>
                           </div>
                           <span>
-                            Giá: {item.base_price_adult.toLocaleString("vi-VN")}{" "}
-                            VND
+                            Price:{" "}
+                            {item.base_price_adult.toLocaleString("vi-VN")} VND
                           </span>
                           <div className="btn-book">
-                            <span>Đặt ngay</span>
+                            <span>Book now</span>
                           </div>
                         </div>
                         <div className="bg"></div>
@@ -188,7 +188,7 @@ const UserHomePage = () => {
       </div>
 
       <div className="list-tour-options">
-        <span className="title">DANH SÁCH TOUR</span>
+        <span className="title">TOUR LIST</span>
         <div className="list-tour-options--content">
           {getAllCategoryTourState?.data?.length
             ? getAllCategoryTourState?.data?.map((item, index) => {
@@ -233,7 +233,7 @@ const UserHomePage = () => {
                       : item.description}
                   </span>
                   <div className="btn-more">
-                    <span>Xem thêm</span>
+                    <span>See more</span>
                   </div>
                 </div>
               </div>
@@ -253,7 +253,7 @@ const UserHomePage = () => {
                     <span className="name">{item.name}</span>
                     <span className="des">{item.title}</span>
                     <div className="btn-more">
-                      <span>Xem thêm</span>
+                      <span>See more</span>
                     </div>
                   </div>
                 );

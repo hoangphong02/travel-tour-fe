@@ -64,10 +64,10 @@ const Banner = () => {
                 <span className="name-tour">{item?.name?.toUpperCase()}</span>
                 <span className="price-tour">
                   {" "}
-                  Giá: {item.base_price_adult.toLocaleString("vi-VN")} VND
+                  Price: {item.base_price_adult.toLocaleString("vi-VN")} VND
                 </span>
                 <Button onClick={() => handleClickTourDetail(item?._id)}>
-                  Đặt ngay
+                  Book now
                 </Button>
               </div>
             </div>
