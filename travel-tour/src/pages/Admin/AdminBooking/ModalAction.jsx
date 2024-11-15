@@ -14,6 +14,7 @@ import {
   ModalHeader,
 } from "reactstrap";
 import * as Yup from "yup";
+import { Switch } from "~/components/common";
 import {
   LIST_OPTION_RANK_HOTEL,
   ListNameBooking,
@@ -589,6 +590,28 @@ export const ModalActions = ({
                           {errors.payment_method_name}
                         </div>
                       ) : null}
+                    </FormGroup>
+                  </div>
+
+                  <div className="d-flex" style={{ gap: "12px" }}>
+                    <FormGroup className="w-100 error-l-100">
+                      <Label>Checked in: </Label>
+                      <Switch
+                        checked={values.active}
+                        onChange={(e) =>
+                          setFieldValue("active", e.target.checked)
+                        }
+                      />
+                    </FormGroup>
+                    <FormGroup className="w-100 error-l-100">
+                      <Label>Canceled: </Label>
+
+                      <Switch
+                        checked={values.active}
+                        onChange={(e) =>
+                          setFieldValue("active", e.target.checked)
+                        }
+                      />
                     </FormGroup>
                   </div>
 

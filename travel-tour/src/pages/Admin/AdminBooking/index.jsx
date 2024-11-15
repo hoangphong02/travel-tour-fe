@@ -18,10 +18,11 @@ import {
   resetUpdateBooking,
 } from "~/redux/booking/actions";
 import moment from "moment";
-import { ListSearch, ListStatusBooking } from "~/constants";
+import { ListSearch, ListStatusBooking, STATUS_CHECKING } from "~/constants";
 import { getAllUserRequest } from "~/redux/user/actions";
 import Select from "react-select";
 import { FormGroup } from "react-bootstrap";
+import { isCancel } from "axios";
 
 const AdminBooking = () => {
   const [isShowModalAction, setIsShowModalAction] = useState(false);
@@ -61,6 +62,7 @@ const AdminBooking = () => {
   const [indexPage, setIndexPage] = useState(1);
   const [options, setOptions] = useState([]);
   const [status, setStatus] = useState("");
+  const [statusBooking, setStatusBooking] = useState("");
 
   const limit = 10;
   const dispatch = useDispatch();
@@ -80,7 +82,7 @@ const AdminBooking = () => {
 
   useEffect(() => {
     setCallApi(true);
-  }, [searchDebounce, status, start, end]);
+  }, [searchDebounce, status, start, end, statusBooking]);
 
   useEffect(() => {
     if (getAllCategoryTourState?.data) {
@@ -116,6 +118,20 @@ const AdminBooking = () => {
       }
       if (end) {
         params.edate = moment(end).format("MM/DD/YYYY");
+      }
+      if (statusBooking) {
+        if (statusBooking.value === "is_checking") {
+          params.is_checking = true;
+        }
+        if (statusBooking.value === "is_not_checking") {
+          params.is_checking = false;
+        }
+        if (statusBooking.value === "is_cancel") {
+          params.is_cancel = true;
+        }
+        if (statusBooking.value === "is_not_cancel") {
+          params.is_cancel = false;
+        }
       }
       dispatch(getAllBookingRequest(params));
       setCallApi(false);
@@ -310,7 +326,7 @@ const AdminBooking = () => {
         <TopComponent handleShowModalActions={handleShowModalActions} />
       </div>
       <div className="search">
-        <div className="body">
+        <div className="body" style={{ height: "fit-content" }}>
           <Select
             className="select-type"
             options={ListSearch}
@@ -328,15 +344,23 @@ const AdminBooking = () => {
           </span>
         </div>
         <div className="d-flex gap-2 align-items-center select-filter">
-          <span>Status:</span>
+          <span>Payment status:</span>
           <Select
             options={ListStatusBooking}
             onChange={(e) => setStatus(e)}
             value={status}
           ></Select>
         </div>
+        <div className="d-flex gap-2 align-items-center select-filter">
+          <span>Booking status:</span>
+          <Select
+            options={STATUS_CHECKING}
+            onChange={(e) => setStatusBooking(e)}
+            value={statusBooking}
+          ></Select>
+        </div>
         <FormGroup className="d-flex gap-2 align-items-center">
-          <label htmlFor=""> Tour booking date from: </label>
+          <label htmlFor=""> From: </label>
           <input
             type="date"
             value={start}

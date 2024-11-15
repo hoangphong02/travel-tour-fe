@@ -42,3 +42,22 @@ export const ListSearch = [
     label: "Tour code",
   },
 ];
+
+export const STATUS_CHECKING = [
+  {
+    value: "is_checking",
+    label: "Checked in",
+  },
+  {
+    value: "is_not_checking",
+    label: "Not checked in",
+  },
+  {
+    value: "is_cancel",
+    label: "Canceled",
+  },
+  {
+    value: "is_not_cancel",
+    label: "Not cancelled",
+  },
+];

@@ -6,3 +6,4 @@ export * from "./CardTour";
 export * from "./Editor";
 export * from "./CardBlog";
 export * from "./RenderQuill";
+export * from "./Switch";

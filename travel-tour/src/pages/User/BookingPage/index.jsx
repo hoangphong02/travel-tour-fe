@@ -42,6 +42,7 @@ const BookingPage = () => {
   } = useSelector((store) => store.booking);
   const [total, setTotal] = useState(0);
   const [showModalPaymentCash, setShowModalPaymentCash] = useState(false);
+
   const handleShowConfirmPaymentCash = () => {
     setShowModalPaymentCash(true);
   };
@@ -132,6 +133,7 @@ const BookingPage = () => {
         child_ticket,
         transactionId,
         start_date,
+        end_date,
       } = values;
       const payload = {
         tour_id: id,
@@ -145,14 +147,27 @@ const BookingPage = () => {
         child_ticket: Number(child_ticket),
         total_price: total,
         transactionId,
-        start_date: moment(start_date).format("MM/DD/YYYY"),
+        start_date: new Date(start_date).toISOString(),
         payment_method_name: "cash",
       };
-      if (start_date) {
-        payload.end_date = moment(start_date).add(
-          getDetailTourState?.data?.schedules?.length,
-          "days"
-        );
+
+      if (end_date) {
+        const startDate = moment(payload.start_date);
+        const daysToAdd = getDetailTourState?.data?.schedules?.length || 0;
+        const [hours, minutes] = end_date.split(":");
+        const endDate = startDate
+          .add(daysToAdd, "days")
+          .set({ hour: hours, minute: minutes, second: 0 });
+        payload.end_date = endDate.toISOString();
+      } else {
+        if (start_date) {
+          const end = moment(start_date).add(
+            getDetailTourState?.data?.schedules?.length,
+            "days"
+          );
+
+          payload.end_date = new Date(end).toISOString();
+        }
       }
       dispatch(createBookingRequest(payload));
     },
@@ -284,38 +299,59 @@ const BookingPage = () => {
                 transactions this)
               </span>
             </span>
-            <div className="list-option">
+            <div className="list-option-price">
               <div className="option">
-                <span>Adult</span>
-                <input
-                  type="number"
-                  placeholder="0"
-                  value={formik.values.adult_ticket}
-                  onChange={(e) =>
-                    formik.setFieldValue("adult_ticket", e.target.value)
-                  }
-                />
+                <span className="title">Adult</span>
+                <div className="input-price">
+                  <input
+                    type="number"
+                    placeholder="0"
+                    value={formik.values.adult_ticket}
+                    onChange={(e) =>
+                      formik.setFieldValue("adult_ticket", e.target.value)
+                    }
+                  />
+                </div>
               </div>
               <div className="option">
-                <span>Children</span>
-                <input
-                  type="number"
-                  placeholder="0"
-                  value={formik.values.child_ticket}
-                  onChange={(e) =>
-                    formik.setFieldValue("child_ticket", e.target.value)
-                  }
-                />
+                <span className="title">Children</span>
+                <div className="input-price">
+                  <input
+                    type="number"
+                    placeholder="0"
+                    value={formik.values.child_ticket}
+                    onChange={(e) =>
+                      formik.setFieldValue("child_ticket", e.target.value)
+                    }
+                  />
+                </div>
+              </div>
+            </div>
+            <div className="list-option-price">
+              <div className="option">
+                <span className="title">Select start date</span>
+                <div className="input-price">
+                  <input
+                    type="datetime-local"
+                    value={formik.values.start_date}
+                    onChange={(e) => {
+                      console.log(e.target.value);
+                      formik.setFieldValue("start_date", e.target.value);
+                    }}
+                  />
+                </div>
               </div>
               <div className="option">
-                <span>Select travel date</span>
-                <input
-                  type="date"
-                  value={formik.values.start_date}
-                  onChange={(e) =>
-                    formik.setFieldValue("start_date", e.target.value)
-                  }
-                />
+                <span className="title">Choose your return time</span>
+                <div className="input-price">
+                  <input
+                    type="time"
+                    value={formik.values.end_date}
+                    onChange={(e) =>
+                      formik.setFieldValue("end_date", e.target.value)
+                    }
+                  />
+                </div>
               </div>
             </div>
             <div className="list-option-price">
