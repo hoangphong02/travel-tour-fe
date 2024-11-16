@@ -50,6 +50,11 @@ const initialState = {
   isUpdatePaymentBookingRequest: false,
   isUpdatePaymentBookingSuccess: false,
   isUpdatePaymentBookingFailure: false,
+
+  //
+  isUpdateCheckingRequest: false,
+  isUpdateCheckingSuccess: false,
+  isUpdateCheckingFailure: false,
   // Local
   errorMessages: [],
 };
@@ -316,6 +321,34 @@ const reducer = handleActions(
       isAddGuideBookingRequest: false,
       isAddGuideBookingSuccess: false,
       isAddGuideBookingFailure: false,
+      errorMessages: [],
+    }),
+
+    // #region : Update Food
+    [Actions.updateCheckingRequest]: (state) => ({
+      ...state,
+      isUpdateCheckingRequest: true,
+      isUpdateCheckingSuccess: false,
+      isUpdateCheckingFailure: false,
+    }),
+    [Actions.updateCheckingSuccess]: (state) => ({
+      ...state,
+      isUpdateCheckingRequest: false,
+      isUpdateCheckingSuccess: true,
+      isUpdateCheckingFailure: false,
+    }),
+    [Actions.updateCheckingFailure]: (state, { payload }) => ({
+      ...state,
+      isUpdateCheckingRequest: false,
+      isUpdateCheckingSuccess: false,
+      isUpdateCheckingFailure: true,
+      errorMessages: payload,
+    }),
+    [Actions.resetUpdateChecking]: (state) => ({
+      ...state,
+      isUpdateCheckingRequest: false,
+      isUpdateCheckingSuccess: false,
+      isUpdateCheckingFailure: false,
       errorMessages: [],
     }),
 

@@ -77,4 +77,9 @@ export const deleteBookingSuccess = createAction("DELETE_BOOKING_SUCCESS");
 export const deleteBookingFailure = createAction("DELETE_BOOKING_FAILURE");
 export const resetDeleteBooking = createAction("RESET_DELETE_BOOKING");
 
+export const updateCheckingRequest = createAction("UPDATE_CHECKING_REQUEST");
+export const updateCheckingSuccess = createAction("UPDATE_CHECKING_SUCCESS");
+export const updateCheckingFailure = createAction("UPDATE_CHECKING_FAILURE");
+export const resetUpdateChecking = createAction("RESET_UPDATE_CHECKING");
+
 export const resetBookingState = createAction("RESET_Booking_STATE");

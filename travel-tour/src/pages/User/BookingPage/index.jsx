@@ -335,7 +335,6 @@ const BookingPage = () => {
                     type="datetime-local"
                     value={formik.values.start_date}
                     onChange={(e) => {
-                      console.log(e.target.value);
                       formik.setFieldValue("start_date", e.target.value);
                     }}
                   />

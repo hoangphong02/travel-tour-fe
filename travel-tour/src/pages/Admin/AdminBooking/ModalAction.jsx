@@ -126,6 +126,8 @@ export const ModalActions = ({
       end_date,
       note,
       address,
+      is_cancel,
+      is_checking,
     } = dataForm;
 
     const payload = {
@@ -142,18 +144,22 @@ export const ModalActions = ({
       payment_method_name: payment_method_name?.value,
       tour_guide: tour_guide?.value,
       group_number,
-      start_date: moment(start_date).format("MM/DD/YYYY"),
-      end_date: moment(end_date).format("MM/DD/YYYY"),
+      start_date: new Date(start_date).toISOString(),
+      end_date: new Date(end_date).toISOString(),
       note,
       address,
+      is_cancel,
+      is_checking,
     };
 
     const payloadUpdate = {
-      start_date: moment(start_date).format("MM/DD/YYYY"),
-      end_date: moment(end_date).format("MM/DD/YYYY"),
+      start_date: new Date(start_date).toISOString(),
+      end_date: new Date(end_date).toISOString(),
       address,
       payment_status: payment_status?.value,
       payment_method_name: payment_method_name?.value,
+      is_cancel,
+      is_checking,
     };
 
     if (type === "add") {
@@ -193,11 +199,11 @@ export const ModalActions = ({
             start_date:
               type === "add"
                 ? ""
-                : moment(data?.start_date).format("YYYY-MM-DD") || "",
+                : moment(data?.start_date).format("YYYY-MM-DDTHH:mm") || "",
             end_date:
               type === "add"
                 ? ""
-                : moment(data?.end_date).format("YYYY-MM-DD") || "",
+                : moment(data?.end_date).format("YYYY-MM-DDTHH:mm") || "",
             hotel_level:
               type === "add"
                 ? ""
@@ -233,6 +239,9 @@ export const ModalActions = ({
                       };
                     }) || {},
             note: type === "add" ? "" : data?.note || "",
+            is_cancel: type === "add" ? false : data?.is_cancel || false,
+            is_checking: type === "add" ? false : data?.is_checking || false,
+            customer_list: type === "add" ? "" : data?.customer_list || "",
           }}
           validationSchema={SignupSchema}
           onSubmit={onSubmit}
@@ -428,7 +437,7 @@ export const ModalActions = ({
                         </span>
                       </Label>
                       <Field
-                        type="date"
+                        type="datetime-local"
                         className="form-control"
                         name="start_date"
                         placeholder="Enter the start date"
@@ -447,7 +456,7 @@ export const ModalActions = ({
                         </span>
                       </Label>
                       <Field
-                        type="date"
+                        type="datetime-local"
                         className="form-control"
                         name="end_date"
                         placeholder="Enter the end date"
@@ -592,29 +601,6 @@ export const ModalActions = ({
                       ) : null}
                     </FormGroup>
                   </div>
-
-                  <div className="d-flex" style={{ gap: "12px" }}>
-                    <FormGroup className="w-100 error-l-100">
-                      <Label>Checked in: </Label>
-                      <Switch
-                        checked={values.active}
-                        onChange={(e) =>
-                          setFieldValue("active", e.target.checked)
-                        }
-                      />
-                    </FormGroup>
-                    <FormGroup className="w-100 error-l-100">
-                      <Label>Canceled: </Label>
-
-                      <Switch
-                        checked={values.active}
-                        onChange={(e) =>
-                          setFieldValue("active", e.target.checked)
-                        }
-                      />
-                    </FormGroup>
-                  </div>
-
                   <div className="d-flex" style={{ gap: "12px" }}>
                     <FormGroup className="w-100 error-l-100">
                       <Label>Note: </Label>
@@ -625,6 +611,41 @@ export const ModalActions = ({
                         value={values.note}
                         onChange={(e) => setFieldValue("note", e.target.value)}
                         placeholder="Enter note"
+                      />
+                    </FormGroup>
+                  </div>
+                  <div className="d-flex" style={{ gap: "12px" }}>
+                    <FormGroup className="w-100 error-l-100">
+                      <Label>List customer: </Label>
+                      <textarea
+                        disabled
+                        className="form-control"
+                        name="customer_list"
+                        value={values.customer_list}
+                        onChange={(e) =>
+                          setFieldValue("customer_list", e.target.value)
+                        }
+                        placeholder="Customer list"
+                      />
+                    </FormGroup>
+                  </div>
+                  <div className="d-flex" style={{ gap: "12px" }}>
+                    <FormGroup className="w-100 error-l-100 d-flex gap-4">
+                      <Label>Checked in: </Label>
+                      <Switch
+                        checked={values.is_checking}
+                        onChange={(e) =>
+                          setFieldValue("is_checking", e.target.checked)
+                        }
+                      />
+                    </FormGroup>
+                    <FormGroup className="w-100 error-l-100 d-flex gap-4">
+                      <Label>Canceled: </Label>
+                      <Switch
+                        checked={values.is_cancel}
+                        onChange={(e) =>
+                          setFieldValue("is_cancel", e.target.checked)
+                        }
                       />
                     </FormGroup>
                   </div>

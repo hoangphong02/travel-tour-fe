@@ -3,15 +3,28 @@ import React, { useEffect, useMemo, useState } from "react";
 import { Button, Modal, OverlayTrigger, Tooltip } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
+import { toast } from "react-toastify";
 import { ReactTableWithPaginationCard } from "~/components/common";
 import { CSEyeSolid } from "~/components/iconography/Solid";
 import { routesUser } from "~/configs";
+import {
+  resetUpdateBooking,
+  resetUpdateChecking,
+  updateBookingRequest,
+  updateCheckingRequest,
+} from "~/redux/booking/actions";
 import { getAllTourRequest } from "~/redux/tour/actions";
 import { getWorkSchedulesRequest } from "~/redux/user/actions";
+import { ModalConfirmChecking } from "./ModalConfirmChecking";
+import { CSEditOutline } from "~/components/iconography/Outline";
+import { ModalUpdateListCustomer } from "./ModalUpdateListCustomer";
 
 const WorkSchedulePage = () => {
   const { getWorkSchedulesState, profileResponse } = useSelector(
     (store) => store.user
+  );
+  const { isUpdateBookingSuccess, isUpdateCheckingSuccess } = useSelector(
+    (store) => store.booking
   );
   const { getAllTourState } = useSelector((store) => store.tour);
   const [callApi, setCallApi] = useState(false);
@@ -21,6 +34,8 @@ const WorkSchedulePage = () => {
   const [dataTable, setDataTable] = useState([]);
   const [dataActive, setDataActive] = useState();
   const [show, setShow] = useState(false);
+  const [showChecking, setShowChecking] = useState(false);
+  const [showAddCustomer, setShowAddCustomer] = useState(false);
 
   const dispatch = useDispatch();
   const history = useHistory();
@@ -58,6 +73,61 @@ const WorkSchedulePage = () => {
     setDataTable(getWorkSchedulesState?.data || []);
   }, [getWorkSchedulesState?.data]);
 
+  const handleShowChecking = (row) => {
+    setDataActive(row);
+    setShowChecking(true);
+  };
+  const handleCloseChecking = () => {
+    setDataActive();
+    setShowChecking(false);
+  };
+  const handleChecking = () => {
+    const payload = {
+      id: dataActive._id,
+      body: {
+        is_checking: !dataActive.is_checking,
+      },
+    };
+    dispatch(updateBookingRequest(payload));
+  };
+
+  const handleShowCustomer = (row) => {
+    setDataActive(row);
+    setShowAddCustomer(true);
+  };
+  const handleCloseCustomer = () => {
+    setDataActive();
+    setShowAddCustomer(false);
+  };
+
+  const handleConfirmUpdateCustomer = (value) => {
+    const payload = {
+      id: dataActive._id,
+      body: {
+        is_checking: true,
+        customer_list: value,
+      },
+    };
+    dispatch(updateCheckingRequest(payload));
+  };
+
+  useEffect(() => {
+    if (isUpdateBookingSuccess) {
+      toast.success("Update status checked in booking tour successfully");
+      handleCloseChecking();
+      setCallApi(true);
+      dispatch(resetUpdateBooking());
+    }
+  }, [isUpdateBookingSuccess]);
+
+  useEffect(() => {
+    if (isUpdateCheckingSuccess) {
+      toast.success("Update list customer on tour successfully");
+      handleCloseCustomer();
+      setCallApi(true);
+      dispatch(resetUpdateChecking());
+    }
+  }, [isUpdateCheckingSuccess]);
   const columns = useMemo(() => [
     {
       Header: "Ordinal number",
@@ -248,6 +318,37 @@ const WorkSchedulePage = () => {
         );
       },
     },
+    {
+      Header: "CHECKED IN",
+      accessor: "is_checking",
+      cellClass: "list-item-heading w-5",
+      Cell: ({ value, row }) => {
+        return (
+          <div
+            className={profileResponse?.data?.role === "admin" ? "d-none" : ""}
+          >
+            <div className="d-flex gap-3 align-items-center">
+              <input
+                type="checkbox"
+                checked={value}
+                style={{ height: "16px", width: "16px", cursor: "pointer" }}
+                onClick={() => handleShowChecking(row)}
+              />
+
+              <div
+                outline
+                color="primary"
+                className="icon-button"
+                style={{ cursor: "pointer" }}
+                onClick={() => handleShowCustomer(row)}
+              >
+                <CSEditOutline />
+              </div>
+            </div>
+          </div>
+        );
+      },
+    },
   ]);
   const handleClickRow = (value) => {
     setDataActive(value);
@@ -311,6 +412,22 @@ const WorkSchedulePage = () => {
       </div>
       {show && dataActive && (
         <ModalListUser data={dataActive} handleClose={handleClose} />
+      )}
+
+      {showChecking && dataActive && (
+        <ModalConfirmChecking
+          isOpen
+          handleClose={handleCloseChecking}
+          handleConfirm={handleChecking}
+        />
+      )}
+      {showAddCustomer && dataActive && (
+        <ModalUpdateListCustomer
+          isOpen
+          handleClose={handleCloseCustomer}
+          handleConfirm={handleConfirmUpdateCustomer}
+          data={dataActive}
+        />
       )}
     </div>
   );

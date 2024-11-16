@@ -160,6 +160,20 @@ function* updatePaymentBooking({ payload }) {
     }
   }
 }
+
+function* updateChecking({ payload }) {
+  try {
+    const response = yield call(() =>
+      axiosMicro.put(`/booking/checking/${payload.id}`, payload.body)
+    );
+    yield put(Actions.updateCheckingSuccess(response.data));
+  } catch (error) {
+    if (error?.response?.data) {
+      const messages = error.response.data;
+      yield put(Actions.updateCheckingFailure(messages));
+    }
+  }
+}
 // eslint-disable-next-line func-names
 export default function* () {
   yield takeLatest(Actions.getAllBookingRequest, getAllBookings);
@@ -172,4 +186,5 @@ export default function* () {
   yield takeLatest(Actions.getUserGuideBookingRequest, getUserGuideBooking);
   yield takeLatest(Actions.getStatisticalRequest, getStatistical);
   yield takeLatest(Actions.updatePaymentBookingRequest, updatePaymentBooking);
+  yield takeLatest(Actions.updateCheckingRequest, updateChecking);
 }
