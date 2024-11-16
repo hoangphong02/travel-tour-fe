@@ -439,7 +439,7 @@ const WorkSchedulePage = () => {
         },
       },
       {
-        Header: "CLIENT",
+        Header: "CUSTOMER",
         accessor: "",
         cellClass: "list-item-heading w-5",
         Cell: ({ row }) => {
