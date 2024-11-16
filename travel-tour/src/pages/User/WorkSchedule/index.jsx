@@ -546,7 +546,7 @@ const WorkSchedulePage = () => {
       // Các cột khác
     ];
 
-    if (profileResponse?.data?.role === "staff") {
+    if (profileResponse?.data?.role === "employee") {
       baseColumns.push({
         Header: "CHECKED IN",
         accessor: "is_checking",

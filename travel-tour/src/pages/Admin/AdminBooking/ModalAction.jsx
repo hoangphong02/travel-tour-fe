@@ -128,6 +128,7 @@ export const ModalActions = ({
       address,
       is_cancel,
       is_checking,
+      customer_list,
     } = dataForm;
 
     const payload = {
@@ -150,6 +151,7 @@ export const ModalActions = ({
       address,
       is_cancel,
       is_checking,
+      customer_list,
     };
 
     const payloadUpdate = {
@@ -160,6 +162,7 @@ export const ModalActions = ({
       payment_method_name: payment_method_name?.value,
       is_cancel,
       is_checking,
+      customer_list,
     };
 
     if (type === "add") {
@@ -618,7 +621,6 @@ export const ModalActions = ({
                     <FormGroup className="w-100 error-l-100">
                       <Label>List customer: </Label>
                       <textarea
-                        disabled
                         className="form-control"
                         name="customer_list"
                         value={values.customer_list}
