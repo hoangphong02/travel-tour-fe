@@ -128,228 +128,458 @@ const WorkSchedulePage = () => {
       dispatch(resetUpdateChecking());
     }
   }, [isUpdateCheckingSuccess]);
-  const columns = useMemo(() => [
-    {
-      Header: "Ordinal number",
-      accessor: "",
-      cellClass: "list-item-heading w-5",
-      Cell: (row) => row.row.index + 1,
-    },
-    {
-      Header: "GUIDE",
-      accessor: "name",
-      cellClass: "list-item-heading w-5",
-      Cell: ({ value }) => {
-        return (
-          <div
-            className="d-flex flex-column text-align-left"
-            style={{ gap: "10px" }}
-          >
-            {profileResponse?.data?.role === "admin" ? (
-              <span>{value}</span>
-            ) : (
-              <span>{profileResponse?.data?.name}</span>
-            )}
-          </div>
-        );
-      },
-    },
-    {
-      Header: "PHONE (GUIDE)",
-      accessor: "phone",
-      cellClass: "list-item-heading w-5",
-      Cell: ({ value }) => {
-        return (
-          <div
-            className="d-flex flex-column text-align-left"
-            style={{ gap: "10px" }}
-          >
-            {profileResponse?.data?.role === "admin" ? (
-              <span>{value}</span>
-            ) : (
-              <span>{profileResponse?.data?.phone}</span>
-            )}
-          </div>
-        );
-      },
-    },
-    {
-      Header: "TIME",
-      accessor: "",
-      cellClass: "list-item-heading w-5",
-      Cell: ({ row }) => {
-        return (
-          <div
-            className="d-flex flex-column text-align-left"
-            style={{ gap: "10px" }}
-          >
-            {profileResponse?.data?.role === "admin" ? (
-              <>
-                <span>
-                  <strong>Start:</strong>{" "}
-                  {moment(row?.original?.bookings[0]?.start_date).format(
-                    "DD/MM/YYYY"
-                  )}
-                </span>
-                <span>
-                  <strong>End:</strong>{" "}
-                  {moment(row?.original?.bookings[0]?.end_date).format(
-                    "DD/MM/YYYY"
-                  )}{" "}
-                </span>
-              </>
-            ) : (
-              <>
-                <span>
-                  <strong>Start:</strong>{" "}
-                  {moment(row?.original?.start_date).format("DD/MM/YYYY")}
-                </span>
-                <span>
-                  <strong>End:</strong>{" "}
-                  {moment(row?.original?.end_date).format("DD/MM/YYYY")}{" "}
-                </span>
-              </>
-            )}
-          </div>
-        );
-      },
-    },
-    {
-      Header: "CLIENT",
-      accessor: "",
-      cellClass: "list-item-heading w-5",
-      Cell: ({ row }) => {
-        return (
-          <div
-            className="d-flex flex-column text-align-left"
-            style={{ gap: "10px" }}
-          >
-            {profileResponse?.data?.role === "admin" ? (
-              <OverlayTrigger
-                placement="right"
-                delay={{ show: 250, hide: 400 }}
-                overlay={renderTooltip}
-              >
-                <Button
-                  onClick={handleShow}
-                  variant="none"
-                  style={{
-                    padding: "0 24px",
-                    width: "fit-content",
-                  }}
-                >
-                  <CSEyeSolid className="fill-white" />
-                </Button>
-              </OverlayTrigger>
-            ) : (
-              <>
-                <span>
-                  <strong>Name: </strong> {row.original?.fullname}
-                </span>
-                <span>
-                  <strong>Phone: </strong> {row.original?.phone}
-                </span>
-                <span>
-                  <strong>Email: </strong> {row.original?.email}
-                </span>
-                <span>
-                  <strong>Adult ticket: </strong> {row.original?.adult_ticket}
-                </span>
-                <span>
-                  <strong>Child tickets: </strong> {row.original?.child_ticket}
-                </span>
-                <span>
-                  <strong>Address: </strong> {row.original?.address}
-                </span>
-                <span>
-                  <strong>Note: </strong> {row.original?.note}
-                </span>
-              </>
-            )}
-          </div>
-        );
-      },
-    },
-    {
-      Header: "TOUR NAME",
-      accessor: "",
-      cellClass: "list-item-heading w-5",
-      Cell: ({ row }) => {
-        return (
-          <div
-            className="d-flex flex-column text-align-left"
-            style={{ gap: "10px" }}
-          >
-            {profileResponse?.data?.role === "admin"
-              ? getAllTourState?.data?.find(
-                  (item) => item?._id === row?.original?.bookings[0]?.tour_id
-                )?.name
-              : getAllTourState?.data?.find(
-                  (item) => item?._id === row?.original?.tour_id
-                )?.name}
-            <span></span>
-          </div>
-        );
-      },
-    },
-    {
-      Header: "PRICE TOUR",
-      accessor: "",
-      cellClass: "list-item-heading w-5",
-      Cell: ({ row }) => {
-        return (
-          <div
-            className="d-flex flex-column text-align-left"
-            style={{ gap: "10px" }}
-          >
-            {profileResponse?.data?.role === "admin" ? (
-              <span>
-                {row?.original?.bookings[0]?.total_price?.toLocaleString(
-                  "VI-VN"
-                )}{" "}
-                VNĐ
-              </span>
-            ) : (
-              <span>
-                {row?.original?.total_price?.toLocaleString("VI-VN")} VNĐ
-              </span>
-            )}
-          </div>
-        );
-      },
-    },
-    {
-      Header: "CHECKED IN",
-      accessor: "is_checking",
-      cellClass: "list-item-heading w-5",
-      Cell: ({ value, row }) => {
-        return (
-          <div
-            className={profileResponse?.data?.role === "admin" ? "d-none" : ""}
-          >
-            <div className="d-flex gap-3 align-items-center">
-              <input
-                type="checkbox"
-                checked={value}
-                style={{ height: "16px", width: "16px", cursor: "pointer" }}
-                onClick={() => handleShowChecking(row)}
-              />
+  // const columns = useMemo(() => [
+  //   {
+  //     Header: "Ordinal number",
+  //     accessor: "",
+  //     cellClass: "list-item-heading w-5",
+  //     Cell: (row) => row.row.index + 1,
+  //   },
+  //   {
+  //     Header: "GUIDE",
+  //     accessor: "name",
+  //     cellClass: "list-item-heading w-5",
+  //     Cell: ({ value }) => {
+  //       return (
+  //         <div
+  //           className="d-flex flex-column text-align-left"
+  //           style={{ gap: "10px" }}
+  //         >
+  //           {profileResponse?.data?.role === "admin" ? (
+  //             <span>{value}</span>
+  //           ) : (
+  //             <span>{profileResponse?.data?.name}</span>
+  //           )}
+  //         </div>
+  //       );
+  //     },
+  //   },
+  //   {
+  //     Header: "PHONE (GUIDE)",
+  //     accessor: "phone",
+  //     cellClass: "list-item-heading w-5",
+  //     Cell: ({ value }) => {
+  //       return (
+  //         <div
+  //           className="d-flex flex-column text-align-left"
+  //           style={{ gap: "10px" }}
+  //         >
+  //           {profileResponse?.data?.role === "admin" ? (
+  //             <span>{value}</span>
+  //           ) : (
+  //             <span>{profileResponse?.data?.phone}</span>
+  //           )}
+  //         </div>
+  //       );
+  //     },
+  //   },
+  //   {
+  //     Header: "TIME",
+  //     accessor: "",
+  //     cellClass: "list-item-heading w-5",
+  //     Cell: ({ row }) => {
+  //       return (
+  //         <div
+  //           className="d-flex flex-column text-align-left"
+  //           style={{ gap: "10px" }}
+  //         >
+  //           {profileResponse?.data?.role === "admin" ? (
+  //             <>
+  //               <span>
+  //                 <strong>Start:</strong>{" "}
+  //                 {moment(row?.original?.bookings[0]?.start_date).format(
+  //                   "DD/MM/YYYY"
+  //                 )}
+  //               </span>
+  //               <span>
+  //                 <strong>End:</strong>{" "}
+  //                 {moment(row?.original?.bookings[0]?.end_date).format(
+  //                   "DD/MM/YYYY"
+  //                 )}{" "}
+  //               </span>
+  //             </>
+  //           ) : (
+  //             <>
+  //               <span>
+  //                 <strong>Start:</strong>{" "}
+  //                 {moment(row?.original?.start_date).format("DD/MM/YYYY")}
+  //               </span>
+  //               <span>
+  //                 <strong>End:</strong>{" "}
+  //                 {moment(row?.original?.end_date).format("DD/MM/YYYY")}{" "}
+  //               </span>
+  //             </>
+  //           )}
+  //         </div>
+  //       );
+  //     },
+  //   },
+  //   {
+  //     Header: "CLIENT",
+  //     accessor: "",
+  //     cellClass: "list-item-heading w-5",
+  //     Cell: ({ row }) => {
+  //       return (
+  //         <div
+  //           className="d-flex flex-column text-align-left"
+  //           style={{ gap: "10px" }}
+  //         >
+  //           {profileResponse?.data?.role === "admin" ? (
+  //             <OverlayTrigger
+  //               placement="right"
+  //               delay={{ show: 250, hide: 400 }}
+  //               overlay={renderTooltip}
+  //             >
+  //               <Button
+  //                 onClick={handleShow}
+  //                 variant="none"
+  //                 style={{
+  //                   padding: "0 24px",
+  //                   width: "fit-content",
+  //                 }}
+  //               >
+  //                 <CSEyeSolid className="fill-white" />
+  //               </Button>
+  //             </OverlayTrigger>
+  //           ) : (
+  //             <>
+  //               <span>
+  //                 <strong>Name: </strong> {row.original?.fullname}
+  //               </span>
+  //               <span>
+  //                 <strong>Phone: </strong> {row.original?.phone}
+  //               </span>
+  //               <span>
+  //                 <strong>Email: </strong> {row.original?.email}
+  //               </span>
+  //               <span>
+  //                 <strong>Adult ticket: </strong> {row.original?.adult_ticket}
+  //               </span>
+  //               <span>
+  //                 <strong>Child tickets: </strong> {row.original?.child_ticket}
+  //               </span>
+  //               <span>
+  //                 <strong>Address: </strong> {row.original?.address}
+  //               </span>
+  //               <span>
+  //                 <strong>Note: </strong> {row.original?.note}
+  //               </span>
+  //             </>
+  //           )}
+  //         </div>
+  //       );
+  //     },
+  //   },
+  //   {
+  //     Header: "TOUR NAME",
+  //     accessor: "",
+  //     cellClass: "list-item-heading w-5",
+  //     Cell: ({ row }) => {
+  //       return (
+  //         <div
+  //           className="d-flex flex-column text-align-left"
+  //           style={{ gap: "10px" }}
+  //         >
+  //           {profileResponse?.data?.role === "admin"
+  //             ? getAllTourState?.data?.find(
+  //                 (item) => item?._id === row?.original?.bookings[0]?.tour_id
+  //               )?.name
+  //             : getAllTourState?.data?.find(
+  //                 (item) => item?._id === row?.original?.tour_id
+  //               )?.name}
+  //           <span></span>
+  //         </div>
+  //       );
+  //     },
+  //   },
+  //   {
+  //     Header: "PRICE TOUR",
+  //     accessor: "",
+  //     cellClass: "list-item-heading w-5",
+  //     Cell: ({ row }) => {
+  //       return (
+  //         <div
+  //           className="d-flex flex-column text-align-left"
+  //           style={{ gap: "10px" }}
+  //         >
+  //           {profileResponse?.data?.role === "admin" ? (
+  //             <span>
+  //               {row?.original?.bookings[0]?.total_price?.toLocaleString(
+  //                 "VI-VN"
+  //               )}{" "}
+  //               VNĐ
+  //             </span>
+  //           ) : (
+  //             <span>
+  //               {row?.original?.total_price?.toLocaleString("VI-VN")} VNĐ
+  //             </span>
+  //           )}
+  //         </div>
+  //       );
+  //     },
+  //   },
+  //   {
+  //     Header: "CHECKED IN",
+  //     accessor: "is_checking",
+  //     cellClass: "list-item-heading w-5",
+  //     Cell: ({ value, row }) => {
+  //       return (
+  //         <div
+  //           className={profileResponse?.data?.role === "admin" ? "d-none" : ""}
+  //         >
+  //           <div className="d-flex gap-3 align-items-center">
+  //             <input
+  //               type="checkbox"
+  //               checked={value}
+  //               style={{ height: "16px", width: "16px", cursor: "pointer" }}
+  //               onClick={() => handleShowChecking(row)}
+  //             />
 
-              <div
-                outline
-                color="primary"
-                className="icon-button"
-                style={{ cursor: "pointer" }}
-                onClick={() => handleShowCustomer(row)}
-              >
-                <CSEditOutline />
+  //             <div
+  //               outline
+  //               color="primary"
+  //               className="icon-button"
+  //               style={{ cursor: "pointer" }}
+  //               onClick={() => handleShowCustomer(row)}
+  //             >
+  //               <CSEditOutline />
+  //             </div>
+  //           </div>
+  //         </div>
+  //       );
+  //     },
+  //   },
+  // ]);
+
+  const columns = useMemo(() => {
+    const baseColumns = [
+      {
+        Header: "Ordinal number",
+        accessor: "",
+        cellClass: "list-item-heading w-5",
+        Cell: (row) => row.row.index + 1,
+      },
+      {
+        Header: "GUIDE",
+        accessor: "name",
+        cellClass: "list-item-heading w-5",
+        Cell: ({ value }) => {
+          return (
+            <div
+              className="d-flex flex-column text-align-left"
+              style={{ gap: "10px" }}
+            >
+              {profileResponse?.data?.role === "admin" ? (
+                <span>{value}</span>
+              ) : (
+                <span>{profileResponse?.data?.name}</span>
+              )}
+            </div>
+          );
+        },
+      },
+      {
+        Header: "PHONE (GUIDE)",
+        accessor: "phone",
+        cellClass: "list-item-heading w-5",
+        Cell: ({ value }) => {
+          return (
+            <div
+              className="d-flex flex-column text-align-left"
+              style={{ gap: "10px" }}
+            >
+              {profileResponse?.data?.role === "admin" ? (
+                <span>{value}</span>
+              ) : (
+                <span>{profileResponse?.data?.phone}</span>
+              )}
+            </div>
+          );
+        },
+      },
+      {
+        Header: "TIME",
+        accessor: "",
+        cellClass: "list-item-heading w-5",
+        Cell: ({ row }) => {
+          return (
+            <div
+              className="d-flex flex-column text-align-left"
+              style={{ gap: "10px" }}
+            >
+              {profileResponse?.data?.role === "admin" ? (
+                <>
+                  <span>
+                    <strong>Start:</strong>{" "}
+                    {moment(row?.original?.bookings[0]?.start_date).format(
+                      "DD/MM/YYYY"
+                    )}
+                  </span>
+                  <span>
+                    <strong>End:</strong>{" "}
+                    {moment(row?.original?.bookings[0]?.end_date).format(
+                      "DD/MM/YYYY"
+                    )}{" "}
+                  </span>
+                </>
+              ) : (
+                <>
+                  <span>
+                    <strong>Start:</strong>{" "}
+                    {moment(row?.original?.start_date).format("DD/MM/YYYY")}
+                  </span>
+                  <span>
+                    <strong>End:</strong>{" "}
+                    {moment(row?.original?.end_date).format("DD/MM/YYYY")}{" "}
+                  </span>
+                </>
+              )}
+            </div>
+          );
+        },
+      },
+      {
+        Header: "CLIENT",
+        accessor: "",
+        cellClass: "list-item-heading w-5",
+        Cell: ({ row }) => {
+          return (
+            <div
+              className="d-flex flex-column text-align-left"
+              style={{ gap: "10px" }}
+            >
+              {profileResponse?.data?.role === "admin" ? (
+                <OverlayTrigger
+                  placement="right"
+                  delay={{ show: 250, hide: 400 }}
+                  overlay={renderTooltip}
+                >
+                  <Button
+                    onClick={handleShow}
+                    variant="none"
+                    style={{
+                      padding: "0 24px",
+                      width: "fit-content",
+                    }}
+                  >
+                    <CSEyeSolid className="fill-white" />
+                  </Button>
+                </OverlayTrigger>
+              ) : (
+                <>
+                  <span>
+                    <strong>Name: </strong> {row.original?.fullname}
+                  </span>
+                  <span>
+                    <strong>Phone: </strong> {row.original?.phone}
+                  </span>
+                  <span>
+                    <strong>Email: </strong> {row.original?.email}
+                  </span>
+                  <span>
+                    <strong>Adult ticket: </strong> {row.original?.adult_ticket}
+                  </span>
+                  <span>
+                    <strong>Child tickets: </strong>{" "}
+                    {row.original?.child_ticket}
+                  </span>
+                  <span>
+                    <strong>Address: </strong> {row.original?.address}
+                  </span>
+                  <span>
+                    <strong>Note: </strong> {row.original?.note}
+                  </span>
+                </>
+              )}
+            </div>
+          );
+        },
+      },
+      {
+        Header: "TOUR NAME",
+        accessor: "",
+        cellClass: "list-item-heading w-5",
+        Cell: ({ row }) => {
+          return (
+            <div
+              className="d-flex flex-column text-align-left"
+              style={{ gap: "10px" }}
+            >
+              {profileResponse?.data?.role === "admin"
+                ? getAllTourState?.data?.find(
+                    (item) => item?._id === row?.original?.bookings[0]?.tour_id
+                  )?.name
+                : getAllTourState?.data?.find(
+                    (item) => item?._id === row?.original?.tour_id
+                  )?.name}
+              <span></span>
+            </div>
+          );
+        },
+      },
+      {
+        Header: "PRICE TOUR",
+        accessor: "",
+        cellClass: "list-item-heading w-5",
+        Cell: ({ row }) => {
+          return (
+            <div
+              className="d-flex flex-column text-align-left"
+              style={{ gap: "10px" }}
+            >
+              {profileResponse?.data?.role === "admin" ? (
+                <span>
+                  {row?.original?.bookings[0]?.total_price?.toLocaleString(
+                    "VI-VN"
+                  )}{" "}
+                  VNĐ
+                </span>
+              ) : (
+                <span>
+                  {row?.original?.total_price?.toLocaleString("VI-VN")} VNĐ
+                </span>
+              )}
+            </div>
+          );
+        },
+      },
+      // Các cột khác
+    ];
+
+    if (profileResponse?.data?.role === "staff") {
+      baseColumns.push({
+        Header: "CHECKED IN",
+        accessor: "is_checking",
+        cellClass: "list-item-heading w-5",
+        Cell: ({ value, row }) => {
+          return (
+            <div>
+              <div className="d-flex gap-3 align-items-center">
+                <input
+                  type="checkbox"
+                  checked={value}
+                  style={{ height: "16px", width: "16px", cursor: "pointer" }}
+                  onClick={() => handleShowChecking(row)}
+                />
+                <div
+                  outline
+                  color="primary"
+                  className="icon-button"
+                  style={{ cursor: "pointer" }}
+                  onClick={() => handleShowCustomer(row)}
+                >
+                  <CSEditOutline />
+                </div>
               </div>
             </div>
-          </div>
-        );
-      },
-    },
-  ]);
+          );
+        },
+      });
+    }
+
+    return baseColumns;
+  }, [profileResponse, handleShowChecking, handleShowCustomer]);
+
   const handleClickRow = (value) => {
     setDataActive(value);
   };
