@@ -8,9 +8,7 @@ import { ReactTableWithPaginationCard } from "~/components/common";
 import { CSEyeSolid } from "~/components/iconography/Solid";
 import { routesUser } from "~/configs";
 import {
-  resetUpdateBooking,
   resetUpdateChecking,
-  updateBookingRequest,
   updateCheckingRequest,
 } from "~/redux/booking/actions";
 import { getAllTourRequest } from "~/redux/tour/actions";
@@ -23,9 +21,7 @@ const WorkSchedulePage = () => {
   const { getWorkSchedulesState, profileResponse } = useSelector(
     (store) => store.user
   );
-  const { isUpdateBookingSuccess, isUpdateCheckingSuccess } = useSelector(
-    (store) => store.booking
-  );
+  const { isUpdateCheckingSuccess } = useSelector((store) => store.booking);
   const { getAllTourState } = useSelector((store) => store.tour);
   const [callApi, setCallApi] = useState(false);
   const [startDate, setStartDate] = useState(new Date());
@@ -36,6 +32,7 @@ const WorkSchedulePage = () => {
   const [show, setShow] = useState(false);
   const [showChecking, setShowChecking] = useState(false);
   const [showAddCustomer, setShowAddCustomer] = useState(false);
+  const [type, setType] = useState("");
 
   const dispatch = useDispatch();
   const history = useHistory();
@@ -75,11 +72,13 @@ const WorkSchedulePage = () => {
 
   const handleShowChecking = (row) => {
     setDataActive(row);
+    setType("checking");
     setShowChecking(true);
   };
   const handleCloseChecking = () => {
     setDataActive();
     setShowChecking(false);
+    setType("");
   };
   const handleChecking = () => {
     const payload = {
@@ -88,16 +87,18 @@ const WorkSchedulePage = () => {
         is_checking: !dataActive.is_checking,
       },
     };
-    dispatch(updateBookingRequest(payload));
+    dispatch(updateCheckingRequest(payload));
   };
 
   const handleShowCustomer = (row) => {
     setDataActive(row);
+    setType("customer");
     setShowAddCustomer(true);
   };
   const handleCloseCustomer = () => {
     setDataActive();
     setShowAddCustomer(false);
+    setType("");
   };
 
   const handleConfirmUpdateCustomer = (value) => {
@@ -112,18 +113,16 @@ const WorkSchedulePage = () => {
   };
 
   useEffect(() => {
-    if (isUpdateBookingSuccess) {
-      toast.success("Update status checked in booking tour successfully");
-      handleCloseChecking();
-      setCallApi(true);
-      dispatch(resetUpdateBooking());
-    }
-  }, [isUpdateBookingSuccess]);
-
-  useEffect(() => {
     if (isUpdateCheckingSuccess) {
-      toast.success("Update list customer on tour successfully");
+      if (type === "checking") {
+        toast.success("Update checking on tour successfully");
+        setType("");
+      } else {
+        toast.success("Update list customer on tour successfully");
+        setType("");
+      }
       handleCloseCustomer();
+      handleCloseChecking();
       setCallApi(true);
       dispatch(resetUpdateChecking());
     }

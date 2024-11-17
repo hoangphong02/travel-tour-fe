@@ -67,8 +67,8 @@ export const ModalActions = ({
     const payload = {
       tour_id: tour_id[0]?.value,
       tour_guide_id: tour_guide?.value,
-      start_date: moment(start_date).format("MM/DD/YYYY"),
-      end_date: moment(end_date).format("MM/DD/YYYY"),
+      start_date: new Date(start_date).toISOString(),
+      end_date: new Date(end_date).toISOString(),
       group_number,
     };
 
@@ -103,11 +103,11 @@ export const ModalActions = ({
             start_date:
               type === "add"
                 ? ""
-                : moment(data?.start_date).format("YYYY-MM-DD") || "",
+                : moment(data?.start_date).format("YYYY-MM-DDTHH:mm") || "",
             end_date:
               type === "add"
                 ? ""
-                : moment(data?.end_date).format("YYYY-MM-DD") || "",
+                : moment(data?.end_date).format("YYYY-MM-DDTHH:mm") || "",
             tour_guide:
               type === "add"
                 ? {}
@@ -213,7 +213,7 @@ export const ModalActions = ({
                       </Label>
                       <Field
                         disabled
-                        type="date"
+                        type="datetime-local"
                         className="form-control"
                         name="start_date"
                         placeholder="Enter the start date"
@@ -233,7 +233,7 @@ export const ModalActions = ({
                       </Label>
                       <Field
                         disabled
-                        type="date"
+                        type="datetime-local"
                         className="form-control"
                         name="end_date"
                         placeholder="Enter the end date"

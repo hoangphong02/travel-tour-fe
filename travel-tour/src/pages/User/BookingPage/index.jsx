@@ -341,7 +341,22 @@ const BookingPage = () => {
                 </div>
               </div>
               <div className="option">
-                <span className="title">Choose your return time</span>
+                <span className="title">
+                  Choose your return time
+                  {formik.values.start_date && (
+                    <span style={{ color: "red" }}>
+                      {" "}
+                      ({" "}
+                      {moment(formik.values.start_date)
+                        .add(
+                          getDetailTourState?.data?.schedules?.length,
+                          "days"
+                        )
+                        ?.format("DD/MM/YYYY")}{" "}
+                      )
+                    </span>
+                  )}
+                </span>
                 <div className="input-price">
                   <input
                     type="time"

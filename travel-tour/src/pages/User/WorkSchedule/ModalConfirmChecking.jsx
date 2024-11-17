@@ -7,7 +7,7 @@ export const ModalConfirmChecking = ({
   handleClose,
   handleConfirm,
 }) => {
-  const { isUpdateBookingRequest, isUpdateBookingFailure } = useSelector(
+  const { isUpdateCheckingRequest, isUpdateCheckingFailure } = useSelector(
     (store) => store.booking
   );
 
@@ -20,7 +20,7 @@ export const ModalConfirmChecking = ({
       toggle={handleClose}
     >
       <ModalBody>
-        {isUpdateBookingFailure && (
+        {isUpdateCheckingFailure && (
           <Alert color="danger">Update checked in failure</Alert>
         )}
         <h3 className="color-danger">Update status checked in booking</h3>
@@ -30,9 +30,9 @@ export const ModalConfirmChecking = ({
         <div className="d-flex align-content-center justify-content-end flex-grow-1 gap-2">
           <Button
             color="primary"
-            disabled={isUpdateBookingRequest}
+            disabled={isUpdateCheckingRequest}
             className={`btn-shadow btn-multiple-state ${
-              isUpdateBookingRequest ? "show-spinner disabled" : ""
+              isUpdateCheckingRequest ? "show-spinner disabled" : ""
             }`}
             onClick={handleConfirm}
           >
@@ -41,7 +41,7 @@ export const ModalConfirmChecking = ({
               <span className="bounce2" />
               <span className="bounce3" />
             </span>
-            {isUpdateBookingRequest ? (
+            {isUpdateCheckingRequest ? (
               <Spinner size="12" />
             ) : (
               <span className="label">Confirm</span>
@@ -49,11 +49,11 @@ export const ModalConfirmChecking = ({
           </Button>
           <Button
             outline
-            disabled={isUpdateBookingRequest}
+            disabled={isUpdateCheckingRequest}
             className={`btn-shadow btn-multiple-state ${
-              isUpdateBookingRequest ? "disabled" : ""
+              isUpdateCheckingRequest ? "disabled" : ""
             }`}
-            style={isUpdateBookingRequest ? { cursor: "no-drop" } : {}}
+            style={isUpdateCheckingRequest ? { cursor: "no-drop" } : {}}
             onClick={handleClose}
           >
             Back
