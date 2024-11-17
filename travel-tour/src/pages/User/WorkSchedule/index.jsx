@@ -353,7 +353,7 @@ const WorkSchedulePage = () => {
   const columns = useMemo(() => {
     const baseColumns = [
       {
-        Header: "Ordinal number",
+        Header: "ORDINAL NUMBER",
         accessor: "",
         cellClass: "list-item-heading w-5",
         Cell: (row) => row.row.index + 1,
@@ -411,13 +411,13 @@ const WorkSchedulePage = () => {
                   <span>
                     <strong>Start:</strong>{" "}
                     {moment(row?.original?.bookings[0]?.start_date).format(
-                      "DD/MM/YYYY"
+                      "hh:mm DD/MM/YYYY"
                     )}
                   </span>
                   <span>
                     <strong>End:</strong>{" "}
                     {moment(row?.original?.bookings[0]?.end_date).format(
-                      "DD/MM/YYYY"
+                      "hh:mm DD/MM/YYYY"
                     )}{" "}
                   </span>
                 </>
@@ -425,11 +425,13 @@ const WorkSchedulePage = () => {
                 <>
                   <span>
                     <strong>Start:</strong>{" "}
-                    {moment(row?.original?.start_date).format("DD/MM/YYYY")}
+                    {moment(row?.original?.start_date).format(
+                      "hh:mm DD/MM/YYYY"
+                    )}
                   </span>
                   <span>
                     <strong>End:</strong>{" "}
-                    {moment(row?.original?.end_date).format("DD/MM/YYYY")}{" "}
+                    {moment(row?.original?.end_date).format("hh:mm DD/MM/YYYY")}{" "}
                   </span>
                 </>
               )}
@@ -616,14 +618,14 @@ const WorkSchedulePage = () => {
               onChange={(e) => setStartDate(new Date(e.target.value))}
             />
           </div>
-          <div>
+          {/* <div>
             <label htmlFor="">End date: </label>
             <input
               type="date"
               value={moment(endDate).format("YYYY-MM-DD")}
               onChange={(e) => setEndDate(new Date(e.target.value))}
             />
-          </div>
+          </div> */}
         </div>
       </div>
       <div className="table">

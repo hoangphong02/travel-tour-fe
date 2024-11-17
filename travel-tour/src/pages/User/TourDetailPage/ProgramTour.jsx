@@ -39,10 +39,7 @@ const ProgramTour = () => {
                 </div>
                 <div className="section-right">
                   <div className="title">
-                    <span>
-                      Details day
-                      {index + 1}
-                    </span>
+                    <span>Details day {index + 1}</span>
                   </div>
                   <RenderQuillItem key={item._id} detail={item.detail} />
                 </div>
