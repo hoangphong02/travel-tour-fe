@@ -1,11 +1,10 @@
 import { Field, Form, Formik } from "formik";
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   Alert,
   Button,
   FormGroup,
-  Input,
   Label,
   Modal,
   ModalBody,
@@ -34,7 +33,6 @@ export const ModalActions = ({
 
   const dispatch = useDispatch();
   const [isShowModalConfirm, setIsShowModalConfirm] = useState(false);
-  // const [urlImage, setUrlImage] = useState();
   const [dataForm, setDataForm] = useState(null);
   const fileInputRef = useRef(null);
   const SignupSchemaAdd = Yup.object().shape({
@@ -51,13 +49,6 @@ export const ModalActions = ({
         /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
         "Invalid email"
       ),
-    // password: Yup.string()
-    //   .required("Mật khẩu không được để trống")
-    //   .min(5, "Phải ít nhất 5 ký tự"),
-    // confirmPassword: Yup.string()
-    //   .required("Mật khẩu xác nhận không được để trống")
-    //   .oneOf([Yup.ref("password")], "Mật khẩu xác nhận không khớp")
-    //   .min(5, "Phải ít nhất 5 ký tự"),
   });
 
   const uploadToCloudinary = async (file, uploadPreset, uploadUrl) => {

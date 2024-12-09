@@ -17,6 +17,7 @@ export const CardTour = memo((tour) => {
     <div className="card-tour" onClick={handleDetail}>
       <img
         src={tour.tour?.image?.find((item) => item.type === "banner")?.url}
+        alt=""
       />
       <div className="info-card">
         <span className="title">{tour?.tour?.name}</span>

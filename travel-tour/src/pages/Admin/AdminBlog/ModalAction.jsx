@@ -1,6 +1,5 @@
 import { Field, Form, Formik } from "formik";
 import { useEffect, useState } from "react";
-import { Alert } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import Select from "react-select";
 import {
@@ -48,15 +47,9 @@ export const ModalActions = ({
   setIsShowModalConfirm,
   options,
 }) => {
-  const { getAllCategoryState } = useSelector((store) => store.categoryBlog);
-  const {
-    isCreateBlogsRequest,
-    isCreateBlogsSuccess,
-    isCreateBlogsFailure,
-    isUpdateBlogsRequest,
-    isUpdateBlogsSuccess,
-    isUpdateBlogsFailure,
-  } = useSelector((store) => store.blog);
+  const { isCreateBlogsRequest, isUpdateBlogsRequest } = useSelector(
+    (store) => store.blog
+  );
 
   const dispatch = useDispatch();
   const [urlImage, setUrlImage] = useState();

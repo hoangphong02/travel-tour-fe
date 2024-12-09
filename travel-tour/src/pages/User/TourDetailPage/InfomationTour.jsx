@@ -7,12 +7,7 @@ import { useSelector } from "react-redux";
 import { LIST_OPTION_RANK_HOTEL, ListTransport } from "~/constants";
 
 const InfomationTour = () => {
-  const {
-    isGetDetailTourRequest,
-    isGetDetailTourSuccess,
-    isGetDetailTourFailure,
-    getDetailTourState,
-  } = useSelector((store) => store.tour);
+  const { getDetailTourState } = useSelector((store) => store.tour);
   return (
     <div className="information-tour">
       <div className="information-tour-title">
@@ -20,15 +15,15 @@ const InfomationTour = () => {
       </div>
       <div className="information-tour-body">
         <div>
-          <img src={notification} />
+          <img src={notification} alt="" />
           <span>{getDetailTourState?.data?.shedule_on_week}</span>
         </div>
         <div>
-          <img src={time} />
+          <img src={time} alt="" />
           <span>{getDetailTourState?.data?.schedules?.length}</span>
         </div>
         <div>
-          <img src={address} />
+          <img src={address} alt="" />
           <span>
             {
               ListTransport.find(
@@ -39,7 +34,7 @@ const InfomationTour = () => {
           </span>
         </div>
         <div>
-          <img src={hotel} />
+          <img src={hotel} alt="" />
           <span>
             {
               LIST_OPTION_RANK_HOTEL.find(

@@ -5,20 +5,12 @@ import { FooterAction, HeaderAction } from "~/components/common";
 import { routesUser } from "~/configs";
 import { getProfileRequest } from "~/redux/user/actions";
 
-// import { getProfileRequest } from '~/redux/user/actions';
-// import { useDispatch, useSelector } from 'react-redux';
-// import { LoadingPage } from '~/pages/Other';
-
 export const UserLayout = (props) => {
-  const { isGetProfileSuccess, profileResponse, isGetProfileFailure } =
-    useSelector((store) => store.user);
+  const { isGetProfileSuccess } = useSelector((store) => store.user);
   const dispatch = useDispatch();
   const location = useLocation();
   const { pathname } = location;
   const [isScroll, setIsScroll] = useState(false);
-
-  const [isAuth, setIsAuth] = useState(false);
-  const [isLoading, setIsLoading] = useState(true);
 
   const checkAuth = () => {
     dispatch(getProfileRequest());

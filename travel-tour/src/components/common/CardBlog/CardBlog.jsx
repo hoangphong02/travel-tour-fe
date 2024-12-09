@@ -1,5 +1,4 @@
 import { Button } from "react-bootstrap";
-import Image1 from "~/assets/logo/image1.jpg";
 import React, { memo } from "react";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 

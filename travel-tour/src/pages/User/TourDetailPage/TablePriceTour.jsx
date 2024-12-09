@@ -6,20 +6,12 @@ import { ReactTableWithPaginationCard } from "~/components/common";
 import { LIST_OPTION_RANK_HOTEL } from "~/constants";
 
 const TablePriceTour = () => {
-  const [dataActive, setDataActive] = useState({});
   const [dataTable, setDataTable] = useState([]);
-  const {
-    isGetDetailTourRequest,
-    isGetDetailTourSuccess,
-    isGetDetailTourFailure,
-    getDetailTourState,
-  } = useSelector((store) => store.tour);
+  const { getDetailTourState } = useSelector((store) => store.tour);
 
   const history = useHistory();
 
-  const handleClickRow = (value) => {
-    setDataActive(value);
-  };
+  const handleClickRow = () => {};
 
   useEffect(() => {
     if (getDetailTourState) {

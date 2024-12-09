@@ -3,12 +3,7 @@ import { useSelector } from "react-redux";
 import RenderQuillItem from "~/components/common/RenderQuill";
 
 const OverviewTour = () => {
-  const {
-    isGetDetailTourRequest,
-    isGetDetailTourSuccess,
-    isGetDetailTourFailure,
-    getDetailTourState,
-  } = useSelector((store) => store.tour);
+  const { getDetailTourState } = useSelector((store) => store.tour);
   return (
     <div className="overview-tour">
       <div className="overview-tour-title">

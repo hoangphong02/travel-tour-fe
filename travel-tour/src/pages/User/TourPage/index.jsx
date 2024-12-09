@@ -5,13 +5,7 @@ import PaginationCustom from "~/components/common/TableComponent/PaginationCusto
 import { getAllTourRequest } from "~/redux/tour/actions";
 
 const TourPage = () => {
-  const {
-    isGetAllTourRequest,
-    isGetAllTourSuccess,
-    isGetAllTourFailure,
-    getAllTourState,
-  } = useSelector((store) => store.tour);
-  const limit = 6;
+  const { getAllTourState } = useSelector((store) => store.tour);
   const [indexPage, setIndexPage] = useState(1);
   const dispatch = useDispatch();
   const handleChangePage = (idxPage) => {

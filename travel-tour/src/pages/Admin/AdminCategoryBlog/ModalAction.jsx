@@ -35,15 +35,9 @@ export const ModalActions = ({
   setIsShowModalConfirm,
 }) => {
   const {
-    getAllCategoryState,
     isCreateCategoryRequest,
-    isCreateCategorySuccess,
     isCreateCategoryFailure,
-    isGetAllCategoryRequest,
-    isGetAllCategorySuccess,
-    isGetAllCategoryFailure,
     isUpdateCategoryRequest,
-    isUpdateCategorySuccess,
     isUpdateCategoryFailure,
   } = useSelector((store) => store.categoryBlog);
   const dispatch = useDispatch();
@@ -70,7 +64,6 @@ export const ModalActions = ({
       const data = await response.json();
 
       if (data.secure_url) {
-        // Trả về URL của ảnh đã upload
         return data.secure_url;
       } else {
         throw new Error("Failed to upload image");

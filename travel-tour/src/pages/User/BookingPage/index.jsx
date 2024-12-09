@@ -33,10 +33,8 @@ const BookingPage = () => {
     isCreateBookingSuccess,
     isCreateBookingFailure,
     createBookingState,
-    isUpdatePaymentBookingRequest,
     isUpdatePaymentBookingSuccess,
     isUpdatePaymentBookingFailure,
-    isUpdateBookingRequest,
     isUpdateBookingSuccess,
     isUpdateBookingFailure,
   } = useSelector((store) => store.booking);

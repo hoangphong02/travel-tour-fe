@@ -5,7 +5,6 @@ import banner1 from "~/assets/logo/image3.jpg";
 import { getAllTourMainRequest } from "~/redux/tour/actions";
 
 const IntroducePage = () => {
-  const [isScrollSectionRight, setIsScrollSectionRight] = useState(false);
   const [isScrollRight, setIsScrollRight] = useState(true);
   const ref = useRef();
   const dispatch = useDispatch();
@@ -31,16 +30,6 @@ const IntroducePage = () => {
         setIsScrollRight(false); // tắt position fixed khi cách cuối trang 400px
       } else {
         setIsScrollRight(true); // bật position fixed khi chưa tới cuối trang
-      }
-
-      // Kiểm tra nếu phần tử đã được cuộn vào tầm nhìn
-      if (ref.current) {
-        const rightSectionRect = ref.current.getBoundingClientRect();
-        if (scrollTop > rightSectionRect.top + window.scrollY) {
-          setIsScrollSectionRight(true); // thêm class khi phần tử đã cuộn vào tầm nhìn
-        } else {
-          setIsScrollSectionRight(false); // xóa class nếu phần tử không còn trong tầm nhìn
-        }
       }
     };
 

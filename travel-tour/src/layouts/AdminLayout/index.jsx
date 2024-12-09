@@ -1,7 +1,7 @@
 import React from "react";
 import { HeaderAdmin } from "./components";
 import { SideBar } from "./components/SideBar";
-import { Redirect, Route, useLocation } from "react-router-dom";
+import { Route } from "react-router-dom";
 
 export const AdminLayout = (props) => {
   const render = () => {

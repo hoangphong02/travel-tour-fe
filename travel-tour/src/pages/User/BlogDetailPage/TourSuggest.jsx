@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React from "react";
 import { Button } from "react-bootstrap";
 import { useSelector } from "react-redux";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";

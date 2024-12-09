@@ -22,12 +22,7 @@ export const HeaderAction = memo(() => {
   const location = useLocation();
   const { pathname } = location;
   const { profileResponse } = useSelector((store) => store.user);
-  const {
-    isGetAllCategoryRequest,
-    isGetAllCategorySuccess,
-    isGetAllCategoryFailure,
-    getAllCategoryState,
-  } = useSelector((store) => store.categoryBlog);
+  const { getAllCategoryState } = useSelector((store) => store.categoryBlog);
   const [isShowModalLogout, setIsShowModalLogout] = useState(false);
   const dispatch = useDispatch();
   const { getAllCategoryTourState } = useSelector(

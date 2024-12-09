@@ -17,17 +17,10 @@ const TourDetailPage = () => {
     setOption(value);
   };
   const { id } = useParams();
-  const {
-    isGetDetailTourRequest,
-    isGetDetailTourSuccess,
-    isGetDetailTourFailure,
-    getDetailTourState,
-  } = useSelector((store) => store.tour);
-  const {
-    getAllCommentsState,
-    isCreateCommentsSuccess,
-    isReplyCommentsSuccess,
-  } = useSelector((store) => store.comment);
+  const { getDetailTourState } = useSelector((store) => store.tour);
+  const { isCreateCommentsSuccess, isReplyCommentsSuccess } = useSelector(
+    (store) => store.comment
+  );
 
   useEffect(() => {
     if (id) {

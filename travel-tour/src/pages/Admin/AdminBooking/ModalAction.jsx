@@ -1,6 +1,6 @@
 import { Field, Form, Formik } from "formik";
 import moment from "moment";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Alert } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import Select from "react-select";
@@ -19,7 +19,6 @@ import {
   LIST_OPTION_RANK_HOTEL,
   ListNameBooking,
   ListStatusBooking,
-  ListTransport,
 } from "~/constants";
 import {
   createBookingRequest,
@@ -88,15 +87,11 @@ export const ModalActions = ({
   setIsShowModalConfirm,
 }) => {
   const { getAllTourState } = useSelector((store) => store.tour);
-  const { isGetAllUsersSuccess, getAllUsersState } = useSelector(
-    (store) => store.user
-  );
+  const { getAllUsersState } = useSelector((store) => store.user);
   const {
     isCreateBookingRequest,
-    isCreateBookingSuccess,
     isCreateBookingFailure,
     isUpdateBookingRequest,
-    isUpdateBookingSuccess,
     isUpdateBookingFailure,
   } = useSelector((store) => store.booking);
 
@@ -307,11 +302,6 @@ export const ModalActions = ({
                           value={values.tour_guide}
                           placeholder="Choose a tour guide"
                         ></Select>
-                        {/* {errors.title && touched.title ? (
-                        <div className="invalid-feedback d-block">
-                          {errors.title}
-                        </div>
-                      ) : null} */}
                       </FormGroup>
                     ) : null}
                   </div>
@@ -423,11 +413,6 @@ export const ModalActions = ({
                         name="child_ticket"
                         placeholder="Enter the number of child tickets"
                       />
-                      {/* {errors.name && touched.name ? (
-                        <div className="invalid-feedback d-block">
-                          {errors.name}
-                        </div>
-                      ) : null} */}
                     </FormGroup>
                   </div>
 
@@ -507,11 +492,6 @@ export const ModalActions = ({
                           name="group_number"
                           placeholder="Enter the number of people/group"
                         />
-                        {/* {errors.typeBlog && touched.typeBlog ? (
-                          <div className="invalid-feedback d-block">
-                            {errors.typeBlog}
-                          </div>
-                        ) : null} */}
                       </FormGroup>
                     ) : null}
                   </div>
@@ -550,11 +530,6 @@ export const ModalActions = ({
                           name="transactionId"
                           placeholder="Enter the payment code"
                         />
-                        {/* {errors.typeBlog && touched.typeBlog ? (
-                        <div className="invalid-feedback d-block">
-                          {errors.typeBlog}
-                        </div>
-                      ) : null} */}
                       </FormGroup>
                     ) : null}
                   </div>
@@ -677,11 +652,6 @@ export const ModalActions = ({
                         border: "none",
                         padding: "8px 24px",
                       }}
-                      // className={`btn-shadow btn-multiple-state ${
-                      //   isCreateFoodRequest || isUpdateFoodRequest
-                      //     ? "show-spinner cursor-none"
-                      //     : ""
-                      // } `}
                       type="submit"
                     >
                       <span className="spinner d-inline-block">

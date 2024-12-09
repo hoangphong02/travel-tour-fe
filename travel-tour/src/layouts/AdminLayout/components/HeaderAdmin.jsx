@@ -1,8 +1,5 @@
 import React, { memo, useEffect, useState } from "react";
-import {
-  useHistory,
-  useLocation,
-} from "react-router-dom/cjs/react-router-dom.min";
+import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 import logo from "~/assets/logo/no-avatar.png";
 import { useDispatch, useSelector } from "react-redux";
 import { getAllCategoryTourRequest } from "~/redux/categoryTour/actions";
@@ -13,10 +10,7 @@ import { resetUserState } from "~/redux/user/actions";
 import { routesUser } from "~/configs";
 
 export const HeaderAdmin = memo(() => {
-  const [isScroll, setIsScroll] = useState(false);
   const history = useHistory();
-  const location = useLocation();
-  const { pathname } = location;
   const { profileResponse } = useSelector((store) => store.user);
   const [isShowModalLogout, setIsShowModalLogout] = useState(false);
   // const { getAllNotificationsResponse } = useSelector(
@@ -41,14 +35,6 @@ export const HeaderAdmin = memo(() => {
       })
     );
   }, []);
-  window.addEventListener("scroll", function () {
-    let scrollTop = window.scrollY || document.documentElement.scrollTop;
-    if (scrollTop > 80) {
-      setIsScroll(true);
-    } else {
-      setIsScroll(false);
-    }
-  });
 
   const handleLogout = () => {
     dispatch(logoutRequest());
@@ -71,7 +57,7 @@ export const HeaderAdmin = memo(() => {
         <Dropdown as={ButtonGroup}>
           <div style={{ display: "flex", gap: "16px", alignItems: "center" }}>
             <div className="header-admin--inner--right">
-              <img src={logo} />
+              <img src={logo} alt="" />
             </div>
             <div>
               <span className="name-user">{profileResponse?.data?.name}</span>

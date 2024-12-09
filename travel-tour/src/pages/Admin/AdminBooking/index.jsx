@@ -22,7 +22,6 @@ import { ListSearch, ListStatusBooking, STATUS_CHECKING } from "~/constants";
 import { getAllUserRequest } from "~/redux/user/actions";
 import Select from "react-select";
 import { FormGroup } from "react-bootstrap";
-import { isCancel } from "axios";
 
 const AdminBooking = () => {
   const [isShowModalAction, setIsShowModalAction] = useState(false);
@@ -39,18 +38,13 @@ const AdminBooking = () => {
 
   const searchDebounce = useDebounce(search, 500);
   const {
-    isGetAllBookingRequest,
     isGetAllBookingSuccess,
-    isGetAllBookingFailure,
     getAllBookingState,
-    isCreateBookingRequest,
     isCreateBookingSuccess,
     isCreateBookingFailure,
-    isUpdateBookingRequest,
     isUpdateBookingSuccess,
     isUpdateBookingFailure,
   } = useSelector((store) => store.booking);
-  const { getAllTourState } = useSelector((store) => store.tour);
 
   const { getAllCategoryTourState } = useSelector(
     (store) => store.categoryTour
@@ -75,9 +69,6 @@ const AdminBooking = () => {
   };
   const handleCloseModalDelete = () => {
     setIsShowModalDelete(false);
-  };
-  const handleShowModalDelete = () => {
-    setIsShowModalDelete(true);
   };
 
   useEffect(() => {
@@ -158,11 +149,6 @@ const AdminBooking = () => {
       cellClass: "list-item-heading w-5",
       Cell: (row) => row.row.index + 1,
     },
-    // {
-    //   Header: "Mã",
-    //   accessor: "_id",
-    //   cellClass: "list-item-heading w-5",
-    // },
     {
       Header: "Tour name",
       accessor: "tour_id",
@@ -261,14 +247,6 @@ const AdminBooking = () => {
           >
             <CSEditOutline />
           </div>
-          {/* <div
-            outline
-            color="primary"
-            className="icon-button"
-            onClick={() => handleShowModalDelete(true)}
-          >
-            <CSTrash2Outline />
-          </div> */}
         </div>
       ),
     },

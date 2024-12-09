@@ -27,14 +27,10 @@ const AdminCategoryTour = () => {
   const searchDebounce = useDebounce(search, 500);
 
   const {
-    isGetAllCategoryTourRequest,
     isGetAllCategoryTourSuccess,
-    isGetAllCategoryTourFailure,
     getAllCategoryTourState,
-    isCreateCategoryTourRequest,
     isCreateCategoryTourSuccess,
     isCreateCategoryTourFailure,
-    isUpdateCategoryTourRequest,
     isUpdateCategoryTourSuccess,
     isUpdateCategoryTourFailure,
   } = useSelector((store) => store.categoryTour);
@@ -92,11 +88,6 @@ const AdminCategoryTour = () => {
       cellClass: "list-item-heading w-5",
       Cell: (row) => row.row.index + 1,
     },
-    // {
-    //   Header: "MÃ",
-    //   accessor: "_id",
-    //   cellClass: "list-item-heading w-5",
-    // },
     {
       Header: "Name",
       accessor: "name",

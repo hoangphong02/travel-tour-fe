@@ -1,6 +1,6 @@
 import { Field, Form, Formik } from "formik";
 import moment from "moment";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Alert } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import Select from "react-select";
@@ -14,11 +14,7 @@ import {
   ModalHeader,
 } from "reactstrap";
 import * as Yup from "yup";
-import {
-  addGuideBookingRequest,
-  createBookingRequest,
-  updateBookingRequest,
-} from "~/redux/booking/actions";
+import { addGuideBookingRequest } from "~/redux/booking/actions";
 
 export const PHONE_REGEX = /((0)+([1-9]{1})+([0-9]{8})\b)/g;
 
@@ -49,7 +45,6 @@ export const ModalActions = ({
   const {
     getUserGuideBookingState,
     isAddGuideBookingRequest,
-    isAddGuideBookingSuccess,
     isAddGuideBookingFailure,
   } = useSelector((store) => store.booking);
 
@@ -157,11 +152,6 @@ export const ModalActions = ({
                         value={values.tour_id}
                         placeholder="Choose a tour"
                       ></Select>
-                      {/* {errors.title && touched.title ? (
-                        <div className="invalid-feedback d-block">
-                          {errors.title}
-                        </div>
-                      ) : null} */}
                     </FormGroup>
                     <FormGroup className="w-100 error-l-100">
                       <Label>
@@ -218,11 +208,6 @@ export const ModalActions = ({
                         name="start_date"
                         placeholder="Enter the start date"
                       />
-                      {/* {errors.name && touched.name ? (
-                        <div className="invalid-feedback d-block">
-                          {errors.name}
-                        </div>
-                      ) : null} */}
                     </FormGroup>
                     <FormGroup className="w-100 error-l-100">
                       <Label>
@@ -238,11 +223,6 @@ export const ModalActions = ({
                         name="end_date"
                         placeholder="Enter the end date"
                       />
-                      {/* {errors.name && touched.name ? (
-                        <div className="invalid-feedback d-block">
-                          {errors.name}
-                        </div>
-                      ) : null} */}
                     </FormGroup>
                   </div>
                   <div className="d-flex" style={{ gap: "12px" }}>
@@ -259,11 +239,6 @@ export const ModalActions = ({
                         name="group_number"
                         placeholder="Enter group name"
                       />
-                      {/* {errors.name && touched.name ? (
-                        <div className="invalid-feedback d-block">
-                          {errors.name}
-                        </div>
-                      ) : null} */}
                     </FormGroup>
                   </div>
                 </ModalBody>
@@ -295,11 +270,6 @@ export const ModalActions = ({
                         border: "none",
                         padding: "8px 24px",
                       }}
-                      // className={`btn-shadow btn-multiple-state ${
-                      //   isCreateFoodRequest || isUpdateFoodRequest
-                      //     ? "show-spinner cursor-none"
-                      //     : ""
-                      // } `}
                       type="submit"
                     >
                       <span className="spinner d-inline-block">

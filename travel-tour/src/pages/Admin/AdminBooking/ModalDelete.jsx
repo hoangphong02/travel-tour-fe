@@ -6,7 +6,6 @@ import {
   deleteBookingRequest,
   resetDeleteBooking,
 } from "~/redux/booking/actions";
-import { deleteTourRequest, resetDeleteTour } from "~/redux/tour/actions";
 
 export const ModalDelete = ({ data, isOpen, handleClose, setCallApi }) => {
   const dispatch = useDispatch();

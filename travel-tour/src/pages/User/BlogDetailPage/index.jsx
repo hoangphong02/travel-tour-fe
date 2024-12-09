@@ -5,20 +5,13 @@ import {
   useHistory,
   useParams,
 } from "react-router-dom/cjs/react-router-dom.min";
-import banner1 from "~/assets/logo/image3.jpg";
 import RenderQuillItem from "~/components/common/RenderQuill";
 import { getDetailBlogsRequest } from "~/redux/blog/actions";
 import { getAllTourMainRequest } from "~/redux/tour/actions";
 import TourSuggest from "./TourSuggest";
 
 const BlogDetailPage = () => {
-  const {
-    isGetDetailBlogRequest,
-    isGetDetailBlogSuccess,
-    isGetDetailBlogFailure,
-    getDetailBlogState,
-  } = useSelector((store) => store.blog);
-  const [isScrollSectionRight, setIsScrollSectionRight] = useState(false);
+  const { getDetailBlogState } = useSelector((store) => store.blog);
   const [isScrollRight, setIsScrollRight] = useState(true);
   const ref = useRef();
   const { id } = useParams();
@@ -51,16 +44,6 @@ const BlogDetailPage = () => {
       const fullHeight = document.documentElement.scrollHeight; // tổng chiều cao của nội dung trang
 
       if (ref.current) {
-        const rightSectionRect = ref.current.getBoundingClientRect();
-
-        // Kiểm tra nếu phần tử đã được cuộn vào tầm nhìn
-        if (scrollTop > rightSectionRect.top + window.scrollY) {
-          setIsScrollSectionRight(true);
-        } else {
-          setIsScrollSectionRight(false);
-        }
-
-        // Kiểm tra nếu khoảng cách từ cuối trang tới vị trí cuộn nhỏ hơn hoặc bằng 400px
         if (fullHeight - (scrollTop + windowHeight) <= 400) {
           setIsScrollRight(false); // tắt position fixed khi cách cuối trang 400px
         } else {
@@ -68,7 +51,7 @@ const BlogDetailPage = () => {
             fullHeight - (scrollTop + windowHeight) > 400 &&
             window.scrollY < 130
           ) {
-            setIsScrollRight(true); // bật position fixed khi chưa tới cuối trang
+            setIsScrollRight(true);
           }
         }
       }
@@ -91,11 +74,6 @@ const BlogDetailPage = () => {
             </div>
 
             <RenderQuillItem detail={getDetailBlogState?.data?.description} />
-
-            {/* <div className="image-about-us">
-              <img src={getDetailBlogState?.data?.image[0]?.url} />
-            </div> */}
-
             <div className="title-tour-intro">
               <span className="title">Related tours</span>
               <div className="line-1"></div>
@@ -132,58 +110,6 @@ const BlogDetailPage = () => {
                 </div>
               )}
             </div>
-
-            {/* <div className="form-comment">
-              <div className="form-comment-body">
-                <div>
-                  <span style={{ fontSize: "20px", fontWeight: "600" }}>
-                    BÌNH LUẬN BÀI VIẾT
-                  </span>
-                </div>
-
-                <div className="section-1">
-                  <div>
-                    <span style={{ fontSize: "18px", fontWeight: "600" }}>
-                      1. Nhập họ tên
-                    </span>
-                    <input type="text" />
-                  </div>
-                  <div>
-                    <span style={{ fontSize: "18px", fontWeight: "600" }}>
-                      2. Nhập email
-                    </span>
-                    <input type="text" />
-                  </div>
-                  <div>
-                    <span style={{ fontSize: "18px", fontWeight: "600" }}>
-                      3. Nhập số điện thoại
-                    </span>
-                    <input type="text" />
-                  </div>
-                </div>
-                <div className="section-2">
-                  <div>
-                    <span style={{ fontSize: "18px", fontWeight: "600" }}>
-                      4. Viết nhận xét của bạn vào bên dưới
-                    </span>
-                    <textarea type="text" className="message" />
-                  </div>
-                </div>
-                <div className="section-3">
-                  <div className="btn-send">
-                    <span
-                      style={{
-                        fontSize: "18px",
-                        fontWeight: "600",
-                        color: "rgb(156 204 219)",
-                      }}
-                    >
-                      GỬI NGAY
-                    </span>
-                  </div>
-                </div>
-              </div>
-            </div> */}
           </div>
         </div>
         <div className="introduce-page-wrapper-body-right">

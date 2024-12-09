@@ -26,14 +26,10 @@ const AdminBlog = () => {
   const [search, setSearch] = useState("");
   const searchDebounce = useDebounce(search, 500);
   const {
-    isGetAllBlogsRequest,
     isGetAllBlogsSuccess,
-    isGetAllBlogsFailure,
     getAllBlogsState,
-    isCreateBlogsRequest,
     isCreateBlogsSuccess,
     isCreateBlogsFailure,
-    isUpdateBlogsRequest,
     isUpdateBlogsSuccess,
     isUpdateBlogsFailure,
   } = useSelector((store) => store.blog);

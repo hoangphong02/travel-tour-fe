@@ -1,15 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import imageTour from "~/assets/logo/image-tour.png";
 import RenderQuillItem from "~/components/common/RenderQuill";
 
 const ProgramTour = () => {
-  const {
-    isGetDetailTourRequest,
-    isGetDetailTourSuccess,
-    isGetDetailTourFailure,
-    getDetailTourState,
-  } = useSelector((store) => store.tour);
+  const { getDetailTourState } = useSelector((store) => store.tour);
   const [banner, setBanner] = useState();
   useEffect(() => {
     if (getDetailTourState) {

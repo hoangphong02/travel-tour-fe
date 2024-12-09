@@ -2,20 +2,14 @@ import React, { useEffect, useMemo, useState } from "react";
 import { Button } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
-import { ReactTableWithPaginationCard, Table } from "~/components/common";
+import { ReactTableWithPaginationCard } from "~/components/common";
 import { ListTransport } from "~/constants";
 import { getAllTourRequest } from "~/redux/tour/actions";
 
 const PriceTourPage = () => {
   const [indexPage, setIndexPage] = useState(1);
-  const [dataActive, setDataActive] = useState({});
   const [dataTable, setDataTable] = useState([]);
-  const {
-    isGetAllTourRequest,
-    isGetAllTourSuccess,
-    isGetAllTourFailure,
-    getAllTourState,
-  } = useSelector((store) => store.tour);
+  const { getAllTourState } = useSelector((store) => store.tour);
   const dispatch = useDispatch();
   const history = useHistory();
   useEffect(() => {
@@ -110,9 +104,7 @@ const PriceTourPage = () => {
     setIndexPage(idxPage);
     // setIsCallApi(true);
   };
-  const handleClickRow = (value) => {
-    setDataActive(value);
-  };
+  const handleClickRow = () => {};
 
   useEffect(() => {
     if (getAllTourState?.data) {

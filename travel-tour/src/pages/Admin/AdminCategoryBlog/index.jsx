@@ -28,15 +28,10 @@ const AdminCategoryBlog = () => {
 
   const {
     getAllCategoryState,
-    isCreateCategoryRequest,
     isCreateCategorySuccess,
     isCreateCategoryFailure,
-    isGetAllCategoryRequest,
     isGetAllCategorySuccess,
-    isGetAllCategoryFailure,
-    isUpdateCategoryRequest,
     isUpdateCategorySuccess,
-    isUpdateCategoryFailure,
   } = useSelector((store) => store.categoryBlog);
   const [callApi, setCallApi] = useState(false);
   const [dataActive, setDataActive] = useState(null);
@@ -92,11 +87,6 @@ const AdminCategoryBlog = () => {
       cellClass: "list-item-heading w-5",
       Cell: (row) => row.row.index + 1,
     },
-    // {
-    //   Header: "MÃ",
-    //   accessor: "_id",
-    //   cellClass: "list-item-heading w-5",
-    // },
     {
       Header: "Name",
       accessor: "name",

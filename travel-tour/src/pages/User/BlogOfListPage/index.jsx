@@ -1,21 +1,12 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  useHistory,
-  useParams,
-} from "react-router-dom/cjs/react-router-dom.min";
+import { useParams } from "react-router-dom/cjs/react-router-dom.min";
 import { CardBlog } from "~/components/common/CardBlog";
 import { getAllBlogsRequest } from "~/redux/blog/actions";
 
 const BlogOfListPage = () => {
-  const history = useHistory();
   const dispatch = useDispatch();
-  const {
-    isGetAllBlogsRequest,
-    isGetAllBlogsSuccess,
-    isGetAllBlogsFailure,
-    getAllBlogsState,
-  } = useSelector((store) => store.blog);
+  const { getAllBlogsState } = useSelector((store) => store.blog);
 
   const { getAllCategoryState } = useSelector((store) => store.categoryBlog);
   const { id } = useParams();

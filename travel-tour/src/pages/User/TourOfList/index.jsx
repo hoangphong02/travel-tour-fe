@@ -9,12 +9,7 @@ const TourOfListPage = () => {
   const { getAllCategoryTourState } = useSelector(
     (store) => store.categoryTour
   );
-  const {
-    isGetAllTourRequest,
-    isGetAllTourSuccess,
-    isGetAllTourFailure,
-    getAllTourState,
-  } = useSelector((store) => store.tour);
+  const { getAllTourState } = useSelector((store) => store.tour);
   const dispatch = useDispatch();
   const limit = 10;
   const [indexPage, setIndexPage] = useState(1);

@@ -1,5 +1,4 @@
-import React, { memo, useState } from "react";
-import { Dropdown } from "react-bootstrap";
+import React, { memo } from "react";
 import image1 from "~/assets/logo/image1.jpg";
 import image2 from "~/assets/logo/image2.jpg";
 import image3 from "~/assets/logo/image3.jpg";

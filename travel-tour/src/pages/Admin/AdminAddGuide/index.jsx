@@ -28,7 +28,6 @@ const AdminAddGuide = () => {
   const {
     getAllBookingGroupState,
     isGetAllBookingGroupSuccess,
-    getUserGuideBookingState,
     isAddGuideBookingSuccess,
     isAddGuideBookingFailure,
   } = useSelector((store) => store.booking);
